@@ -77,6 +77,19 @@ dialog{width:min(620px,calc(100% - 24px));max-height:90vh;overflow:auto;border:1
 @media(max-width:440px){.wrap{width:calc(100% - 26px)}.brand{font-size:13px}.brand-mark{width:35px;height:35px}.hero h1{font-size:41px}.hero-visual{min-height:360px}.orb{width:155px;height:155px}.orbit-line{width:245px}.ml-one{right:2%;top:12%}.ml-two{left:1%;bottom:18%}.ml-three{right:25%;bottom:7%}.floating-card{width:130px;padding:12px}.fc-num{font-size:26px}.floating-card p{font-size:10px}.services-grid{grid-template-columns:1fr 1fr}.service{min-height:230px;padding:15px}.service-icon{width:39px;height:39px}.service .num{left:13px;top:15px}.service h3{margin-top:17px}.work-grid{grid-template-columns:1fr}.work-art{aspect-ratio:1.65}.review-grid{grid-template-columns:1fr}.review{min-height:unset}.review blockquote{margin-bottom:17px}.checklist{grid-template-columns:1fr}.process-grid{grid-template-columns:1fr 1fr}.stat strong{font-size:21px}.footer-links{gap:10px}.footer-links a{font-size:10px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.js .reveal{opacity:1;transform:none}}
 
+/* Header fix for mobile browsers using desktop-site viewport */
+@media (max-width: 1000px){
+  .topbar .nav{height:68px;gap:10px}
+  .topbar .brand{min-width:0;gap:9px;flex:0 1 auto}
+  .topbar .brand>span:last-child{min-width:0;white-space:nowrap}
+  .topbar .brand small{font-size:9px;letter-spacing:0}
+  .topbar .navlinks{display:none;position:absolute;top:68px;right:16px;left:16px;width:auto;max-width:calc(100vw - 32px);padding:12px;border:1px solid var(--line);border-radius:18px;background:#111318;box-shadow:0 20px 50px #0009;flex-direction:column;align-items:stretch;gap:0;font-size:14px}
+  .topbar .navlinks.open{display:flex}
+  .topbar .navlinks a{padding:11px 8px}
+  .topbar .nav-cta{display:none}
+  .topbar .menu-toggle{display:block;flex:0 0 auto}
+}
+
 /* RESPONSIVE REFINEMENT + SERVICE CTA */
 html{max-width:100%;overflow-x:clip}body{width:100%;max-width:100%;overflow-x:clip}main,header,footer,section,.wrap,.hero-grid,.hero-copy,.hero-visual,.services-grid,.work-grid,.about-grid,.review-grid,.process-grid{min-width:0;max-width:100%}
 .frame-kicker{font:600 10px/1.5 Estedad,sans-serif;letter-spacing:0;color:#c9cbd1;direction:rtl}.frame-kicker b{color:var(--lime);padding:0 5px}
