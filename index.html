@@ -631,7 +631,7 @@ document.getElementById('copySummary').addEventListener('click',async()=>{
 });
 
 // Replace Android/iOS native select popups with branded, site-matched option sheets.
-document.querySelectorAll('.modal select').forEach(select=>{
+document.querySelectorAll('.modal select:not(#socialServiceType)').forEach(select=>{
   select.classList.add('modal-select-native');
   const wrap=document.createElement('div');wrap.className='custom-select';
   const trigger=document.createElement('button');trigger.type='button';trigger.className='custom-select-trigger';trigger.setAttribute('aria-haspopup','listbox');trigger.setAttribute('aria-expanded','false');
