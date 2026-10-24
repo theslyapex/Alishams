@@ -6,6 +6,13 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#090a0d"><meta name="description" content="علی شمس برای موشن‌گرافیک، طراحی وب، تولید محتوای ویدئویی و رشد کسب‌وکارهای آنلاین.">
 <link rel="canonical" href="https://theslyapex.github.io/Alishams/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="علی شمس | طراحی وب، ابزارهای آنلاین و خدمات دیجیتال">
+<meta property="og:description" content="علی شمس برای موشن‌گرافیک، طراحی وب، تولید محتوای ویدئویی و رشد کسب‌وکارهای آنلاین.">
+<meta property="og:image" content="https://my.uploadkon.ir/d/FEhEGxyXHsD61GtAgd5KleKexbCVCM/NjYxNjJ8cGFkZA.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="علی شمس | طراحی وب، ابزارهای آنلاین و خدمات دیجیتال">
+<meta name="twitter:description" content="علی شمس برای موشن‌گرافیک، طراحی وب، تولید محتوای ویدئویی و رشد کسب‌وکارهای آنلاین.">
 <meta property="og:url" content="https://theslyapex.github.io/Alishams/">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"علی شمس | Alishams","url":"https://theslyapex.github.io/Alishams/","inLanguage":"fa-IR","publisher":{"@type":"Person","name":"علی شمس"}}</script>
 <title>علی شمس | طراحی وب، ابزارهای آنلاین و خدمات دیجیتال</title>
@@ -227,7 +234,7 @@ nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classLi
 const revealObserver=('IntersectionObserver' in window)?new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target)}}),{threshold:.12}):null;
 document.querySelectorAll('.reveal').forEach(el=>{if(revealObserver)revealObserver.observe(el);else el.classList.add('visible')});
 document.querySelectorAll('.faq button').forEach(b=>b.addEventListener('click',()=>{const box=b.parentElement,open=box.classList.toggle('open');b.setAttribute('aria-expanded',String(open));b.lastElementChild.textContent=open?'−':'＋'}));
-const serviceParam=new URLSearchParams(location.search).get('service');if(serviceParam){const sel=document.getElementById('serviceSelect');const match=[...sel.options].find(o=>o.textContent.trim()===serviceParam.trim());if(match){sel.value=match.value}else{const fallback=[...sel.options].find(o=>o.textContent.trim()==='هنوز مطمئن نیستم');if(fallback)sel.value=fallback.value;const details=document.getElementById('projectDetails');if(details&&!details.value)details.value='خدمت موردنظر: '+serviceParam+'\\n';}}const dlg=document.getElementById('orderDialog');document.getElementById('openOrder').addEventListener('click',()=>dlg.showModal());document.getElementById('closeDialog').addEventListener('click',()=>dlg.close());dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+const serviceParam=new URLSearchParams(location.search).get('service');if(serviceParam){const sel=document.getElementById('serviceSelect');const match=[...sel.options].find(o=>o.textContent.trim()===serviceParam.trim());if(match){sel.value=match.value}else{const fallback=[...sel.options].find(o=>o.textContent.trim()==='هنوز مطمئن نیستم');if(fallback)sel.value=fallback.value;const details=document.getElementById('projectDetails');if(details&&!details.value)details.value='خدمت موردنظر: '+serviceParam+'\\n';}}const dlg=document.getElementById('orderDialog');document.getElementById('openOrder').addEventListener('click',()=>dlg.showModal());if(serviceParam){const openOrderFromService=()=>{if(!dlg.open)dlg.showModal()};if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',openOrderFromService,{once:true})}else{setTimeout(openOrderFromService,120)}}document.getElementById('closeDialog').addEventListener('click',()=>dlg.close());dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
 document.querySelectorAll('[data-service]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('serviceSelect').value=b.dataset.service;dlg.showModal()}));
 let orderSummaryText = '';
 document.getElementById('makeSummary').addEventListener('click',()=>{
