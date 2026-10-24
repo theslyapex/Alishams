@@ -45,11 +45,12 @@
 .principle-slide.is-active{position:relative;opacity:1;visibility:visible;transform:translateY(0) scale(1);pointer-events:auto;animation:principleEnter .7s cubic-bezier(.2,.75,.2,1) both}
 .principle-logo{width:76px;height:76px;border-radius:22px;display:grid;place-items:center;margin-bottom:18px;background:linear-gradient(145deg,#22262d,#121419);padding:9px;border:1px solid #d9ff7238;box-shadow:0 0 0 5px #d9ff7208,0 10px 28px #0005;animation:logoLoop 3.2s ease-in-out infinite}
 .principle-logo img{width:100%;height:100%;object-fit:contain;border-radius:14px;background:transparent}
-.principle-count{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;padding:7px 12px;border:1px solid #d9ff7230;border-radius:999px;background:linear-gradient(110deg,#d9ff720d,#ffffff04);color:var(--text);font-family:Vazirmatn, sans-serif;letter-spacing:0;direction:rtl}
-.principle-count-label{font-size:11px;font-weight:600;color:var(--muted)}
-.principle-count strong{font-family:Manrope,Vazirmatn,sans-serif;font-size:15px;line-height:1;color:var(--lime);font-weight:800;font-variant-numeric:tabular-nums}
-.principle-count-divider{height:17px;width:1px;background:linear-gradient(180deg,transparent,#d9ff7277,transparent);margin-inline:2px}
-.principle-count-total{font-size:10px;font-weight:500;color:#a8abb4}
+.principle-count{display:inline-flex;align-items:center;gap:9px;margin-bottom:14px;padding:9px 15px;border:1px solid #d9ff7245;border-radius:14px;background:linear-gradient(135deg,#d9ff7214,#ffffff04 72%);color:var(--text);font-family:Estedad,Vazirmatn,sans-serif;letter-spacing:0;direction:rtl;box-shadow:inset 0 1px 0 #ffffff08,0 8px 22px #0002;position:relative;overflow:hidden}
+.principle-count:before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:linear-gradient(180deg,transparent,var(--lime),transparent);opacity:.85}
+.principle-count-label{font-size:12px;font-weight:700;color:#e6e8ec;letter-spacing:-.4px}
+.principle-count strong{font-family:Manrope,Estedad,sans-serif;font-size:21px;line-height:1;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-1.2px;color:var(--lime);text-shadow:0 0 18px #d9ff7238}
+.principle-count-divider{height:22px;width:1px;background:linear-gradient(180deg,transparent,#d9ff7277,transparent);margin-inline:2px}
+.principle-count-total{font-family:Estedad,Vazirmatn,sans-serif;font-size:11px;font-weight:600;color:#b8bdc6;letter-spacing:-.3px}
 .principle-slide h3{font-size:clamp(21px,3vw,29px);margin:0 0 10px;letter-spacing:-.4px}
 .principle-slide p{max-width:510px;margin:0;color:var(--muted);font-size:14px;line-height:2.1}
 .principles-controls{display:flex;align-items:center;justify-content:space-between;max-width:760px;margin:18px auto 0;direction:ltr}
