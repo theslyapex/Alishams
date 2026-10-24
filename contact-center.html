@@ -38,7 +38,6 @@
 <div class="field"><label for="subject">موضوع درخواست</label><input id="subject" name="subject" maxlength="120" placeholder="مثلاً طراحی وب‌سایت" required></div>
 <div class="field"><label for="category">دسته‌بندی</label><select id="category" name="category"><option>سؤال عمومی</option><option>طراحی وب‌سایت</option><option>موشن‌گرافیک و ویدئو</option><option>همکاری و پروژه</option><option>گزارش مشکل</option><option>سایر موارد</option></select></div>
 <div class="field"><label for="message">شرح درخواست</label><textarea id="message" name="message" maxlength="5000" placeholder="جزئیات درخواستت را بنویس..." required></textarea></div>
-<div class="field"><label for="attachments">فایل پیوست (اختیاری)</label><div class="filebox">می‌توانی فایل موردنیاز را انتخاب کنی؛ در حال حاضر فایل به درخواست ارسال نمی‌شود.<input type="file" id="attachments" multiple accept="image/*,.pdf,.doc,.docx,.txt,.zip"><div class="file-list" id="fileList"></div></div></div>
 <button class="btn btn-primary submit" type="submit" id="submitRequest">ثبت درخواست ←</button>
 </form>
 </section>
@@ -67,14 +66,13 @@ const toast=document.getElementById('toast');
 function notify(message){toast.textContent=message;toast.classList.add('show');clearTimeout(notify.timer);notify.timer=setTimeout(()=>toast.classList.remove('show'),4500)}
 function safeText(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 document.getElementById('year').textContent=new Date().getFullYear();
-document.getElementById('attachments').addEventListener('change',e=>{const files=[...e.target.files];document.getElementById('fileList').textContent=files.length?files.map(f=>f.name+' ('+(f.size/1024/1024).toFixed(2)+' MB)').join(' · '):''});
 document.getElementById('composeForm').addEventListener('submit',async e=>{
 e.preventDefault();const form=e.currentTarget,button=document.getElementById('submitRequest'),original=button.textContent;button.disabled=true;button.textContent='در حال ثبت…';
 try{
 const payload={name:form.elements.name.value.trim(),email:form.elements.email.value.trim(),subject:form.elements.subject.value.trim(),category:form.elements.category.value,message:form.elements.message.value.trim()};
 const response=await fetch(SUPABASE_URL+'/functions/v1/submit-communication-request',{method:'POST',headers:{'Content-Type':'application/json','apikey':API_KEY},body:JSON.stringify(payload)});
 const result=await response.json();if(!response.ok||!result.ok)throw new Error(result.error||'ثبت درخواست انجام نشد.');
-document.getElementById('newTrackingCode').textContent=result.tracking_code||'';document.getElementById('newAccessToken').textContent=result.access_token||'';document.getElementById('credentialBackdrop').classList.add('show');form.reset();document.getElementById('fileList').textContent='';
+document.getElementById('newTrackingCode').textContent=result.tracking_code||'';document.getElementById('newAccessToken').textContent=result.access_token||'';document.getElementById('credentialBackdrop').classList.add('show');form.reset();
 }catch(err){notify(err.message||'ارتباط با سرور برقرار نشد؛ دوباره تلاش کن.')}finally{button.disabled=false;button.textContent=original}
 });
 const threadEndpoint=SUPABASE_URL+'/functions/v1/communication-thread';
