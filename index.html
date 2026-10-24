@@ -556,13 +556,14 @@ function updateSocialServiceFields(){
  socialHint.textContent=platform==='خدمات اینستاگرام'?'نوع تعامل اینستاگرامی را دقیق انتخاب کن. لینک پست، ریلز، استوری یا حساب موردنظر را در توضیحات سفارش بنویس.':'نوع خدمت تلگرام را انتخاب کن. لینک گروه، کانال یا پست موردنظر را در توضیحات سفارش بنویس.';
 }
 document.getElementById('serviceSelect').addEventListener('change',updateSocialServiceFields);
+updateSocialServiceFields();
 socialType.addEventListener('change',()=>{
  const isGift=document.getElementById('serviceSelect').value==='خدمات تلگرام'&&socialType.value==='گیفت تلگرام';
  giftFields.hidden=!isGift;giftDetail.required=isGift;
  if(isGift)socialHint.textContent='نام دقیق گیفت یا ارزش دلاری آن را وارد کن؛ لینک یا شناسه مقصد را هم در توضیحات سفارش بنویس.';
 });
 const dlg=document.getElementById('orderDialog');document.getElementById('openOrder').addEventListener('click',()=>dlg.showModal());if(serviceParam){const openOrderFromService=()=>{if(!dlg.open)dlg.showModal()};if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',openOrderFromService,{once:true})}else{setTimeout(openOrderFromService,120)}}document.getElementById('closeDialog').addEventListener('click',()=>dlg.close());dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
-document.querySelectorAll('[data-service]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('serviceSelect').value=b.dataset.service;dlg.showModal()}));
+document.querySelectorAll('[data-service]').forEach(b=>b.addEventListener('click',()=>{const serviceSelect=document.getElementById('serviceSelect');serviceSelect.value=b.dataset.service;serviceSelect.dispatchEvent(new Event('change',{bubbles:true}));dlg.showModal()}));
 let orderSummaryText = '';
 document.getElementById('makeSummary').addEventListener('click',async()=>{
  const val=id=>document.getElementById(id).value.trim();
