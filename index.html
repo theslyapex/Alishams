@@ -631,15 +631,35 @@ document.getElementById('copySummary').addEventListener('click',async()=>{
 });
 
 // Replace Android/iOS native select popups with branded, site-matched option sheets.
-document.querySelectorAll('.modal select:not(#socialServiceType)').forEach(select=>{
+document.querySelectorAll('.modal select').forEach(select=>{
   select.classList.add('modal-select-native');
   const wrap=document.createElement('div');wrap.className='custom-select';
   const trigger=document.createElement('button');trigger.type='button';trigger.className='custom-select-trigger';trigger.setAttribute('aria-haspopup','listbox');trigger.setAttribute('aria-expanded','false');
-  const label=()=>select.options[select.selectedIndex]?.textContent||'انتخاب کنید';trigger.textContent=label();
+  const label=()=>select.options[select.selectedIndex]?.textContent||'انتخاب کنید';
+  trigger.textContent=label();
   const menu=document.createElement('div');menu.className='custom-select-menu';menu.setAttribute('role','listbox');
-  [...select.options].forEach((option,index)=>{const item=document.createElement('button');item.type='button';item.className='custom-select-option';item.textContent=option.textContent;item.setAttribute('role','option');item.setAttribute('aria-selected',String(index===select.selectedIndex));item.addEventListener('click',()=>{select.selectedIndex=index;select.dispatchEvent(new Event('change',{bubbles:true}));trigger.textContent=label();menu.querySelectorAll('.custom-select-option').forEach((el,i)=>el.setAttribute('aria-selected',String(i===index)));wrap.classList.remove('open');trigger.setAttribute('aria-expanded','false')});menu.appendChild(item)});
-  wrap.append(trigger,menu);select.insertAdjacentElement('afterend',wrap);
-  trigger.addEventListener('click',()=>{const opening=!wrap.classList.contains('open');document.querySelectorAll('.custom-select.open').forEach(other=>{other.classList.remove('open');other.querySelector('.custom-select-trigger')?.setAttribute('aria-expanded','false')});wrap.classList.toggle('open',opening);trigger.setAttribute('aria-expanded',String(opening))});
+  const rebuild=()=>{
+    menu.innerHTML='';
+    [...select.options].forEach((option,index)=>{
+      const item=document.createElement('button');item.type='button';item.className='custom-select-option';item.textContent=option.textContent;item.setAttribute('role','option');item.setAttribute('aria-selected',String(index===select.selectedIndex));
+      item.addEventListener('click',()=>{
+        select.selectedIndex=index;select.dispatchEvent(new Event('change',{bubbles:true}));trigger.textContent=label();
+        menu.querySelectorAll('.custom-select-option').forEach((el,k)=>el.setAttribute('aria-selected',String(k===index)));
+        wrap.classList.remove('open');trigger.setAttribute('aria-expanded','false');
+      });
+      menu.appendChild(item);
+    });
+  };
+  rebuild();wrap.append(trigger,menu);select.insertAdjacentElement('afterend',wrap);
+  if(select.id==='socialServiceType'){
+    new MutationObserver(()=>{rebuild();trigger.textContent=label()}).observe(select,{childList:true});
+  }
+  select.addEventListener('change',()=>{rebuild();trigger.textContent=label()});
+  trigger.addEventListener('click',()=>{
+    const opening=!wrap.classList.contains('open');
+    document.querySelectorAll('.custom-select.open').forEach(other=>{other.classList.remove('open');other.querySelector('.custom-select-trigger')?.setAttribute('aria-expanded','false')});
+    rebuild();wrap.classList.toggle('open',opening);trigger.setAttribute('aria-expanded',String(opening));
+  });
 });
 document.addEventListener('click',e=>{if(!e.target.closest('.custom-select'))document.querySelectorAll('.custom-select.open').forEach(w=>{w.classList.remove('open');w.querySelector('.custom-select-trigger')?.setAttribute('aria-expanded','false')})});
 // Discourage casual copying, image dragging and context-menu access. This is not DRM.
