@@ -670,5 +670,4 @@ document.addEventListener('cut',e=>{if(!e.target.closest('input,textarea,[conten
 document.addEventListener('keydown',e=>{const k=e.key.toLowerCase();if((e.ctrlKey||e.metaKey)&&['c','x','u','s','p'].includes(k)&&!e.target.closest('input,textarea,[contenteditable="true"]'))e.preventDefault();if(e.key==='Escape')document.querySelectorAll('.custom-select.open').forEach(w=>{w.classList.remove('open');w.querySelector('.custom-select-trigger')?.setAttribute('aria-expanded','false')})});
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
-<script src="https://widget.kadran.ir/loader.js" data-widget-key="ww_cce48a7b02588e37c89152a2" async></script>
 </body></html>
