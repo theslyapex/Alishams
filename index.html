@@ -503,7 +503,7 @@ document.getElementById('makeSummary').addEventListener('click',async()=>{
   document.getElementById('resultArea').hidden=false;
   btn.textContent='سفارش ثبت شد ✓';
  }catch(err){feedback.textContent=err.message||'خطا در ثبت سفارش.';btn.textContent='تلاش دوباره برای ثبت سفارش ↗';btn.disabled=false;return}
- btn.disabled=false;
+ btn.disabled=true;
 });
 document.getElementById('copySummary').addEventListener('click',async()=>{
   const feedback=document.getElementById('copyFeedback');
