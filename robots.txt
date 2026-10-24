@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://theslyapex.github.io/Alishams/sitemap.xml
