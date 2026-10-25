@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://alishams.ir/videos.html?v=motion-graphic-01</loc>
+    <video:video>
+      <video:thumbnail_loc>https://my.uploadkon.ir/d/CXhEd1GQWzE6l8QtL0uazSJ2UHj6dM/NzgxOTl8cGFkZA.jpg</video:thumbnail_loc>
+      <video:title>تیزر تبلیغاتی | موشن گرافیک</video:title>
+      <video:description>این پروژه با هدف معرفی هویت بصری و فضای خلاقانه‌ی Alishams Digital Studio طراحی و اجرا شده است. در این تیزر تبلیغاتی، از تکنیک‌های موشن‌گرافیک، انیمیشن و ترکیب‌بندی پویا برای خلق تجربه‌ای بصری منسجم و هماهنگ با هویت برند استفاده شده است. تمرکز پروژه بر ارائه‌ی جذاب برند، تقویت جلوه‌ی بصری آن و ایجاد ارتباط مؤثرتر با مخاطب است.</video:description>
+      <video:content_loc>https://my.uploadkon.ir/d/XEKeq2ygayoo5GEwqzvN8RXfPGA9FR/NzgxNzF8cGFkZA.mp4</video:content_loc>
+      <video:publication_date>2026-10-25T13:11:53Z</video:publication_date>
+    </video:video>
+  </url>
 </urlset>
