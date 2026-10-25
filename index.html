@@ -321,11 +321,11 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .studio-stats-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
 .studio-stats-head h2{margin:0;font-size:clamp(17px,2.2vw,23px);line-height:1.7;font-weight:800;letter-spacing:-.35px}
 .studio-stats-head .eyebrow{font-size:9px;letter-spacing:1.1px}
-.studio-stats-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
-.studio-stat{min-width:0;padding:15px 12px 13px;border:1px solid #ffffff12;border-radius:15px;background:linear-gradient(145deg,#ffffff07,#ffffff02);transition:transform .25s,border-color .25s,background .25s}
+.studio-stats-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.studio-stat{min-width:0;padding:12px 9px 10px;border:1px solid #ffffff12;border-radius:15px;background:linear-gradient(145deg,#ffffff07,#ffffff02);transition:transform .25s,border-color .25s,background .25s}
 .studio-stat:hover{transform:translateY(-3px);border-color:#d9ff7255;background:#d9ff7207}
-.studio-stat-number{display:block;direction:ltr;text-align:right;color:var(--lime);font:800 clamp(27px,3vw,39px)/1.2 Manrope,Estedad,sans-serif;letter-spacing:-1.2px;font-variant-numeric:tabular-nums;white-space:nowrap}
-.studio-stat-label{display:block;margin-top:9px;color:#d4d4db;font-size:clamp(10px,.95vw,12px);line-height:1.9;font-weight:500}
+.studio-stat-number{display:block;direction:ltr;text-align:right;color:var(--lime);font:800 clamp(20px,2.2vw,32px)/1.2 Manrope,Estedad,sans-serif;letter-spacing:-1.2px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.studio-stat-label{display:block;margin-top:7px;color:#d4d4db;font-size:clamp(9px,.8vw,11px);line-height:1.9;font-weight:500}
 @media(max-width:900px){.studio-stats-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.studio-stat-number{font-size:clamp(28px,4.5vw,38px)}}
 @media(max-width:560px){.studio-stats{padding:17px 0 30px}.studio-stats-inner{padding:17px 13px;border-radius:19px}.studio-stats-head{display:block;margin-bottom:13px}.studio-stats-head .eyebrow{margin-bottom:5px}.studio-stats-head h2{font-size:17px}.studio-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.studio-stat{padding:13px 11px;border-radius:13px}.studio-stat-number{font-size:30px}.studio-stat-label{font-size:10px;line-height:1.8;margin-top:7px}}
 @media(prefers-reduced-motion:reduce){.studio-stat{transition:none}.studio-stat:hover{transform:none}}
