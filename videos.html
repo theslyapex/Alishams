@@ -201,7 +201,7 @@
 var SUPABASE_URL='https://srfldjfrzmtnlabusssq.supabase.co', KEY='sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB';
 var db=window.supabase&&window.supabase.createClient(SUPABASE_URL,KEY),$=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 var names={'motion-graphics':'موشن‌گرافیک',reels:'ریلز',advertisement:'تیزر تبلیغاتی',other:'سایر آثار'},videos=[],category=['all'],counts={views:{}};
-function visitor(){var t='';try{t=localStorage.getItem('alishams_video_visitor')||''}catch(e){}if(!t){t=(window.crypto&&crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random()+Math.random()).replace(/-/g,'');try{localStorage.setItem('alishams_video_visitor',t)}catch(e){}}return t}
+function visitor(){return (window.crypto&&crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random()+Math.random()).replace(/-/g,'')}
 var token=visitor();
 function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function fmt(n){return new Intl.NumberFormat('fa-IR').format(n||0)}
@@ -239,8 +239,14 @@ async function load(){
  if(res.error){console.error(res.error);$('#stream').innerHTML='<div class="error">فعلاً دریافت ویدئوها ممکن نیست. کمی بعد دوباره امتحان کن.</div>';return}
  videos=res.data||[];
  if(videos.length){
- var ids=videos.map(function(v){return v.id}),views=await db.from('studio_video_views').select('video_id').in('video_id',ids);views.data&&views.data.forEach(function(x){counts.views[x.video_id]=(counts.views[x.video_id]||0)+1});
- var slug=new URLSearchParams(location.search).get('v'),target=videos.find(function(v){return v.slug===slug});if(target){var wr=await db.from('studio_video_views').insert({video_id:target.id,visitor_token:token});if(wr.error&&wr.error.code!=='23505')console.debug(wr.error)}
+  var ids=videos.map(function(v){return v.id});
+  // Count one view for every published video each time the videos page is opened.
+  // A fresh token is generated for this page load, so refreshes count as new visits.
+  var visitRows=videos.map(function(v){return {video_id:v.id,visitor_token:token}});
+  var visitResult=await db.from('studio_video_views').insert(visitRows);
+  if(visitResult.error)console.warn('Could not record video page views:',visitResult.error);
+  var views=await db.from('studio_video_views').select('video_id').in('video_id',ids);
+  if(views.data)views.data.forEach(function(x){counts.views[x.video_id]=(counts.views[x.video_id]||0)+1});
  }
  render();
  var slug2=new URLSearchParams(location.search).get('v');if(slug2){setTimeout(function(){var e=$('#video-'+CSS.escape(slug2));if(e)e.scrollIntoView({behavior:'smooth',block:'center'})},100)}
