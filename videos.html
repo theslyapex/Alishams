@@ -32,9 +32,9 @@ function card(v){
 }
 function updateVideoSEO(){
  var base='https://alishams.ir/videos.html',slug=new URLSearchParams(location.search).get('v'),selected=videos.find(function(v){return v.slug===slug}),title=selected?(selected.title+' | ویدئوهای علی شمس'):'ویدئوها و آثار خلاقانه علی شمس | Alishams',description=selected?(selected.description||('تماشای '+selected.title+'؛ اثری از علی شمس در زمینه '+(names[selected.category]||'تولید محتوای ویدئویی')+'.')):'تماشای موشن‌گرافیک‌ها، ریلزها و تیزرهای تبلیغاتی علی شمس؛ مجموعه‌ای از آثار خلاقانه و نمونه‌کارهای ویدئویی.';
- description=String(description).replace(/\\s+/g,' ').trim().slice(0,300);
+ description=String(description).replace(/\s+/g,' ').trim().slice(0,300);
  var canonical=selected?base+'?v='+encodeURIComponent(selected.slug):base;
- document.title=title;
+ document.title=title;var canonicalLink=document.querySelector('link[rel="canonical"]');if(canonicalLink)canonicalLink.href=canonical;
  var setMeta=function(selector,attr,value){var el=document.querySelector(selector);if(el)el.setAttribute(attr,value)};
  setMeta('meta[name="description"]','content',description);setMeta('meta[property="og:title"]','content',title);setMeta('meta[property="og:description"]','content',description);setMeta('meta[property="og:url"]','content',canonical);setMeta('meta[name="twitter:title"]','content',title);setMeta('meta[name="twitter:description"]','content',description);
  if(selected&&selected.poster_url){setMeta('meta[property="og:image"]','content',selected.poster_url);setMeta('meta[name="twitter:image"]','content',selected.poster_url)}else{setMeta('meta[property="og:image"]','content','https://alishams.ir/assets/images/alishams-studio-workspace.jpg');setMeta('meta[name="twitter:image"]','content','https://alishams.ir/assets/images/alishams-studio-workspace.jpg')}
