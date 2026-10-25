@@ -6,7 +6,7 @@
 (function(){
 const $=id=>document.getElementById(id);
 const form=$("loginForm"),button=$("submitBtn");
-function notice(message,type=""){const el=$("authNotice");el.textContent=message;el.className="notice"+(type?" "+type)}
+function notice(message,type=""){const el=$("authNotice");el.textContent=message;el.className="notice"+(type ? " "+type : "")}
 let sbPromise;
 function getClient(){
  if(!sbPromise) sbPromise=import("https://esm.sh/@supabase/supabase-js@2").then(({createClient})=>createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}));
