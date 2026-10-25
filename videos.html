@@ -56,6 +56,10 @@
 .video-player .poster{transition:opacity .22s ease}
 .custom-play{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:76px;height:76px;border:0;border-radius:50%;background:var(--lime);color:#10120b;box-shadow:0 0 0 9px rgba(217,255,114,.14),0 10px 30px rgba(0,0,0,.35);font-size:27px;transition:transform .2s,box-shadow .2s}
 .custom-play:hover{transform:translate(-50%,-50%) scale(1.06);box-shadow:0 0 0 11px rgba(217,255,114,.16),0 12px 34px rgba(0,0,0,.4)}
+.video-player .custom-play.is-playing{opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,-50%) scale(.92)}
+.video-player:hover .custom-play.is-playing{opacity:0;visibility:hidden}
+.video-player .custom-play{opacity:1;visibility:visible;pointer-events:auto}
+
 .custom-play-icon{display:block;line-height:1;transform:translateX(2px)}
 .custom-play.is-playing .custom-play-icon{transform:none;font-size:24px}
 @media(max-width:760px){.custom-play{width:64px;height:64px;font-size:23px}.custom-play.is-playing .custom-play-icon{font-size:21px}}
