@@ -352,6 +352,32 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 /* Ensure the Persian labels use the site's loaded Persian typeface */.topbar .nav-actions .header-control-label,.topbar .nav-actions .account-cta .account-cta-label{font-family:"Vazirmatn",Tahoma,sans-serif!important;font-size:9px!important;font-weight:600!important;line-height:12px!important;letter-spacing:0!important;text-rendering:optimizeLegibility!important;-webkit-font-smoothing:antialiased!important}
 .topbar .nav-actions .header-control-icon{font-size:18px!important;width:20px!important;height:20px!important;flex-basis:20px!important;line-height:20px!important}.topbar .nav-actions .header-control-label,.topbar .nav-actions .account-cta .account-cta-label{font-family:"Estedad","Vazirmatn",Tahoma,sans-serif!important}
 /* Desktop header balance: navigation centered, brand right, account left */@media(min-width:1001px){.topbar .nav{position:relative!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:20px!important}.topbar .brand{position:relative!important;z-index:2!important;flex:0 0 auto!important;margin-inline-start:0!important}.topbar .navlinks{position:absolute!important;left:50%!important;right:auto!important;top:50%!important;transform:translate(-50%,-50%)!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:clamp(10px,1.1vw,18px)!important;width:max-content!important;max-width:calc(100% - 360px)!important;white-space:nowrap!important;z-index:1!important}.topbar .nav-actions{position:relative!important;z-index:2!important;flex:0 0 auto!important;margin-inline-start:0!important;margin-inline-end:0!important}.topbar .nav-actions .menu-toggle{display:none!important}}
+
+/* Mobile navigation: dropdowns expand inside the menu */
+@media(max-width:760px){
+  .topbar .nav-dropdown{display:block;width:100%;min-width:0}
+  .topbar .nav-dropdown-toggle{
+    display:flex;width:100%;align-items:center;justify-content:space-between;
+    padding:11px 8px;text-align:right;border-radius:10px;
+  }
+  .topbar .nav-dropdown-toggle:hover,
+  .topbar .nav-dropdown-toggle[aria-expanded="true"]{
+    background:rgba(217,255,114,.055);
+  }
+  .topbar .nav-dropdown-menu{
+    position:static;top:auto;right:auto;z-index:auto;
+    display:none;width:100%;min-width:0;margin:0 0 8px;padding:5px 8px 5px 0;
+    border:0;border-right:2px solid rgba(217,255,114,.45);
+    border-radius:0 9px 9px 0;background:rgba(255,255,255,.025);
+    box-shadow:none;backdrop-filter:none;
+  }
+  .topbar .nav-dropdown.open .nav-dropdown-menu{display:grid;gap:2px}
+  .topbar .nav-dropdown-menu a{
+    padding:9px 12px;white-space:normal;border-radius:8px;font-size:13px;
+  }
+  .topbar .nav-dropdown-menu a:hover{background:rgba(217,255,114,.09)}
+}
+
 </style>
 <style id="principles-redesign">
 /* Scoped redesign: WORK PRINCIPLES section only */
