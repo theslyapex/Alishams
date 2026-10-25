@@ -1,0 +1,116 @@
+ALISHAMS STUDIO — قالب‌های ایمیل احراز هویت Supabase
+========================================================
+راهنما:
+هر بخش را جداگانه در Supabase Dashboard > Authentication > Email Templates قرار بده.
+برای هر قالب، Subject و Body متناظر را کپی کن.
+این فایل TXT است تا بتوانی HTML را راحت کپی کنی.
+رنگ‌ها: پس‌زمینه #080b12، سبز نئونی #b6ff4a، بنفش #a970ff، متن روشن #f4f5fb.
+توجه: قالب ایمیل به‌تنهایی آدرس فرستنده را تغییر نمی‌دهد؛ فرستنده در تنظیمات SMTP تعیین می‌شود.
+
+--------------------------------------------------------
+1) CONFIRM SIGNUP / تأیید ثبت‌نام
+Subject:
+ایمیلت را تأیید کن | Alishams Studio
+
+Body (HTML):
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#080b12;font-family:Tahoma,Arial,sans-serif;color:#f4f5fb;direction:rtl">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0">برای فعال‌سازی حساب Alishams Studio، آدرس ایمیلت را تأیید کن.</div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#080b12;padding:32px 12px">
+    <tr><td align="center">
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:560px;background:#101521;border:1px solid #292d3c;border-radius:20px;overflow:hidden">
+        <tr><td style="height:5px;background:linear-gradient(90deg,#a970ff,#b6ff4a)"></td></tr>
+        <tr><td align="center" style="padding:32px 28px 12px">
+          <div style="font-size:12px;letter-spacing:3px;color:#b6ff4a;font-weight:bold;direction:ltr">ALISHAMS STUDIO</div>
+          <h1 style="font-size:25px;line-height:1.7;margin:20px 0 8px;color:#ffffff">به جمع ما خوش اومدی!</h1>
+          <p style="font-size:15px;line-height:2;color:#c5cada;margin:0">برای تکمیل ثبت‌نام و فعال‌سازی حساب کاربری، ایمیلت را تأیید کن.</p>
+        </td></tr>
+        <tr><td align="center" style="padding:24px 28px 12px">
+          <a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#b6ff4a;color:#10130a;text-decoration:none;font-size:15px;font-weight:bold;padding:15px 30px;border-radius:10px">تأیید آدرس ایمیل</a>
+        </td></tr>
+        <tr><td style="padding:18px 28px 28px">
+          <p style="font-size:12px;line-height:2;color:#9299ad;margin:0">اگر این حساب را خودت ایجاد نکرده‌ای، این ایمیل را نادیده بگیر. برای امنیت حساب، لینک تأیید را با دیگران به اشتراک نگذار.</p>
+          <div style="height:1px;background:#292d3c;margin:24px 0 16px"></div>
+          <p style="font-size:12px;line-height:2;color:#9299ad;text-align:center;margin:0">نیاز به کمک داری؟ <a href="https://alishams.ir" style="color:#b6ff4a;text-decoration:none">alishams.ir</a><br>© Alishams Studio</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>
+
+--------------------------------------------------------
+2) RESET PASSWORD / بازیابی رمز عبور
+Subject:
+لینک امن تغییر رمز عبور | Alishams Studio
+
+Body (HTML):
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#080b12;font-family:Tahoma,Arial,sans-serif;color:#f4f5fb;direction:rtl">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0">درخواست تغییر رمز عبور حساب Alishams Studio دریافت شد.</div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#080b12;padding:32px 12px">
+    <tr><td align="center">
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:560px;background:#101521;border:1px solid #292d3c;border-radius:20px;overflow:hidden">
+        <tr><td style="height:5px;background:linear-gradient(90deg,#a970ff,#b6ff4a)"></td></tr>
+        <tr><td align="center" style="padding:32px 28px 12px">
+          <div style="font-size:12px;letter-spacing:3px;color:#b6ff4a;font-weight:bold;direction:ltr">ALISHAMS STUDIO</div>
+          <h1 style="font-size:25px;line-height:1.7;margin:20px 0 8px;color:#ffffff">بازیابی رمز عبور</h1>
+          <p style="font-size:15px;line-height:2;color:#c5cada;margin:0">درخواستی برای تغییر رمز عبور حساب شما دریافت کردیم. برای انتخاب رمز جدید، روی دکمه زیر بزن.</p>
+        </td></tr>
+        <tr><td align="center" style="padding:24px 28px 12px">
+          <a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#b6ff4a;color:#10130a;text-decoration:none;font-size:15px;font-weight:bold;padding:15px 30px;border-radius:10px">انتخاب رمز عبور جدید</a>
+        </td></tr>
+        <tr><td style="padding:18px 28px 28px">
+          <p style="font-size:12px;line-height:2;color:#9299ad;margin:0">اگر این درخواست را ثبت نکرده‌ای، این ایمیل را نادیده بگیر؛ رمز عبورت تغییر نمی‌کند. این لینک را برای هیچ‌کس نفرست.</p>
+          <div style="height:1px;background:#292d3c;margin:24px 0 16px"></div>
+          <p style="font-size:12px;line-height:2;color:#9299ad;text-align:center;margin:0">پشتیبانی: <a href="mailto:support@alishams.ir" style="color:#b6ff4a;text-decoration:none">support@alishams.ir</a><br>© Alishams Studio · <a href="https://alishams.ir" style="color:#b6ff4a;text-decoration:none">alishams.ir</a></p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>
+
+--------------------------------------------------------
+3) MAGIC LINK / لینک ورود یک‌بارمصرف
+Subject:
+لینک ورود امن شما | Alishams Studio
+
+Body (HTML):
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#080b12;font-family:Tahoma,Arial,sans-serif;color:#f4f5fb;direction:rtl">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#080b12;padding:32px 12px"><tr><td align="center">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:560px;background:#101521;border:1px solid #292d3c;border-radius:20px;overflow:hidden">
+<tr><td style="height:5px;background:linear-gradient(90deg,#a970ff,#b6ff4a)"></td></tr>
+<tr><td align="center" style="padding:32px 28px 12px"><div style="font-size:12px;letter-spacing:3px;color:#b6ff4a;font-weight:bold;direction:ltr">ALISHAMS STUDIO</div><h1 style="font-size:25px;line-height:1.7;margin:20px 0 8px;color:#fff">ورود به حساب کاربری</h1><p style="font-size:15px;line-height:2;color:#c5cada;margin:0">برای ورود امن به حساب خود، از دکمه زیر استفاده کن. این لینک فقط یک‌بار قابل استفاده است.</p></td></tr>
+<tr><td align="center" style="padding:24px 28px 12px"><a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#b6ff4a;color:#10130a;text-decoration:none;font-size:15px;font-weight:bold;padding:15px 30px;border-radius:10px">ورود به Alishams Studio</a></td></tr>
+<tr><td style="padding:18px 28px 28px"><p style="font-size:12px;line-height:2;color:#9299ad;margin:0">اگر خودت درخواست ورود نداده‌ای، این پیام را نادیده بگیر و لینک را با کسی به اشتراک نگذار.</p><div style="height:1px;background:#292d3c;margin:24px 0 16px"></div><p style="font-size:12px;line-height:2;color:#9299ad;text-align:center;margin:0"><a href="https://alishams.ir" style="color:#b6ff4a;text-decoration:none">alishams.ir</a> · © Alishams Studio</p></td></tr>
+</table></td></tr></table>
+</body>
+</html>
+
+--------------------------------------------------------
+4) EMAIL CHANGE / تأیید تغییر ایمیل
+Subject:
+تأیید آدرس ایمیل جدید | Alishams Studio
+
+Body (HTML):
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#080b12;font-family:Tahoma,Arial,sans-serif;color:#f4f5fb;direction:rtl">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#080b12;padding:32px 12px"><tr><td align="center">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:560px;background:#101521;border:1px solid #292d3c;border-radius:20px;overflow:hidden">
+<tr><td style="height:5px;background:linear-gradient(90deg,#a970ff,#b6ff4a)"></td></tr>
+<tr><td align="center" style="padding:32px 28px 12px"><div style="font-size:12px;letter-spacing:3px;color:#b6ff4a;font-weight:bold;direction:ltr">ALISHAMS STUDIO</div><h1 style="font-size:25px;line-height:1.7;margin:20px 0 8px;color:#fff">تأیید ایمیل جدید</h1><p style="font-size:15px;line-height:2;color:#c5cada;margin:0">برای تأیید تغییر آدرس ایمیل حساب خود، روی دکمه زیر بزن.</p></td></tr>
+<tr><td align="center" style="padding:24px 28px 12px"><a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#b6ff4a;color:#10130a;text-decoration:none;font-size:15px;font-weight:bold;padding:15px 30px;border-radius:10px">تأیید ایمیل جدید</a></td></tr>
+<tr><td style="padding:18px 28px 28px"><p style="font-size:12px;line-height:2;color:#9299ad;margin:0">اگر درخواست تغییر ایمیل نداده‌ای، این پیام را نادیده بگیر و برای بررسی با پشتیبانی تماس بگیر.</p><div style="height:1px;background:#292d3c;margin:24px 0 16px"></div><p style="font-size:12px;line-height:2;color:#9299ad;text-align:center;margin:0"><a href="mailto:support@alishams.ir" style="color:#b6ff4a;text-decoration:none">support@alishams.ir</a> · <a href="https://alishams.ir" style="color:#b6ff4a;text-decoration:none">alishams.ir</a></p></td></tr>
+</table></td></tr></table>
+</body>
+</html>
