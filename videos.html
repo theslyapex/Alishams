@@ -110,7 +110,44 @@
 .video-card .video-info .actions .action:hover .bubble{border-color:var(--lime)!important;color:var(--lime)!important}
 .video-card .video-info .actions .like-btn.liked .bubble{border-color:var(--pink)!important;color:var(--pink)!important}
 @media(max-width:600px){.video-card .video-info .video-meta{gap:4px!important}.video-card .video-info .meta-tags{gap:4px!important}.video-card .video-info .meta-tags .tag{font-size:8px!important;padding:4px 5px!important}.video-card .video-info .actions{gap:2px!important}.video-card .video-info .actions .action{min-width:25px!important;padding:1px!important}.video-card .video-info .actions .bubble{flex-basis:25px!important;width:25px!important;height:25px!important;min-width:25px!important;font-size:13px!important}.video-card .video-info .actions .action-label{display:none!important}}
-@media(max-width:360px){.video-card .video-info .video-meta{align-items:flex-start!important}.video-card .video-info .meta-tags{max-width:55%!important}.video-card .video-info .actions{gap:1px!important}.video-card .video-info .actions .action{min-width:23px!important}.video-card .video-info .actions .bubble{flex-basis:23px!important;width:23px!important;height:23px!important;min-width:23px!important}} .seo-content{width:min(100% - 32px,980px);margin:0 auto 64px;padding:clamp(20px,4vw,34px);border:1px solid rgba(255,255,255,.08);border-radius:24px;background:linear-gradient(145deg,rgba(24,27,36,.72),rgba(13,15,21,.72));color:#b8bfcd}.seo-content h2{margin:0 0 12px;color:#f4f5f7;font-size:clamp(19px,2.6vw,25px);line-height:1.8}.seo-content h3{margin:22px 0 7px;color:#e8ebf2;font-size:16px}.seo-content p{margin:0 0 12px;font-size:13px;line-height:2.2}.seo-content a{color:var(--lime);text-decoration:underline;text-underline-offset:3px}.seo-content .seo-note{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);color:#8e96a6;font-size:12px}@media(max-width:760px){.seo-content{width:calc(100% - 24px);margin-bottom:38px;padding:19px;border-radius:20px}.seo-content p{font-size:12px}}</style></head><body>
+@media(max-width:360px){.video-card .video-info .video-meta{align-items:flex-start!important}.video-card .video-info .meta-tags{max-width:55%!important}.video-card .video-info .actions{gap:1px!important}.video-card .video-info .actions .action{min-width:23px!important}.video-card .video-info .actions .bubble{flex-basis:23px!important;width:23px!important;height:23px!important;min-width:23px!important}} .seo-content{width:min(100% - 32px,980px);margin:0 auto 64px;padding:clamp(20px,4vw,34px);border:1px solid rgba(255,255,255,.08);border-radius:24px;background:linear-gradient(145deg,rgba(24,27,36,.72),rgba(13,15,21,.72));color:#b8bfcd}.seo-content h2{margin:0 0 12px;color:#f4f5f7;font-size:clamp(19px,2.6vw,25px);line-height:1.8}.seo-content h3{margin:22px 0 7px;color:#e8ebf2;font-size:16px}.seo-content p{margin:0 0 12px;font-size:13px;line-height:2.2}.seo-content a{color:var(--lime);text-decoration:underline;text-underline-offset:3px}.seo-content .seo-note{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);color:#8e96a6;font-size:12px}@media(max-width:760px){.seo-content{width:calc(100% - 24px);margin-bottom:38px;padding:19px;border-radius:20px}.seo-content p{font-size:12px}}
+/* Layout fix: keep every video card and its content at the full stream width.
+   Both published videos use a landscape 16:9 frame on desktop and mobile. */
+#stream > .video-card{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+#stream > .video-card > .video-main,
+#stream > .video-card .video-player,
+#stream > .video-card .video-info{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin-inline:0!important;
+  box-sizing:border-box!important;
+}
+#stream > .video-card > .video-main{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+}
+#stream > .video-card .video-player{
+  aspect-ratio:16/9!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:hidden!important;
+}
+#stream > .video-card .video-player video,
+#stream > .video-card .video-player .poster{
+  width:100%!important;
+  height:100%!important;
+}
+
+</style></head><body>
 <header class="topbar"><div class="header-inner"><a class="brand" href="index.html" aria-label="علی شمس"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس"><span>علی شمس<small>ALISHAMS DIGITAL STUDIO</small></span></a><nav class="toplinks" id="videoNav"><a href="index.html">صفحه اصلی</a><a href="index.html#services">خدمات</a><a href="portfolio.html">نمونه‌کارها</a><a href="pricing.html">قیمت‌گذاری</a><a href="about.html">درباره من</a><a href="project-tracking.html">پیگیری پروژه</a><a href="order-tracking.html">پیگیری سفارش</a></nav><a class="nav-cta" href="contact-center.html">شروع یک پروژه <span aria-hidden="true">↗</span></a><button class="menu-toggle" id="videoMenuToggle" type="button" aria-label="باز کردن منو" aria-expanded="false">☰</button></div></header>
 <div class="crumb-wrap"><nav class="breadcrumb" aria-label="مسیر صفحه"><a href="index.html">صفحه اصلی</a><span class="sep">/</span><span aria-current="page">ویدئوها</span></nav></div>
 <section class="intro"><div><span class="eyebrow">WATCH · CREATE</span><h1>نمونه‌کارهای ویدئویی <span style="color:var(--lime)">علی شمس</span></h1><p>تماشای موشن‌گرافیک، تیزر تبلیغاتی، ریلز و پروژه‌های تولید محتوای ویدئویی؛ مجموعه‌ای از نمونه‌کارهای خلاقانه Alishams Studio برای معرفی برند و کسب‌وکار.</p></div><span class="live-badge">● فید ویدئوهای علی شمس</span></section>
@@ -130,7 +167,7 @@ function fmt(n){return new Intl.NumberFormat('fa-IR').format(n||0)}
 function url(v){return new URL('videos.html?v='+encodeURIComponent(v.slug),location.origin).href}
 function toast(s){var e=$('#toast');e.textContent=s;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove('show')},2500)}
 function getCategories(v){var c=Array.isArray(v.categories)?v.categories:[];if(!c.length&&v.category)c=[v.category];return c}function card(v){
- var liked=false;try{liked=localStorage.getItem('alishams_liked_'+v.id)==='1'}catch(e){}var ratio=v.aspect_ratio==='16:9'?'16/9':v.aspect_ratio==='1:1'?'1/1':'9/16';
+ var liked=false;try{liked=localStorage.getItem('alishams_liked_'+v.id)==='1'}catch(e){}var ratio='16/9';
  return '<article class="video-card" id="video-'+esc(v.slug)+'" data-id="'+esc(v.id)+'"><div class="video-main"><div class="video-player" style="aspect-ratio:'+ratio+'">'+(v.poster_url?'<img class="poster" src="'+esc(v.poster_url)+'" alt="'+esc(v.title)+'" loading="lazy">':'')+'<video playsinline preload="none" poster="'+esc(v.poster_url||'')+'" aria-label="'+esc(v.title)+'" src="'+esc(v.video_url)+'"></video><button class="custom-play" type="button" aria-label="پخش ویدئو"><span class="custom-play-icon">▶</span></button></div><div class="video-info"><h2 class="video-title">'+esc(v.title)+'</h2><p class="video-description">'+esc(v.description)+'</p><div class="video-meta" style="display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;flex-wrap:nowrap!important;gap:8px!important;width:100%!important;visibility:visible!important;opacity:1!important"><div class="meta-tags" style="display:flex!important;flex:1 1 auto!important;align-items:center!important;flex-wrap:wrap!important;gap:5px!important;min-width:0!important;visibility:visible!important;opacity:1!important"><span class="tag">'+getCategories(v).map(function(c){return names[c]||c}).join('، ')||'ویدئو'+'</span>'+(v.featured?'<span class="tag featured">✦ اثر منتخب</span>':'')+'<span class="tag">▶ '+fmt(counts.views[v.id])+' بازدید</span></div></div></div></div></article>'
 }
 function updateVideoSEO(){
