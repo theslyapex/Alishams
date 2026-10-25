@@ -40,6 +40,7 @@ $("resetBtn").addEventListener("click",async function(){
  finally{reset.disabled=false}
 });
 function getNextUrl(){const raw=new URLSearchParams(location.search).get("next");if(!raw)return "/account.html";try{const u=new URL(raw,location.origin);return u.origin===location.origin?u.pathname+u.search+u.hash:"/account.html"}catch{return "/account.html"}}
+const registerLink=document.querySelector(".switch a");if(registerLink){const next=new URLSearchParams(location.search).get("next");if(next)registerLink.href="/register.html?next="+encodeURIComponent(next)}
 getClient().then(async sb=>{const {data:{session}}=await sb.auth.getSession();if(session)location.replace(getNextUrl())}).catch(err=>{console.error("Supabase init failed:",err);notice("سامانه ورود بارگذاری نشد. با اتصال اینترنت دیگری دوباره امتحان کن.","error")});
 })();
 </script>
