@@ -41,4 +41,34 @@ $("resetBtn").addEventListener("click",async function(){
 });
 getClient().then(async sb=>{const {data:{session}}=await sb.auth.getSession();if(session)location.replace("/account.html")}).catch(err=>{console.error("Supabase init failed:",err);notice("سامانه ورود بارگذاری نشد. با اتصال اینترنت دیگری دوباره امتحان کن.","error")});
 })();
-</script></body></html>
+</script>
+<script>
+/* Alishams interaction guard: discourages casual copying; not a security boundary. */
+(() => {
+  const isEditable = (target) => !!target.closest('input, textarea, select, [contenteditable="true"], [role="textbox"]');
+  document.addEventListener('contextmenu', (event) => {
+    if (!isEditable(event.target)) event.preventDefault();
+  });
+  document.addEventListener('selectstart', (event) => {
+    if (!isEditable(event.target)) event.preventDefault();
+  });
+  document.addEventListener('copy', (event) => {
+    if (!isEditable(event.target)) event.preventDefault();
+  });
+  document.addEventListener('cut', (event) => {
+    if (!isEditable(event.target)) event.preventDefault();
+  });
+  document.addEventListener('dragstart', (event) => {
+    if (!isEditable(event.target)) event.preventDefault();
+  });
+})();
+</script>
+<style>
+/* Keep inputs usable while discouraging selection of page text. */
+body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+input, textarea, select, [contenteditable="true"], [role="textbox"] {
+  -webkit-user-select: text !important; user-select: text !important; -webkit-touch-callout: default;
+}
+</style>
+
+</body></html>
