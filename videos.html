@@ -245,8 +245,12 @@ async function load(){
   var visitRows=videos.map(function(v){return {video_id:v.id,visitor_token:token}});
   var visitResult=await db.from('studio_video_views').insert(visitRows);
   if(visitResult.error)console.warn('Could not record video page views:',visitResult.error);
-  var views=await db.from('studio_video_views').select('video_id').in('video_id',ids);
-  if(views.data)views.data.forEach(function(x){counts.views[x.video_id]=(counts.views[x.video_id]||0)+1});
+  // Query exact counts on the server; don't fetch all rows (Supabase defaults to 500 rows).
+  await Promise.all(videos.map(async function(v){
+   var result=await db.from('studio_video_views').select('id',{count:'exact',head:true}).eq('video_id',v.id);
+   if(!result.error)counts.views[v.id]=result.count||0;
+   else console.warn('Could not read exact video view count:',v.id,result.error);
+  }));
  }
  render();
  var slug2=new URLSearchParams(location.search).get('v');if(slug2){setTimeout(function(){var e=$('#video-'+CSS.escape(slug2));if(e)e.scrollIntoView({behavior:'smooth',block:'center'})},100)}
