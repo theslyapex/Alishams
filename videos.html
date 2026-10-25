@@ -51,7 +51,7 @@ async function load(){
 }
 async function like(id,btn){
  var v=videos.find(function(x){return x.id===id});if(!v)return;var key='alishams_liked_'+id,was=localStorage.getItem(key)==='1';
- if(was){var d=await db.from('studio_video_likes').delete().eq('video_id',id).eq('visitor_token',token);if(d.error){toast('تغییر لایک انجام نشد.');return}localStorage.removeItem(key);counts.likes[id]=Math.max(0,(counts.likes[id]||0)-1);btn.classList.remove('liked')}
+ if(was){toast('این ویدئو را قبلاً لایک کرده‌ای.');return}
  else{var i=await db.from('studio_video_likes').insert({video_id:id,visitor_token:token});if(i.error&&i.error.code!=='23505'){toast('فعلاً ثبت لایک ممکن نیست.');return}localStorage.setItem(key,'1');if(!i.error)counts.likes[id]=(counts.likes[id]||0)+1;btn.classList.add('liked')}
  $('.like-count',btn).textContent=fmt(counts.likes[id]);$('#likeTotal').textContent=fmt(Object.values(counts.likes).reduce(function(a,b){return a+b},0))
 }
