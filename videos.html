@@ -60,6 +60,31 @@
 .custom-play.is-playing .custom-play-icon{transform:none;font-size:24px}
 @media(max-width:760px){.custom-play{width:64px;height:64px;font-size:23px}.custom-play.is-playing .custom-play-icon{font-size:21px}}
 
+
+/* Compact engagement actions aligned opposite the selected category */
+.video-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.meta-tags{display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-width:0}
+.video-meta .actions{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:7px;padding:0;margin:0;border:0;flex:0 0 auto}
+.video-meta .action{display:grid;place-items:center;gap:0;min-width:34px;padding:0;border:0;background:transparent;color:#b8bdc9}
+.video-meta .bubble{width:34px;height:34px;flex:0 0 34px;font-size:16px;border-radius:50%}
+.video-meta .action:hover .bubble{transform:translateY(-1px);border-color:var(--lime);color:var(--lime)}
+.video-meta .action.liked .bubble{background:#ff638d26;border-color:var(--pink);color:var(--pink)}
+@media(max-width:760px){
+ .video-meta{flex-wrap:nowrap;gap:8px}
+ .meta-tags{gap:5px}
+ .meta-tags .tag{padding:5px 7px;font-size:9px}
+ .video-meta .actions{gap:4px}
+ .video-meta .bubble{width:31px;height:31px;flex-basis:31px;font-size:15px}
+ .video-meta .action{min-width:29px}
+}
+@media(max-width:390px){
+ .video-meta{align-items:flex-start}
+ .meta-tags{max-width:65%}
+ .video-meta .actions{gap:2px}
+ .video-meta .bubble{width:28px;height:28px;flex-basis:28px}
+ .video-meta .action{min-width:26px}
+}
+
 </style></head><body>
 <header class="topbar"><div class="header-inner"><a class="brand" href="index.html" aria-label="علی شمس"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس"><span>علی شمس<small>ALISHAMS DIGITAL STUDIO</small></span></a><nav class="toplinks" id="videoNav"><a href="index.html">صفحه اصلی</a><a href="index.html#services">خدمات</a><a href="portfolio.html">نمونه‌کارها</a><a href="pricing.html">قیمت‌گذاری</a><a href="about.html">درباره من</a><a href="project-tracking.html">پیگیری پروژه</a><a href="order-tracking.html">پیگیری سفارش</a></nav><a class="nav-cta" href="contact-center.html">شروع یک پروژه <span aria-hidden="true">↗</span></a><button class="menu-toggle" id="videoMenuToggle" type="button" aria-label="باز کردن منو" aria-expanded="false">☰</button></div></header>
 <div class="crumb-wrap"><nav class="breadcrumb" aria-label="مسیر صفحه"><a href="index.html">صفحه اصلی</a><span class="sep">/</span><span aria-current="page">ویدئوها</span></nav></div>
@@ -81,7 +106,7 @@ function url(v){return new URL('videos.html?v='+encodeURIComponent(v.slug),locat
 function toast(s){var e=$('#toast');e.textContent=s;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove('show')},2500)}
 function getCategories(v){var c=Array.isArray(v.categories)?v.categories:[];if(!c.length&&v.category)c=[v.category];return c}function card(v){
  var liked=localStorage.getItem('alishams_liked_'+v.id)==='1',ratio=v.aspect_ratio==='16:9'?'16/9':v.aspect_ratio==='1:1'?'1/1':'9/16';
- return '<article class="video-card" id="video-'+esc(v.slug)+'" data-id="'+esc(v.id)+'"><div class="video-main"><div class="video-player" style="aspect-ratio:'+ratio+'">'+(v.poster_url?'<img class="poster" src="'+esc(v.poster_url)+'" alt="'+esc(v.title)+'" loading="lazy">':'')+'<video playsinline preload="none" poster="'+esc(v.poster_url||'')+'" aria-label="'+esc(v.title)+'" data-src="'+esc(v.video_url)+'"></video><button class="custom-play" type="button" aria-label="پخش ویدئو"><span class="custom-play-icon">▶</span></button></div><div class="video-info"><h2 class="video-title">'+esc(v.title)+'</h2><p class="video-description">'+esc(v.description)+'</p><div class="video-meta"><span class="tag">'+getCategories(v).map(function(c){return names[c]||c}).join('، ')||'ویدئو'+'</span>'+(v.featured?'<span class="tag featured">✦ اثر منتخب</span>':'')+'<span class="tag">▶ '+fmt(counts.views[v.id])+' بازدید</span></div></div></div><div class="actions"><button class="action like-btn '+(liked?'liked':'')+'" data-action="like" data-id="'+esc(v.id)+'" aria-label="لایک"><span class="bubble">♥</span><span class="like-count">'+fmt(counts.likes[v.id])+'</span><span>لایک</span></button><button class="action" data-action="comments" data-id="'+esc(v.id)+'"><span class="bubble">☰</span><span>'+fmt(counts.comments[v.id])+'</span><span>دیدگاه</span></button><button class="action" data-action="share" data-id="'+esc(v.id)+'"><span class="bubble">↗</span><span>ارسال</span><span>اشتراک</span></button><button class="action" data-action="copy" data-id="'+esc(v.id)+'"><span class="bubble">⌁</span><span>لینک</span><span>کپی لینک</span></button></div></article>'
+ return '<article class="video-card" id="video-'+esc(v.slug)+'" data-id="'+esc(v.id)+'"><div class="video-main"><div class="video-player" style="aspect-ratio:'+ratio+'">'+(v.poster_url?'<img class="poster" src="'+esc(v.poster_url)+'" alt="'+esc(v.title)+'" loading="lazy">':'')+'<video playsinline preload="none" poster="'+esc(v.poster_url||'')+'" aria-label="'+esc(v.title)+'" data-src="'+esc(v.video_url)+'"></video><button class="custom-play" type="button" aria-label="پخش ویدئو"><span class="custom-play-icon">▶</span></button></div><div class="video-info"><h2 class="video-title">'+esc(v.title)+'</h2><p class="video-description">'+esc(v.description)+'</p><div class="video-meta"><div class="meta-tags"><span class="tag">'+getCategories(v).map(function(c){return names[c]||c}).join('، ')||'ویدئو'+'</span>'+(v.featured?'<span class="tag featured">✦ اثر منتخب</span>':'')+'<span class="tag">▶ '+fmt(counts.views[v.id])+' بازدید</span></div><div class="actions"><button class="action like-btn '+(liked?'liked':'')+'" data-action="like" data-id="'+esc(v.id)+'" aria-label="لایک"><span class="bubble">♥</span><span class="like-count">'+fmt(counts.likes[v.id])+'</span></button><button class="action" data-action="comments" data-id="'+esc(v.id)+'" aria-label="دیدگاه"><span class="bubble">☰</span><span>'+fmt(counts.comments[v.id])+'</span></button><button class="action" data-action="share" data-id="'+esc(v.id)+'" aria-label="اشتراک‌گذاری"><span class="bubble">↗</span></button><button class="action" data-action="copy" data-id="'+esc(v.id)+'" aria-label="کپی لینک"><span class="bubble">⌁</span></button></div></div></div></div></article>'
 }
 function updateVideoSEO(){
  var base='https://alishams.ir/videos.html',slug=new URLSearchParams(location.search).get('v'),selected=videos.find(function(v){return v.slug===slug}),title=selected?(selected.title+' | ویدئوهای علی شمس'):'ویدئوها و آثار خلاقانه علی شمس | Alishams',description=selected?(selected.description||('تماشای '+selected.title+'؛ اثری از علی شمس در زمینه '+(names[selected.category]||'تولید محتوای ویدئویی')+'.')):'تماشای موشن‌گرافیک‌ها، ریلزها و تیزرهای تبلیغاتی علی شمس؛ مجموعه‌ای از آثار خلاقانه و نمونه‌کارهای ویدئویی.';
