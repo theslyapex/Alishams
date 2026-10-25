@@ -162,6 +162,91 @@
 }
 #stream article.video-card .video-player{aspect-ratio:16/9!important;height:auto!important;max-height:none!important}
 
+
+/* FIX: stable single-column video feed; keep each video full-width and stacked vertically */
+#stream{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  width:100%!important;
+  min-width:0!important;
+  gap:18px!important;
+}
+#stream > .video-card,
+#stream > article.video-card{
+  display:block!important;
+  float:none!important;
+  position:relative!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  grid-column:auto!important;
+  align-self:stretch!important;
+  box-sizing:border-box!important;
+}
+#stream > .video-card > .video-main,
+#stream > .video-card .video-player,
+#stream > .video-card .video-info{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin-inline:0!important;
+  box-sizing:border-box!important;
+}
+#stream > .video-card > .video-main{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+}
+#stream > .video-card .video-player{
+  display:block!important;
+  position:relative!important;
+  aspect-ratio:16/9!important;
+  width:100%!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:hidden!important;
+}
+#stream > .video-card .video-player video,
+#stream > .video-card .video-player .poster{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  object-fit:contain!important;
+}
+@media(max-width:760px){
+  .feed{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    width:100%!important;
+    max-width:100%!important;
+    padding:0 12px!important;
+    gap:16px!important;
+  }
+  #stream{
+    width:100%!important;
+    max-width:100%!important;
+    gap:16px!important;
+  }
+  #stream > .video-card,
+  #stream > article.video-card{
+    width:100%!important;
+    max-width:100%!important;
+    padding:10px!important;
+    border-radius:20px!important;
+  }
+  #stream > .video-card .video-player{
+    aspect-ratio:16/9!important;
+    border-radius:14px!important;
+  }
+  #stream > .video-card .video-info{
+    padding:13px 4px 4px!important;
+  }
+}
+
 </style></head><body>
 <header class="topbar"><div class="header-inner"><a class="brand" href="index.html" aria-label="علی شمس"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس"><span>علی شمس<small>ALISHAMS DIGITAL STUDIO</small></span></a><nav class="toplinks" id="videoNav"><a href="index.html">صفحه اصلی</a><a href="index.html#services">خدمات</a><a href="portfolio.html">نمونه‌کارها</a><a href="pricing.html">قیمت‌گذاری</a><a href="about.html">درباره من</a><a href="project-tracking.html">پیگیری پروژه</a><a href="order-tracking.html">پیگیری سفارش</a></nav><a class="nav-cta" href="contact-center.html">شروع یک پروژه <span aria-hidden="true">↗</span></a><button class="menu-toggle" id="videoMenuToggle" type="button" aria-label="باز کردن منو" aria-expanded="false">☰</button></div></header>
 <div class="crumb-wrap"><nav class="breadcrumb" aria-label="مسیر صفحه"><a href="index.html">صفحه اصلی</a><span class="sep">/</span><span aria-current="page">ویدئوها</span></nav></div>
