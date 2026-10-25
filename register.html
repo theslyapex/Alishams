@@ -39,7 +39,7 @@ form.addEventListener("submit", async event => {
   try {
     const { data, error } = await sb.auth.signUp({
       email, password,
-      options: { data: { full_name, phone }, emailRedirectTo: "https://alishams.ir/account.html" }
+      options: { data: { full_name, phone }, emailRedirectTo: "https://alishams.ir/account.html?next=" + encodeURIComponent(getNextUrl()) }
     });
     if (error) {
       console.error("Registration error:", error);
@@ -52,7 +52,7 @@ form.addEventListener("submit", async event => {
     }
     if (data.session) {
       notice("حساب ساخته شد؛ در حال انتقال به فضای مشتریان…", "success");
-      location.replace("/account.html");
+      location.replace(getNextUrl());
       return;
     }
     notice("درخواست ثبت‌نام با موفقیت ارسال شد. ایمیلت را بررسی کن و در صورت دریافت لینک تأیید، آن را باز کن؛ سپس وارد حساب شو.", "success");
@@ -65,9 +65,10 @@ form.addEventListener("submit", async event => {
     button.innerHTML = 'ساخت حساب کاربری <span aria-hidden="true">↗</span>';
   }
 });
+function getNextUrl(){const raw=new URLSearchParams(location.search).get("next");if(!raw)return "/account.html";try{const u=new URL(raw,location.origin);return u.origin===location.origin?u.pathname+u.search+u.hash:"/account.html"}catch{return "/account.html"}}
 try {
   const { data: { session } } = await sb.auth.getSession();
-  if (session) location.replace("/account.html");
+  if (session) location.replace(getNextUrl());
 } catch (error) {
   console.error("Supabase initialization failed:", error);
   notice("سامانه ثبت‌نام بارگذاری نشد. صفحه را تازه‌سازی کن و دوباره امتحان کن.", "error");
