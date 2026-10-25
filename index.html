@@ -452,6 +452,18 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 @media(max-width:800px){.video-showcase{padding-top:48px;padding-bottom:58px}.video-showcase-card{grid-template-columns:1fr;gap:16px;padding:27px 23px 31px}.video-showcase-copy h2{font-size:clamp(34px,8vw,47px)}.video-showcase-visual{min-height:310px;order:-1;margin:0 0 8px}.video-showcase-window{inset:8% 6% 8%}.video-showcase-float-top{right:0}.video-showcase-float-bottom{left:0}.video-showcase-frame{inset:14% 17% 16% 15%}.frame-front>strong{font-size:clamp(25px,7vw,39px)}}
 @media(max-width:430px){.video-showcase-card{padding:22px 17px 25px;border-radius:23px}.video-showcase-visual{min-height:265px}.video-showcase-window-top{padding:0 9px}.video-showcase-window-top>span:nth-child(2){font-size:7px}.video-showcase-float{padding:8px 10px}.video-showcase-meta{gap:10px 13px}.video-showcase-wave{gap:2px}.video-showcase-wave i{width:1.5px}}
 @media(prefers-reduced-motion:reduce){.video-showcase *,.video-showcase *:before,.video-showcase *:after{animation:none!important;scroll-behavior:auto!important}}
+
+/* Video-first artwork and a more tactile play control */
+.video-showcase-clapper{right:10%;top:9%;width:clamp(78px,11vw,126px);aspect-ratio:1.15;border:0;border-radius:0;background:none;box-shadow:none;filter:drop-shadow(0 12px 17px #0009) drop-shadow(0 0 15px #b6a0ff30);animation:videoClapperFloat 4.8s ease-in-out infinite}
+.video-showcase-clapper svg{display:block;width:100%;height:100%;overflow:visible}
+.video-showcase-play{width:76px;height:76px;border:1px solid rgba(217,255,114,.95);border-radius:24px;background:linear-gradient(145deg,rgba(217,255,114,.23),rgba(17,19,24,.94) 58%,rgba(182,160,255,.22));color:#e6ff9a;box-shadow:inset 0 1px 0 #ffffff30,0 0 0 1px rgba(217,255,114,.12),0 0 0 9px rgba(217,255,114,.07),0 12px 35px #0008,0 0 35px rgba(217,255,114,.22);backdrop-filter:blur(14px);transition:background .3s,box-shadow .3s,scale .3s;animation:videoPlayPulse 2.4s ease-out infinite}
+.video-showcase-play:before{content:"";position:absolute;inset:-8px;border:1px solid rgba(217,255,114,.25);border-radius:30px;animation:videoPlayRing 2.4s ease-out infinite;pointer-events:none}
+.video-showcase-play:after{content:"";position:absolute;inset:7px;border:1px solid rgba(255,255,255,.1);border-radius:17px;pointer-events:none}
+.video-showcase-play svg{position:relative;z-index:1;width:27px;height:27px;margin-left:3px;filter:drop-shadow(0 0 7px #d9ff7270)}
+.video-showcase-visual:hover .video-showcase-play{background:linear-gradient(145deg,#e5ff9a,#a8ce54 52%,#b6a0ff);color:#10130b;scale:1.08;box-shadow:inset 0 1px 0 #ffffff8a,0 0 0 10px #d9ff721c,0 15px 42px #0009,0 0 45px #d9ff7266}
+@keyframes videoClapperFloat{0%,100%{translate:0 0;rotate:-4deg}50%{translate:0 -9px;rotate:3deg}}
+@keyframes videoPlayRing{0%,100%{transform:scale(.94);opacity:.65}50%{transform:scale(1.1);opacity:.18}}
+@media(prefers-reduced-motion:reduce){.video-showcase-clapper,.video-showcase-play,.video-showcase-play:before{animation:none!important}}
 </style>
 
 
@@ -550,7 +562,17 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
      <div class="video-showcase-screen">
       <div class="video-showcase-grid"></div>
       <div class="video-showcase-frame frame-back"><span>CREATIVE</span><strong>STORY<br>IN MOTION</strong></div>
-      <div class="video-showcase-frame frame-front"><span>VISUAL LAB · 001</span><div class="video-showcase-shape"></div><strong>MAKE<br>IT MOVE<span>.</span></strong><small>DESIGN · MOTION · IMPACT</small></div>
+      <div class="video-showcase-frame frame-front"><span>VISUAL LAB · 001</span><div class="video-showcase-shape video-showcase-clapper" aria-hidden="true">
+ <svg viewBox="0 0 120 100" role="presentation">
+  <defs><linearGradient id="clapperBody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e4ff9b"/><stop offset=".52" stop-color="#b6e45c"/><stop offset="1" stop-color="#607d35"/></linearGradient><linearGradient id="clapperTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d7caff"/><stop offset="1" stop-color="#8d73df"/></linearGradient></defs>
+  <rect x="17" y="31" width="88" height="57" rx="10" fill="#080a0d" stroke="#d9ff72" stroke-width="2"/>
+  <rect x="17" y="31" width="88" height="57" rx="10" fill="url(#clapperBody)" opacity=".96"/>
+  <path d="M17 44h88" stroke="#10140d" stroke-width="2" opacity=".55"/>
+  <path d="M27 32l13 12h14L41 32zm28 0 13 12h14L69 32zm28 0 13 12h4V32z" fill="#15151c" opacity=".92"/>
+  <g transform="rotate(-9 60 30)"><rect x="14" y="14" width="92" height="23" rx="5" fill="url(#clapperTop)" stroke="#eee7ff" stroke-width="1.4"/><path d="M25 15l14 21h13L38 15zm29 0 14 21h13L67 15zm29 0 14 21h5V15z" fill="#242033" opacity=".95"/></g>
+  <circle cx="61" cy="65" r="13" fill="#10140d"/><path d="M57 57.5c0-1.5 1.5-2.3 2.8-1.4l12 8.1c1.1.7 1.1 2.3 0 3l-12 8.1c-1.3.9-2.8.1-2.8-1.4z" fill="#d9ff72"/>
+ </svg>
+</div><strong>MAKE<br>IT MOVE<span>.</span></strong><small>DESIGN · MOTION · IMPACT</small></div>
       <span class="video-showcase-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.8c0-.8.9-1.3 1.6-.8l9 6.2c.6.4.6 1.2 0 1.6l-9 6.2c-.7.5-1.6 0-1.6-.8z" fill="currentColor"/></svg></span>
       <div class="video-showcase-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
      </div>
