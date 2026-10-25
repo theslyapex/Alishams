@@ -1,0 +1,110 @@
+name: Refresh video sitemap
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 4 * * *"
+  repository_dispatch:
+    types: [video-published, video-updated]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-video-sitemap
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate Google Video Sitemap from published Supabase videos
+        env:
+          SUPABASE_URL: https://srfldjfrzmtnlabusssq.supabase.co
+          SUPABASE_ANON_KEY: sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB
+        run: |
+          python3 <<'PY'
+          import json
+          import os
+          import urllib.parse
+          import urllib.request
+          import xml.etree.ElementTree as ET
+          from datetime import datetime, timezone
+
+          base = os.environ["SUPABASE_URL"].rstrip("/")
+          key = os.environ["SUPABASE_ANON_KEY"]
+          query = urllib.parse.urlencode({
+              "select": "slug,title,description,video_url,poster_url,published_at",
+              "is_published": "eq.true",
+              "order": "published_at.desc"
+          })
+          request = urllib.request.Request(
+              f"{base}/rest/v1/studio_videos?{query}",
+              headers={
+                  "apikey": key,
+                  "Authorization": f"Bearer {key}",
+                  "Accept": "application/json"
+              }
+          )
+          with urllib.request.urlopen(request, timeout=30) as response:
+              videos = json.load(response)
+
+          sitemap_ns = "http://www.sitemaps.org/schemas/sitemap/0.9"
+          video_ns = "http://www.google.com/schemas/sitemap-video/1.1"
+          ET.register_namespace("", sitemap_ns)
+          ET.register_namespace("video", video_ns)
+          root = ET.Element(f"{{{sitemap_ns}}}urlset")
+
+          def clean(value, limit=None):
+              value = " ".join(str(value or "").split())
+              return value[:limit] if limit else value
+
+          for video in videos:
+              slug = clean(video.get("slug"))
+              title = clean(video.get("title"), 100)
+              description = clean(video.get("description"), 2048)
+              content_url = clean(video.get("video_url"))
+              thumbnail = clean(video.get("poster_url"))
+              if not (slug and title and description and content_url and thumbnail):
+                  continue
+              if not (content_url.startswith("https://") and thumbnail.startswith("https://")):
+                  continue
+
+              page_url = "https://alishams.ir/videos.html?v=" + urllib.parse.quote(slug, safe="-._~")
+              url_node = ET.SubElement(root, f"{{{sitemap_ns}}}url")
+              ET.SubElement(url_node, f"{{{sitemap_ns}}}loc").text = page_url
+              video_node = ET.SubElement(url_node, f"{{{video_ns}}}video")
+              ET.SubElement(video_node, f"{{{video_ns}}}thumbnail_loc").text = thumbnail
+              ET.SubElement(video_node, f"{{{video_ns}}}title").text = title
+              ET.SubElement(video_node, f"{{{video_ns}}}description").text = description
+              ET.SubElement(video_node, f"{{{video_ns}}}content_loc").text = content_url
+              published = clean(video.get("published_at"))
+              if published:
+                  try:
+                      normalized = datetime.fromisoformat(published.replace("Z", "+00:00"))
+                      if normalized.tzinfo is None:
+                          normalized = normalized.replace(tzinfo=timezone.utc)
+                      ET.SubElement(video_node, f"{{{video_ns}}}publication_date").text = normalized.astimezone(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+                  except ValueError:
+                      pass
+
+          ET.indent(root, space="  ")
+          tree = ET.ElementTree(root)
+          tree.write("sitemap-videos.xml", encoding="utf-8", xml_declaration=True)
+          print(f"Generated video sitemap with {len(root)} eligible published videos from {len(videos)} published records.")
+          PY
+
+      - name: Commit sitemap when changed
+        run: |
+          if git diff --quiet -- sitemap-videos.xml; then
+            echo "Video sitemap is already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sitemap-videos.xml
+          git commit -m "chore: refresh video sitemap"
+          git push
