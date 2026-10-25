@@ -403,6 +403,57 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 </style><style id="principles-hide-labels">
 #reviews .principle-count{display:none!important}
 </style><script src="/site-protection.js" defer></script>
+
+<style id="video-showcase-styles">
+.video-showcase{padding-top:72px;padding-bottom:88px}
+.video-showcase-card{position:relative;display:grid;grid-template-columns:.9fr 1.1fr;align-items:center;gap:clamp(28px,5vw,70px);min-height:470px;padding:clamp(25px,5vw,62px);border:1px solid rgba(255,255,255,.12);border-radius:30px;background:radial-gradient(ellipse at 78% 48%,rgba(182,160,255,.1),transparent 43%),linear-gradient(125deg,#171920,#101116 62%,#14151b);overflow:hidden;isolation:isolate}
+.video-showcase-card:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(110deg,transparent 10%,#000 90%)}
+.video-showcase-copy{position:relative;z-index:2}
+.video-showcase-copy h2{font-size:clamp(34px,4.3vw,54px);line-height:1.45;letter-spacing:-1.6px;margin:18px 0}
+.video-showcase-copy h2 span{color:var(--lime);text-shadow:0 0 32px rgba(217,255,114,.12)}
+.video-showcase-copy>p{max-width:450px;color:var(--muted);line-height:2.2;margin:0 0 27px}
+.video-showcase-cta{min-height:50px}
+.video-showcase-meta{display:flex;flex-wrap:wrap;gap:14px 19px;margin-top:28px;color:#9c9ea7;font:700 9px/1.6 Manrope,Estedad,sans-serif;letter-spacing:1px}
+.video-showcase-meta span{display:inline-flex;align-items:center;gap:7px}
+.video-showcase-meta i{width:5px;height:5px;background:var(--lav);border-radius:50%;box-shadow:0 0 10px #b6a0ff99}
+.video-showcase-visual{position:relative;display:block;min-width:0;min-height:350px;perspective:1000px;isolation:isolate}
+.video-showcase-glow{position:absolute;inset:7% 8%;border-radius:50%;background:radial-gradient(ellipse,rgba(217,255,114,.13),rgba(182,160,255,.12) 40%,transparent 72%);filter:blur(23px);animation:videoGlowPulse 5s ease-in-out infinite}
+.video-showcase-orbit{position:absolute;left:50%;top:49%;width:90%;height:53%;border:1px solid rgba(217,255,114,.24);border-radius:50%;transform:translate(-50%,-50%) rotate(-24deg);pointer-events:none}
+.video-showcase-orbit-one{animation:videoOrbitSpin 24s linear infinite}
+.video-showcase-orbit-two{width:76%;height:72%;border-color:rgba(182,160,255,.24);transform:translate(-50%,-50%) rotate(38deg);animation:videoOrbitSpin 30s linear infinite reverse}
+.video-showcase-window{position:absolute;inset:8% 4% 8% 3%;overflow:hidden;border:1px solid rgba(255,255,255,.2);border-radius:21px;background:rgba(12,13,17,.91);box-shadow:0 30px 90px #0008;transform:rotateY(-5deg) rotateX(2deg);backdrop-filter:blur(15px)}
+.video-showcase-window-top{height:38px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 13px;border-bottom:1px solid rgba(255,255,255,.1);color:#9295a0;font:700 8px Manrope,Estedad,sans-serif;letter-spacing:.7px;direction:ltr}
+.video-showcase-dots{display:flex;gap:4px}.video-showcase-dots i{width:5px;height:5px;border-radius:50%;background:#555862}.video-showcase-dots i:first-child{background:var(--coral)}.video-showcase-dots i:last-child{background:var(--lime)}
+.video-showcase-window-top b{font-size:8px;color:#ff8e75;white-space:nowrap}
+.video-showcase-screen{position:absolute;inset:38px 0 0;overflow:hidden;background:radial-gradient(ellipse at 52% 43%,#292b32,#14151b 60%,#0c0d11)}
+.video-showcase-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px);background-size:25px 25px;opacity:.17;mask-image:linear-gradient(to bottom,#000,transparent 90%)}
+.video-showcase-frame{position:absolute;inset:15% 17% 15% 15%;overflow:hidden;border:1px solid rgba(255,255,255,.22);border-radius:12px;box-shadow:0 18px 45px #0008}
+.video-showcase-frame span,.video-showcase-frame small{position:absolute;font:700 8px Manrope,Estedad,sans-serif;letter-spacing:1.3px}
+.frame-back{inset:20% 22% 20% 10%;transform:rotate(-10deg);background:linear-gradient(135deg,#b6a0ff,#51436f 44%,#1b1925 45%,#111218);opacity:.68;animation:videoFrameDrift 8s ease-in-out infinite}
+.frame-back span{top:12px;left:13px;color:#201a32}.frame-back strong{position:absolute;left:13px;bottom:17px;color:#f5f3ee;font:800 clamp(17px,2.7vw,32px)/.95 Manrope,Estedad,sans-serif;letter-spacing:-1.5px}
+.frame-front{background:linear-gradient(135deg,#d9ff72 0%,#8caa58 37%,#20251b 38%,#111411 100%);transform:rotate(5deg);animation:videoFrameDrift 7s ease-in-out infinite reverse}
+.frame-front>span{top:13px;left:13px;color:#182012}
+.frame-front>strong{position:absolute;left:13px;bottom:15%;color:#f5f3ee;font:900 clamp(22px,3.2vw,43px)/.92 Manrope,Estedad,sans-serif;letter-spacing:-2px;text-shadow:0 3px 20px #0005}
+.frame-front>strong span{position:static;color:var(--lime);font:inherit}
+.frame-front small{bottom:12px;left:13px;color:#c7d0bc;font-size:7px}
+.video-showcase-shape{position:absolute;right:10%;top:12%;width:clamp(68px,10vw,115px);aspect-ratio:1;border:1px solid rgba(255,255,255,.55);border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff9,#b6a0ff 18%,#514277 48%,#11121a 72%);box-shadow:inset -12px -15px 22px #0009,0 0 35px #b6a0ff55;animation:videoShapeFloat 5s ease-in-out infinite}
+.video-showcase-play{position:absolute;left:50%;top:48%;z-index:3;width:57px;height:57px;display:grid;place-items:center;border:1px solid rgba(217,255,114,.8);border-radius:50%;background:rgba(9,10,13,.75);color:var(--lime);box-shadow:0 0 0 8px rgba(217,255,114,.08),0 0 32px rgba(217,255,114,.2);transform:translate(-50%,-50%);animation:videoPlayPulse 2.4s ease-out infinite}
+.video-showcase-play svg{width:21px;height:21px;margin-left:2px}
+.video-showcase-wave{position:absolute;z-index:4;left:10%;right:10%;bottom:7%;height:23px;display:flex;align-items:center;justify-content:center;gap:3px;opacity:.8}
+.video-showcase-wave i{width:2px;height:30%;border-radius:3px;background:var(--lime);animation:videoWave 1s ease-in-out infinite alternate}
+.video-showcase-wave i:nth-child(3n){animation-delay:-.7s}.video-showcase-wave i:nth-child(3n + 1){animation-delay:-.3s}.video-showcase-wave i:nth-child(4n){height:90%;background:var(--lav)}
+.video-showcase-float{position:absolute;z-index:5;padding:10px 13px;border:1px solid rgba(255,255,255,.17);border-radius:12px;background:rgba(17,19,24,.9);box-shadow:0 12px 35px #0006;backdrop-filter:blur(15px);animation:videoFloat 5.5s ease-in-out infinite}
+.video-showcase-float-top{top:1%;right:-1%}.video-showcase-float-bottom{bottom:1%;left:-2%;display:flex;align-items:center;gap:10px;animation-delay:-2.5s}
+.video-showcase-float span{display:block;color:#9fa2ab;font:700 8px Manrope,Estedad,sans-serif;letter-spacing:.8px}.video-showcase-float b{display:block;color:var(--ink);font-size:10px;margin-top:2px}
+.video-showcase-equalizer{display:flex!important;align-items:center;gap:3px;height:20px}
+.video-showcase-equalizer i{width:3px;height:35%;border-radius:2px;background:var(--lav);animation:videoWave .7s ease-in-out infinite alternate}
+.video-showcase-equalizer i:nth-child(2){height:90%;animation-delay:-.4s}.video-showcase-equalizer i:nth-child(3){height:60%;animation-delay:-.2s}.video-showcase-equalizer i:nth-child(4){height:100%;animation-delay:-.6s}
+@keyframes videoOrbitSpin{to{rotate:360deg}}@keyframes videoGlowPulse{0%,100%{opacity:.65;scale:.94}50%{opacity:1;scale:1.06}}@keyframes videoFrameDrift{0%,100%{translate:0 0}50%{translate:0 -7px}}@keyframes videoShapeFloat{0%,100%{translate:0 0;rotate:-5deg}50%{translate:0 -9px;rotate:6deg}}@keyframes videoPlayPulse{0%,100%{box-shadow:0 0 0 8px rgba(217,255,114,.08),0 0 32px rgba(217,255,114,.2)}50%{box-shadow:0 0 0 14px rgba(217,255,114,.02),0 0 42px rgba(217,255,114,.34)}}@keyframes videoWave{from{transform:scaleY(.45);opacity:.5}to{transform:scaleY(1);opacity:1}}@keyframes videoFloat{0%,100%{translate:0 0}50%{translate:0 -8px}}
+@media(max-width:800px){.video-showcase{padding-top:48px;padding-bottom:58px}.video-showcase-card{grid-template-columns:1fr;gap:16px;padding:27px 23px 31px}.video-showcase-copy h2{font-size:clamp(34px,8vw,47px)}.video-showcase-visual{min-height:310px;order:-1;margin:0 0 8px}.video-showcase-window{inset:8% 6% 8%}.video-showcase-float-top{right:0}.video-showcase-float-bottom{left:0}.video-showcase-frame{inset:14% 17% 16% 15%}.frame-front>strong{font-size:clamp(25px,7vw,39px)}}
+@media(max-width:430px){.video-showcase-card{padding:22px 17px 25px;border-radius:23px}.video-showcase-visual{min-height:265px}.video-showcase-window-top{padding:0 9px}.video-showcase-window-top>span:nth-child(2){font-size:7px}.video-showcase-float{padding:8px 10px}.video-showcase-meta{gap:10px 13px}.video-showcase-wave{gap:2px}.video-showcase-wave i{width:1.5px}}
+@media(prefers-reduced-motion:reduce){.video-showcase *,.video-showcase *:before,.video-showcase *:after{animation:none!important;scroll-behavior:auto!important}}
+</style>
+
 </head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="علی شمس"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><nav class="navlinks" id="navlinks"><a href="#services">خدمات</a><a href="portfolio.html">نمونه‌کارها</a><a href="videos.html">ویدئوها</a><a href="pricing.html">قیمت‌گذاری</a><a href="about.html">درباره من</a><a href="#trust">شفافیت همکاری</a><a href="#reviews">رویکرد کاری</a><a href="#conversation">گفت‌وگو</a><a href="project-tracking.html">پیگیری پروژه</a><a href="order-tracking.html">پیگیری سفارش</a><a href="#faq">پرسش‌ها</a></nav><a class="nav-cta" href="#contact">شروع یک پروژه <span class="arrow">↗︎</span></a><button class="menu-toggle" id="menuToggle" aria-label="باز کردن منو" aria-expanded="false">☰</button></div></header>
@@ -474,6 +525,38 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <div class="work-card reveal delay-1"><a class="work-art work-art-social" href="https://theslyapex.github.io/SHIRAZEH/" target="_blank" rel="noopener noreferrer" aria-label="مشاهده وبسایت شیرازه"><span class="work-type">WEB DESIGN · SHIRAZEH RESUME BUILDER</span><img src="https://raw.githubusercontent.com/theslyapex/Alishams/main/assets/images/shirazeh.jpg" alt="پیش‌نمایش تصویری وبسایت شیرازه" loading="lazy" decoding="async"><span class="screenshot-open">مشاهده وب‌سایت ↗︎</span></a><div class="work-info"><div><h3>طراحی صفر تا صد وبسایت با موضوع ساخت رزومه آنلاین</h3><p>طراحی رابط کاربری، طراحی ابزار · شیرازه</p><a class="case-study-link" href="case-studies/shirazeh.html">مطالعهٔ موردی پروژه <span aria-hidden="true">↗︎</span></a></div><a class="work-arrow" href="case-studies/shirazeh.html" aria-label="مطالعهٔ موردی پروژه">↗︎</a></div></div>
 <div class="work-card reveal delay-1"><a class="work-art work-art-social" href="https://theslyapex.github.io/Abzarino/" target="_blank" rel="noopener noreferrer" aria-label="مشاهده وبسایت ابزارینو"><span class="work-type">WEB DESIGN · ABZARINO</span><img src="https://raw.githubusercontent.com/theslyapex/Alishams/main/assets/images/abzarino.jpg" alt="پیش‌نمایش تصویری وبسایت ابزارینو" loading="lazy" decoding="async"><span class="screenshot-open">مشاهده وب‌سایت ↗︎</span></a><div class="work-info"><div><h3>طراحی صفر تا صد وبسایت با موضوع ابزارهای کاربردی</h3><p>طراحی رابط کاربری، طراحی · ابزارینو</p><a class="case-study-link" href="case-studies/abzarino.html">مطالعهٔ موردی پروژه <span aria-hidden="true">↗︎</span></a></div><a class="work-arrow" href="case-studies/abzarino.html" aria-label="مطالعهٔ موردی پروژه">↗︎</a></div></div>
 </div></div></section>
+
+<section class="section video-showcase" id="video-showcase" aria-labelledby="videoShowcaseTitle">
+ <div class="wrap">
+  <div class="video-showcase-card reveal">
+   <div class="video-showcase-copy">
+    <span class="eyebrow">ALISHAMS · MOTION & VIDEO</span>
+    <h2 id="videoShowcaseTitle">ایده‌ها را<br> <span>در حرکت ببین.</span></h2>
+    <p>از موشن‌گرافیک و ریلز تا ویدئوهای تبلیغاتی؛ مجموعه‌ای از کارهای ویدئویی من را ببین و هر اثر را جداگانه تماشا کن.</p>
+    <a class="btn btn-primary video-showcase-cta" href="videos.html">ورود به دنیای ویدئوها <span class="arrow" aria-hidden="true">↗︎</span></a>
+    <div class="video-showcase-meta"><span><i></i> MOTION GRAPHICS</span><span><i></i> REELS & ADS</span><span><i></i> SELECTED VIDEOS</span></div>
+   </div>
+   <a class="video-showcase-visual" href="videos.html" aria-label="مشاهده مجموعه ویدئوهای علی شمس">
+    <div class="video-showcase-glow"></div>
+    <div class="video-showcase-orbit video-showcase-orbit-one"></div>
+    <div class="video-showcase-orbit video-showcase-orbit-two"></div>
+    <div class="video-showcase-window">
+     <div class="video-showcase-window-top"><span class="video-showcase-dots"><i></i><i></i><i></i></span><span>ALISHAMS / VIDEO STUDIO</span><b>● REC</b></div>
+     <div class="video-showcase-screen">
+      <div class="video-showcase-grid"></div>
+      <div class="video-showcase-frame frame-back"><span>CREATIVE</span><strong>STORY<br>IN MOTION</strong></div>
+      <div class="video-showcase-frame frame-front"><span>VISUAL LAB · 001</span><div class="video-showcase-shape"></div><strong>MAKE<br>IT MOVE<span>.</span></strong><small>DESIGN · MOTION · IMPACT</small></div>
+      <span class="video-showcase-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.8c0-.8.9-1.3 1.6-.8l9 6.2c.6.4.6 1.2 0 1.6l-9 6.2c-.7.5-1.6 0-1.6-.8z" fill="currentColor"/></svg></span>
+      <div class="video-showcase-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+     </div>
+    </div>
+    <div class="video-showcase-float video-showcase-float-top"><span>01 / VISUAL STORY</span><b>Frame by frame.</b></div>
+    <div class="video-showcase-float video-showcase-float-bottom"><span class="video-showcase-equalizer"><i></i><i></i><i></i><i></i><i></i></span><b>PLAY YOUR IDEAS</b></div>
+   </a>
+  </div>
+ </div>
+</section>
+
 <section class="section" id="about"><div class="wrap about-grid"><div class="portrait reveal"><img class="portrait-photo" src="https://raw.githubusercontent.com/theslyapex/Alishams/main/assets/images/ali-shams-portrait.jpg" alt="تصویر صاحب استودیو" loading="lazy" decoding="async"><div class="portrait-label"><span>علی شمس · طراح و سازنده دیجیتال</span><span>ABOUT THE CREATOR</span></div></div><div class="about-copy reveal delay-1"><span class="eyebrow">A LITTLE ABOUT ME</span><h2>پشت هر پروژه،<br>یک فکر دقیق قرار دارد.</h2><p>من روی پیوند ایده، طراحی و اجرا تمرکز می‌کنم؛ از محتوایی که باید در چند ثانیه توجه مخاطب را جلب کند تا صفحه‌ای که باید حس اعتماد بسازد. برای من، نتیجه خوب از شنیدن درست نیاز پروژه و توجه به جزئیات شروع می‌شود.</p><div class="stats"><div class="stat"><strong>با چند قدم ساده</strong><span>ایده تا اجرا</span></div><div class="stat"><strong>100%</strong><span>توجه به جزئیات</span></div><div class="stat"><strong>∞</strong><span>کنجکاوی خلاق</span></div></div><p style="margin-top:22px"><a class="btn btn-quiet" href="about.html">آشنایی بیشتر با من ↗︎</a></p></div></div></section>
 <section class="section reviews-section" id="reviews"><div class="wrap principles-wrap">
 <div class="section-head reveal"><div><span class="eyebrow">THE WAY I WORK <i class="principles-live-dot"></i></span><h2>همکاری خوب، از <span class="principles-title-accent">جزئیات</span> شروع می‌شود.</h2><p class="principles-intro">سه اصل ساده که مسیر یک همکاری حرفه‌ای را روشن‌تر می‌کنند.</p></div><span class="principles-side-note">MY<br>PRINCIPLES <b>↙︎</b></span></div>
