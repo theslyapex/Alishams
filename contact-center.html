@@ -24,14 +24,14 @@ html,body,body *{-webkit-user-select:none!important;user-select:none!important;-
 <div class="shell">
 <header class="topbar">
 <a class="brand" href="/" aria-label="بازگشت به صفحه اصلی"><span class="brandmark"><img src="https://my.uploadkon.ir/d/FEhEGxyXHsD61GtAgd5KleKexbCVCM/NjYxNjJ8cGFkZA.png" alt="لوگوی علی شمس"></span><span>مرکز گفت‌وگو<small>ALISHAMS · COMMUNICATION HUB</small></span></a>
-<a class="top-link" href="/">↖ بازگشت به سایت</a>
+<a class="top-link" href="/">↖︎ بازگشت به سایت</a>
 </header>
 <main>
 <section class="hero">
 <span class="eyebrow">✦ ارتباط مستقیم و قابل‌پیگیری</span>
 <h1>ایده‌ات را مطرح کن؛<br><span>از همین‌جا شروع کنیم.</span></h1>
 <p>درخواستت را ثبت کن و کد پیگیری و کلید خصوصی را در جای امن نگه دار. هر زمان خواستی، با همین اطلاعات می‌توانی مکاتبه را ببینی و پاسخ بدهی.</p>
-<div class="actions"><a class="btn btn-primary" href="#newRequest">＋ ثبت درخواست جدید</a><a class="btn btn-secondary" href="#trackingPanel">پیگیری مکاتبه ←</a></div>
+<div class="actions"><a class="btn btn-primary" href="#newRequest">＋ ثبت درخواست جدید</a><a class="btn btn-secondary" href="#trackingPanel">پیگیری مکاتبه ←︎</a></div>
 </section>
 <div class="layout">
 <section class="panel" id="newRequest">
@@ -42,7 +42,7 @@ html,body,body *{-webkit-user-select:none!important;user-select:none!important;-
 <div class="field"><label for="subject">موضوع درخواست</label><input id="subject" name="subject" maxlength="120" placeholder="مثلاً طراحی وب‌سایت" required></div>
 <div class="field"><label for="categoryTrigger">دسته‌بندی</label><div class="category-picker" id="categoryPicker"><select class="native-category" id="category" name="category" tabindex="-1" aria-hidden="true"><option>سؤال عمومی</option><option>طراحی وب‌سایت</option><option>موشن‌گرافیک و ویدئو</option><option>همکاری و پروژه</option><option>گزارش مشکل</option><option>سایر موارد</option></select><button class="category-trigger" type="button" id="categoryTrigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="categoryMenu"><span id="categorySelected">سؤال عمومی</span><span class="category-chevron" aria-hidden="true">⌄</span></button><div class="category-menu" id="categoryMenu" role="listbox" aria-label="انتخاب دسته‌بندی"><button type="button" class="category-option" role="option" aria-selected="true" data-value="سؤال عمومی"><span>سؤال عمومی</span><span class="category-check">✓</span></button><button type="button" class="category-option" role="option" aria-selected="false" data-value="طراحی وب‌سایت"><span>طراحی وب‌سایت</span><span class="category-check">✓</span></button><button type="button" class="category-option" role="option" aria-selected="false" data-value="موشن‌گرافیک و ویدئو"><span>موشن‌گرافیک و ویدئو</span><span class="category-check">✓</span></button><button type="button" class="category-option" role="option" aria-selected="false" data-value="همکاری و پروژه"><span>همکاری و پروژه</span><span class="category-check">✓</span></button><button type="button" class="category-option" role="option" aria-selected="false" data-value="گزارش مشکل"><span>گزارش مشکل</span><span class="category-check">✓</span></button><button type="button" class="category-option" role="option" aria-selected="false" data-value="سایر موارد"><span>سایر موارد</span><span class="category-check">✓</span></button></div></div></div>
 <div class="field"><label for="message">شرح درخواست</label><textarea id="message" name="message" maxlength="5000" placeholder="جزئیات درخواستت را بنویس..." required></textarea></div>
-<button class="btn btn-primary submit" type="submit" id="submitRequest">ثبت درخواست ←</button>
+<button class="btn btn-primary submit" type="submit" id="submitRequest">ثبت درخواست ←︎</button>
 </form>
 </section>
 <section class="panel tracking" id="trackingPanel">
@@ -50,11 +50,11 @@ html,body,body *{-webkit-user-select:none!important;user-select:none!important;-
 <form id="trackingForm">
 <div class="field"><label for="trackingCode">کد پیگیری</label><input id="trackingCode" maxlength="40" autocomplete="off" required placeholder="کد پیگیری"></div>
 <div class="field"><label for="accessToken">کلید خصوصی</label><input id="accessToken" maxlength="128" autocomplete="off" required placeholder="کلید خصوصی پیگیری" spellcheck="false"></div>
-<button class="btn btn-primary" type="submit" id="loadThreadBtn">نمایش مکاتبه ←</button>
+<button class="btn btn-primary" type="submit" id="loadThreadBtn">نمایش مکاتبه ←︎</button>
 </form>
 <div class="security-note"><span class="security-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3"/><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M12 14v3"/></svg></span><span>کد پیگیری و کلید خصوصی را با دیگران به اشتراک نگذار. این دو مورد برای دسترسی به مکاتبه لازم‌اند.</span></div>
 <div class="private-thread" id="privateThread"><div class="thread-meta" id="privateThreadMeta"></div><div class="messages" id="privateMessages"></div>
-<form class="reply-form" id="replyForm"><div class="field"><label for="replyMessage">پاسخ شما</label><textarea id="replyMessage" maxlength="5000" required placeholder="پیامت را بنویس..."></textarea></div><button class="btn btn-primary" type="submit" id="replyBtn">ارسال پاسخ ←</button></form>
+<form class="reply-form" id="replyForm"><div class="field"><label for="replyMessage">پاسخ شما</label><textarea id="replyMessage" maxlength="5000" required placeholder="پیامت را بنویس..."></textarea></div><button class="btn btn-primary" type="submit" id="replyBtn">ارسال پاسخ ←︎</button></form>
 </div>
 </section>
 </div>
@@ -93,7 +93,7 @@ document.getElementById('trackingForm').addEventListener('submit',async e=>{
 e.preventDefault();const btn=document.getElementById('loadThreadBtn');btn.disabled=true;btn.textContent='در حال دریافت…';
 try{const data=await callThread({action:'read',tracking_code:document.getElementById('trackingCode').value.trim(),access_token:document.getElementById('accessToken').value.trim()});renderPrivateThread(data);notify('مکاتبه با موفقیت دریافت شد.')}
 catch(err){document.getElementById('privateThread').style.display='none';notify(err.message||'دریافت مکاتبه انجام نشد.')}
-finally{btn.disabled=false;btn.textContent='نمایش مکاتبه ←'}
+finally{btn.disabled=false;btn.textContent='نمایش مکاتبه ←︎'}
 });
 document.getElementById('replyForm').addEventListener('submit',async e=>{
 e.preventDefault();const btn=document.getElementById('replyBtn'),input=document.getElementById('replyMessage'),original=btn.textContent;btn.disabled=true;btn.textContent='در حال ارسال…';
