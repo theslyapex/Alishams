@@ -367,15 +367,17 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
   .topbar .nav-dropdown-menu{
     position:static;top:auto;right:auto;z-index:auto;
     display:none;width:100%;min-width:0;margin:0 0 8px;padding:5px 8px 5px 0;
-    border:0;border-right:2px solid rgba(217,255,114,.45);
-    border-radius:0 9px 9px 0;background:rgba(255,255,255,.025);
+    border:0;border-right:0;
+    border-radius:0;background:transparent;
     box-shadow:none;backdrop-filter:none;
   }
   .topbar .nav-dropdown.open .nav-dropdown-menu{display:grid;gap:2px}
   .topbar .nav-dropdown-menu a{
     padding:9px 12px;white-space:normal;border-radius:8px;font-size:13px;
   }
-  .topbar .nav-dropdown-menu a:hover{background:rgba(217,255,114,.09)}
+  .topbar .nav-dropdown-menu a:hover{background:transparent}
+  .topbar .nav-dropdown-menu a:active,
+  .topbar .nav-dropdown-menu a:focus-visible{background:rgba(217,255,114,.09);color:var(--lime)}
 }
 
 </style>
