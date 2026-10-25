@@ -34,7 +34,7 @@ function render(){
  var list=videos.filter(function(v){return category==='all'||v.category===category});
  if(!list.length){$('#stream').innerHTML='<div class="empty"><strong>'+(videos.length?'در این دسته هنوز ویدئویی نیست':'به‌زودی اولین ویدئو منتشر می‌شود')+'</strong>'+(videos.length?'دسته دیگری را انتخاب کن.':'فید آماده است؛ پس از انتشار ویدئوها، آن‌ها همین‌جا نمایش داده می‌شوند.')+'</div>';return}
  $('#stream').innerHTML=list.map(card).join('');
- $$('.video-player video').forEach(function(v){v.addEventListener('play',function(){if(!v.src){v.src=v.dataset.src;v.load();v.play().catch(function(){})}var h=v.parentElement.querySelector('.playhint');if(h)h.style.display='none';$$('.video-player video').forEach(function(o){if(o!==v)o.pause()})});v.addEventListener('pause',function(){var h=v.parentElement.querySelector('.playhint');if(h)h.style.display='grid'})});
+ $$('.video-player video').forEach(function(v){v.addEventListener('play',function(){if(!v.src){v.src=v.dataset.src;v.load();v.play().catch(function(){})}var p=v.parentElement.querySelector('.poster');if(p)p.style.display='none';var h=v.parentElement.querySelector('.playhint');if(h)h.style.display='none';$('.video-player video').forEach(function(o){if(o!==v)o.pause()})});v.addEventListener('pause',function(){var h=v.parentElement.querySelector('.playhint');if(h)h.style.display='grid'})});
 }
 async function load(){
  if(!db){$('#stream').innerHTML='<div class="error">اتصال پایگاه داده برقرار نشد. صفحه را دوباره بارگذاری کن.</div>';return}
