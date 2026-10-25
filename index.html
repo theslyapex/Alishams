@@ -314,6 +314,22 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 @media(max-width:480px){.tracking-promo-card{border-radius:24px;padding:25px 17px}.tracking-kicker{font-size:8px;letter-spacing:1px}.tracking-promo-content>p{font-size:12px}.tracking-promo-actions{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:9px}.tracking-promo-actions a{width:auto;max-width:100%;min-height:40px;padding:9px 14px;font-size:11px;border-radius:11px;flex:0 0 auto}.tracking-assurances{gap:8px 12px;font-size:9px}.tracking-visual{min-height:250px}.tracking-window-body{padding:17px}.tracking-lock-badge{padding:9px 11px}.tracking-lock-badge>span{width:29px;height:29px}}
 @media(prefers-reduced-motion:reduce){.tracking-live-dot,.tracking-window,.tracking-lock-badge{animation:none!important}.tracking-promo-actions a{transition:none}}
 
+
+/* COMPACT STUDIO STATS */
+.studio-stats{padding:24px 0 42px}
+.studio-stats-inner{position:relative;overflow:hidden;padding:clamp(18px,2.6vw,28px);border:1px solid #d9ff7238;border-radius:23px;background:radial-gradient(ellipse at 100% 0%,#d9ff7210,transparent 44%),linear-gradient(145deg,#17191f,#0e0f13 78%);box-shadow:0 18px 48px #0003}
+.studio-stats-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.studio-stats-head h2{margin:0;font-size:clamp(17px,2.2vw,23px);line-height:1.7;font-weight:800;letter-spacing:-.35px}
+.studio-stats-head .eyebrow{font-size:9px;letter-spacing:1.1px}
+.studio-stats-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.studio-stat{min-width:0;padding:15px 12px 13px;border:1px solid #ffffff12;border-radius:15px;background:linear-gradient(145deg,#ffffff07,#ffffff02);transition:transform .25s,border-color .25s,background .25s}
+.studio-stat:hover{transform:translateY(-3px);border-color:#d9ff7255;background:#d9ff7207}
+.studio-stat-number{display:block;direction:ltr;text-align:right;color:var(--lime);font:800 clamp(27px,3vw,39px)/1.2 Manrope,Estedad,sans-serif;letter-spacing:-1.2px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.studio-stat-label{display:block;margin-top:9px;color:#d4d4db;font-size:clamp(10px,.95vw,12px);line-height:1.9;font-weight:500}
+@media(max-width:900px){.studio-stats-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.studio-stat-number{font-size:clamp(28px,4.5vw,38px)}}
+@media(max-width:560px){.studio-stats{padding:17px 0 30px}.studio-stats-inner{padding:17px 13px;border-radius:19px}.studio-stats-head{display:block;margin-bottom:13px}.studio-stats-head .eyebrow{margin-bottom:5px}.studio-stats-head h2{font-size:17px}.studio-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.studio-stat{padding:13px 11px;border-radius:13px}.studio-stat-number{font-size:30px}.studio-stat-label{font-size:10px;line-height:1.8;margin-top:7px}.studio-stat:last-child{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){.studio-stat{transition:none}.studio-stat:hover{transform:none}}
+
 </style>
 <style id="principles-redesign">
 /* Scoped redesign: WORK PRINCIPLES section only */
@@ -428,6 +444,15 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <div class="pb-steps"><div class="pb-step"><span class="pb-num">گام اول</span><div><b>درباره ایده‌ات بگو</b><small>هدف، نیاز و چیزی که در ذهنته</small></div><span class="pb-arrow">↗︎</span></div><div class="pb-step"><span class="pb-num">گام دوم</span><div><b>راه مناسب رو انتخاب می‌کنیم</b><small>خدمت، سبک اجرا و جزئیات پروژه</small></div><span class="pb-arrow">↗︎</span></div><div class="pb-step"><span class="pb-num">گام سوم</span><div><b>با برنامه جلو می‌ریم</b><small>زمان‌بندی روشن و شروع همکاری</small></div><span class="pb-arrow">↗︎</span></div></div>
 <div class="pb-bottom"><span class="pb-note">شروع همکاری با یک گفت‌وگوی کوتاهه.<br>بدون پیچیدگی و حرف‌های اضافه.</span><a class="pb-link" href="#contact">شروع یک پروژه <span>↗︎</span></a></div></div></div></div></section>
 <div class="ticker"><div class="ticker-track"><span>موشن گرافیک</span><i>✳</i><span>طراحی قالب وب‌سایت</span><i>✳</i><span>ریلز و محتوای ویدئویی</span><i>✳</i><span>تیزر تبلیغاتی</span><i>✳</i><span>امنیت شبکه‌های اجتماعی</span><i>✳</i><span>خرید فالوور و لایک شبکه‌های اجتماعی</span><i>✳</i><span>نگارش مقاله وب‌سایت</span><i>✳</i><span>تبلیغات و معرفی</span><i>✳</i><span>مشاوره کسب‌وکار آنلاین</span><i>✳</i><span>فوتوشاپ</span><i>✳</i></div></div>
+<section class="studio-stats" aria-labelledby="studioStatsTitle"><div class="wrap"><div class="studio-stats-inner">
+<div class="studio-stats-head"><div><span class="eyebrow">ALISHAMS DIGITAL STUDIO · IN NUMBERS</span><h2 id="studioStatsTitle">استودیو دیجیتال علی شمس به روایت آمار</h2></div></div>
+<div class="studio-stats-grid">
+<article class="studio-stat"><span class="studio-stat-number" data-studio-count="15">+۱۵</span><span class="studio-stat-label">پروژه‌های درحال‌ انجام</span></article>
+<article class="studio-stat"><span class="studio-stat-number" data-studio-count="10">+۱۰</span><span class="studio-stat-label">سفارش‌های درحال بررسی</span></article>
+<article class="studio-stat"><span class="studio-stat-number" data-studio-count="20">+۲۰</span><span class="studio-stat-label">پروژه‌های به‌اتمام رسیده</span></article>
+<article class="studio-stat"><span class="studio-stat-number" data-studio-count="50">+۵۰</span><span class="studio-stat-label">درخواست‌های فعال در مرکز گفت‌وگو</span></article>
+<article class="studio-stat"><span class="studio-stat-number" data-studio-count="250">+۲۵۰</span><span class="studio-stat-label">گفت‌وگوهای موفق بسته‌شده</span></article>
+</div></div></div></section>
 <section class="section" id="services"><div class="wrap"><div class="section-head reveal"><div><span class="eyebrow">WHAT I DO</span><h2>برای هر ایده،<br>یک راه خلاقانه هست.</h2></div><p>خدمت مناسب را انتخاب کن؛ بعد درباره هدف، مخاطب و بهترین مسیر اجرا با هم صحبت می‌کنیم.</p></div><div class="services-grid">
 <article class="service reveal"><span class="num">خدمت اول</span><div class="service-icon"><svg class="service-motion-icon service-motion-icon--motion" viewBox="0 0 100 100" aria-hidden="true"><circle class="motion-aura" cx="50" cy="50" r="43"/><g fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><rect x="25" y="28" width="50" height="44" rx="7"/><path d="M25 40h50M35 28l7 12m8-12 7 12m8-12 7 12"/><path d="m44 47 15 8-15 8z"/></g><circle class="motion-spark" cx="78" cy="23" r="2.5"/></svg></div><h3>موشن‌گرافیک</h3><p>روایت تصویری جذاب برای معرفی برند، محصول، مفهوم یا داستان.</p><a class="service-detail-link" href="services/motion-graphics.html">جزئیات خدمت <span aria-hidden="true">↗︎</span></a><button data-service="موشن‌گرافیک">ثبت سفارش <span class="service-cta-arrow order-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 7V5.8A5 5 0 0 1 17 5.8V7"/><rect x="4" y="7" width="16" height="14" rx="2.5"/><path d="m9 13 2 2 4-4"/></svg></span></button></article>
 <article class="service reveal delay-1"><span class="num">خدمت دوم</span><div class="service-icon"><svg class="service-motion-icon service-motion-icon--web" viewBox="0 0 100 100" aria-hidden="true"><circle class="motion-aura" cx="50" cy="50" r="43"/><g fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="23" width="64" height="53" rx="7"/><path d="M18 36h64M31 48h22M31 57h14M31 66h27"/></g><circle class="motion-spark" cx="78" cy="23" r="2.5"/></svg></div><h3>طراحی قالب وب‌سایت و وبلاگ</h3><p>رابط کاربری چشم‌نواز، منظم و سازگار با موبایل و دسکتاپ.</p><a class="service-detail-link" href="services/website-design.html">جزئیات خدمت <span aria-hidden="true">↗︎</span></a><button data-service="طراحی قالب وب‌سایت">ثبت سفارش <span class="service-cta-arrow order-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 7V5.8A5 5 0 0 1 17 5.8V7"/><rect x="4" y="7" width="16" height="14" rx="2.5"/><path d="m9 13 2 2 4-4"/></svg></span></button></article>
@@ -680,6 +705,35 @@ document.addEventListener('dragstart',e=>e.preventDefault());
 document.addEventListener('copy',e=>{if(!window.__allowOrderCopy && !e.target.closest('input,textarea,[contenteditable="true"]'))e.preventDefault()});
 document.addEventListener('cut',e=>{if(!e.target.closest('input,textarea,[contenteditable="true"]'))e.preventDefault()});
 document.addEventListener('keydown',e=>{const k=e.key.toLowerCase();if((e.ctrlKey||e.metaKey)&&['c','x','u','s','p'].includes(k)&&!e.target.closest('input,textarea,[contenteditable="true"]'))e.preventDefault();if(e.key==='Escape')document.querySelectorAll('.custom-select.open').forEach(w=>{w.classList.remove('open');w.querySelector('.custom-select-trigger')?.setAttribute('aria-expanded','false')})});
+
+// Animate compact studio statistics when the section enters the viewport.
+(function(){
+ const counters=[...document.querySelectorAll('[data-studio-count]')];
+ if(!counters.length)return;
+ const formatter=new Intl.NumberFormat('fa-IR');
+ const animateCounter=el=>{
+  if(el.dataset.animated==='true')return;
+  el.dataset.animated='true';
+  const target=Number(el.dataset.studioCount)||0;
+  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion){el.textContent='+'+formatter.format(target);return;}
+  const duration=1050,start=performance.now();
+  const step=now=>{
+   const progress=Math.min((now-start)/duration,1);
+   const eased=1-Math.pow(1-progress,3);
+   el.textContent='+'+formatter.format(Math.round(target*eased));
+   if(progress<1)requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+ };
+ if('IntersectionObserver' in window){
+  const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+   if(entry.isIntersecting){animateCounter(entry.target);observer.unobserve(entry.target);}
+  }),{threshold:.35});
+  counters.forEach(el=>observer.observe(el));
+ }else counters.forEach(animateCounter);
+})();
+
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
