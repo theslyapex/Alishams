@@ -99,6 +99,25 @@
   }
 }
 
+
+/* Custom dark neon category popup; avoids the browser's white native select menu. */
+#messagesPanel .category-picker{position:relative;width:100%;z-index:5}
+#messagesPanel .category-picker>select{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;left:0;bottom:0;padding:0!important}
+#messagesPanel .category-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 15px;border:1px solid #a58bff45;border-radius:14px;color:var(--text);background:linear-gradient(135deg,#a58bff12,#d9ff7208),#0d0f16;font:500 13px/1.9 "Vazirmatn",Tahoma,sans-serif;text-align:right;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s}
+#messagesPanel .category-trigger:hover,#messagesPanel .category-picker.open .category-trigger{border-color:#d9ff72a0;box-shadow:0 0 0 3px #d9ff7212,0 0 25px #a58bff12}
+#messagesPanel .category-chevron{font-size:21px;color:var(--lime);transition:transform .22s}
+#messagesPanel .category-picker.open .category-chevron{transform:rotate(180deg)}
+#messagesPanel .category-menu{position:absolute;top:calc(100% + 9px);right:0;left:0;z-index:120;display:grid;gap:5px;padding:8px;border:1px solid #a58bff55;border-radius:17px;background:linear-gradient(145deg,#1a1c27f7,#0c0e14f8);box-shadow:0 22px 60px #000b,0 0 30px #a58bff10;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);opacity:0;visibility:hidden;transform:translateY(-7px) scale(.985);transform-origin:top center;transition:opacity .18s ease,transform .18s ease,visibility .18s}
+#messagesPanel .category-picker.open .category-menu{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+#messagesPanel .category-option{width:100%;display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid transparent;border-radius:11px;background:transparent;color:#e8e9f1;text-align:right;font:400 13px/1.8 "Vazirmatn",Tahoma,sans-serif;cursor:pointer;transition:background .18s,border-color .18s,color .18s}
+#messagesPanel .category-option:hover{background:#a58bff16;border-color:#a58bff38;color:#fff}
+#messagesPanel .category-option.selected{background:linear-gradient(90deg,#d9ff720c,#a58bff16);border-color:#d9ff7233;color:var(--lime)}
+#messagesPanel .category-icon{width:28px;height:28px;display:grid;place-items:center;flex:0 0 28px;border-radius:9px;background:#a58bff18;color:var(--purple);font-size:15px}
+#messagesPanel .category-option.selected .category-icon{background:#d9ff7216;color:var(--lime)}
+#messagesPanel .category-check{margin-right:auto;color:var(--lime);opacity:0;transform:scale(.7);transition:opacity .18s,transform .18s}
+#messagesPanel .category-option.selected .category-check{opacity:1;transform:scale(1)}
+@media(max-width:480px){#messagesPanel .category-option,#messagesPanel .category-trigger{font-size:16px}}
+
 </style>
 </head>
 <body>
@@ -115,7 +134,18 @@
 <div class="tabs"><button class="btn tab active" data-tab="ordersPanel">سفارش‌ها</button><button class="btn tab" data-tab="projectsPanel">پروژه‌ها</button><button class="btn tab" data-tab="messagesPanel">پیام‌ها</button><button class="btn tab" data-tab="credentialsPanel">کدها و کلیدها</button><button class="btn tab" data-tab="profilePanel">پروفایل</button></div>
 <div id="ordersPanel" class="panel-grid"><section class="card"><div class="section-head"><h2>سفارش‌های من</h2><small>بر اساس ایمیل حساب</small></div><div id="ordersList" class="list"><div class="empty">در حال دریافت…</div></div><div class="section-head" style="margin-top:18px"><h2>تاریخچه سفارش‌ها</h2></div><div id="orderEventsList" class="list"></div><p class="muted">برای جزئیات کامل سفارش، از صفحه پیگیری با کلید خصوصی‌ای که هنگام ثبت سفارش دریافت کردی استفاده کن.</p><a class="btn" href="/order-tracking.html">پیگیری جزئیات سفارش ↗</a><p class="muted">برای سفارش‌هایی که با ایمیل دیگری ثبت شده‌اند، از مرکز گفت‌وگو کمک بگیر.</p><a class="btn primary" href="/pricing.html">ثبت سفارش جدید ↗</a></section><section class="card"><div class="section-head"><h2>آخرین وضعیت‌ها</h2></div><div id="recentList" class="list"></div><p class="muted">کد پیگیری خصوصی و اطلاعات محرمانه سفارش‌ها در این بخش نمایش داده نمی‌شود.</p></section></div>
 <div id="projectsPanel" class="panel-grid hidden"><section class="card"><div class="section-head"><h2>پروژه‌های من</h2><small>وضعیت اجرا و پیشرفت</small></div><div id="projectsList" class="list"><div class="empty">در حال دریافت…</div></div><div class="section-head" style="margin-top:18px"><h2>پرداخت‌ها و مراحل پروژه</h2></div><div id="projectDetailsList" class="list"></div></section><section class="card"><div class="section-head"><h2>پیگیری پروژه</h2></div><p class="muted">اگر پروژه‌ای اینجا نمایش داده نمی‌شود، ممکن است با ایمیل دیگری ثبت شده باشد. می‌توانی از صفحه پیگیری با اطلاعات خصوصی‌ای که مدیر در اختیارت گذاشته استفاده کنی.</p><a class="btn" href="/project-tracking.html">صفحه پیگیری پروژه ↗</a></section></div>
-<div id="messagesPanel" class="panel-grid hidden"><section class="card"><div class="section-head"><h2>گفت‌وگوهای من</h2><small>پیام‌های مرتبط با ایمیل حساب</small></div><div id="requestsList" class="list"><div class="empty">در حال دریافت…</div></div><div class="section-head" style="margin-top:18px"><h2>شروع گفت‌وگوی جدید</h2></div><form id="newConversationForm"><div class="field"><label for="newConversationSubject">موضوع</label><input id="newConversationSubject" maxlength="120" required placeholder="موضوع پیام"></div><div class="field"><label for="newConversationCategory">دسته‌بندی</label><select id="newConversationCategory" style="width:100%;background:#0b0c12;border:1px solid #ffffff19;border-radius:12px;padding:13px;color:var(--text)"><option>سؤال عمومی</option><option>پشتیبانی فنی</option><option>سفارش و پرداخت</option><option>پروژه فعال</option><option>پیشنهاد و همکاری</option></select></div><div class="field"><label for="newConversationMessage">متن پیام</label><textarea id="newConversationMessage" maxlength="5000" required rows="4" style="width:100%;background:#0b0c12;border:1px solid #ffffff19;border-radius:12px;padding:13px;color:var(--text);resize:vertical" placeholder="پیامت را بنویس…"></textarea></div><button class="btn primary" id="newConversationSubmit" type="submit">ثبت گفت‌وگوی جدید</button><p id="newConversationNotice" class="notice" aria-live="polite"></p></form><a class="btn" href="/contact-center.html">مرکز گفت‌وگوی کامل ↗</a></section><section class="card"><div class="section-head"><h2>تاریخچه پیام‌ها</h2></div><div id="messagesList" class="list"></div></section></div>
+<div id="messagesPanel" class="panel-grid hidden"><section class="card"><div class="section-head"><h2>گفت‌وگوهای من</h2><small>پیام‌های مرتبط با ایمیل حساب</small></div><div id="requestsList" class="list"><div class="empty">در حال دریافت…</div></div><div class="section-head" style="margin-top:18px"><h2>شروع گفت‌وگوی جدید</h2></div><form id="newConversationForm"><div class="field"><label for="newConversationSubject">موضوع</label><input id="newConversationSubject" maxlength="120" required placeholder="موضوع پیام"></div><div class="field"><label for="newConversationCategory">دسته‌بندی</label><div class="category-picker" id="categoryPicker">
+<select id="newConversationCategory" aria-hidden="true" tabindex="-1">
+<option>سؤال عمومی</option><option>پشتیبانی فنی</option><option>سفارش و پرداخت</option><option>پروژه فعال</option><option>پیشنهاد و همکاری</option>
+</select>
+<button class="category-trigger" id="categoryTrigger" type="button" aria-haspopup="listbox" aria-expanded="false"><span id="categorySelected">سؤال عمومی</span><span class="category-chevron" aria-hidden="true">⌄</span></button>
+<div class="category-menu" id="categoryMenu" role="listbox" aria-label="انتخاب دسته‌بندی">
+<button type="button" class="category-option selected" role="option" aria-selected="true" data-value="سؤال عمومی"><span class="category-icon">✳</span>سؤال عمومی<span class="category-check">✓</span></button>
+<button type="button" class="category-option" role="option" aria-selected="false" data-value="پشتیبانی فنی"><span class="category-icon">⌘</span>پشتیبانی فنی<span class="category-check">✓</span></button>
+<button type="button" class="category-option" role="option" aria-selected="false" data-value="سفارش و پرداخت"><span class="category-icon">◇</span>سفارش و پرداخت<span class="category-check">✓</span></button>
+<button type="button" class="category-option" role="option" aria-selected="false" data-value="پروژه فعال"><span class="category-icon">▣</span>پروژه فعال<span class="category-check">✓</span></button>
+<button type="button" class="category-option" role="option" aria-selected="false" data-value="پیشنهاد و همکاری"><span class="category-icon">✧</span>پیشنهاد و همکاری<span class="category-check">✓</span></button>
+</div></div></div><div class="field"><label for="newConversationMessage">متن پیام</label><textarea id="newConversationMessage" maxlength="5000" required rows="4" style="width:100%;background:#0b0c12;border:1px solid #ffffff19;border-radius:12px;padding:13px;color:var(--text);resize:vertical" placeholder="پیامت را بنویس…"></textarea></div><button class="btn primary" id="newConversationSubmit" type="submit">ثبت گفت‌وگوی جدید</button><p id="newConversationNotice" class="notice" aria-live="polite"></p></form><a class="btn" href="/contact-center.html">مرکز گفت‌وگوی کامل ↗</a></section><section class="card"><div class="section-head"><h2>تاریخچه پیام‌ها</h2></div><div id="messagesList" class="list"></div></section></div>
 <div id="credentialsPanel" class="panel-grid hidden"><section class="card"><div class="section-head"><h2>کدها و کلیدهای پیگیری من</h2><small>فقط برای حساب واردشده</small></div><p class="muted">کدها و کلیدهای خصوصی مربوط به سفارش‌ها، پروژه‌ها و گفت‌وگوهای این حساب را اینجا ببین و کپی کن. برای موارد قدیمی که کلیدشان قبلاً ذخیره نشده، با صدور کلید جدید، کلید قبلی همان مورد باطل می‌شود.</p><div id="credentialsList" class="list"><div class="empty">در حال دریافت…</div></div><p id="credentialsNotice" class="notice" aria-live="polite"></p></section><section class="card"><div class="section-head"><h2>نکته امنیتی</h2></div><p class="muted">کلید خصوصی را مثل رمز عبور نگه دار و برای دیگران نفرست. صدور کلید جدید، کلید قبلی همان سفارش، پروژه یا گفت‌وگو را نامعتبر می‌کند.</p></section></div>
 <div id="profilePanel" class="panel-grid hidden"><section class="card"><div class="section-head"><h2>اطلاعات حساب</h2></div><form id="profileForm"><div class="profile-grid"><div class="field"><label for="profileName">نام و نام خانوادگی</label><input id="profileName" maxlength="120" required></div><div class="field"><label for="profilePhone">شماره تماس</label><input id="profilePhone" type="tel" maxlength="40"></div></div><div class="field"><label>ایمیل حساب</label><input id="profileEmail" type="email" disabled></div><button class="btn primary" type="submit">ذخیره پروفایل</button></form><p id="profileNotice" class="notice" aria-live="polite"></p></section><section class="card"><div class="section-head"><h2>امنیت حساب</h2></div><p class="muted">برای تغییر رمز عبور از گزینه بازیابی رمز استفاده کن. لینک بازیابی به ایمیل حساب ارسال می‌شود.</p><button id="profileResetBtn" class="btn" type="button">ارسال لینک تغییر رمز</button><p id="securityNotice" class="notice" aria-live="polite"></p><p class="muted">هر حساب فقط اطلاعات سفارش‌ها، پروژه‌ها و مکاتباتی را می‌بیند که ایمیل ثبت‌شده آن‌ها با ایمیل حساب مطابقت داشته باشد.</p></section></div>
 <p id="dashNotice" class="notice" aria-live="polite"></p>
@@ -193,6 +223,29 @@ $("newConversationForm").addEventListener("submit",async e=>{e.preventDefault();
 
 sb.auth.onAuthStateChange((event,newSession)=>{if(event==="PASSWORD_RECOVERY"){session=newSession;showRecovery()}else if(newSession&&event==="SIGNED_IN"){session=newSession;loadDashboard()}else if(!newSession&&event==="SIGNED_OUT"){session=null;showAuth()}});
 const {data:{session:initialSession}}=await sb.auth.getSession();const requestedNext=new URLSearchParams(location.search).get("next");if(initialSession&&requestedNext){try{const target=new URL(requestedNext,location.origin);if(target.origin===location.origin){location.replace(target.pathname+target.search+target.hash)}else{session=initialSession;await loadDashboard()}}catch{session=initialSession;await loadDashboard()}}else if(location.hash.includes("type=recovery")){session=initialSession;showRecovery()}else if(initialSession){session=initialSession;await loadDashboard()}else{location.replace("/login.html"+(location.search||""))}
+
+/* Accessible custom category dropdown */
+(()=>{
+ const root=document.getElementById("categoryPicker");
+ if(!root)return;
+ const select=document.getElementById("newConversationCategory");
+ const trigger=document.getElementById("categoryTrigger");
+ const selected=document.getElementById("categorySelected");
+ const options=[...root.querySelectorAll(".category-option")];
+ function close(){root.classList.remove("open");trigger.setAttribute("aria-expanded","false")}
+ function open(){root.classList.add("open");trigger.setAttribute("aria-expanded","true")}
+ trigger.addEventListener("click",()=>root.classList.contains("open")?close():open());
+ options.forEach(option=>option.addEventListener("click",()=>{
+   const value=option.dataset.value;
+   select.value=value;selected.textContent=value;
+   options.forEach(item=>{const active=item===option;item.classList.toggle("selected",active);item.setAttribute("aria-selected",String(active))});
+   select.dispatchEvent(new Event("change",{bubbles:true}));
+   close();trigger.focus();
+ }));
+ document.addEventListener("click",event=>{if(!root.contains(event.target))close()});
+ document.addEventListener("keydown",event=>{if(event.key==="Escape")close()});
+})();
+
 </script>
 
 <script>
