@@ -70,8 +70,12 @@ const toast=document.getElementById('toast');
 function notify(message){toast.textContent=message;toast.classList.add('show');clearTimeout(notify.timer);notify.timer=setTimeout(()=>toast.classList.remove('show'),4500)}
 function safeText(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 document.getElementById('year').textContent=new Date().getFullYear();
+async function customerSessionExists(){try{const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");const sb=createClient(SUPABASE_URL,API_KEY);const {data}=await sb.auth.getSession();return !!data.session}catch(err){console.error("Customer session check failed",err);return false}}
+function requireCustomerLogin(next){location.href="/login.html?next="+encodeURIComponent(next)}
+document.querySelector('a[href="#newRequest"]').addEventListener("click",async e=>{if(!(await customerSessionExists())){e.preventDefault();requireCustomerLogin(location.pathname+location.search+"#newRequest")}});
+
 document.getElementById('composeForm').addEventListener('submit',async e=>{
-e.preventDefault();const form=e.currentTarget,button=document.getElementById('submitRequest'),original=button.textContent;button.disabled=true;button.textContent='در حال ثبت…';
+e.preventDefault();if(!(await customerSessionExists())){requireCustomerLogin(location.pathname+location.search+'#newRequest');return}const form=e.currentTarget,button=document.getElementById('submitRequest'),original=button.textContent;button.disabled=true;button.textContent='در حال ثبت…';
 try{
 const payload={name:form.elements.name.value.trim(),email:form.elements.email.value.trim(),subject:form.elements.subject.value.trim(),category:form.elements.category.value,message:form.elements.message.value.trim()};
 const response=await fetch(SUPABASE_URL+'/functions/v1/submit-communication-request',{method:'POST',headers:{'Content-Type':'application/json','apikey':API_KEY},body:JSON.stringify(payload)});
