@@ -40,7 +40,8 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const URL="https://srfldjfrzmtnlabusssq.supabase.co";
 const KEY="sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB";
-const API=URL+"/functions/v1/customer-account";\nconst REDIRECT="https://alishams.ir/account.html";
+const API=URL+"/functions/v1/customer-account";
+const REDIRECT="https://alishams.ir/account.html";
 const sb=createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const $=id=>document.getElementById(id);
 let session=null, dashboardData=null;
