@@ -235,8 +235,24 @@ function render(){
 }
 async function load(){
  if(!db){$('#stream').innerHTML='<div class="error">اتصال پایگاه داده برقرار نشد. صفحه را دوباره بارگذاری کن.</div>';return}
- var res=await db.from('studio_videos').select('id,slug,title,description,category,categories,video_url,poster_url,aspect_ratio,featured,published_at').eq('is_published',true).order('featured',{ascending:false}).order('published_at',{ascending:false});
- if(res.error){console.error(res.error);$('#stream').innerHTML='<div class="error">فعلاً دریافت ویدئوها ممکن نیست. کمی بعد دوباره امتحان کن.</div>';return}
+ var selectFields='id,slug,title,description,category,categories,video_url,poster_url,aspect_ratio,featured,published_at';
+ var res, lastError;
+ // Retry transient network/API failures, then fall back to core fields if optional fields cause a schema error.
+ for(var attempt=0;attempt<2;attempt++){
+  res=await db.from('studio_videos').select(selectFields).eq('is_published',true).order('featured',{ascending:false}).order('published_at',{ascending:false});
+  if(!res.error)break;
+  lastError=res.error;
+  console.warn('Video feed request failed:',lastError);
+  if(attempt===0)await new Promise(function(resolve){setTimeout(resolve,700)});
+ }
+ if(res.error){
+  res=await db.from('studio_videos').select('id,slug,title,description,category,video_url,poster_url,featured,published_at').eq('is_published',true).order('featured',{ascending:false}).order('published_at',{ascending:false});
+  if(res.error){
+   console.error('Could not load published videos:',res.error,'Previous error:',lastError);
+   $('#stream').innerHTML='<div class="error">دریافت ویدئوها از سرور با خطا روبه‌رو شد. صفحه را یک‌بار تازه‌سازی کن؛ اگر مشکل ادامه داشت، بعداً دوباره امتحان کن.</div>';
+   return;
+  }
+ }
  videos=res.data||[];
  if(videos.length){
   var ids=videos.map(function(v){return v.id});
