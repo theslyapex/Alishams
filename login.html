@@ -27,7 +27,7 @@ form.addEventListener("submit",async function(e){
   notice("در حال بررسی اطلاعات ورود…");
   const {data,error}=await sb.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
   if(error){notice(error.message==="Invalid login credentials"?"ایمیل یا رمز عبور اشتباه است.":error.message,"error");return}
-  location.replace("/account.html");
+  location.replace(getNextUrl());
  }catch(err){console.error("Login failed:",err);notice("ارتباط با سامانه ورود برقرار نشد. اتصال اینترنت را بررسی کن و دوباره امتحان کن.","error")}
  finally{button.disabled=false;button.innerHTML='ورود امن به حساب <span aria-hidden="true">↗</span>'}
 });
@@ -39,7 +39,8 @@ $("resetBtn").addEventListener("click",async function(){
  catch(err){console.error("Password reset failed:",err);notice("ارسال لینک بازیابی انجام نشد. اتصال اینترنت را بررسی کن.","error")}
  finally{reset.disabled=false}
 });
-getClient().then(async sb=>{const {data:{session}}=await sb.auth.getSession();if(session)location.replace("/account.html")}).catch(err=>{console.error("Supabase init failed:",err);notice("سامانه ورود بارگذاری نشد. با اتصال اینترنت دیگری دوباره امتحان کن.","error")});
+function getNextUrl(){const raw=new URLSearchParams(location.search).get("next");if(!raw)return "/account.html";try{const u=new URL(raw,location.origin);return u.origin===location.origin?u.pathname+u.search+u.hash:"/account.html"}catch{return "/account.html"}}
+getClient().then(async sb=>{const {data:{session}}=await sb.auth.getSession();if(session)location.replace(getNextUrl())}).catch(err=>{console.error("Supabase init failed:",err);notice("سامانه ورود بارگذاری نشد. با اتصال اینترنت دیگری دوباره امتحان کن.","error")});
 })();
 </script>
 <script>
