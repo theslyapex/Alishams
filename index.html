@@ -449,6 +449,26 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .video-showcase-equalizer i{width:3px;height:35%;border-radius:2px;background:var(--lav);animation:videoWave .7s ease-in-out infinite alternate}
 .video-showcase-equalizer i:nth-child(2){height:90%;animation-delay:-.4s}.video-showcase-equalizer i:nth-child(3){height:60%;animation-delay:-.2s}.video-showcase-equalizer i:nth-child(4){height:100%;animation-delay:-.6s}
 @keyframes videoOrbitSpin{to{rotate:360deg}}@keyframes videoGlowPulse{0%,100%{opacity:.65;scale:.94}50%{opacity:1;scale:1.06}}@keyframes videoFrameDrift{0%,100%{translate:0 0}50%{translate:0 -7px}}@keyframes videoShapeFloat{0%,100%{translate:0 0;rotate:-5deg}50%{translate:0 -9px;rotate:6deg}}@keyframes videoPlayPulse{0%,100%{box-shadow:0 0 0 8px rgba(217,255,114,.08),0 0 32px rgba(217,255,114,.2)}50%{box-shadow:0 0 0 14px rgba(217,255,114,.02),0 0 42px rgba(217,255,114,.34)}}@keyframes videoWave{from{transform:scaleY(.45);opacity:.5}to{transform:scaleY(1);opacity:1}}@keyframes videoFloat{0%,100%{translate:0 0}50%{translate:0 -8px}}
+
+/* VIDEO SHOWCASE — cinematic graphite storyboard, replacing the green/purple cards */
+.video-showcase-glow{background:radial-gradient(ellipse,rgba(255,255,255,.075),rgba(217,255,114,.055) 38%,transparent 72%)}
+.video-showcase-orbit{border-color:rgba(255,255,255,.16)}
+.video-showcase-orbit-two{border-color:rgba(217,255,114,.24)}
+.video-showcase-frame{border-color:rgba(255,255,255,.19);background:#14161b;box-shadow:0 22px 50px #0009}
+.frame-back{background:linear-gradient(145deg,#282a30 0%,#17191e 58%,#101115 100%);opacity:.86}
+.frame-back span{color:#d5d6dc}
+.frame-back strong{color:#f5f3ee}
+.frame-front{background:linear-gradient(145deg,#25282d 0%,#191b20 58%,#111216 100%);transform:rotate(3deg)}
+.frame-front>span{color:#d9ff72}
+.frame-front>strong{color:#f5f3ee;text-shadow:0 3px 22px #0009}
+.frame-front>strong span{color:var(--lime)}
+.frame-front small{color:#b8bbc3}
+.video-showcase-clapper{display:none}
+.frame-front:after{content:"";position:absolute;left:13px;right:13px;top:42%;height:34px;border-top:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(255,255,255,.15);background:repeating-linear-gradient(90deg,rgba(217,255,114,.9) 0 2px,transparent 2px 7px,rgba(255,255,255,.22) 7px 9px,transparent 9px 14px);opacity:.8;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.video-showcase-play{border-color:rgba(255,255,255,.7);background:rgba(12,13,17,.88);color:var(--lime);box-shadow:0 0 0 8px rgba(255,255,255,.035),0 0 32px rgba(217,255,114,.12)}
+.video-showcase-wave i:nth-child(4n){background:#d9ff72}
+.video-showcase-equalizer i{background:#d9ff72}
+
 @media(max-width:800px){.video-showcase{padding-top:48px;padding-bottom:58px}.video-showcase-card{grid-template-columns:1fr;gap:16px;padding:27px 23px 31px}.video-showcase-copy h2{font-size:clamp(34px,8vw,47px)}.video-showcase-visual{min-height:310px;order:-1;margin:0 0 8px}.video-showcase-window{inset:8% 6% 8%}.video-showcase-float-top{right:0}.video-showcase-float-bottom{left:0}.video-showcase-frame{inset:14% 17% 16% 15%}.frame-front>strong{font-size:clamp(25px,7vw,39px)}}
 @media(max-width:430px){.video-showcase-card{padding:22px 17px 25px;border-radius:23px}.video-showcase-visual{min-height:265px}.video-showcase-window-top{padding:0 9px}.video-showcase-window-top>span:nth-child(2){font-size:7px}.video-showcase-float{padding:8px 10px}.video-showcase-meta{gap:10px 13px}.video-showcase-wave{gap:2px}.video-showcase-wave i{width:1.5px}}
 @media(prefers-reduced-motion:reduce){.video-showcase *,.video-showcase *:before,.video-showcase *:after{animation:none!important;scroll-behavior:auto!important}}
