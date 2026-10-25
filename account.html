@@ -14,6 +14,91 @@
 @media(max-width:760px){.auth-layout,.panel-grid{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:12px}.stat strong{font-size:21px}.shell{width:min(100% - 24px,1120px)}.topbar{align-items:center;flex-wrap:wrap;padding:14px 0}.brand{font-size:13px}.toplinks a{padding:9px 10px;font-size:11px}.toplinks{width:100%;justify-content:flex-end}.tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.tab{width:100%;padding:11px 8px}.dash-head{align-items:flex-start}.section-head{align-items:flex-start;flex-wrap:wrap}.card{border-radius:18px}.item .row{align-items:flex-start}.credential-item code{word-break:break-word}}
 @media(max-width:480px){.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:1/-1}.profile-grid{grid-template-columns:1fr}.hero{padding-top:26px}.topbar{gap:10px}.brand img{width:38px;height:38px}.toplinks{display:grid;grid-template-columns:1fr;gap:6px}.toplinks details{width:100%}.toplinks summary{width:100%;justify-content:space-between}.toplinks .menu-links{grid-template-columns:1fr}.auth-layout{padding-bottom:30px}.dashboard{padding-bottom:32px}.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.section-head h2{font-size:16px}.btn{max-width:100%;white-space:normal}.item{padding:12px}.field input,textarea,select{font-size:16px}}
  .toplinks details{position:relative}.toplinks summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:linear-gradient(135deg,#ffffff0a,#ffffff03);border-radius:13px;padding:10px 14px;font-size:12px;font-weight:700}.toplinks summary::-webkit-details-marker{display:none}.toplinks summary:after{content:"⌄";color:var(--lime);font-size:16px;transition:transform .2s}.toplinks details[open] summary:after{transform:rotate(180deg)}.toplinks .menu-links{position:absolute;top:calc(100% + 8px);left:0;z-index:80;min-width:205px;display:grid;gap:4px;padding:8px;border:1px solid #ffffff1c;border-radius:15px;background:#14161df5;box-shadow:0 20px 55px #0009;backdrop-filter:blur(18px)}.toplinks .menu-links a{display:block;border:0;background:transparent;text-align:right}.toplinks .menu-links a:hover{background:#d9ff7210;border-color:#d9ff7244}#authView{display:none}button:disabled{opacity:.55;cursor:wait}.notice{overflow-wrap:anywhere}dialog.account-dialog{width:min(440px,calc(100% - 28px));border:1px solid #d9ff7240;border-radius:24px;background:linear-gradient(145deg,#1a1c24,#0e1015);color:var(--text);padding:25px;box-shadow:0 35px 100px #000b}dialog.account-dialog::backdrop{background:#030407c9;backdrop-filter:blur(8px)}dialog.account-dialog h2{margin:0 0 8px;font-size:20px}dialog.account-dialog p{color:var(--muted);font-size:13px;line-height:2}.dialog-actions{display:flex;gap:8px;justify-content:flex-start;flex-wrap:wrap;margin-top:18px}
+
+/* Message fields: use the site's Persian font consistently, including placeholders. */
+#messagesPanel textarea,
+#messagesPanel input,
+#messagesPanel select,
+#messagesPanel textarea::placeholder,
+#messagesPanel input::placeholder {
+  font-family: "Vazirmatn", Tahoma, sans-serif !important;
+}
+#messagesPanel textarea::placeholder,
+#messagesPanel input::placeholder {
+  color: #9297a8;
+  opacity: 1;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+#messagesPanel textarea,
+#messagesPanel input,
+#messagesPanel select {
+  font-size: 13px;
+  line-height: 1.9;
+  transition: border-color .22s ease, box-shadow .22s ease, background .22s ease;
+}
+#messagesPanel textarea:focus,
+#messagesPanel input:focus,
+#messagesPanel select:focus {
+  outline: none;
+  border-color: #a58bff99 !important;
+  background: #10111a !important;
+  box-shadow: 0 0 0 3px #a58bff18, 0 0 22px #a58bff0c;
+}
+#messagesPanel #newConversationCategory {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding: 14px 15px 14px 42px !important;
+  border: 1px solid #a58bff45 !important;
+  border-radius: 14px !important;
+  background:
+    linear-gradient(135deg, #a58bff0e, #d9ff7207),
+    #0b0c12 !important;
+  box-shadow: inset 0 1px 0 #ffffff06;
+}
+#messagesPanel .field:has(#newConversationCategory) {
+  position: relative;
+}
+#messagesPanel .field:has(#newConversationCategory)::after {
+  content: "⌄";
+  position: absolute;
+  left: 15px;
+  bottom: 12px;
+  color: var(--lime);
+  font-size: 20px;
+  line-height: 1;
+  pointer-events: none;
+  transition: transform .2s ease;
+}
+#messagesPanel #newConversationCategory:focus {
+  border-color: #d9ff72a0 !important;
+  box-shadow: 0 0 0 3px #d9ff7214, 0 0 24px #d9ff720b;
+}
+#messagesPanel #newConversationCategory option {
+  background: #171923;
+  color: #f5f6fa;
+  font-family: "Vazirmatn", Tahoma, sans-serif;
+  padding: 12px;
+}
+#messagesPanel #newConversationMessage,
+#messagesPanel [data-reply-input] {
+  min-height: 105px;
+  border-radius: 14px !important;
+  background: linear-gradient(145deg, #0d0f16, #0a0b10) !important;
+}
+#messagesPanel #newConversationSubmit {
+  box-shadow: 0 8px 25px #d9ff7214;
+}
+#messagesPanel #newConversationSubmit:hover {
+  box-shadow: 0 10px 30px #d9ff7224;
+}
+@media (max-width: 480px) {
+  #messagesPanel textarea, #messagesPanel input, #messagesPanel select {
+    font-size: 16px;
+  }
+}
+
 </style>
 </head>
 <body>
