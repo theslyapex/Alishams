@@ -66,6 +66,7 @@ form.addEventListener("submit", async event => {
   }
 });
 function getNextUrl(){const raw=new URLSearchParams(location.search).get("next");if(!raw)return "/account.html";try{const u=new URL(raw,location.origin);return u.origin===location.origin?u.pathname+u.search+u.hash:"/account.html"}catch{return "/account.html"}}
+const loginLink=document.querySelector(".switch a");if(loginLink){const next=new URLSearchParams(location.search).get("next");if(next)loginLink.href="/login.html?next="+encodeURIComponent(next)}
 try {
   const { data: { session } } = await sb.auth.getSession();
   if (session) location.replace(getNextUrl());
