@@ -247,6 +247,91 @@
   }
 }
 
+
+/* FINAL MOBILE FIX: one independent, full-width card per video */
+.feed{
+  grid-template-columns:minmax(0,1fr)!important;
+}
+#stream.stream{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+#stream.stream > article.video-card{
+  display:block!important;
+  float:none!important;
+  position:relative!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  grid-column:1/-1!important;
+  grid-row:auto!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+}
+#stream.stream > article.video-card > .video-main{
+  display:flex!important;
+  flex-direction:column!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+#stream.stream > article.video-card .video-player{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  aspect-ratio:16/9!important;
+  height:auto!important;
+  max-height:none!important;
+}
+#stream.stream > article.video-card .video-info{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+@media(max-width:760px){
+  .feed{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:0 auto 30px!important;
+    padding:0 12px!important;
+    box-sizing:border-box!important;
+  }
+  #stream.stream{
+    gap:16px!important;
+  }
+  #stream.stream > article.video-card{
+    width:100%!important;
+    max-width:100%!important;
+    padding:10px!important;
+    margin:0!important;
+    border:1px solid var(--line)!important;
+    border-radius:20px!important;
+    box-sizing:border-box!important;
+  }
+  #stream.stream > article.video-card .video-player{
+    aspect-ratio:16/9!important;
+    border-radius:14px!important;
+  }
+  #stream.stream > article.video-card .video-info{
+    padding:13px 4px 4px!important;
+  }
+  .sidebar{display:none!important}
+}
+/* Remove the obsolete long SEO copy panel if it exists in a cached/older page build. */
+.seo-content,
+section[aria-labelledby="video-seo-heading"],
+#video-seo-heading{
+  display:none!important;
+}
+
 </style></head><body>
 <header class="topbar"><div class="header-inner"><a class="brand" href="index.html" aria-label="علی شمس"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس"><span>علی شمس<small>ALISHAMS DIGITAL STUDIO</small></span></a><nav class="toplinks" id="videoNav"><a href="index.html">صفحه اصلی</a><a href="index.html#services">خدمات</a><a href="portfolio.html">نمونه‌کارها</a><a href="pricing.html">قیمت‌گذاری</a><a href="about.html">درباره من</a><a href="project-tracking.html">پیگیری پروژه</a><a href="order-tracking.html">پیگیری سفارش</a></nav><a class="nav-cta" href="contact-center.html">شروع یک پروژه <span aria-hidden="true">↗</span></a><button class="menu-toggle" id="videoMenuToggle" type="button" aria-label="باز کردن منو" aria-expanded="false">☰</button></div></header>
 <div class="crumb-wrap"><nav class="breadcrumb" aria-label="مسیر صفحه"><a href="index.html">صفحه اصلی</a><span class="sep">/</span><span aria-current="page">ویدئوها</span></nav></div>
