@@ -809,18 +809,19 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 </style>
 
 <style id="footer-enamad-placement">
-.footer-inner{position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;color:var(--muted);font-size:11px}
-.footer-links{order:-1;flex:0 0 100%;display:flex;align-items:center;justify-content:center;gap:17px}
+.footer-inner{position:relative;display:flex;align-items:center;justify-content:space-between;gap:20px;color:var(--muted);font-size:11px}
+.footer-links{display:flex;align-items:center;gap:17px}
 .footer-tagline{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-width:0}
-.footer-enamad-link{position:absolute;left:0;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;justify-content:center;line-height:0}
+.footer-enamad-link{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;line-height:0}
 .footer-enamad-link img{display:block;width:42px;height:auto;max-height:52px;object-fit:contain;border:0}
 @media(max-width:760px){
-.footer-inner{gap:14px}
-.footer-links{flex:0 0 100%;flex-wrap:wrap;gap:12px 16px}
-.footer-tagline{margin-left:42px;gap:8px}
+.footer-inner{flex-wrap:wrap;gap:14px}
+.footer-links{order:-1;flex:0 0 100%;flex-wrap:wrap;justify-content:center;gap:12px 16px}
+.footer-tagline{position:relative;box-sizing:border-box;width:100%;min-height:40px;padding-left:42px;margin:0;gap:8px;justify-content:center;text-align:center}
+.footer-enamad-link{position:absolute;left:0;top:50%;transform:translateY(-50%)}
 .footer-enamad-link img{width:36px}
 }
-@media(max-width:420px){.footer-tagline{font-size:10px;margin-left:38px}.footer-enamad-link img{width:32px}}
+@media(max-width:420px){.footer-tagline{font-size:10px;padding-left:38px}.footer-enamad-link img{width:32px}}
 </style>
 <footer class="footer"><div class="wrap"><div class="footer-inner"><a class="brand" href="#top"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><div class="footer-tagline"><span>ایده‌پردازی، طراحی و اجرا؛ با دقت در جزئیات.</span><a class="footer-enamad-link" href="https://trustseal.enamad.ir/?id=8351537&amp;Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG" target="_blank" rel="noopener noreferrer" referrerpolicy="origin" aria-label="مشاهده و اعتبارسنجی نماد اعتماد الکترونیکی"><img src="/assets/enamad.png" alt="نماد اعتماد الکترونیکی" loading="lazy" decoding="async"></a></div><div class="footer-links"><a href="#services">خدمات</a><a href="portfolio.html">نمونه‌کارها</a><a href="about.html">درباره من</a><div class="footer-tracking"><button type="button" class="footer-tracking-toggle" id="footerTrackingToggle" aria-expanded="false" aria-controls="footerTrackingMenu">پیگیری <span aria-hidden="true">⌄</span></button><div class="footer-tracking-menu" id="footerTrackingMenu" hidden><a href="order-tracking.html">پیگیری سفارش</a><a href="project-tracking.html">پیگیری پروژه</a></div></div><a href="https://t.me/theslyapex" target="_blank" rel="noopener noreferrer">تلگرام</a></div></div><div class="foot-bottom"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><a href="#top">بازگشت به بالا ↑︎</a></div></div></footer>
 <style id="social-service-options">
