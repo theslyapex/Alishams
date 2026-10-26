@@ -8,7 +8,17 @@
       <video:title>تیزر تبلیغاتی | موشن گرافیک</video:title>
       <video:description>این پروژه با هدف معرفی هویت بصری و فضای خلاقانه‌ی Alishams Digital Studio طراحی و اجرا شده است. در این تیزر تبلیغاتی، از تکنیک‌های موشن‌گرافیک، انیمیشن و ترکیب‌بندی پویا برای خلق تجربه‌ای بصری منسجم و هماهنگ با هویت برند استفاده شده است. تمرکز پروژه بر ارائه‌ی جذاب برند، تقویت جلوه‌ی بصری آن و ایجاد ارتباط مؤثرتر با مخاطب است.</video:description>
       <video:content_loc>https://my.uploadkon.ir/d/XEKeq2ygayoo5GEwqzvN8RXfPGA9FR/NzgxNzF8cGFkZA.mp4</video:content_loc>
-      <video:publication_date>2026-10-25T13:11:53Z</video:publication_date>
+      <video:publication_date>2026-10-25T13:11:53+00:00</video:publication_date>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://alishams.ir/videos.html?v=motion-graphic-02</loc>
+    <video:video>
+      <video:thumbnail_loc>https://my.uploadkon.ir/d/eZe7S7kXP3ug7dgyaWbT4kmy4geVzG/NzgzNTZ8cGFkZA.jpg</video:thumbnail_loc>
+      <video:title>محتوای شبکه‌های اجتماعی | موشن گرافیک</video:title>
+      <video:description>طراحی و تولید تیزر تبلیغاتی موشن‌گرافیک برای وب‌سایت Alishams.ir با هدف معرفی هویت بصری، خدمات و فضای خلاقانه برند. این پروژه با بهره‌گیری از انیمیشن، حرکت‌های پویا و ترکیب‌بندی بصری جذاب اجرا شده تا پیام برند را به شکلی مدرن و تأثیرگذار به مخاطب منتقل کند.</video:description>
+      <video:content_loc>https://my.uploadkon.ir/d/fiAYUB2VONooFR6dmGxJYRvhRVCeMG/NzgzNTB8cGFkZA.mp4</video:content_loc>
+      <video:publication_date>2026-10-25T17:38:35+00:00</video:publication_date>
     </video:video>
   </url>
 </urlset>
