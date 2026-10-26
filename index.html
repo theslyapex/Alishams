@@ -812,18 +812,32 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .footer-inner{position:relative;display:flex;align-items:center;justify-content:space-between;gap:20px;color:var(--muted);font-size:11px}
 .footer-links{display:flex;align-items:center;gap:17px}
 .footer-tagline{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-width:0}
-.footer-enamad-official{display:flex;justify-content:center;align-items:center;margin:18px auto 8px;text-align:center}
-.footer-enamad-official img{max-width:100%;height:auto}
+.footer-trust-section{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;margin:24px auto 14px;padding:18px 20px 16px;max-width:430px;border:1px solid rgba(217,255,114,.2);border-radius:22px;background:linear-gradient(135deg,rgba(217,255,114,.055),rgba(255,255,255,.018));box-shadow:0 12px 34px rgba(0,0,0,.16);font-family:Estedad,Tahoma,sans-serif;direction:rtl;text-align:center}
+.footer-trust-heading{display:flex;align-items:center;justify-content:center;gap:8px;color:#e8f5c2;font-size:13px;font-weight:700}
+.footer-trust-heading-icon{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:rgba(217,255,114,.12);border:1px solid rgba(217,255,114,.38);color:#d9ff72;font-size:13px}
+.footer-enamad-official{display:flex;justify-content:center;align-items:center;margin:0;text-align:center;min-height:58px}
+.footer-enamad-official a{display:inline-flex;align-items:center;justify-content:center;line-height:0}
+.footer-enamad-official img{display:block;max-width:100%;height:auto;max-height:90px;object-fit:contain}
+.footer-vpn-bubble{position:relative;display:flex;align-items:center;justify-content:center;gap:9px;max-width:100%;box-sizing:border-box;padding:10px 14px;border:1px solid rgba(91,214,255,.25);border-radius:15px;background:linear-gradient(120deg,rgba(91,214,255,.1),rgba(155,92,255,.1));color:#dfeaf4;font-size:11px;line-height:1.9;animation:footerBubbleFloat 3.6s ease-in-out infinite;box-shadow:0 6px 20px rgba(0,0,0,.12)}
+.footer-vpn-bubble:before{content:"";position:absolute;top:-6px;right:28px;width:10px;height:10px;transform:rotate(45deg);background:#11151d;border-top:1px solid rgba(91,214,255,.25);border-left:1px solid rgba(91,214,255,.25)}
+.footer-vpn-bubble-icon{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:rgba(91,214,255,.13);color:#75dcff;font-size:14px;font-weight:800}
+@keyframes footerBubbleFloat{0%,100%{transform:translateY(0);box-shadow:0 6px 20px rgba(0,0,0,.12)}50%{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.2)}}
+@media(prefers-reduced-motion:reduce){.footer-vpn-bubble{animation:none}}
 @media(max-width:760px){
 .footer-inner{display:flex;flex-direction:column;align-items:stretch;gap:14px}
 .footer-inner>.brand{order:0;align-self:flex-start}
 .footer-links{order:1;flex:0 0 auto;width:100%;box-sizing:border-box;flex-wrap:wrap;justify-content:flex-start;direction:rtl;text-align:right;gap:12px 16px}
 .footer-tagline{order:2;position:relative;box-sizing:border-box;width:100%;min-height:40px;margin:0;gap:8px;justify-content:flex-start;direction:rtl;text-align:right}
 .footer-tagline>span{display:block;flex:1;text-align:right}
-.footer-enamad-official{margin:18px auto 8px}
+.footer-trust-section{width:100%;max-width:430px;box-sizing:border-box;margin:22px auto 14px;padding:16px 14px;border-radius:18px}
+.footer-vpn-bubble{font-size:11px;padding:9px 11px}
 }
 </style>
-<footer class="footer"><div class="wrap"><div class="footer-inner"><a class="brand" href="#top"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><div class="footer-tagline"><span>ایده‌پردازی، طراحی و اجرا؛ با دقت در جزئیات.</span></div><div class="footer-links"><a href="#services">خدمات</a><a href="portfolio.html">نمونه‌کارها</a><a href="about.html">درباره من</a><div class="footer-tracking"><button type="button" class="footer-tracking-toggle" id="footerTrackingToggle" aria-expanded="false" aria-controls="footerTrackingMenu">پیگیری <span aria-hidden="true">⌄</span></button><div class="footer-tracking-menu" id="footerTrackingMenu" hidden><a href="order-tracking.html">پیگیری سفارش</a><a href="project-tracking.html">پیگیری پروژه</a></div></div><a href="https://t.me/theslyapex" target="_blank" rel="noopener noreferrer">تلگرام</a></div></div><div class="footer-enamad-official"><a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=8351537&Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=8351537&Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG' alt='' style='cursor:pointer' code='i249fenOsdRVKRmBs8hLEgsCrTirXrSG'></a></div><div class="foot-bottom"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><a href="#top">بازگشت به بالا ↑︎</a></div></div></footer>
+<footer class="footer"><div class="wrap"><div class="footer-inner"><a class="brand" href="#top"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><div class="footer-tagline"><span>ایده‌پردازی، طراحی و اجرا؛ با دقت در جزئیات.</span></div><div class="footer-links"><a href="#services">خدمات</a><a href="portfolio.html">نمونه‌کارها</a><a href="about.html">درباره من</a><div class="footer-tracking"><button type="button" class="footer-tracking-toggle" id="footerTrackingToggle" aria-expanded="false" aria-controls="footerTrackingMenu">پیگیری <span aria-hidden="true">⌄</span></button><div class="footer-tracking-menu" id="footerTrackingMenu" hidden><a href="order-tracking.html">پیگیری سفارش</a><a href="project-tracking.html">پیگیری پروژه</a></div></div><a href="https://t.me/theslyapex" target="_blank" rel="noopener noreferrer">تلگرام</a></div></div><section class="footer-trust-section" aria-label="نماد اعتماد الکترونیکی">
+  <div class="footer-trust-heading"><span class="footer-trust-heading-icon" aria-hidden="true">✓</span><span>اعتماد و اعتبار</span></div>
+  <div class="footer-enamad-official"><a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=8351537&Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG' aria-label="مشاهده نماد اعتماد الکترونیکی علی شمس"><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=8351537&Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG' alt='نماد اعتماد الکترونیکی' style='cursor:pointer' code='i249fenOsdRVKRmBs8hLEgsCrTirXrSG'></a></div>
+  <div class="footer-vpn-bubble" role="note"><span class="footer-vpn-bubble-icon" aria-hidden="true">ⓘ</span><span>اگر نماد اعتماد باز نشد، VPN خود را خاموش کنید و دوباره امتحان کنید.</span></div>
+</section><div class="foot-bottom"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><a href="#top">بازگشت به بالا ↑︎</a></div></div></footer>
 <style id="social-service-options">
 .social-service-fields{margin:0 0 16px;padding:16px;border:1px solid #c9a7ff30;border-radius:16px;background:linear-gradient(145deg,#c9a7ff0a,#44d9ff06)}
 .social-service-fields[hidden],#telegramGiftFields[hidden]{display:none!important}
