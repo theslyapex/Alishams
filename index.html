@@ -845,7 +845,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <footer class="footer"><div class="wrap"><div class="footer-inner"><a class="brand" href="#top"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><div class="footer-tagline"><span>ایده‌پردازی، طراحی و اجرا؛ با دقت در جزئیات.</span></div><div class="footer-links"><a href="#services">خدمات</a><a href="portfolio.html">نمونه‌کارها</a><a href="about.html">درباره من</a><div class="footer-tracking"><button type="button" class="footer-tracking-toggle" id="footerTrackingToggle" aria-expanded="false" aria-controls="footerTrackingMenu">پیگیری <span aria-hidden="true">⌄</span></button><div class="footer-tracking-menu" id="footerTrackingMenu" hidden><a href="order-tracking.html">پیگیری سفارش</a><a href="project-tracking.html">پیگیری پروژه</a></div></div><a href="https://t.me/theslyapex" target="_blank" rel="noopener noreferrer">تلگرام</a></div></div><section class="footer-trust-section" aria-label="نماد اعتماد الکترونیکی">
   <div class="footer-trust-heading"><span class="footer-trust-heading-icon" aria-hidden="true"><img src="https://img.icons8.com/?size=100&id=srfpO1dyikDn&format=png" alt="" loading="lazy"></span><span>اعتماد و اعتبار</span></div>
   <div class="footer-enamad-official"><a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=8351537&Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG' aria-label="مشاهده نماد اعتماد الکترونیکی علی شمس"><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=8351537&Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG' alt='نماد اعتماد الکترونیکی' style='cursor:pointer' code='i249fenOsdRVKRmBs8hLEgsCrTirXrSG'></a></div>
-  <div class="footer-vpn-bubble" role="note"><span class="footer-vpn-bubble-icon" aria-hidden="true"><img src="https://img.icons8.com/color/48/000000/error--v1.gif" alt="" loading="eager" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"><span class="footer-vpn-fallback">!</span></span><span class="footer-vpn-animated-text">برای نماد اعتماد، VPN خود را خاموش کنید</span></div>
+  <div class="footer-vpn-bubble" role="note" hidden><span class="footer-vpn-bubble-icon" aria-hidden="true"><img src="https://img.icons8.com/color/48/000000/error--v1.gif" alt="" loading="eager" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"><span class="footer-vpn-fallback">!</span></span><span class="footer-vpn-animated-text">برای نماد اعتماد، VPN خود را خاموش کنید</span></div>
 </section><div class="foot-bottom"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><a href="#top">بازگشت به بالا ↑︎</a></div></div></footer>
 <style id="social-service-options">
 .social-service-fields{margin:0 0 16px;padding:16px;border:1px solid #c9a7ff30;border-radius:16px;background:linear-gradient(145deg,#c9a7ff0a,#44d9ff06)}
@@ -1077,4 +1077,29 @@ if(newsletterForm){newsletterForm.addEventListener('submit',async e=>{e.preventD
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
+
+<style id="vpn-bubble-detection-style">.footer-vpn-bubble[hidden]{display:none!important}</style>
+<script id="vpn-bubble-detection">
+(function(){
+  var bubble=document.querySelector('.footer-vpn-bubble');
+  if(!bubble)return;
+  bubble.hidden=true;
+  var controller=typeof AbortController!=='undefined'?new AbortController():null;
+  var timer=setTimeout(function(){if(controller)controller.abort()},4500);
+  fetch('https://iplogs.com/v1/check',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({}),
+    signal:controller?controller.signal:undefined
+  }).then(function(response){
+    if(!response.ok)throw new Error('VPN check unavailable');
+    return response.json();
+  }).then(function(data){
+    var isVpn=data.is_vpn===true || data.verdict==='vpn_detected';
+    if(isVpn)bubble.hidden=false;
+  }).catch(function(){
+    bubble.hidden=true;
+  }).finally(function(){clearTimeout(timer)});
+})();
+</script>
 </body></html>
