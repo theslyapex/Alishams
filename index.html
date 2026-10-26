@@ -813,7 +813,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .footer-inner{position:relative;display:flex;align-items:center;justify-content:space-between;gap:20px;color:var(--muted);font-size:11px}
 .footer-links{display:flex;align-items:center;gap:17px}
 .footer-tagline{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-width:0}
-.footer-trust-section{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;gap:15px;width:min(100%,450px);margin:30px auto 18px;padding:clamp(22px,4vw,36px);overflow:hidden;border:1px solid rgba(255,255,255,.14);border-radius:28px;background:radial-gradient(circle at 100% 0%,rgba(217,255,114,.11),transparent 38%),linear-gradient(145deg,#17191f,#0e0f13 78%);box-shadow:0 30px 90px #0006;font-family:Estedad,Tahoma,sans-serif;direction:rtl;text-align:center}
+.footer-trust-section{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;gap:15px;width:min(100%,450px);margin:30px auto 18px;padding:clamp(22px,4vw,36px);padding-bottom:38px;overflow:hidden;border:1px solid rgba(255,255,255,.14);border-radius:28px;background:radial-gradient(circle at 100% 0%,rgba(217,255,114,.11),transparent 38%),linear-gradient(145deg,#17191f,#0e0f13 78%);box-shadow:0 30px 90px #0006;font-family:Estedad,Tahoma,sans-serif;direction:rtl;text-align:center}
 .footer-trust-section:before{content:"";position:absolute;z-index:-1;inset:7px;border:1px solid rgba(255,255,255,.045);border-radius:20px;pointer-events:none}
 .footer-trust-section:after{content:"";position:absolute;z-index:-1;top:-90px;right:0;left:auto;width:210px;height:210px;transform:none;border:1px solid rgba(182,160,255,.25);border-radius:50%;box-shadow:0 0 0 24px rgba(182,160,255,.025),0 0 0 50px rgba(182,160,255,.02);background:transparent;filter:none;pointer-events:none}
 .footer-trust-heading{display:flex;align-items:center;justify-content:center;gap:12px;color:#f2eaff;font-family:"Noto Nastaliq Urdu",serif;font-size:19px;font-weight:400;line-height:2.2;text-shadow:0 2px 18px rgba(182,160,255,.22)}
@@ -824,12 +824,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .footer-enamad-official a{display:inline-flex;align-items:center;justify-content:center;line-height:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;transition:transform .25s}
 .footer-enamad-official a:hover{transform:translateY(-2px);border:0;background:transparent;box-shadow:none}
 .footer-enamad-official img{display:block;max-width:100%;height:auto;max-height:90px;object-fit:contain}
-.footer-vpn-animated-text{display:inline-block;color:#f3f4ff;background:linear-gradient(100deg,#f3f4ff 0%,#b7f7f0 28%,#ffffff 48%,#d8c6ff 66%,#f3f4ff 100%);background-size:240% 100%;background-position:100% 50%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:footerPersianTextShimmer 4.2s ease-in-out infinite;text-shadow:none}@keyframes footerPersianTextShimmer{0%,100%{background-position:100% 50%;filter:drop-shadow(0 0 0 rgba(174,224,255,0))}50%{background-position:0% 50%;filter:drop-shadow(0 0 5px rgba(174,224,255,.22))}}@media(prefers-reduced-motion:reduce){.footer-vpn-animated-text{animation:none;background-position:50% 50%;-webkit-text-fill-color:#f3f4ff;color:#f3f4ff}}.footer-vpn-bubble{position:relative;display:flex;align-items:center;justify-content:center;gap:11px;width:100%;max-width:355px;box-sizing:border-box;padding:12px 16px;border:1px solid rgba(124,139,255,.32);border-radius:16px;background:linear-gradient(115deg,rgba(20,184,166,.13) 0%,rgba(64,92,190,.16) 48%,rgba(142,83,214,.17) 100%);color:#f0f2ff;font-size:12px;font-weight:600;line-height:1.9;box-shadow:0 9px 28px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.06);animation:footerBubbleFloat 4.2s ease-in-out infinite}
-.footer-vpn-bubble:before{content:"";position:absolute;top:-6px;right:calc(50% - 5px);width:10px;height:10px;transform:rotate(45deg);background:#202334;border-top:1px solid rgba(124,139,255,.32);border-left:1px solid rgba(124,139,255,.32)}
-.footer-vpn-bubble-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 25px;width:25px;height:25px;background:transparent;border:0;border-radius:0;overflow:visible}
-.footer-vpn-bubble-icon img{display:block;width:30px;height:30px;object-fit:contain;filter:drop-shadow(0 0 7px rgba(255,190,92,.38))}.footer-vpn-fallback{display:none;align-items:center;justify-content:center;width:24px;height:24px;border:2px solid #ffca70;border-radius:50%;color:#ffca70;font:800 18px/1 Tahoma,sans-serif;animation:footerWarningPulse 1.35s ease-in-out infinite}@keyframes footerWarningPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 1px rgba(255,202,112,.2))}50%{transform:scale(1.13);filter:drop-shadow(0 0 7px rgba(255,202,112,.8))}}
-@keyframes footerBubbleFloat{0%,100%{transform:translateY(0);box-shadow:0 8px 24px rgba(0,0,0,.16)}50%{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.24)}}
-@media(prefers-reduced-motion:reduce){.footer-vpn-bubble,.footer-trust-heading-icon{animation:none}}
+.footer-vpn-note{position:absolute;left:12px;bottom:9px;z-index:2;direction:ltr;font:500 8px/1.4 Arial,sans-serif;letter-spacing:.15px;color:rgba(222,225,239,.42);white-space:nowrap;pointer-events:none;user-select:none}
 @media(max-width:760px){
 .footer-inner{display:flex;flex-direction:column;align-items:stretch;gap:14px}
 .footer-inner>.brand{order:0;align-self:flex-start}
@@ -845,7 +840,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <footer class="footer"><div class="wrap"><div class="footer-inner"><a class="brand" href="#top"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><div class="footer-tagline"><span>ایده‌پردازی، طراحی و اجرا؛ با دقت در جزئیات.</span></div><div class="footer-links"><a href="#services">خدمات</a><a href="portfolio.html">نمونه‌کارها</a><a href="about.html">درباره من</a><div class="footer-tracking"><button type="button" class="footer-tracking-toggle" id="footerTrackingToggle" aria-expanded="false" aria-controls="footerTrackingMenu">پیگیری <span aria-hidden="true">⌄</span></button><div class="footer-tracking-menu" id="footerTrackingMenu" hidden><a href="order-tracking.html">پیگیری سفارش</a><a href="project-tracking.html">پیگیری پروژه</a></div></div><a href="https://t.me/theslyapex" target="_blank" rel="noopener noreferrer">تلگرام</a></div></div><section class="footer-trust-section" aria-label="نماد اعتماد الکترونیکی">
   <div class="footer-trust-heading"><span class="footer-trust-heading-icon" aria-hidden="true"><img src="https://img.icons8.com/?size=100&id=srfpO1dyikDn&format=png" alt="" loading="lazy"></span><span>اعتماد و اعتبار</span></div>
   <div class="footer-enamad-official"><a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=8351537&Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG' aria-label="مشاهده نماد اعتماد الکترونیکی علی شمس"><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=8351537&Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG' alt='نماد اعتماد الکترونیکی' style='cursor:pointer' code='i249fenOsdRVKRmBs8hLEgsCrTirXrSG'></a></div>
-  <div class="footer-vpn-bubble" role="note" hidden><span class="footer-vpn-bubble-icon" aria-hidden="true"><img src="https://img.icons8.com/color/48/000000/error--v1.gif" alt="" loading="eager" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"><span class="footer-vpn-fallback">!</span></span><span class="footer-vpn-animated-text">برای نماد اعتماد، VPN خود را خاموش کنید</span></div>
+  <span class="footer-vpn-note" aria-label="Turn off your VPN">Turn off your VPN</span>
 </section><div class="foot-bottom"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><a href="#top">بازگشت به بالا ↑︎</a></div></div></footer>
 <style id="social-service-options">
 .social-service-fields{margin:0 0 16px;padding:16px;border:1px solid #c9a7ff30;border-radius:16px;background:linear-gradient(145deg,#c9a7ff0a,#44d9ff06)}
@@ -1078,28 +1073,5 @@ document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
 
-<style id="vpn-bubble-detection-style">.footer-vpn-bubble[hidden]{display:none!important}</style>
-<script id="vpn-bubble-detection">
-(function(){
-  var bubble=document.querySelector('.footer-vpn-bubble');
-  if(!bubble)return;
-  bubble.hidden=true;
-  var controller=typeof AbortController!=='undefined'?new AbortController():null;
-  var timer=setTimeout(function(){if(controller)controller.abort()},4500);
-  fetch('https://iplogs.com/v1/check',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({}),
-    signal:controller?controller.signal:undefined
-  }).then(function(response){
-    if(!response.ok)throw new Error('VPN check unavailable');
-    return response.json();
-  }).then(function(data){
-    var isVpn=data.is_vpn===true || data.verdict==='vpn_detected';
-    if(isVpn)bubble.hidden=false;
-  }).catch(function(){
-    bubble.hidden=true;
-  }).finally(function(){clearTimeout(timer)});
-})();
-</script>
+
 </body></html>
