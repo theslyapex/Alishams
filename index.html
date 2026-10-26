@@ -683,6 +683,10 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .magazine-feature:after{content:"Aa";position:absolute;left:10px;bottom:-53px;font:800 170px/1 Manrope,sans-serif;letter-spacing:-13px;color:#d9ff7209;pointer-events:none}
 .magazine-feature:hover,.magazine-article:hover{transform:translateY(-5px);border-color:#d9ff7280}
 .magazine-feature .magazine-symbol{display:grid;place-items:center;width:48px;height:48px;border:1px solid #d9ff7255;border-radius:15px;background:#d9ff7210;color:var(--lime);font:700 23px Manrope}
+.magazine-feature .magazine-symbol svg{display:block;width:34px;height:34px;overflow:visible;animation:magazine-help-float 2.8s ease-in-out infinite;filter:drop-shadow(0 0 5px #d9ff7240)}
+.magazine-feature .magazine-symbol .help-spark{transform-box:fill-box;transform-origin:center;animation:magazine-help-spark 2.2s ease-in-out infinite}
+@keyframes magazine-help-float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-3px) rotate(2deg)}}
+@keyframes magazine-help-spark{0%,100%{opacity:.65;transform:scale(.85) rotate(0)}50%{opacity:1;transform:scale(1.12) rotate(18deg)}}
 .magazine-feature h3{position:relative;z-index:1;margin:25px 0 9px;font-size:22px;line-height:1.7}
 .magazine-feature p{position:relative;z-index:1;margin:0 0 20px;color:#b7b8c0;font-size:12px;line-height:2}
 .magazine-link{position:relative;z-index:1;display:inline-flex;align-items:center;gap:9px;align-self:flex-start;color:var(--lime);font-size:12px;font-weight:800}
@@ -710,7 +714,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
    </div>
    <div class="magazine-grid">
     <article class="magazine-feature">
-     <div><span class="magazine-symbol" aria-hidden="true">؟</span><h3>از سؤال تا راه‌حل،<br>با یک راهنمای درست شروع کن.</h3><p>مسیرهای قدم‌به‌قدم، نکته‌های اجرایی و اشتباهاتی که بهتر است پیش از هزینه‌کردن بشناسی.</p></div>
+     <div><span class="magazine-symbol" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 10.5A5.5 5.5 0 0 1 13.5 5h20A5.5 5.5 0 0 1 39 10.5v17a5.5 5.5 0 0 1-5.5 5.5H22l-8.5 6v-6.2A5.5 5.5 0 0 1 8 27.5v-17Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M19 17.5a5 5 0 1 1 8.2 3.85c-2.1 1.7-3.2 2.25-3.2 4.15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="29.5" r="1.35" fill="currentColor"/><g class="help-spark" stroke="#c5adff" stroke-width="2" stroke-linecap="round"><path d="M39 5v6M36 8h6"/><path d="M7 32v4M5 34h4"/></g></svg></span><h3>از سؤال تا راه‌حل،<br>با یک راهنمای درست شروع کن.</h3><p>مسیرهای قدم‌به‌قدم، نکته‌های اجرایی و اشتباهاتی که بهتر است پیش از هزینه‌کردن بشناسی.</p></div>
      <a class="magazine-link" href="/blog.html">ورود به مجله آموزشی <span aria-hidden="true">↗</span></a>
     </article>
     <a class="magazine-article" href="/articles/seo-basics-small-business.html">
