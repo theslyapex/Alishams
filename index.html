@@ -546,7 +546,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <a href="#services">خدمات</a>
 <a href="portfolio.html">نمونه‌کارها</a>
 <a href="videos.html">ویدئوها</a>
-<a href="blog.html">مجله آموزشی</a>
+
 <a href="about.html">درباره من</a>
 <div class="nav-dropdown">
 <button class="nav-dropdown-toggle" type="button" aria-expanded="false">همکاری <span aria-hidden="true">⌄</span></button>
@@ -669,6 +669,61 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
  </div>
 </section>
 
+<style id="learning-magazine-styles">
+.learning-magazine{position:relative;overflow:hidden}
+.learning-magazine:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 8% 45%,#b6a0ff12,transparent 38%),radial-gradient(ellipse at 90% 15%,#d9ff7210,transparent 34%)}
+.magazine-shell{position:relative;overflow:hidden;padding:clamp(22px,4vw,48px);border:1px solid #d9ff7238;border-radius:30px;background:linear-gradient(135deg,#171a1b 0%,#111318 58%,#17131f 100%);box-shadow:0 28px 90px #0003}
+.magazine-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:30px}
+.magazine-head h2{margin:12px 0 8px;font-size:clamp(30px,4.2vw,48px);line-height:1.45;letter-spacing:-1.1px}
+.magazine-head p{max-width:570px;margin:0;color:var(--muted);font-size:13px;line-height:2.1}
+.magazine-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #b6a0ff55;border-radius:999px;color:var(--lav);font-size:11px;white-space:nowrap}
+.magazine-badge:before{content:"✳";font-size:15px}
+.magazine-grid{display:grid;grid-template-columns:1.08fr 1fr 1fr;gap:13px}
+.magazine-feature{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:270px;grid-row:span 1;padding:23px;border:1px solid #d9ff7240;border-radius:21px;background:radial-gradient(ellipse at 85% 12%,#d9ff7219,transparent 45%),linear-gradient(145deg,#20251c,#13151a 70%);overflow:hidden;transition:transform .3s,border-color .3s}
+.magazine-feature:after{content:"Aa";position:absolute;left:10px;bottom:-53px;font:800 170px/1 Manrope,sans-serif;letter-spacing:-13px;color:#d9ff7209;pointer-events:none}
+.magazine-feature:hover,.magazine-article:hover{transform:translateY(-5px);border-color:#d9ff7280}
+.magazine-feature .magazine-symbol{display:grid;place-items:center;width:48px;height:48px;border:1px solid #d9ff7255;border-radius:15px;background:#d9ff7210;color:var(--lime);font:700 23px Manrope}
+.magazine-feature h3{position:relative;z-index:1;margin:25px 0 9px;font-size:22px;line-height:1.7}
+.magazine-feature p{position:relative;z-index:1;margin:0 0 20px;color:#b7b8c0;font-size:12px;line-height:2}
+.magazine-link{position:relative;z-index:1;display:inline-flex;align-items:center;gap:9px;align-self:flex-start;color:var(--lime);font-size:12px;font-weight:800}
+.magazine-link span{font:700 18px Manrope;transition:transform .25s}
+.magazine-link:hover span{transform:translateX(-4px)}
+.magazine-article{display:flex;flex-direction:column;align-items:flex-start;min-height:270px;padding:22px;border:1px solid var(--line);border-radius:21px;background:linear-gradient(150deg,#ffffff08,#ffffff02);transition:transform .3s,border-color .3s}
+.magazine-category{display:inline-flex;padding:6px 10px;border:1px solid #b6a0ff40;border-radius:999px;color:var(--lav);font-size:10px}
+.magazine-article:nth-child(3) .magazine-category{border-color:#ff8e7540;color:var(--coral)}
+.magazine-article h3{margin:22px 0 10px;font-size:17px;line-height:1.9}
+.magazine-article p{margin:0 0 20px;color:var(--muted);font-size:12px;line-height:2.05;flex:1}
+.magazine-bottom{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:19px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}
+.magazine-bottom strong{color:#e7e7ec;font-weight:600}
+.magazine-all{display:inline-flex;align-items:center;gap:10px;padding:11px 16px;border:1px solid #d9ff7255;border-radius:999px;color:var(--lime);font-size:12px;font-weight:800;transition:background .25s,transform .25s}
+.magazine-all:hover{background:#d9ff7210;transform:translateY(-2px)}
+@media(max-width:850px){.magazine-head{align-items:flex-start;flex-direction:column}.magazine-grid{grid-template-columns:1fr 1fr}.magazine-feature{grid-column:1/-1;min-height:230px}.magazine-article{min-height:250px}}
+@media(max-width:560px){.magazine-shell{padding:21px;border-radius:23px}.magazine-grid{grid-template-columns:1fr}.magazine-feature,.magazine-article{min-height:unset;padding:21px}.magazine-feature{grid-column:auto}.magazine-article h3{margin-top:17px}.magazine-bottom{align-items:flex-start;flex-direction:column}.magazine-all{width:100%;justify-content:center}}
+@media(prefers-reduced-motion:reduce){.magazine-feature,.magazine-article,.magazine-link span,.magazine-all{transition:none}}
+</style>
+<section class="section learning-magazine" id="learning-magazine" aria-labelledby="learningMagazineTitle">
+ <div class="wrap">
+  <div class="magazine-shell reveal">
+   <div class="magazine-head">
+    <div><span class="eyebrow">THE LEARNING EDITION</span><h2 id="learningMagazineTitle">دانش کاربردی؛<br><span style="color:var(--lime)">برای قدم بعدی کسب‌وکارت.</span></h2><p>راهنماهای روشن و قابل‌اجرا درباره طراحی سایت، سئو، تولید محتوا و ویدئو؛ برای تصمیم‌های بهتر، نه فقط خواندن چند نکته پراکنده.</p></div>
+    <span class="magazine-badge">۲۰ راهنمای کاربردی</span>
+   </div>
+   <div class="magazine-grid">
+    <article class="magazine-feature">
+     <div><span class="magazine-symbol" aria-hidden="true">✳</span><h3>از سؤال تا راه‌حل،<br>با یک راهنمای درست شروع کن.</h3><p>مسیرهای قدم‌به‌قدم، نکته‌های اجرایی و اشتباهاتی که بهتر است پیش از هزینه‌کردن بشناسی.</p></div>
+     <a class="magazine-link" href="/blog.html">ورود به مجله آموزشی <span aria-hidden="true">↗</span></a>
+    </article>
+    <a class="magazine-article" href="/articles/seo-basics-small-business.html">
+     <span class="magazine-category">سئو و رشد</span><h3>سئو برای کسب‌وکارهای کوچک؛ از کجا شروع کنیم؟</h3><p>اولویت‌بندی صفحه‌ها، محتوا و اقدامات فنی وقتی زمان و بودجه محدود است.</p><span class="magazine-link">مطالعه راهنما <span aria-hidden="true">↗</span></span>
+    </a>
+    <a class="magazine-article" href="/articles/website-design-checklist.html">
+     <span class="magazine-category">طراحی وب‌سایت</span><h3>چک‌لیست طراحی سایت حرفه‌ای پیش از انتشار</h3><p>موارد مهم تجربه کاربری، نسخه موبایل، محتوا و بررسی نهایی سایت.</p><span class="magazine-link">مطالعه راهنما <span aria-hidden="true">↗</span></span>
+    </a>
+   </div>
+   <div class="magazine-bottom"><span><strong>یادگیری کوتاه، تصمیم دقیق‌تر.</strong> راهنماها را بر اساس نیازت انتخاب کن.</span><a class="magazine-all" href="/blog.html">مشاهده همه مقاله‌ها <span aria-hidden="true">↗</span></a></div>
+  </div>
+ </div>
+</section>
 <section class="section" id="about"><div class="wrap about-grid"><div class="portrait reveal"><img class="portrait-photo" src="https://raw.githubusercontent.com/theslyapex/Alishams/main/assets/images/ali-shams-portrait.jpg" alt="تصویر صاحب استودیو" loading="lazy" decoding="async"><div class="portrait-label"><span>علی شمس · طراح و سازنده دیجیتال</span><span>ABOUT THE CREATOR</span></div></div><div class="about-copy reveal delay-1"><span class="eyebrow">A LITTLE ABOUT ME</span><h2>پشت هر پروژه،<br>یک فکر دقیق قرار دارد.</h2><p>من روی پیوند ایده، طراحی و اجرا تمرکز می‌کنم؛ از محتوایی که باید در چند ثانیه توجه مخاطب را جلب کند تا صفحه‌ای که باید حس اعتماد بسازد. برای من، نتیجه خوب از شنیدن درست نیاز پروژه و توجه به جزئیات شروع می‌شود.</p><div class="stats"><div class="stat"><strong>با چند قدم ساده</strong><span>ایده تا اجرا</span></div><div class="stat"><strong>100%</strong><span>توجه به جزئیات</span></div><div class="stat"><strong>∞</strong><span>کنجکاوی خلاق</span></div></div><p style="margin-top:22px"><a class="btn btn-quiet" href="about.html">آشنایی بیشتر با من ↗︎</a></p></div></div></section>
 <section class="section reviews-section" id="reviews"><div class="wrap principles-wrap">
 <div class="section-head reveal"><div><span class="eyebrow">THE WAY I WORK <i class="principles-live-dot"></i></span><h2>همکاری خوب، از <span class="principles-title-accent">جزئیات</span> شروع می‌شود.</h2><p class="principles-intro">سه اصل ساده که مسیر یک همکاری حرفه‌ای را روشن‌تر می‌کنند.</p></div><span class="principles-side-note">MY<br>PRINCIPLES <b>↙︎</b></span></div>
@@ -739,7 +794,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(max-width:520px){.newsletter-form{flex-direction:column}.newsletter-form button{width:100%}.newsletter-panel{border-radius:22px}}
 </style>
-<footer class="footer"><div class="wrap"><div class="footer-inner"><a class="brand" href="#top"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><span>ایده‌پردازی، طراحی و اجرا؛ با دقت در جزئیات.</span><div class="footer-links"><a href="#services">خدمات</a><a href="portfolio.html">نمونه‌کارها</a><a href="blog.html">مجله آموزشی</a><a href="about.html">درباره من</a><div class="footer-tracking"><button type="button" class="footer-tracking-toggle" id="footerTrackingToggle" aria-expanded="false" aria-controls="footerTrackingMenu">پیگیری <span aria-hidden="true">⌄</span></button><div class="footer-tracking-menu" id="footerTrackingMenu" hidden><a href="order-tracking.html">پیگیری سفارش</a><a href="project-tracking.html">پیگیری پروژه</a></div></div><a href="https://t.me/theslyapex" target="_blank" rel="noopener noreferrer">تلگرام</a></div></div><div class="footer-trust-seal"><a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=8351537&Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=8351537&Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG' alt='' style='cursor:pointer' code='i249fenOsdRVKRmBs8hLEgsCrTirXrSG'></a></div><div class="foot-bottom"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><a href="#top">بازگشت به بالا ↑︎</a></div></div></footer>
+<footer class="footer"><div class="wrap"><div class="footer-inner"><a class="brand" href="#top"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><span>ایده‌پردازی، طراحی و اجرا؛ با دقت در جزئیات.</span><div class="footer-links"><a href="#services">خدمات</a><a href="portfolio.html">نمونه‌کارها</a><a href="about.html">درباره من</a><div class="footer-tracking"><button type="button" class="footer-tracking-toggle" id="footerTrackingToggle" aria-expanded="false" aria-controls="footerTrackingMenu">پیگیری <span aria-hidden="true">⌄</span></button><div class="footer-tracking-menu" id="footerTrackingMenu" hidden><a href="order-tracking.html">پیگیری سفارش</a><a href="project-tracking.html">پیگیری پروژه</a></div></div><a href="https://t.me/theslyapex" target="_blank" rel="noopener noreferrer">تلگرام</a></div></div><div class="footer-trust-seal"><a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=8351537&Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=8351537&Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG' alt='' style='cursor:pointer' code='i249fenOsdRVKRmBs8hLEgsCrTirXrSG'></a></div><div class="foot-bottom"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><a href="#top">بازگشت به بالا ↑︎</a></div></div></footer>
 <style id="social-service-options">
 .social-service-fields{margin:0 0 16px;padding:16px;border:1px solid #c9a7ff30;border-radius:16px;background:linear-gradient(145deg,#c9a7ff0a,#44d9ff06)}
 .social-service-fields[hidden],#telegramGiftFields[hidden]{display:none!important}
