@@ -403,6 +403,70 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 @media(max-width:620px){.economic-package-banner{align-items:flex-start;flex-direction:column;padding:18px;gap:12px}.economic-package-copy strong{font-size:16px}.economic-package-price{align-items:flex-start;font-size:21px}}
 @media(prefers-reduced-motion:reduce){.economic-package-banner{transition:none}.economic-package-price b:before{animation:none}}
 
+
+/* HOME PORTFOLIO SHOWCASES */
+.portfolio-showcase{position:relative;isolation:isolate;overflow:hidden}
+.portfolio-showcase:before{content:"";position:absolute;z-index:-1;width:480px;height:480px;border-radius:50%;filter:blur(2px);pointer-events:none;opacity:.65}
+.portfolio-showcase--logos:before{right:-210px;top:8%;background:radial-gradient(circle,#d9ff7214,transparent 68%)}
+.portfolio-showcase--ads:before{left:-210px;top:5%;background:radial-gradient(circle,#b6a0ff1c,transparent 68%)}
+.portfolio-showcase .wrap{position:relative}
+.portfolio-showcase-panel{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,70px);align-items:center;padding:clamp(22px,4.5vw,54px);border:1px solid rgba(255,255,255,.12);border-radius:30px;background:linear-gradient(125deg,rgba(255,255,255,.055),rgba(255,255,255,.018) 55%,rgba(255,255,255,.035));box-shadow:0 35px 100px #0003;overflow:hidden}
+.portfolio-showcase--logos .portfolio-showcase-panel{border-color:#d9ff722b}
+.portfolio-showcase--ads .portfolio-showcase-panel{border-color:#b6a0ff35}
+.portfolio-showcase-copy{position:relative;z-index:2}
+.portfolio-showcase-copy h2{font-size:clamp(30px,4.2vw,49px);line-height:1.45;letter-spacing:-1.2px;margin:18px 0 14px}
+.portfolio-showcase-copy h2 span{color:var(--lime)}
+.portfolio-showcase--ads .portfolio-showcase-copy h2 span{color:var(--lav)}
+.portfolio-showcase-copy p{max-width:470px;color:var(--muted);font-size:13px;line-height:2.2;margin:0 0 24px}
+.portfolio-showcase-meta{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:25px}
+.portfolio-showcase-meta span{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid #ffffff17;border-radius:999px;background:#ffffff05;color:#d6d6dc;font-size:10px}
+.portfolio-showcase-meta i{width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px #d9ff7288}
+.portfolio-showcase--ads .portfolio-showcase-meta i{background:var(--lav);box-shadow:0 0 10px #b6a0ff99}
+.portfolio-showcase-cta{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:51px;padding:12px 20px;border:1px solid var(--lime);border-radius:999px;background:var(--lime);color:#10110d;font-size:12px;font-weight:800;transition:transform .25s var(--ease),box-shadow .25s}
+.portfolio-showcase--ads .portfolio-showcase-cta{background:var(--lav);border-color:var(--lav)}
+.portfolio-showcase-cta:hover{transform:translateY(-3px);box-shadow:0 12px 34px #d9ff7225}
+.portfolio-showcase--ads .portfolio-showcase-cta:hover{box-shadow:0 12px 34px #b6a0ff2b}
+.portfolio-showcase-cta b{font:700 20px Manrope;transition:transform .25s}
+.portfolio-showcase-cta:hover b{transform:translateX(-4px)}
+.portfolio-showcase-art{position:relative;min-width:0;min-height:350px;display:grid;place-items:center;perspective:900px}
+.portfolio-showcase-art:before{content:"";position:absolute;width:75%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(217,255,114,.14),transparent 68%);filter:blur(14px);animation:portfolioGlow 6s ease-in-out infinite}
+.portfolio-showcase--ads .portfolio-showcase-art:before{background:radial-gradient(circle,rgba(182,160,255,.2),transparent 68%)}
+@keyframes portfolioGlow{0%,100%{transform:scale(.92);opacity:.65}50%{transform:scale(1.08);opacity:1}}
+.logo-specimen{position:relative;z-index:1;width:min(100%,440px);height:320px;transform:rotate(-3deg);transition:transform .6s var(--ease)}
+.portfolio-showcase-panel:hover .logo-specimen{transform:rotate(0) translateY(-4px)}
+.logo-specimen-main{position:absolute;inset:12% 12% 12% 12%;display:flex;align-items:center;justify-content:center;gap:20px;border:1px solid #ffffff25;border-radius:25px;background:linear-gradient(145deg,#20251b,#11140f 72%);box-shadow:0 28px 65px #0008;overflow:hidden}
+.logo-specimen-main:before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 25%,#ffffff0c 47%,transparent 65%);transform:translateX(-100%);animation:logoSheen 5.5s ease-in-out infinite}
+@keyframes logoSheen{0%,35%{transform:translateX(-100%)}65%,100%{transform:translateX(100%)}}
+.logo-symbol{position:relative;width:94px;height:94px;display:grid;place-items:center;border:1px solid #d9ff726b;border-radius:27px;color:var(--lime);font:800 43px Manrope;background:linear-gradient(145deg,#d9ff7224,#d9ff7205);box-shadow:0 0 45px #d9ff7212;transform:rotate(-8deg);animation:logoSymbolFloat 5s ease-in-out infinite}
+.logo-symbol:before,.logo-symbol:after{content:"";position:absolute;border:1px solid #d9ff7252;border-radius:inherit;inset:-9px;animation:logoRing 8s linear infinite}
+.logo-symbol:after{inset:-18px;border-color:#b6a0ff50;animation-direction:reverse;animation-duration:12s}
+@keyframes logoSymbolFloat{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-7px) rotate(-2deg)}}
+@keyframes logoRing{to{transform:rotate(360deg)}}
+.logo-wordmark{position:relative;z-index:1;direction:ltr;text-align:left}
+.logo-wordmark strong{display:block;color:#f4f3ec;font:800 clamp(25px,3vw,37px)/1.1 Manrope;letter-spacing:-1.7px}
+.logo-wordmark span{display:block;margin-top:9px;color:#a6b58c;font:600 9px Manrope;letter-spacing:3px}
+.logo-specimen-tag{position:absolute;z-index:2;padding:8px 12px;border:1px solid #ffffff20;border-radius:12px;background:rgba(15,17,14,.85);backdrop-filter:blur(15px);color:#e8e9df;font-size:10px;box-shadow:0 14px 35px #0005}
+.logo-specimen-tag--top{top:3%;right:2%;animation:showcaseFloat 5s ease-in-out infinite}
+.logo-specimen-tag--bottom{bottom:1%;left:1%;animation:showcaseFloat 6s ease-in-out infinite reverse}
+.logo-specimen-tag b{color:var(--lime);font:700 10px Manrope;letter-spacing:1px}
+.logo-specimen-orbit{position:absolute;inset:2% 10%;border:1px dashed #d9ff723d;border-radius:50%;transform:rotate(-23deg)}
+.ad-campaign{position:relative;z-index:1;width:min(100%,440px);height:330px;direction:ltr}
+.ad-card{position:absolute;overflow:hidden;border:1px solid #ffffff32;border-radius:18px;box-shadow:0 24px 55px #0007;transition:transform .55s var(--ease)}
+.ad-card--back{width:45%;height:64%;top:10%;left:2%;transform:rotate(-10deg);background:linear-gradient(145deg,#f4d8bd,#b87d62 52%,#392c3a)}
+.ad-card--back:before{content:"SOCIAL\A CAMPAIGN";white-space:pre;position:absolute;left:14px;bottom:15px;color:#211a25;font:800 18px/1.05 Manrope;letter-spacing:-.5px}
+.ad-card--back:after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;right:-16px;top:10px;background:radial-gradient(circle at 30% 25%,#fff4e4,#b6a0ff 35%,#4b3b68 70%);box-shadow:0 0 35px #b6a0ff66}
+.ad-card--front{width:57%;height:78%;top:16%;right:3%;transform:rotate(7deg);background:linear-gradient(145deg,#d8ff72 0%,#a6c95b 34%,#20271b 34.5%,#10130f 100%)}
+.ad-card--front:before{content:"MAKE\A IT\A MATTER";white-space:pre;position:absolute;left:15px;bottom:18px;color:#f5f4ed;font:800 clamp(23px,3vw,35px)/.93 Manrope;letter-spacing:-1.7px}
+.ad-card--front:after{content:"";position:absolute;right:12px;top:13px;width:75px;height:75px;border:1px solid #1118;border-radius:50%;box-shadow:0 0 0 9px #1111,0 0 0 18px #1111}
+.ad-card-label{position:absolute;top:12px;left:13px;color:#182012;font:700 8px Manrope;letter-spacing:1px}
+.ad-card--back .ad-card-label{color:#2b1d2d}
+.ad-campaign-sticker{position:absolute;z-index:3;right:0;bottom:2%;padding:10px 14px;border:1px solid #b6a0ff77;border-radius:13px;background:#17131fdc;color:#f0eaff;font-size:10px;box-shadow:0 15px 35px #0007;backdrop-filter:blur(15px);animation:showcaseFloat 4.8s ease-in-out infinite}
+.ad-campaign-sticker strong{display:block;color:var(--lav);font:700 10px Manrope;letter-spacing:.8px}
+@keyframes showcaseFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media(max-width:760px){.portfolio-showcase{padding:70px 0}.portfolio-showcase-panel{grid-template-columns:1fr;gap:18px;padding:25px 20px;border-radius:24px}.portfolio-showcase-copy{order:1}.portfolio-showcase-art{order:0;min-height:280px}.logo-specimen{height:270px}.logo-specimen-main{inset:12% 7%;gap:14px}.logo-symbol{width:70px;height:70px;border-radius:21px;font-size:32px}.logo-wordmark strong{font-size:clamp(22px,6vw,31px)}.logo-wordmark span{font-size:8px;letter-spacing:2px}.ad-campaign{height:280px;max-width:390px}.portfolio-showcase-copy h2{font-size:clamp(29px,8vw,39px)}.portfolio-showcase-copy p{font-size:12px}.portfolio-showcase .section-head{margin-bottom:25px}}
+@media(max-width:420px){.portfolio-showcase-panel{padding:19px 15px}.portfolio-showcase-art{min-height:245px}.logo-specimen{height:240px}.logo-specimen-main{inset:12% 5%;gap:10px}.logo-symbol{width:58px;height:58px;font-size:27px;border-radius:17px}.logo-wordmark strong{font-size:21px}.logo-wordmark span{font-size:7px;letter-spacing:1.5px}.logo-specimen-tag{font-size:9px;padding:7px 9px}.ad-campaign{height:245px}.ad-card--front:before{font-size:25px}.ad-card--back:before{font-size:15px}}
+@media(prefers-reduced-motion:reduce){.portfolio-showcase-art:before,.logo-specimen-main:before,.logo-symbol,.logo-symbol:before,.logo-symbol:after,.logo-specimen-tag,.ad-campaign-sticker{animation:none!important}.portfolio-showcase-panel:hover .logo-specimen{transform:none}.portfolio-showcase-cta,.ad-card,.logo-specimen{transition:none}}
+
 </style>
 <style id="principles-redesign">
 /* Scoped redesign: WORK PRINCIPLES section only */
@@ -645,6 +709,49 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <div class="work-card reveal delay-1"><a class="work-art work-art-social" href="https://theslyapex.github.io/SHIRAZEH/" target="_blank" rel="noopener noreferrer" aria-label="مشاهده وبسایت شیرازه"><span class="work-type">WEB DESIGN · SHIRAZEH RESUME BUILDER</span><img src="https://raw.githubusercontent.com/theslyapex/Alishams/main/assets/images/shirazeh.jpg" alt="پیش‌نمایش تصویری وبسایت شیرازه" loading="lazy" decoding="async"><span class="screenshot-open">مشاهده وب‌سایت ↗︎</span></a><div class="work-info"><div><h3>طراحی صفر تا صد وبسایت با موضوع ساخت رزومه آنلاین</h3><p>طراحی رابط کاربری، طراحی ابزار · شیرازه</p><a class="case-study-link" href="case-studies/shirazeh.html">مطالعهٔ موردی پروژه <span aria-hidden="true">↗︎</span></a></div></div></div>
 <div class="work-card reveal delay-1"><a class="work-art work-art-social" href="https://theslyapex.github.io/Abzarino/" target="_blank" rel="noopener noreferrer" aria-label="مشاهده وبسایت ابزارینو"><span class="work-type">WEB DESIGN · ABZARINO</span><img src="https://raw.githubusercontent.com/theslyapex/Alishams/main/assets/images/abzarino.jpg" alt="پیش‌نمایش تصویری وبسایت ابزارینو" loading="lazy" decoding="async"><span class="screenshot-open">مشاهده وب‌سایت ↗︎</span></a><div class="work-info"><div><h3>طراحی صفر تا صد وبسایت با موضوع ابزارهای کاربردی</h3><p>طراحی رابط کاربری، طراحی · ابزارینو</p><a class="case-study-link" href="case-studies/abzarino.html">مطالعهٔ موردی پروژه <span aria-hidden="true">↗︎</span></a></div></div></div>
 </div></div></section>
+
+
+<section class="section portfolio-showcase portfolio-showcase--logos" id="logo-showcase-home" aria-labelledby="logoShowcaseHomeTitle">
+ <div class="wrap">
+  <div class="portfolio-showcase-panel reveal">
+   <div class="portfolio-showcase-copy">
+    <span class="eyebrow">LOGO DESIGN · SIGNATURE IDENTITY</span>
+    <h2 id="logoShowcaseHomeTitle">یک امضا برای برندت؛<br><span>فراتر از یک نشانه.</span></h2>
+    <p>هر لوگو باید شخصیت برند را در یک نگاه منتقل کند. مجموعه نمونه‌کارهای طراحی لوگو را ببین و با سبک‌های مختلف هویت بصری آشنا شو.</p>
+    <div class="portfolio-showcase-meta"><span><i></i> هویت بصری اختصاصی</span><span><i></i> جزئیات حساب‌شده</span><span><i></i> طراحی هدفمند</span></div>
+    <a class="portfolio-showcase-cta" href="logo-portfolio.html">مشاهده نمونه‌کارهای لوگو <b aria-hidden="true">↗</b></a>
+   </div>
+   <div class="portfolio-showcase-art" aria-hidden="true">
+    <div class="logo-specimen">
+     <div class="logo-specimen-orbit"></div>
+     <div class="logo-specimen-main"><div class="logo-symbol">A<span style="font-size:.7em;position:absolute;right:12px;bottom:8px">✦</span></div><div class="logo-wordmark"><strong>ALISHAMS</strong><span>DESIGN STUDIO</span></div></div>
+     <div class="logo-specimen-tag logo-specimen-tag--top">LOGO SYSTEM <b> / 01</b></div>
+     <div class="logo-specimen-tag logo-specimen-tag--bottom">هویت متمایز، ماندگار</div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+<section class="section portfolio-showcase portfolio-showcase--ads" id="ad-showcase-home" aria-labelledby="adShowcaseHomeTitle">
+ <div class="wrap">
+  <div class="portfolio-showcase-panel reveal">
+   <div class="portfolio-showcase-art" aria-hidden="true">
+    <div class="ad-campaign">
+     <div class="ad-card ad-card--back"><span class="ad-card-label">CREATIVE / 02</span></div>
+     <div class="ad-card ad-card--front"><span class="ad-card-label">CAMPAIGN VISUAL</span></div>
+     <div class="ad-campaign-sticker"><strong>VISUAL STORYTELLING</strong>تصویر، پیام، تأثیر</div>
+    </div>
+   </div>
+   <div class="portfolio-showcase-copy">
+    <span class="eyebrow">ADVERTISING VISUALS · CAMPAIGNS</span>
+    <h2 id="adShowcaseHomeTitle">تبلیغی که دیده می‌شود؛<br><span>پیامی که می‌ماند.</span></h2>
+    <p>تصاویر تبلیغاتی فقط برای زیبا بودن نیستند؛ باید توجه جلب کنند، پیام را سریع منتقل کنند و مخاطب را به اقدام نزدیک‌تر کنند. نمونه‌کارهای بصری تبلیغاتی را بررسی کن.</p>
+    <div class="portfolio-showcase-meta"><span><i></i> طراحی چشم‌گیر</span><span><i></i> پیام روشن</span><span><i></i> مناسب فضای دیجیتال</span></div>
+    <a class="portfolio-showcase-cta" href="ad-image-portfolio.html">مشاهده تصاویر تبلیغاتی <b aria-hidden="true">↗</b></a>
+   </div>
+  </div>
+ </div>
+</section>
 
 <section class="section video-showcase" id="video-showcase" aria-labelledby="videoShowcaseTitle">
  <div class="wrap">
