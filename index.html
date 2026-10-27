@@ -497,6 +497,61 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 
 @media(prefers-reduced-motion:reduce){.portfolio-showcase-art:before,.logo-specimen-main:before,.logo-symbol,.logo-symbol:before,.logo-symbol:after,.logo-specimen-tag,.ad-campaign-sticker{animation:none!important}.portfolio-showcase-panel:hover .logo-specimen{transform:none}.portfolio-showcase-cta,.ad-card,.logo-specimen{transition:none}}
 
+
+/* Full portfolio gateway */
+.all-portfolio-promo{padding-top:clamp(28px,5vw,64px);padding-bottom:clamp(35px,6vw,76px)}
+.all-portfolio-panel{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.92fr);gap:clamp(24px,5vw,68px);align-items:center;overflow:hidden;padding:clamp(25px,5vw,58px);border:1px solid rgba(217,255,114,.2);border-radius:clamp(24px,3vw,38px);background:radial-gradient(ellipse at 100% 0,rgba(217,255,114,.09),transparent 36%),radial-gradient(ellipse at 0 100%,rgba(155,124,255,.12),transparent 43%),linear-gradient(135deg,#12151b 0%,#0b0d12 60%,#11131a 100%);box-shadow:0 28px 90px rgba(0,0,0,.22)}
+.all-portfolio-panel:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.18;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(120deg,#000,transparent 75%)}
+.all-portfolio-copy{position:relative;z-index:2;min-width:0}
+.all-portfolio-copy .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:10px;letter-spacing:1.8px}
+.all-portfolio-copy h2{margin:13px 0 15px;font-size:clamp(32px,4.4vw,56px);line-height:1.45;font-weight:900;letter-spacing:-1px}
+.all-portfolio-copy h2 span{color:var(--lime);text-shadow:0 0 35px rgba(217,255,114,.13)}
+.all-portfolio-copy>p{max-width:490px;color:#b2b7c3;font-size:clamp(12px,1.2vw,14px);line-height:2.25;margin:0}
+.all-portfolio-points{display:grid;gap:10px;margin:23px 0 27px}
+.all-portfolio-points span{display:flex;align-items:center;gap:10px;color:#d3d6de;font-size:12px}
+.all-portfolio-points i{width:21px;height:21px;display:grid;place-items:center;flex:0 0 21px;border:1px solid rgba(217,255,114,.35);border-radius:7px;background:rgba(217,255,114,.08);color:var(--lime);font-size:11px;font-style:normal}
+.all-portfolio-cta{display:inline-flex;align-items:center;justify-content:center;gap:20px;min-height:52px;padding:0 21px;border:1px solid var(--lime);border-radius:15px;background:var(--lime);color:#11140a;font-size:13px;font-weight:900;box-shadow:0 9px 30px rgba(217,255,114,.12);transition:transform .22s,box-shadow .22s}
+.all-portfolio-cta b{font-size:18px;transition:transform .22s}
+.all-portfolio-cta:hover{transform:translateY(-3px);box-shadow:0 14px 38px rgba(217,255,114,.2)}
+.all-portfolio-cta:hover b{transform:translate(2px,-2px)}
+.all-portfolio-footnote{display:flex;align-items:center;gap:9px;margin-top:24px;color:#777f8d;font:700 9px Manrope,sans-serif;letter-spacing:1.3px}
+.all-portfolio-footnote i{width:4px;height:4px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime)}
+.all-portfolio-art{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:365px;aspect-ratio:1.02/1;overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:27px;background:radial-gradient(ellipse at 50% 48%,rgba(217,255,114,.1),transparent 38%),linear-gradient(145deg,#1a1e26,#0c0e13 75%);color:inherit;text-decoration:none;box-shadow:0 20px 60px rgba(0,0,0,.28);transition:border-color .25s,transform .25s}
+.all-portfolio-art:hover{border-color:rgba(217,255,114,.48);transform:translateY(-3px)}
+.all-portfolio-art:focus-visible,.all-portfolio-cta:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+.all-portfolio-art-top,.all-portfolio-art-bottom{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:17px 19px;color:#9da4b1;font:700 9px Manrope,sans-serif;letter-spacing:1.1px}
+.all-portfolio-art-top>span{display:flex;gap:4px}.all-portfolio-art-top>span i{width:6px;height:6px;border-radius:50%;background:#656c79}.all-portfolio-art-top>span i:first-child{background:var(--lime)}
+.all-portfolio-art-top small{font-size:8px;color:#697180}
+.all-portfolio-art-bottom{border-top:1px solid rgba(255,255,255,.07);color:#aab0bc}.all-portfolio-art-bottom b{display:grid;place-items:center;width:29px;height:29px;border-radius:10px;background:var(--lime);color:#10120a;font-size:17px;transition:transform .25s}
+.all-portfolio-art:hover .all-portfolio-art-bottom b{transform:translate(2px,-2px)}
+.all-portfolio-stack{position:absolute;inset:66px 20px 55px;perspective:900px}
+.all-portfolio-tile{position:absolute;overflow:hidden;border:1px solid rgba(255,255,255,.15);border-radius:17px;background:linear-gradient(140deg,rgba(36,41,51,.96),rgba(17,20,27,.96));box-shadow:0 24px 55px rgba(0,0,0,.42)}
+.all-portfolio-tile>span{display:block;padding:12px 14px 0;color:#9aa2b0;font:700 8px Manrope,sans-serif;letter-spacing:1px}
+.all-portfolio-tile--back{width:66%;height:62%;top:4%;right:5%;transform:rotate(8deg) translateX(-2%);opacity:.63}
+.all-portfolio-tile--mid{width:69%;height:61%;top:15%;left:0;transform:rotate(-8deg);opacity:.82}
+.all-portfolio-tile--front{width:73%;height:68%;right:12%;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;border-color:rgba(217,255,114,.35);background:radial-gradient(ellipse at 50% 20%,rgba(217,255,114,.12),transparent 45%),linear-gradient(145deg,#1c2226,#0b0d11);transform:rotate(-1.5deg);transition:transform .35s,border-color .35s}
+.all-portfolio-art:hover .all-portfolio-tile--front{transform:rotate(0) translateY(-4px);border-color:rgba(217,255,114,.65)}
+.all-portfolio-mini-browser{position:relative;margin:15px;height:calc(100% - 42px);border:1px solid #ffffff15;border-radius:9px;background:linear-gradient(150deg,#252b35,#12151c);padding:13px 10px}
+.all-portfolio-mini-browser i{display:inline-block;width:4px;height:4px;margin-left:3px;border-radius:50%;background:#777f8d}
+.all-portfolio-mini-browser i:first-child{background:var(--lime)}
+.all-portfolio-mini-browser b{display:block;width:72%;height:5px;margin:12px 0;border-radius:9px;background:#b5bdca25}
+.all-portfolio-mini-browser b:nth-of-type(2){width:48%;background:#d9ff7250}
+.all-portfolio-mini-browser em{display:block;width:100%;height:34%;margin-top:12px;border-radius:6px;background:linear-gradient(115deg,#d9ff7220,#9b7cff30)}
+.all-portfolio-mini-tools{height:calc(100% - 38px);display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:12px}
+.all-portfolio-mini-tools i{display:grid;place-items:center;border:1px solid #ffffff14;border-radius:9px;background:#ffffff07;color:var(--lime);font-size:20px;font-style:normal}
+.all-portfolio-mark{position:relative;display:grid;place-items:center;width:93px;height:93px;margin:16px 0 10px;border:1px solid rgba(217,255,114,.36);border-radius:28px;background:linear-gradient(145deg,#d9ff721b,#d9ff7204);box-shadow:0 0 45px rgba(217,255,114,.08);transform:rotate(-5deg)}
+.all-portfolio-mark b{font:800 63px Manrope,sans-serif;color:#f4f6ee;text-shadow:0 0 24px rgba(217,255,114,.15)}
+.all-portfolio-mark i{position:absolute;right:12px;bottom:12px;color:var(--lime);font-size:16px;font-style:normal}
+.all-portfolio-tile--front>strong{font:800 11px Manrope,sans-serif;letter-spacing:2px;color:#f2f4ec}
+.all-portfolio-tile--front>small{margin-top:7px;color:#858d9b;font:700 7px Manrope,sans-serif;letter-spacing:1.4px}
+.all-portfolio-orbit{position:absolute;z-index:0;pointer-events:none;border:1px solid rgba(217,255,114,.12);border-radius:50%;aspect-ratio:1}
+.all-portfolio-orbit--one{width:76%;top:14%;left:10%;animation:allPortfolioOrbit 28s linear infinite}
+.all-portfolio-orbit--two{width:54%;top:25%;left:21%;border-color:rgba(155,124,255,.17);border-style:dashed;animation:allPortfolioOrbit 36s linear infinite reverse}
+.all-portfolio-orbit--one:after,.all-portfolio-orbit--two:after{content:"";position:absolute;top:17%;left:8%;width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 15px rgba(217,255,114,.7)}
+@keyframes allPortfolioOrbit{to{transform:rotate(360deg)}}
+@media(max-width:760px){.all-portfolio-panel{grid-template-columns:1fr;gap:27px;padding:25px 20px;border-radius:25px}.all-portfolio-copy h2{font-size:clamp(34px,9vw,47px)}.all-portfolio-art{width:100%;min-height:320px;max-height:430px;aspect-ratio:1/1}.all-portfolio-stack{inset:62px 17px 52px}.all-portfolio-tile--front{width:76%;right:10%}.all-portfolio-mark{width:83px;height:83px}.all-portfolio-mark b{font-size:56px}}
+@media(max-width:390px){.all-portfolio-panel{padding:22px 15px}.all-portfolio-copy h2{font-size:32px}.all-portfolio-copy>p{font-size:12px}.all-portfolio-cta{width:100%;gap:12px;padding:0 12px;font-size:12px}.all-portfolio-art{min-height:290px}.all-portfolio-art-top,.all-portfolio-art-bottom{padding:13px}.all-portfolio-stack{inset:56px 12px 48px}}
+@media(prefers-reduced-motion:reduce){.all-portfolio-orbit--one,.all-portfolio-orbit--two{animation:none!important}.all-portfolio-art,.all-portfolio-tile--front,.all-portfolio-cta,.all-portfolio-cta b{transition:none!important}}
 </style>
 <style id="principles-redesign">
 /* Scoped redesign: WORK PRINCIPLES section only */
@@ -739,6 +794,38 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <div class="work-card reveal delay-1"><a class="work-art work-art-social" href="https://theslyapex.github.io/SHIRAZEH/" target="_blank" rel="noopener noreferrer" aria-label="مشاهده وبسایت شیرازه"><span class="work-type">WEB DESIGN · SHIRAZEH RESUME BUILDER</span><img src="https://raw.githubusercontent.com/theslyapex/Alishams/main/assets/images/shirazeh.jpg" alt="پیش‌نمایش تصویری وبسایت شیرازه" loading="lazy" decoding="async"><span class="screenshot-open">مشاهده وب‌سایت ↗︎</span></a><div class="work-info"><div><h3>طراحی صفر تا صد وبسایت با موضوع ساخت رزومه آنلاین</h3><p>طراحی رابط کاربری، طراحی ابزار · شیرازه</p><a class="case-study-link" href="case-studies/shirazeh.html">مطالعهٔ موردی پروژه <span aria-hidden="true">↗︎</span></a></div></div></div>
 <div class="work-card reveal delay-1"><a class="work-art work-art-social" href="https://theslyapex.github.io/Abzarino/" target="_blank" rel="noopener noreferrer" aria-label="مشاهده وبسایت ابزارینو"><span class="work-type">WEB DESIGN · ABZARINO</span><img src="https://raw.githubusercontent.com/theslyapex/Alishams/main/assets/images/abzarino.jpg" alt="پیش‌نمایش تصویری وبسایت ابزارینو" loading="lazy" decoding="async"><span class="screenshot-open">مشاهده وب‌سایت ↗︎</span></a><div class="work-info"><div><h3>طراحی صفر تا صد وبسایت با موضوع ابزارهای کاربردی</h3><p>طراحی رابط کاربری، طراحی · ابزارینو</p><a class="case-study-link" href="case-studies/abzarino.html">مطالعهٔ موردی پروژه <span aria-hidden="true">↗︎</span></a></div></div></div>
 </div></div></section>
+
+
+<section class="section all-portfolio-promo" id="all-portfolio-promo" aria-labelledby="allPortfolioPromoTitle">
+ <div class="wrap">
+  <div class="all-portfolio-panel reveal">
+   <div class="all-portfolio-copy">
+    <span class="eyebrow">THE FULL CREATIVE ARCHIVE · 2026</span>
+    <h2 id="allPortfolioPromoTitle">همه‌ی ایده‌ها،<br><span>در یک قاب.</span></h2>
+    <p>از طراحی وب‌سایت و ابزارهای آنلاین تا ویدئوها و پروژه‌های دیجیتال؛ نگاهی کامل‌تر به مسیر ایده تا اجرا داشته باش.</p>
+    <div class="all-portfolio-points">
+     <span><i aria-hidden="true">✓</i> پروژه‌های واقعی و قابل بررسی</span>
+     <span><i aria-hidden="true">✓</i> دسته‌بندی برای مرور سریع‌تر</span>
+     <span><i aria-hidden="true">✓</i> دسترسی مستقیم به جزئیات هر اثر</span>
+    </div>
+    <a class="all-portfolio-cta" href="portfolio.html">ورود به همه‌ی نمونه‌کارها <b aria-hidden="true">↗</b></a>
+    <span class="all-portfolio-footnote">PORTFOLIO INDEX <i aria-hidden="true"></i> SELECTED DIGITAL WORKS</span>
+   </div>
+   <a class="all-portfolio-art" href="portfolio.html" aria-label="مشاهده همه نمونه‌کارهای علی شمس">
+    <div class="all-portfolio-orbit all-portfolio-orbit--one"></div>
+    <div class="all-portfolio-orbit all-portfolio-orbit--two"></div>
+    <div class="all-portfolio-art-top"><span><i></i><i></i><i></i></span><b>ALISHAMS / WORKS</b><small>INDEX 001—∞</small></div>
+    <div class="all-portfolio-stack">
+     <div class="all-portfolio-tile all-portfolio-tile--back"><span>01 / WEB DESIGN</span><div class="all-portfolio-mini-browser"><i></i><i></i><i></i><b></b><b></b><em></em></div></div>
+     <div class="all-portfolio-tile all-portfolio-tile--mid"><span>02 / DIGITAL TOOLS</span><div class="all-portfolio-mini-tools"><i>✳</i><i>⌘</i><i>↗</i><i>◈</i></div></div>
+     <div class="all-portfolio-tile all-portfolio-tile--front"><span>03 / CREATIVE WORK</span><div class="all-portfolio-mark"><b>A</b><i>✦</i></div><strong>IDEA → IMPACT</strong><small>DESIGN · BUILD · REFINE</small></div>
+    </div>
+    <div class="all-portfolio-art-bottom"><span>EXPLORE THE COLLECTION</span><b>↗</b></div>
+   </a>
+  </div>
+ </div>
+</section>
+
 
 
 <section class="section portfolio-showcase portfolio-showcase--logos" id="logo-showcase-home" aria-labelledby="logoShowcaseHomeTitle">
