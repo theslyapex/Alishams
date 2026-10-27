@@ -78,3 +78,59 @@ drop policy if exists "Admins update portfolio images" on storage.objects;
 create policy "Admins update portfolio images" on storage.objects for update to authenticated using (bucket_id='portfolio-images' and exists(select 1 from public.portfolio_admins a where a.user_id=auth.uid())) with check (bucket_id='portfolio-images' and exists(select 1 from public.portfolio_admins a where a.user_id=auth.uid()));
 drop policy if exists "Admins delete portfolio images" on storage.objects;
 create policy "Admins delete portfolio images" on storage.objects for delete to authenticated using (bucket_id='portfolio-images' and exists(select 1 from public.portfolio_admins a where a.user_id=auth.uid()));
+
+
+-- Final hardening and safe public page counter.
+create index if not exists portfolio_item_views_item_id_idx on public.portfolio_item_views(item_id);
+create index if not exists portfolio_page_views_page_key_idx on public.portfolio_page_views(page_key);
+create or replace function public.get_portfolio_page_view_count(p_page_key text)
+returns bigint language plpgsql security definer set search_path = public as $$
+declare n bigint;
+begin
+ if p_page_key not in ('logo','ad-image') then raise exception 'Invalid page key'; end if;
+ select count(*) into n from public.portfolio_page_views where page_key=p_page_key;
+ return n;
+end; $$;
+revoke all on function public.get_portfolio_page_view_count(text) from public;
+grant execute on function public.get_portfolio_page_view_count(text) to anon, authenticated;
+
+-- Keep authenticated SELECT policy single and separate from administrator write policies.
+drop policy if exists "Admins manage portfolio items" on public.portfolio_items;
+drop policy if exists "Public can read published portfolio items" on public.portfolio_items;
+drop policy if exists "Admins insert portfolio items" on public.portfolio_items;
+drop policy if exists "Admins update portfolio items" on public.portfolio_items;
+drop policy if exists "Admins delete portfolio items" on public.portfolio_items;
+create policy "Public can read published portfolio items" on public.portfolio_items
+ for select to anon, authenticated
+ using (published = true or exists(select 1 from public.portfolio_admins a where a.user_id = (select auth.uid())));
+create policy "Admins insert portfolio items" on public.portfolio_items
+ for insert to authenticated with check (exists(select 1 from public.portfolio_admins a where a.user_id = (select auth.uid())));
+create policy "Admins update portfolio items" on public.portfolio_items
+ for update to authenticated
+ using (exists(select 1 from public.portfolio_admins a where a.user_id = (select auth.uid())))
+ with check (exists(select 1 from public.portfolio_admins a where a.user_id = (select auth.uid())));
+create policy "Admins delete portfolio items" on public.portfolio_items
+ for delete to authenticated using (exists(select 1 from public.portfolio_admins a where a.user_id = (select auth.uid())));
+
+drop policy if exists "Admins read page views" on public.portfolio_page_views;
+create policy "Admins read page views" on public.portfolio_page_views for select to authenticated
+ using (exists(select 1 from public.portfolio_admins a where a.user_id = (select auth.uid())));
+drop policy if exists "Admins read item views" on public.portfolio_item_views;
+create policy "Admins read item views" on public.portfolio_item_views for select to authenticated
+ using (exists(select 1 from public.portfolio_admins a where a.user_id = (select auth.uid())));
+drop policy if exists "Admins read admin list" on public.portfolio_admins;
+create policy "Admins read admin list" on public.portfolio_admins for select to authenticated
+ using (user_id = (select auth.uid()));
+
+drop policy if exists "Public reads portfolio images" on storage.objects;
+create policy "Public reads portfolio images" on storage.objects for select to anon, authenticated using (bucket_id='portfolio-images');
+drop policy if exists "Admins upload portfolio images" on storage.objects;
+create policy "Admins upload portfolio images" on storage.objects for insert to authenticated
+ with check (bucket_id='portfolio-images' and exists(select 1 from public.portfolio_admins a where a.user_id=(select auth.uid())));
+drop policy if exists "Admins update portfolio images" on storage.objects;
+create policy "Admins update portfolio images" on storage.objects for update to authenticated
+ using (bucket_id='portfolio-images' and exists(select 1 from public.portfolio_admins a where a.user_id=(select auth.uid())))
+ with check (bucket_id='portfolio-images' and exists(select 1 from public.portfolio_admins a where a.user_id=(select auth.uid())));
+drop policy if exists "Admins delete portfolio images" on storage.objects;
+create policy "Admins delete portfolio images" on storage.objects for delete to authenticated
+ using (bucket_id='portfolio-images' and exists(select 1 from public.portfolio_admins a where a.user_id=(select auth.uid())));
