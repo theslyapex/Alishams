@@ -465,6 +465,36 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 @keyframes showcaseFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @media(max-width:760px){.portfolio-showcase{padding:70px 0}.portfolio-showcase-panel{grid-template-columns:1fr;gap:18px;padding:25px 20px;border-radius:24px}.portfolio-showcase-copy{order:1}.portfolio-showcase-art{order:0;min-height:280px}.logo-specimen{height:270px}.logo-specimen-main{inset:12% 7%;gap:14px}.logo-symbol{width:70px;height:70px;border-radius:21px;font-size:32px}.logo-wordmark strong{font-size:clamp(22px,6vw,31px)}.logo-wordmark span{font-size:8px;letter-spacing:2px}.ad-campaign{height:280px;max-width:390px}.portfolio-showcase-copy h2{font-size:clamp(29px,8vw,39px)}.portfolio-showcase-copy p{font-size:12px}.portfolio-showcase .section-head{margin-bottom:25px}}
 @media(max-width:420px){.portfolio-showcase-panel{padding:19px 15px}.portfolio-showcase-art{min-height:245px}.logo-specimen{height:240px}.logo-specimen-main{inset:12% 5%;gap:10px}.logo-symbol{width:58px;height:58px;font-size:27px;border-radius:17px}.logo-wordmark strong{font-size:21px}.logo-wordmark span{font-size:7px;letter-spacing:1.5px}.logo-specimen-tag{font-size:9px;padding:7px 9px}.ad-campaign{height:245px}.ad-card--front:before{font-size:25px}.ad-card--back:before{font-size:15px}}
+
+/* AD SHOWCASE: unified electric-lime campaign identity */
+.portfolio-showcase--ads:before{background:radial-gradient(circle,#d9ff7218,transparent 68%)}
+.portfolio-showcase--ads .portfolio-showcase-panel{border-color:#d9ff7240;background:linear-gradient(125deg,#d9ff7208,rgba(255,255,255,.018) 55%,#d9ff7205)}
+.portfolio-showcase--ads .portfolio-showcase-copy h2 span{color:var(--lime);text-shadow:0 0 30px #d9ff7225}
+.portfolio-showcase--ads .portfolio-showcase-meta i{background:var(--lime);box-shadow:0 0 12px #d9ff72a8}
+.portfolio-showcase--ads .portfolio-showcase-cta{background:var(--lime);border-color:var(--lime);color:#10110d}
+.portfolio-showcase--ads .portfolio-showcase-cta:hover{box-shadow:0 12px 34px #d9ff7235}
+.portfolio-showcase--ads .portfolio-showcase-art:before{background:radial-gradient(circle,rgba(217,255,114,.23),transparent 68%)}
+.portfolio-showcase--ads .ad-card--back:after{background:radial-gradient(circle at 30% 25%,#fbffe9,#d9ff72 35%,#53682a 72%);box-shadow:0 0 35px #d9ff7266}
+.portfolio-showcase--ads .ad-campaign-sticker{border-color:#d9ff7280;background:#11170bdc;color:#f4f8e9;box-shadow:0 15px 40px #0009,0 0 25px #d9ff7210}
+.portfolio-showcase--ads .ad-campaign-sticker strong{color:var(--lime)}
+.ad-visual-mark{position:absolute;z-index:2;display:grid;place-items:center;pointer-events:none}
+.ad-visual-mark svg{width:100%;height:100%;overflow:visible;fill:none;stroke:#d9ff72;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 7px #d9ff7288)}
+.ad-visual-mark--back{width:76px;height:76px;right:17%;top:18%;animation:adMarkFloat 4.4s ease-in-out infinite}
+.ad-visual-mark--back svg{fill:#d9ff7214}
+.ad-visual-mark--front{width:76px;height:76px;right:12%;top:18%;animation:adMarkRotate 14s linear infinite}
+.ad-visual-mark--front svg circle:nth-child(2){stroke-dasharray:5 5;animation:adDash 8s linear infinite}
+.ad-visual-mark--front svg circle:nth-child(3){fill:#d9ff72;filter:drop-shadow(0 0 8px #d9ff72)}
+.ad-card--back{background:linear-gradient(145deg,#f4f4d9,#a6c75d 52%,#29351e)}
+.ad-card--back:before{color:#1d2814}
+.ad-card--back .ad-card-label{color:#1d2814}
+.ad-card--front{background:linear-gradient(145deg,#e5ff9c 0%,#a6c95b 34%,#20271b 34.5%,#10130f 100%)}
+.ad-card--front:after{border-color:#d9ff7270;box-shadow:0 0 0 9px #d9ff7218,0 0 0 18px #d9ff720d}
+@keyframes adMarkFloat{0%,100%{transform:translateY(0) rotate(-5deg) scale(.96)}50%{transform:translateY(-7px) rotate(5deg) scale(1.04)}}
+@keyframes adMarkRotate{to{transform:rotate(360deg)}}
+@keyframes adDash{to{stroke-dashoffset:-80}}
+@media(max-width:420px){.ad-visual-mark--back,.ad-visual-mark--front{width:61px;height:61px}}
+@media(prefers-reduced-motion:reduce){.ad-visual-mark,.ad-visual-mark svg circle:nth-child(2){animation:none!important}}
+
 @media(prefers-reduced-motion:reduce){.portfolio-showcase-art:before,.logo-specimen-main:before,.logo-symbol,.logo-symbol:before,.logo-symbol:after,.logo-specimen-tag,.ad-campaign-sticker{animation:none!important}.portfolio-showcase-panel:hover .logo-specimen{transform:none}.portfolio-showcase-cta,.ad-card,.logo-specimen{transition:none}}
 
 </style>
@@ -737,8 +767,8 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
   <div class="portfolio-showcase-panel reveal">
    <div class="portfolio-showcase-art" aria-hidden="true">
     <div class="ad-campaign">
-     <div class="ad-card ad-card--back"><span class="ad-card-label">CREATIVE / 02</span></div>
-     <div class="ad-card ad-card--front"><span class="ad-card-label">CAMPAIGN VISUAL</span></div>
+     <div class="ad-card ad-card--back"><span class="ad-card-label">CREATIVE / 02</span><span class="ad-visual-mark ad-visual-mark--back"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 12 60 38 88 27 72 51 91 69 63 65 50 91 39 65 10 72 28 51 11 31 40 38Z"/><circle cx="50" cy="51" r="12"/><path d="M50 3v10M50 87v10M3 51h10M87 51h10"/></svg></span></div>
+     <div class="ad-card ad-card--front"><span class="ad-card-label">CAMPAIGN VISUAL</span><span class="ad-visual-mark ad-visual-mark--front"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="36"/><circle cx="50" cy="50" r="23"/><circle cx="50" cy="50" r="8"/><path d="M50 3v13M50 84v13M3 50h13M84 50h13M17 17l10 10M73 73l10 10M83 17 73 27M27 73 17 83"/></svg></span></div>
      <div class="ad-campaign-sticker"><strong>VISUAL STORYTELLING</strong>تصویر، پیام، تأثیر</div>
     </div>
    </div>
