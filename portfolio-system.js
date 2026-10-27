@@ -12,11 +12,11 @@ async function loadGallery(category){
  try{
   const [{data:items,error},pageStats]=await Promise.all([
    sb.from("portfolio_items").select("id,category,title,description,image_path,cover_path,created_at,view_count").eq("category",category).eq("published",true).order("created_at",{ascending:false}),
-   sb.from("portfolio_page_views").select("id",{count:"exact",head:true}).eq("page_key",category)
+   sb.rpc("get_portfolio_page_view_count",{p_page_key:category})
   ]);
   if(error)throw error;
   const total=items.reduce((n,x)=>n+(Number(x.view_count)||0),0);
-  document.getElementById("pageViews").textContent=faNum(pageStats.count||0);
+  document.getElementById("pageViews").textContent=faNum(pageStats.data||0);
   document.getElementById("itemViews").textContent=faNum(total);
   document.getElementById("itemCount").textContent=faNum(items.length);
   document.getElementById("sortOrder")?.addEventListener("change",()=>render(items,category,sb),{once:true});
