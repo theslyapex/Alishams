@@ -41,7 +41,7 @@ html,body{-webkit-user-select:none!important;user-select:none!important;-webkit-
 .card:hover .cover-hint,.cover:focus-visible .cover-hint{opacity:1;transform:translateY(0)}
 .modal{padding:clamp(10px,3vw,28px);background:rgba(3,4,7,.84);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);overflow-y:auto}
 .modalbox{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.72fr);grid-template-rows:auto 1fr;gap:18px;width:min(1000px,100%);max-height:min(88dvh,850px);overflow:auto;padding:clamp(14px,2.5vw,24px);border-radius:24px;border-color:#ffffff20;background:radial-gradient(ellipse at 0 0,#d9ff7210,transparent 45%),linear-gradient(145deg,#171922,#0c0d12);box-shadow:0 30px 100px #000b}
-.modalhead{grid-column:2;grid-row:1;align-items:flex-start;min-width:0;padding:0 0 14px;border-bottom:1px solid #ffffff12}
+.modalhead{grid-column:2;grid-row:1;align-items:flex-start;min-width:0;padding:0 0 14px;border-bottom:1px solid #ffffff12;position:relative;padding-inline-end:54px}.modalhead>.close{position:absolute;inset-block-start:0;inset-inline-end:0;width:40px;height:40px;display:grid;place-items:center;padding:0;border-radius:12px;background:#ffffff0a;color:#f4f4ee;font-size:0}.modalhead>.close::before{content:"×";font-size:23px;line-height:1}.modalhead>.close:hover{background:#d9ff7217;border-color:#d9ff72;color:#d9ff72}
 .modalhead h2{font-size:clamp(18px,2vw,26px)!important;line-height:1.6;overflow-wrap:anywhere}
 .modalhead p{line-height:1.9!important;overflow-wrap:anywhere}
 .modalhead [data-modal-views]{display:inline-block;margin-top:9px;padding:3px 9px;border:1px solid #ffffff16;border-radius:99px;background:#ffffff08}
@@ -51,7 +51,7 @@ html,body{-webkit-user-select:none!important;user-select:none!important;-webkit-
 @media(max-width:640px){
  .modal{padding:8px;place-items:center}
  .modalbox{display:flex;flex-direction:column;gap:12px;width:100%;max-height:94dvh;padding:12px;border-radius:18px}
- .modalhead{order:0;width:100%;gap:10px;padding-bottom:10px}
+ .modalhead{order:0;width:100%;gap:10px;padding-bottom:10px;padding-inline-end:48px}.modalhead>.close{width:36px;height:36px;inset-block-start:0;inset-inline-end:0;border-radius:11px}
  .modalhead h2{font-size:18px!important;line-height:1.6}
  .modalhead p{font-size:12px!important;line-height:1.8!important}
  .modalbox>img{order:1;width:100%;height:auto;min-height:0;max-height:52dvh;object-fit:contain;margin:0;border-radius:12px}
