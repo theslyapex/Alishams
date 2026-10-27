@@ -38,3 +38,5 @@ async function openPortfolioItem(id,category,sb){
 function closePortfolioModal(){const m=document.getElementById("imageModal");if(m){m.classList.remove("open");m.setAttribute("aria-hidden","true");document.body.style.overflow="";}}
 document.addEventListener("click",e=>{if(e.target.matches("[data-close-modal]")||e.target.id==="imageModal")closePortfolioModal();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closePortfolioModal();});
+
+export { getPortfolioSB, recordPageView, loadGallery, render, portfolioSB };
