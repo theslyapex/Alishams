@@ -2,7 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 (() => {
 const SB_URL="https://srfldjfrzmtnlabusssq.supabase.co";
 const SB_KEY="sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB";
-const sb=createClient(SUPABASE_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const sb=createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const initials=s=>(String(s||"A").trim().slice(0,1)||"A");
 const avatar=(url,name,size="")=>url?'<span class="ac-avatar '+size+'"><img src="'+esc(url)+'" alt="" loading="lazy"></span>':'<span class="ac-avatar '+size+'">'+esc(initials(name))+'</span>';
