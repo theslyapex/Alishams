@@ -10,3 +10,10 @@
 #al-comments .ac-replyform{margin-top:12px}#al-comments .ac-replyform textarea{min-height:75px}#al-comments .ac-replyform .ac-formfoot{justify-content:flex-start}
 .ac-avatar-settings{display:flex;align-items:center;gap:15px;flex-wrap:wrap}.ac-avatar-settings .ac-avatar{width:76px;height:76px;flex-basis:76px}.ac-avatar-settings .ac-avatar-actions{display:flex;gap:8px;flex-wrap:wrap}.ac-avatar-settings input[type=file]{max-width:100%;font-size:11px;color:#a0a4b2}.ac-avatar-settings .ac-avatar-tip{font-size:10px;line-height:1.9;color:#a0a4b2;margin-top:8px}
 @keyframes acIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}@media(max-width:520px){#al-comments{padding:0 12px}#al-comments .ac-shell{border-radius:19px;padding:16px}#al-comments .ac-comment{padding:12px}#al-comments .ac-form{padding:12px}}@media(prefers-reduced-motion:reduce){#al-comments *{animation:none!important;transition:none!important}}
+
+/* Profile avatar preview sizing */
+.ac-profile-avatar-card .ac-avatar-preview-frame{width:92px;height:92px;flex:0 0 92px;border-radius:50%;padding:4px;overflow:hidden}
+.ac-profile-avatar-card .ac-avatar-preview-frame .ac-avatar{width:100%;height:100%;flex:0 0 100%;border-radius:50%;overflow:hidden}
+.ac-profile-avatar-card .ac-avatar-preview-frame img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:cover;border-radius:50%;margin:0;padding:0}
+.ac-profile-avatar-card .ac-avatar-controls{min-width:0;flex:1}
+.ac-profile-avatar-card #ac-avatar-file{display:block;max-width:100%;margin-top:8px}
