@@ -1,0 +1,29 @@
+/* Alishams share widget — glassmorphism */
+#alishamsShareRoot{position:fixed;left:22px;bottom:22px;z-index:990;direction:rtl;font-family:Estedad,Tahoma,sans-serif;color:#f7f7f5}
+#alishamsShareRoot *{box-sizing:border-box}
+#alishamsShareRoot .as-share-toggle{display:flex;align-items:center;gap:10px;min-height:52px;padding:10px 17px;border:1px solid rgba(200,255,95,.36);border-radius:18px;background:linear-gradient(135deg,rgba(29,35,34,.94),rgba(13,18,22,.92));color:#f7f7f5;box-shadow:0 12px 38px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);font:700 13px inherit;cursor:pointer;transition:transform .25s,border-color .25s,box-shadow .25s}
+#alishamsShareRoot .as-share-toggle:hover{transform:translateY(-3px);border-color:rgba(200,255,95,.8);box-shadow:0 16px 42px rgba(0,0,0,.4),0 0 22px rgba(200,255,95,.1)}
+#alishamsShareRoot .as-share-icon{width:28px;height:28px;display:grid;place-items:center;border-radius:10px;background:rgba(200,255,95,.12);color:#c8ff5f;flex:0 0 auto}
+#alishamsShareRoot .as-share-icon svg{width:20px;height:20px;overflow:visible}
+#alishamsShareRoot .as-share-toggle:hover .as-share-icon svg{animation:asSharePulse .8s ease-in-out infinite alternate}
+#alishamsShareRoot .as-share-label{display:flex;flex-direction:column;align-items:flex-start;gap:2px;line-height:1.25}
+#alishamsShareRoot .as-share-label strong{font-size:13px}
+#alishamsShareRoot .as-share-label small{font-size:10px;color:#a8b0ad;font-weight:500}
+#alishamsShareRoot .as-share-panel{position:absolute;left:0;bottom:64px;width:min(320px,calc(100vw - 32px));padding:17px;border:1px solid rgba(255,255,255,.13);border-radius:22px;background:linear-gradient(145deg,rgba(24,29,31,.97),rgba(10,14,18,.97));box-shadow:0 22px 70px rgba(0,0,0,.48);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);opacity:0;visibility:hidden;transform:translateY(12px) scale(.97);transform-origin:bottom left;transition:opacity .22s,transform .22s,visibility .22s}
+#alishamsShareRoot.is-open .as-share-panel{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+#alishamsShareRoot .as-share-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+#alishamsShareRoot .as-share-head strong{display:block;font-size:15px;font-weight:800}
+#alishamsShareRoot .as-share-head p{margin:5px 0 0;font-size:11px;color:#a8b0ad;line-height:1.8}
+#alishamsShareRoot .as-share-close{border:0;background:rgba(255,255,255,.07);color:#dfe4e1;width:29px;height:29px;border-radius:10px;cursor:pointer;font-size:19px;line-height:1}
+#alishamsShareRoot .as-share-link{display:flex;align-items:center;gap:7px;padding:7px;border:1px solid rgba(255,255,255,.09);border-radius:13px;background:rgba(255,255,255,.035);margin-bottom:12px}
+#alishamsShareRoot .as-share-url{min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;color:#b7c0bc;direction:ltr;text-align:left}
+#alishamsShareRoot .as-copy{border:1px solid rgba(200,255,95,.22);border-radius:9px;padding:8px 10px;background:rgba(200,255,95,.1);color:#d8ff9a;font:700 11px inherit;cursor:pointer;white-space:nowrap}
+#alishamsShareRoot .as-share-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+#alishamsShareRoot .as-share-option{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0;padding:10px 3px 8px;border:1px solid rgba(255,255,255,.075);border-radius:13px;background:rgba(255,255,255,.035);color:#e9eeeb;text-decoration:none;font:500 10px inherit;cursor:pointer;transition:background .2s,transform .2s,border-color .2s}
+#alishamsShareRoot .as-share-option:hover{transform:translateY(-2px);background:rgba(200,255,95,.08);border-color:rgba(200,255,95,.25)}
+#alishamsShareRoot .as-share-option img{width:25px;height:25px;object-fit:contain}
+#alishamsShareRoot .as-share-option svg{width:25px;height:25px}
+#alishamsShareRoot .as-share-status{min-height:17px;margin-top:10px;font-size:11px;color:#c8ff5f;text-align:center}
+@keyframes asSharePulse{from{transform:rotate(-7deg) scale(.94)}to{transform:rotate(7deg) scale(1.08)}}
+@media(max-width:600px){#alishamsShareRoot{left:12px;bottom:calc(14px + env(safe-area-inset-bottom))}#alishamsShareRoot .as-share-toggle{min-height:48px;padding:9px 13px;border-radius:16px}#alishamsShareRoot .as-share-panel{bottom:59px;width:min(310px,calc(100vw - 24px))}}
+@media(prefers-reduced-motion:reduce){#alishamsShareRoot *,#alishamsShareRoot *:before,#alishamsShareRoot *:after{animation:none!important;transition:none!important}}
