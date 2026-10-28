@@ -1,7 +1,7 @@
 /* Alishams share widget — glassmorphism */
 #alishamsShareRoot{position:fixed;left:22px;bottom:22px;z-index:990;direction:rtl;font-family:Estedad,Tahoma,sans-serif;color:#f7f7f5}
 #alishamsShareRoot *{box-sizing:border-box}
-#alishamsShareRoot .as-share-toggle{display:flex;align-items:center;gap:10px;min-height:52px;padding:10px 17px;border:1px solid rgba(200,255,95,.36);border-radius:18px;background:linear-gradient(135deg,rgba(29,35,34,.94),rgba(13,18,22,.92));color:#f7f7f5;box-shadow:0 12px 38px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);font:700 13px inherit;cursor:pointer;transition:transform .25s,border-color .25s,box-shadow .25s}
+#alishamsShareRoot .as-share-toggle{display:flex;align-items:center;gap:10px;min-height:52px;padding:10px 17px;border:1px solid rgba(200,255,95,.36);border-radius:18px;background:linear-gradient(135deg,rgba(29,35,34,.94),rgba(13,18,22,.92));color:#f7f7f5;box-shadow:0 12px 38px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:transform .25s,border-color .25s,box-shadow .25s}
 #alishamsShareRoot .as-share-toggle:hover{transform:translateY(-3px);border-color:rgba(200,255,95,.8);box-shadow:0 16px 42px rgba(0,0,0,.4),0 0 22px rgba(200,255,95,.1)}
 #alishamsShareRoot .as-share-icon{width:28px;height:28px;display:grid;place-items:center;border-radius:10px;background:rgba(200,255,95,.12);color:#c8ff5f;flex:0 0 auto}
 #alishamsShareRoot .as-share-icon svg{width:20px;height:20px;overflow:visible}
@@ -17,9 +17,9 @@
 #alishamsShareRoot .as-share-close{border:0;background:rgba(255,255,255,.07);color:#dfe4e1;width:29px;height:29px;border-radius:10px;cursor:pointer;font-size:19px;line-height:1}
 #alishamsShareRoot .as-share-link{display:flex;align-items:center;gap:7px;padding:7px;border:1px solid rgba(255,255,255,.09);border-radius:13px;background:rgba(255,255,255,.035);margin-bottom:12px}
 #alishamsShareRoot .as-share-url{min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;color:#b7c0bc;direction:ltr;text-align:left}
-#alishamsShareRoot .as-copy{border:1px solid rgba(200,255,95,.22);border-radius:9px;padding:8px 10px;background:rgba(200,255,95,.1);color:#d8ff9a;font:700 11px inherit;cursor:pointer;white-space:nowrap}
+#alishamsShareRoot .as-copy{border:1px solid rgba(200,255,95,.22);border-radius:9px;padding:8px 10px;background:rgba(200,255,95,.1);color:#d8ff9a;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap}
 #alishamsShareRoot .as-share-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
-#alishamsShareRoot .as-share-option{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0;padding:10px 3px 8px;border:1px solid rgba(255,255,255,.075);border-radius:13px;background:rgba(255,255,255,.035);color:#e9eeeb;text-decoration:none;font:500 10px inherit;cursor:pointer;transition:background .2s,transform .2s,border-color .2s}
+#alishamsShareRoot .as-share-option{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0;padding:10px 3px 8px;border:1px solid rgba(255,255,255,.075);border-radius:13px;background:rgba(255,255,255,.035);color:#e9eeeb;text-decoration:none;font-family:inherit;font-size:10px;font-weight:500;cursor:pointer;transition:background .2s,transform .2s,border-color .2s}
 #alishamsShareRoot .as-share-option:hover{transform:translateY(-2px);background:rgba(200,255,95,.08);border-color:rgba(200,255,95,.25)}
 #alishamsShareRoot .as-share-option img{width:25px;height:25px;object-fit:contain}
 #alishamsShareRoot .as-share-option svg{width:25px;height:25px}
