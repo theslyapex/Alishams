@@ -60,14 +60,13 @@ const openCropper=async f=>{
  modal.innerHTML='<div class="ac-crop-dialog" role="dialog" aria-modal="true" aria-labelledby="ac-crop-title"><div class="ac-crop-header"><div><h3 id="ac-crop-title">تنظیم تصویر پروفایل</h3><p>کادر برش همیشه مربع ۱:۱ است؛ تصویر را جابه‌جا یا بزرگ‌نمایی کن.</p></div><button type="button" class="ac-crop-close" aria-label="بستن">×</button></div><div class="ac-crop-stage"><img class="ac-crop-source" alt="پیش‌نمایش برش تصویر"></div><div class="ac-crop-actions"><button type="button" class="ac-crop-zoom" data-zoom="-0.1" aria-label="کوچک‌نمایی">−</button><button type="button" class="ac-crop-zoom" data-zoom="0.1" aria-label="بزرگ‌نمایی">＋</button><span class="ac-crop-ratio">نسبت تصویر ۱:۱</span><button type="button" class="ac-crop-cancel">انصراف</button><button type="button" class="ac-crop-confirm">تأیید برش</button></div></div>';
  document.body.appendChild(modal);
  const image=modal.querySelector(".ac-crop-source");
- image.src=sourceUrl;
  const close=()=>{if(cropper){cropper.destroy();cropper=null}modal.remove();};
  modal.querySelector(".ac-crop-close").onclick=close;
  modal.querySelector(".ac-crop-cancel").onclick=close;
  modal.addEventListener("click",e=>{if(e.target===modal)close()});
  const escHandler=e=>{if(e.key==="Escape"&&document.body.contains(modal)){close();document.removeEventListener("keydown",escHandler)}};
  document.addEventListener("keydown",escHandler);
- await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=()=>reject(new Error("خواندن تصویر انتخاب‌شده انجام نشد."))});
+ await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=()=>reject(new Error("خواندن تصویر انتخاب‌شده انجام نشد."));image.src=sourceUrl;});
  cropper=new window.Cropper(image,{aspectRatio:1,viewMode:1,dragMode:"move",autoCropArea:.88,background:false, responsive:true,restore:false,checkOrientation:true, guides:true,center:true,highlight:false, cropBoxMovable:false,cropBoxResizable:false,toggleDragModeOnDblclick:false,ready(){modal.classList.add("is-open")}});
  modal.querySelectorAll("[data-zoom]").forEach(b=>b.addEventListener("click",()=>cropper&&cropper.zoom(Number(b.dataset.zoom))));
  modal.querySelector(".ac-crop-confirm").onclick=()=>{
