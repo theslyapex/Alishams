@@ -13,7 +13,7 @@ const markup =
 '</nav><div class="nav-actions"><button class="menu-toggle" id="alishamsSharedMenuToggle" type="button" aria-label="باز کردن منو" aria-expanded="false"><span class="header-control-icon" aria-hidden="true">☰</span><span class="header-control-label">منو</span></button>'+
 '<a class="account-cta" id="alishamsSharedAccount" href="/login.html" aria-label="ورود به حساب کاربری و ثبت‌نام" title="ورود به حساب کاربری و ثبت‌نام">'+
 '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-1.5a4.5 4.5 0 0 0-4.5-4.5h-7A4.5 4.5 0 0 0 4 19.5V21"/><circle cx="12" cy="7.5" r="4"/><path d="M18.5 8.5h3m-1.5-1.5v3"/></svg>'+
-'<span class="account-cta-label">حساب کاربری</span><span class="account-cta-status" hidden>وارد شده‌اید</span></a></div></div></header>';
+'<span class="account-cta-label">حساب کاربری</span><span class="account-cta-status" hidden>واردشده‌اید</span></a></div></div></header>';
 function install(){
  if(document.getElementById(HEADER_ID))return;
  const existing=document.querySelector('header');
@@ -33,7 +33,7 @@ function install(){
    const mod=await import('https://esm.sh/@supabase/supabase-js@2');
    const client=mod.createClient('https://srfldjfrzmtnlabusssq.supabase.co','sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB');
    const {data,error}=await client.auth.getSession();if(error)throw error;
-   if(data&&data.session){account.classList.add('is-authenticated');account.href='/account.html';account.setAttribute('aria-label','حساب کاربری؛ وارد شده‌اید');account.title='حساب کاربری — وارد شده‌اید';const status=account.querySelector('.account-cta-status');if(status)status.hidden=false;}
+   if(data&&data.session){account.classList.add('is-authenticated');account.href='/account.html';account.setAttribute('aria-label','حساب کاربری؛ واردشده‌اید');account.title='حساب کاربری — واردشده‌اید';const status=account.querySelector('.account-cta-status');if(status)status.hidden=false;}
    else{account.classList.remove('is-authenticated');account.href='/login.html';account.setAttribute('aria-label','ورود به حساب کاربری و ثبت‌نام');account.title='ورود به حساب کاربری و ثبت‌نام';const status=account.querySelector('.account-cta-status');if(status)status.hidden=true;}
  }catch(error){console.warn('Alishams account status unavailable',error);}})();
 }
