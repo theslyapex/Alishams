@@ -57,3 +57,13 @@
 .ac-crop-stage{position:relative;width:100%;height:min(56vh,430px);min-height:220px;overflow:hidden;border-radius:14px;background:#07080c}.ac-crop-stage img{display:block;max-width:100%;max-height:100%}.ac-crop-stage .cropper-container{max-width:100%!important;max-height:100%!important}.ac-crop-stage .cropper-view-box,.ac-crop-stage .cropper-face{border-radius:0!important}.ac-crop-stage .cropper-line,.ac-crop-stage .cropper-point{display:none!important}
 .ac-crop-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px}.ac-crop-actions button{min-height:38px;padding:8px 12px;border:1px solid #ffffff20;border-radius:10px;background:#ffffff08;color:#f5f6fa;font:600 12px Estedad,Vazirmatn,Tahoma,sans-serif;cursor:pointer}.ac-crop-actions .ac-crop-zoom{width:38px;padding:0;font-size:20px}.ac-crop-actions .ac-crop-ratio{margin-left:auto;color:#d9ff72;font-size:11px}.ac-crop-actions .ac-crop-confirm{background:#d9ff72;color:#15180e;border-color:#d9ff72;font-weight:800}.ac-crop-actions .ac-crop-cancel{margin-right:auto}
 @media(max-width:480px){.ac-crop-modal{padding:8px}.ac-crop-dialog{max-height:94dvh;border-radius:18px;padding:12px}.ac-crop-stage{height:48vh;min-height:200px}.ac-crop-header h3{font-size:15px}.ac-crop-actions{gap:6px}.ac-crop-actions button{padding:8px 9px}.ac-crop-actions .ac-crop-ratio{order:3;width:100%;margin:0}.ac-crop-actions .ac-crop-cancel{margin-right:0}}
+
+
+/* Official site-owner comments */
+#al-comments .ac-comment.ac-admin-comment{position:relative;border-color:rgba(217,255,114,.52)!important;background:linear-gradient(135deg,rgba(217,255,114,.095),rgba(165,139,255,.075) 55%,rgba(15,20,31,.96))!important;box-shadow:inset 3px 0 0 rgba(217,255,114,.9),0 10px 32px rgba(0,0,0,.12)!important}
+#al-comments .ac-comment.ac-admin-comment:before{content:"";position:absolute;top:0;right:0;left:0;height:2px;background:linear-gradient(90deg,transparent,#d9ff72,#a58bff,transparent);opacity:.95}
+#al-comments .ac-comment.ac-admin-comment .ac-avatar{border:1px solid rgba(217,255,114,.75)!important;box-shadow:0 0 0 3px rgba(217,255,114,.08),0 0 18px rgba(217,255,114,.12)}
+#al-comments .ac-authorline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#al-comments .ac-admin-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border:1px solid rgba(217,255,114,.4);border-radius:999px;background:linear-gradient(135deg,rgba(217,255,114,.18),rgba(165,139,255,.15));color:#e5ff9a;font-size:10px;font-weight:800;line-height:1.6;white-space:nowrap}
+#al-comments .ac-comment.ac-admin-comment .ac-commentbody{color:#f8f9e9}
+#al-comments .ac-comment.ac-admin-comment .ac-actions .ac-action{border-color:rgba(217,255,114,.16)}
