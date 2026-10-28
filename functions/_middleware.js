@@ -12,7 +12,9 @@ export async function onRequest(context) {
     .on("head", {
       element(element) {
         element.append('<link rel="stylesheet" href="/site-header.css?v=1">', { html: true });
+        element.append('<link rel="stylesheet" href="/share-page.css?v=1">', { html: true });
         element.append('<script src="/site-header.js?v=1" defer></script>', { html: true });
+        element.append('<script src="/share-page.js?v=1" defer></script>', { html: true });
       }
     })
     .transform(response);
