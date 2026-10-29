@@ -42,24 +42,24 @@ async function boot(){
 async function load(){
  $("list").classList.add("loading");$("list").innerHTML='<div class="empty">در حال دریافت دیدگاه‌ها…</div>';
  try{
-  const {data,error}=await sb.from("site_comments").select("id,user_id,page_key,page_title,body,parent_id,is_approved,created_at,updated_at").order("created_at",{ascending:false}).limit(1000);
+  const {data,error}=await sb.from("site_comments").select("id,user_id,page_key,page_title,body,parent_id,is_approved,moderation_status,created_at,updated_at").order("created_at",{ascending:false}).limit(1000);
   if(error)throw error;comments=data||[];
   const ids=[...new Set(comments.map(c=>c.user_id).filter(Boolean))];profiles={};
   if(ids.length){const p=await sb.from("user_profiles").select("user_id,display_name,avatar_url").in("user_id",ids);if(p.error)throw p.error;(p.data||[]).forEach(x=>profiles[x.user_id]=x)}
-  $("total").textContent=num(comments.length);$("approved").textContent=num(comments.filter(c=>c.is_approved).length);$("pending").textContent=num(comments.filter(c=>!c.is_approved).length);$("hiddenCount").textContent=num(comments.filter(c=>c.is_approved===false).length);
+  $("total").textContent=num(comments.length);$("approved").textContent=num(comments.filter(c=>c.moderation_status==="approved").length);$("pending").textContent=num(comments.filter(c=>c.moderation_status==="pending").length);$("hiddenCount").textContent=num(comments.filter(c=>c.moderation_status==="hidden").length);
   render();note("آخرین داده‌ها دریافت شد · "+date(new Date().toISOString()));
  }catch(e){$("list").innerHTML='<div class="empty">دریافت دیدگاه‌ها ناموفق بود.<br>'+esc(e.message||"خطای ناشناخته")+'</div>';note("خطا در دریافت دیدگاه‌ها: "+(e.message||"خطای ناشناخته"),true)}
  finally{$("list").classList.remove("loading")}
 }
 function render(){
  const q=$("search").value.trim().toLocaleLowerCase("fa"),f=$("filter").value;
- const rows=comments.filter(c=>{const p=profiles[c.user_id]||{};const text=[c.body,c.page_title,c.page_key,p.display_name,c.user_id].join(" ").toLocaleLowerCase("fa");return(!q||text.includes(q))&&(f==="all"||(f==="approved"&&c.is_approved)||(f==="pending"&&!c.is_approved)||(f==="hidden"&&!c.is_approved))});
+ const rows=comments.filter(c=>{const p=profiles[c.user_id]||{};const text=[c.body,c.page_title,c.page_key,p.display_name,c.user_id].join(" ").toLocaleLowerCase("fa");return(!q||text.includes(q))&&(f==="all"||(f==="approved"&&c.moderation_status==="approved")||(f==="pending"&&c.moderation_status==="pending")||(f==="hidden"&&c.moderation_status==="hidden"))});
  if(!rows.length){$("list").innerHTML='<div class="empty">با این فیلتر دیدگاهی پیدا نشد.</div>';return}
  $("list").innerHTML=rows.map(c=>{
-  const p=profiles[c.user_id]||{},name=p.display_name||"کاربر سایت",approved=!!c.is_approved,reply=c.parent_id?'<span class="badge hidden">پاسخ دیدگاه</span>':"";
+  const p=profiles[c.user_id]||{},name=p.display_name||"کاربر سایت",status=c.moderation_status|| (c.is_approved?"approved":"pending"),approved=status==="approved",reply=c.parent_id?'<span class="badge hidden">پاسخ دیدگاه</span>':"";
   const av=p.avatar_url?'<span class="avatar"><img src="'+esc(p.avatar_url)+'" alt=""></span>':'<span class="avatar">'+esc(initial(name))+'</span>';
   const href=pageHref(c.page_key);
-  return '<article class="comment '+(approved?"":"pending")+'" data-id="'+esc(c.id)+'"><div class="comment-top"><div class="author">'+av+'<div class="author-info"><div class="author-name">'+esc(name)+'</div><div class="meta">'+esc(date(c.created_at))+' · شناسه کاربر: '+esc(c.user_id)+'</div></div></div><div class="badges">'+reply+(approved?'<span class="badge approved">منتشرشده</span>':'<span class="badge pending">پنهان / در انتظار بررسی</span>')+'</div></div><div class="body">'+esc(c.body)+'</div><div class="pageinfo"><div>صفحه: '+esc(c.page_title||c.page_key||"—")+'</div><div>مسیر: '+esc(c.page_key||"—")+(href?' · <a href="'+esc(href)+'" target="_blank" rel="noopener">بازکردن صفحه ↗</a>':"")+'</div>'+(c.updated_at&&Math.abs(new Date(c.updated_at)-new Date(c.created_at))>60000?'<div>آخرین ویرایش: '+esc(date(c.updated_at))+'</div>':"")+'</div><div class="actions">'+(approved?'<button class="btn" data-action="hide">پنهان‌کردن</button>':'<button class="btn success" data-action="approve">تأیید و انتشار</button>')+'<button class="btn" data-action="edit">ویرایش متن</button><button class="btn danger" data-action="delete">حذف دیدگاه</button></div></article>'
+  return '<article class="comment '+(approved?"":"pending")+'" data-id="'+esc(c.id)+'"><div class="comment-top"><div class="author">'+av+'<div class="author-info"><div class="author-name">'+esc(name)+'</div><div class="meta">'+esc(date(c.created_at))+' · شناسه کاربر: '+esc(c.user_id)+'</div></div></div><div class="badges">'+reply+(status==="approved"?'<span class="badge approved">منتشرشده</span>':status==="hidden"?'<span class="badge hidden">پنهان‌شده</span>':'<span class="badge pending">در انتظار بررسی</span>')+'</div></div><div class="body">'+esc(c.body)+'</div><div class="pageinfo"><div>صفحه: '+esc(c.page_title||c.page_key||"—")+'</div><div>مسیر: '+esc(c.page_key||"—")+(href?' · <a href="'+esc(href)+'" target="_blank" rel="noopener">بازکردن صفحه ↗</a>':"")+'</div>'+(c.updated_at&&Math.abs(new Date(c.updated_at)-new Date(c.created_at))>60000?'<div>آخرین ویرایش: '+esc(date(c.updated_at))+'</div>':"")+'</div><div class="actions">'+(approved?'<button class="btn" data-action="hide">پنهان‌کردن</button>':'<button class="btn success" data-action="approve">تأیید و انتشار</button>')+'<button class="btn" data-action="edit">ویرایش متن</button><button class="btn danger" data-action="delete">حذف دیدگاه</button></div></article>'
  }).join("");
  $("list").querySelectorAll("[data-action]").forEach(b=>b.addEventListener("click",()=>act(b.closest("[data-id]").dataset.id,b.dataset.action,b)));
 }
@@ -67,8 +67,8 @@ async function act(id,action,btn){
  const c=comments.find(x=>x.id===id);if(!c)return;
  if(action==="delete"&&!confirm("این دیدگاه برای همیشه حذف شود؟ این کار قابل بازگشت نیست."))return;
  let patch={};
- if(action==="approve")patch={is_approved:true,updated_at:new Date().toISOString()};
- if(action==="hide")patch={is_approved:false,updated_at:new Date().toISOString()};
+ if(action==="approve")patch={is_approved:true,moderation_status:"approved",updated_at:new Date().toISOString()};
+ if(action==="hide")patch={is_approved:false,moderation_status:"hidden",updated_at:new Date().toISOString()};
  if(action==="edit"){
   const value=prompt("متن ویرایش‌شدهٔ دیدگاه:",c.body);if(value===null)return;const body=value.trim();if(body.length<2||body.length>2000){note("متن باید بین ۲ تا ۲۰۰۰ نویسه باشد.",true);return}patch={body,updated_at:new Date().toISOString()};
  }
@@ -76,7 +76,7 @@ async function act(id,action,btn){
  try{
   if(action==="delete"){const {error}=await sb.from("site_comments").delete().eq("id",id);if(error)throw error;comments=comments.filter(x=>x.id!==id)}
   else{const {data,error}=await sb.from("site_comments").update(patch).eq("id",id).select("id");if(error)throw error;if(!data?.length)throw new Error("تغییر ثبت نشد؛ مجوز پایگاه داده را بررسی کنید.");comments=comments.map(x=>x.id===id?{...x,...patch}:x)}
-  $("total").textContent=num(comments.length);$("approved").textContent=num(comments.filter(x=>x.is_approved).length);$("pending").textContent=num(comments.filter(x=>!x.is_approved).length);$("hiddenCount").textContent=num(comments.filter(x=>!x.is_approved).length);render();note(action==="delete"?"دیدگاه حذف شد.":action==="approve"?"دیدگاه تأیید و منتشر شد.":action==="hide"?"دیدگاه پنهان شد.":"متن دیدگاه ویرایش شد.");
+  $("total").textContent=num(comments.length);$("approved").textContent=num(comments.filter(x=>x.moderation_status==="approved").length);$("pending").textContent=num(comments.filter(x=>x.moderation_status==="pending").length);$("hiddenCount").textContent=num(comments.filter(x=>x.moderation_status==="hidden").length);render();note(action==="delete"?"دیدگاه حذف شد.":action==="approve"?"دیدگاه تأیید و منتشر شد.":action==="hide"?"دیدگاه پنهان شد.":"متن دیدگاه ویرایش شد.");
  }catch(e){note("انجام عملیات ناموفق بود: "+(e.message||"خطای ناشناخته"),true);btn.disabled=false}
 }
 $("refresh").addEventListener("click",load);$("search").addEventListener("input",render);$("filter").addEventListener("change",render);
