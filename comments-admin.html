@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#080a09">
+<title>مدیریت دیدگاه‌ها | Alishams</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#080a09;--panel:#11140f;--line:#ffffff15;--text:#f5f7ef;--muted:#a5ab9c;--lime:#d6ff59;--red:#ff858c;--purple:#b7a0ff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 8% 0%,#d6ff5910,transparent 36%),radial-gradient(ellipse at 92% 15%,#b7a0ff10,transparent 30%),var(--bg);color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}.shell{width:min(1180px,calc(100% - 28px));margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:20px 0;border-bottom:1px solid var(--line)}.brand{font-weight:800;letter-spacing:.2px}.brand span{color:var(--lime)}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);border-radius:12px;padding:10px 13px;background:#ffffff07;color:var(--text);font-size:12px;text-decoration:none;transition:.2s}.btn:hover{border-color:#d6ff5966;transform:translateY(-1px)}.btn.primary{background:var(--lime);border-color:var(--lime);color:#10130a;font-weight:800}.btn.danger{border-color:#ff858c40;color:#ffb0b5}.btn.success{border-color:#d6ff5940;color:var(--lime)}.hero{padding:30px 0 18px}.eyebrow{font-size:10px;font-weight:800;letter-spacing:1px;color:var(--lime)}h1{font-size:clamp(27px,4vw,40px);line-height:1.4;margin:6px 0 8px}.sub{font-size:13px;color:var(--muted);line-height:2;margin:0}.notice{display:none;margin:15px 0;padding:12px 14px;border:1px solid #d6ff5930;border-radius:13px;background:#d6ff5908;color:var(--muted);font-size:12px;line-height:1.9;overflow-wrap:anywhere}.notice.show{display:block}.notice.error{border-color:#ff858c55;color:#ffb0b5}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:20px 0}.stat,.panel{border:1px solid var(--line);background:linear-gradient(145deg,#151811ee,#0e100dee);border-radius:17px}.stat{padding:15px}.stat span{display:block;color:var(--muted);font-size:11px}.stat strong{display:block;font-size:26px;color:var(--lime);margin-top:5px}.panel{padding:16px;margin:14px 0}.toolbar{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(160px,.7fr) auto;gap:10px;align-items:center}.field{width:100%;min-width:0;border:1px solid #ffffff1a;background:#090b08;color:var(--text);border-radius:12px;padding:12px 13px;outline:none;font-size:12px}.field:focus{border-color:#d6ff5980;box-shadow:0 0 0 3px #d6ff5910}.toolbar .btn{white-space:nowrap}.list{display:grid;gap:12px;margin:16px 0 40px}.comment{border:1px solid var(--line);border-radius:17px;background:linear-gradient(135deg,#151811d9,#0d0f0c);padding:17px;min-width:0}.comment.pending{border-color:#e9bc5a45}.comment.hidden-comment{opacity:.8;border-color:#b7a0ff35}.comment-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}.author{display:flex;align-items:center;gap:11px;min-width:0}.avatar{display:grid;place-items:center;width:43px;height:43px;flex:0 0 43px;border-radius:50%;border:1px solid #d6ff5945;background:#20251a;color:var(--lime);font-weight:800;overflow:hidden}.avatar img{width:100%;height:100%;object-fit:cover}.author-info{min-width:0}.author-name{font-size:13px;font-weight:800;overflow-wrap:anywhere}.meta{font-size:10px;color:var(--muted);line-height:1.9;margin-top:3px;overflow-wrap:anywhere}.badges{display:flex;gap:6px;flex-wrap:wrap}.badge{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:99px;padding:5px 9px;font-size:10px;white-space:nowrap}.badge.pending{color:#f2cb78;border-color:#e9bc5a45;background:#e9bc5a0b}.badge.approved{color:var(--lime);border-color:#d6ff5940;background:#d6ff590b}.badge.hidden{color:#c7b8ff;border-color:#b7a0ff40;background:#b7a0ff0b}.body{font-size:13px;line-height:2.15;white-space:pre-wrap;overflow-wrap:anywhere;margin:16px 0}.pageinfo{border-top:1px solid #ffffff0d;padding-top:11px;color:var(--muted);font-size:11px;line-height:1.9;overflow-wrap:anywhere}.pageinfo a{color:var(--lime);text-decoration:none}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}.actions .btn{padding:8px 11px}.empty{border:1px dashed #ffffff22;border-radius:15px;text-align:center;padding:32px 15px;color:var(--muted);font-size:12px;line-height:2}.hidden{display:none!important}.loading{opacity:.65;pointer-events:none}.foot{font-size:10px;color:#737a6b;line-height:1.9;padding:0 0 25px}
+@media(max-width:680px){.shell{width:min(100% - 20px,1180px)}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.stat{padding:12px}.stat strong{font-size:23px}.toolbar{grid-template-columns:1fr}.toolbar .btn{width:100%}.panel{padding:12px}.comment{padding:13px}.comment-top{gap:10px}.actions .btn{flex:1 1 auto}.hero{padding-top:24px}}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="top"><div class="brand">ALISHAMS <span>· MODERATION</span></div><div class="top-actions"><a class="btn" href="/admin-panel.html">پنل مدیریت اصلی ↗</a><a class="btn" href="/account.html">حساب کاربری</a><a class="btn" href="/">مشاهده سایت</a><button class="btn" id="logout">خروج</button></div></header>
+<section class="hero"><div class="eyebrow">PRIVATE CONTROL CENTER</div><h1>مدیریت دیدگاه‌ها</h1><p class="sub">بررسی، انتشار، پنهان‌سازی و حذف دیدگاه‌های وب‌سایت از یک بخش واحد.</p></section>
+<div id="notice" class="notice show" role="status" aria-live="polite">در حال بررسی دسترسی مدیر…</div>
+<div id="app" class="hidden">
+<section class="stats"><div class="stat"><span>همهٔ دیدگاه‌ها</span><strong id="total">—</strong></div><div class="stat"><span>منتشرشده</span><strong id="approved">—</strong></div><div class="stat"><span>در انتظار بررسی</span><strong id="pending">—</strong></div><div class="stat"><span>پنهان‌شده</span><strong id="hiddenCount">—</strong></div></section>
+<section class="panel"><div class="toolbar"><input id="search" class="field" type="search" placeholder="جست‌وجو در متن، نام یا صفحه…"><select id="filter" class="field" aria-label="فیلتر وضعیت"><option value="all">همهٔ وضعیت‌ها</option><option value="pending">در انتظار بررسی</option><option value="approved">منتشرشده</option><option value="hidden">پنهان‌شده</option></select><button id="refresh" class="btn primary">به‌روزرسانی ↻</button></div></section>
+<div id="list" class="list"><div class="empty">در حال بارگذاری دیدگاه‌ها…</div></div>
+<p class="foot">این صفحه فقط برای حساب مدیر تعیین‌شده قابل استفاده است. هر تغییر وضعیت مستقیماً در پایگاه داده ثبت می‌شود.</p>
+</div>
+</main>
+<script type="module">
+import{createClient}from"https://esm.sh/@supabase/supabase-js@2";
+const URL="https://srfldjfrzmtnlabusssq.supabase.co",KEY="sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB",ADMIN_EMAIL="theslyapex@gmail.com",ADMIN_ID="20e3df23-9f5a-4d88-8adc-093f75feb5df";
+const sb=createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const $=id=>document.getElementById(id),esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])),num=v=>Number(v||0).toLocaleString("fa-IR"),date=v=>v?new Date(v).toLocaleString("fa-IR",{dateStyle:"medium",timeStyle:"short"}):"—",initial=s=>(String(s||"ک").trim()[0]||"ک");
+let user=null,comments=[],profiles={};
+function note(msg,error=false){const el=$("notice");el.textContent=msg;el.className="notice show"+(error?" error":"")}
+function pageHref(key){if(!key||!key.startsWith("/"))return null;return "https://alishams.ir"+key}
+async function boot(){
+ const {data:{session},error}=await sb.auth.getSession();if(error)throw error;user=session?.user||null;
+ if(!user){note("برای ورود به مدیریت دیدگاه‌ها، ابتدا وارد حساب مدیر شوید. در حال انتقال به صفحهٔ ورود…");setTimeout(()=>location.href="/login.html?next="+encodeURIComponent("/comments-admin.html"),800);return}
+ if(user.id!==ADMIN_ID||String(user.email||"").toLowerCase()!==ADMIN_EMAIL){note("این حساب مجوز مدیریت دیدگاه‌ها را ندارد.",true);$("logout").classList.remove("hidden");return}
+ $("app").classList.remove("hidden");note("دسترسی مدیر تأیید شد. دیدگاه‌ها بارگذاری می‌شوند.");await load();
+}
+async function load(){
+ $("list").classList.add("loading");$("list").innerHTML='<div class="empty">در حال دریافت دیدگاه‌ها…</div>';
+ try{
+  const {data,error}=await sb.from("site_comments").select("id,user_id,page_key,page_title,body,parent_id,is_approved,created_at,updated_at").order("created_at",{ascending:false}).limit(1000);
+  if(error)throw error;comments=data||[];
+  const ids=[...new Set(comments.map(c=>c.user_id).filter(Boolean))];profiles={};
+  if(ids.length){const p=await sb.from("user_profiles").select("user_id,display_name,avatar_url").in("user_id",ids);if(p.error)throw p.error;(p.data||[]).forEach(x=>profiles[x.user_id]=x)}
+  $("total").textContent=num(comments.length);$("approved").textContent=num(comments.filter(c=>c.is_approved).length);$("pending").textContent=num(comments.filter(c=>!c.is_approved).length);$("hiddenCount").textContent=num(comments.filter(c=>c.is_approved===false).length);
+  render();note("آخرین داده‌ها دریافت شد · "+date(new Date().toISOString()));
+ }catch(e){$("list").innerHTML='<div class="empty">دریافت دیدگاه‌ها ناموفق بود.<br>'+esc(e.message||"خطای ناشناخته")+'</div>';note("خطا در دریافت دیدگاه‌ها: "+(e.message||"خطای ناشناخته"),true)}
+ finally{$("list").classList.remove("loading")}
+}
+function render(){
+ const q=$("search").value.trim().toLocaleLowerCase("fa"),f=$("filter").value;
+ const rows=comments.filter(c=>{const p=profiles[c.user_id]||{};const text=[c.body,c.page_title,c.page_key,p.display_name,c.user_id].join(" ").toLocaleLowerCase("fa");return(!q||text.includes(q))&&(f==="all"||(f==="approved"&&c.is_approved)||(f==="pending"&&!c.is_approved)||(f==="hidden"&&!c.is_approved))});
+ if(!rows.length){$("list").innerHTML='<div class="empty">با این فیلتر دیدگاهی پیدا نشد.</div>';return}
+ $("list").innerHTML=rows.map(c=>{
+  const p=profiles[c.user_id]||{},name=p.display_name||"کاربر سایت",approved=!!c.is_approved,reply=c.parent_id?'<span class="badge hidden">پاسخ دیدگاه</span>':"";
+  const av=p.avatar_url?'<span class="avatar"><img src="'+esc(p.avatar_url)+'" alt=""></span>':'<span class="avatar">'+esc(initial(name))+'</span>';
+  const href=pageHref(c.page_key);
+  return '<article class="comment '+(approved?"":"pending")+'" data-id="'+esc(c.id)+'"><div class="comment-top"><div class="author">'+av+'<div class="author-info"><div class="author-name">'+esc(name)+'</div><div class="meta">'+esc(date(c.created_at))+' · شناسه کاربر: '+esc(c.user_id)+'</div></div></div><div class="badges">'+reply+(approved?'<span class="badge approved">منتشرشده</span>':'<span class="badge pending">پنهان / در انتظار بررسی</span>')+'</div></div><div class="body">'+esc(c.body)+'</div><div class="pageinfo"><div>صفحه: '+esc(c.page_title||c.page_key||"—")+'</div><div>مسیر: '+esc(c.page_key||"—")+(href?' · <a href="'+esc(href)+'" target="_blank" rel="noopener">بازکردن صفحه ↗</a>':"")+'</div>'+(c.updated_at&&Math.abs(new Date(c.updated_at)-new Date(c.created_at))>60000?'<div>آخرین ویرایش: '+esc(date(c.updated_at))+'</div>':"")+'</div><div class="actions">'+(approved?'<button class="btn" data-action="hide">پنهان‌کردن</button>':'<button class="btn success" data-action="approve">تأیید و انتشار</button>')+'<button class="btn" data-action="edit">ویرایش متن</button><button class="btn danger" data-action="delete">حذف دیدگاه</button></div></article>'
+ }).join("");
+ $("list").querySelectorAll("[data-action]").forEach(b=>b.addEventListener("click",()=>act(b.closest("[data-id]").dataset.id,b.dataset.action,b)));
+}
+async function act(id,action,btn){
+ const c=comments.find(x=>x.id===id);if(!c)return;
+ if(action==="delete"&&!confirm("این دیدگاه برای همیشه حذف شود؟ این کار قابل بازگشت نیست."))return;
+ let patch={};
+ if(action==="approve")patch={is_approved:true,updated_at:new Date().toISOString()};
+ if(action==="hide")patch={is_approved:false,updated_at:new Date().toISOString()};
+ if(action==="edit"){
+  const value=prompt("متن ویرایش‌شدهٔ دیدگاه:",c.body);if(value===null)return;const body=value.trim();if(body.length<2||body.length>2000){note("متن باید بین ۲ تا ۲۰۰۰ نویسه باشد.",true);return}patch={body,updated_at:new Date().toISOString()};
+ }
+ btn.disabled=true;
+ try{
+  if(action==="delete"){const {error}=await sb.from("site_comments").delete().eq("id",id);if(error)throw error;comments=comments.filter(x=>x.id!==id)}
+  else{const {data,error}=await sb.from("site_comments").update(patch).eq("id",id).select("id");if(error)throw error;if(!data?.length)throw new Error("تغییر ثبت نشد؛ مجوز پایگاه داده را بررسی کنید.");comments=comments.map(x=>x.id===id?{...x,...patch}:x)}
+  $("total").textContent=num(comments.length);$("approved").textContent=num(comments.filter(x=>x.is_approved).length);$("pending").textContent=num(comments.filter(x=>!x.is_approved).length);$("hiddenCount").textContent=num(comments.filter(x=>!x.is_approved).length);render();note(action==="delete"?"دیدگاه حذف شد.":action==="approve"?"دیدگاه تأیید و منتشر شد.":action==="hide"?"دیدگاه پنهان شد.":"متن دیدگاه ویرایش شد.");
+ }catch(e){note("انجام عملیات ناموفق بود: "+(e.message||"خطای ناشناخته"),true);btn.disabled=false}
+}
+$("refresh").addEventListener("click",load);$("search").addEventListener("input",render);$("filter").addEventListener("change",render);
+$("logout").addEventListener("click",async()=>{await sb.auth.signOut();location.href="/login.html?next="+encodeURIComponent("/comments-admin.html")});
+sb.auth.onAuthStateChange((_event,session)=>{if(!session){location.href="/login.html?next="+encodeURIComponent("/comments-admin.html")}});
+boot().catch(e=>note("خطا در راه‌اندازی پنل: "+(e.message||"خطای ناشناخته"),true));
+</script>
+</body></html>
