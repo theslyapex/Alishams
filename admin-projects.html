@@ -38,7 +38,7 @@ $("uploadProjectFile").onclick=async()=>{
  if(!selected)return say("projectFileStatus","ابتدا پروژه را انتخاب کن.");
  const input=$("projectFile"),file=input.files?.[0];if(!file)return say("projectFileStatus","ابتدا فایل را انتخاب کن.");
  const isInvoice=$("projectFileInvoice").checked;if(isInvoice&&(file.type!=="application/pdf"||!file.name.toLowerCase().endsWith(".pdf")))return say("projectFileStatus","فاکتور باید PDF باشد.");
- if(file.size>100*1024*1024)return say("projectFileStatus","حجم فایل نباید بیشتر از ۱۰۰ مگابایت باشد.");
+ if(file.size>200*1024*1024)return say("projectFileStatus","حجم فایل نباید بیشتر از ۲۰۰ مگابایت باشد.");
  const btn=$("uploadProjectFile");btn.disabled=true;say("projectFileStatus","در حال بارگذاری فایل…");
  const safeName=file.name.replace(/[^\p{L}\p{N}._-]+/gu,"_").slice(-180)||"project-file";
  const path=selected.id+"/"+crypto.randomUUID()+"-"+safeName;
