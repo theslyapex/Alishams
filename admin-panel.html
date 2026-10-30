@@ -18,6 +18,43 @@ button{font:inherit;cursor:pointer}.app{height:100dvh;display:grid;grid-template
 .workspace{grid-row:2;grid-column:2;min-width:0;min-height:0;display:flex;flex-direction:column;padding:15px 17px 17px;gap:11px}.workspace-head{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:43px}.crumb{font-size:11px;color:var(--muted)}.crumb strong{color:#f3f5f6;font-size:14px;margin-left:8px}.reload{border:1px solid var(--line);background:#ffffff08;color:#e9edf0;border-radius:10px;padding:8px 12px;font-size:11px}.frame-wrap{flex:1;min-height:0;position:relative;border:1px solid #ffffff18;border-radius:17px;overflow:hidden;background:#090b0d;box-shadow:0 20px 70px #0005}.frame-wrap:before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--purple),transparent);z-index:1;opacity:.65}iframe{display:block;width:100%;height:100%;border:0;background:#080a0c}
 @media(max-width:850px){.app{grid-template-columns:1fr;grid-template-rows:64px 68px minmax(0,1fr)}.topbar{grid-row:1;padding:0 13px}.logo{width:36px;height:36px}.brand strong{font-size:13px}.secure{font-size:0;padding:9px}.secure .dot{margin:0}.site{padding:8px 10px}.sidebar{grid-row:2;grid-column:1;border-left:0;border-bottom:1px solid var(--line);padding:8px 10px;overflow-x:auto;overflow-y:hidden}.side-label,.side-foot{display:none}.nav{display:flex;gap:7px;width:max-content}.nav button{width:auto;min-width:106px;padding:8px 10px;gap:7px}.ico{width:28px;height:28px;flex-basis:28px}.nav-copy b{font-size:10px}.nav-copy small{display:none}.workspace{grid-row:3;grid-column:1;padding:10px;gap:7px}.workspace-head{min-height:32px}.frame-wrap{border-radius:13px}}
 @media(max-width:420px){.brand small{font-size:8px}.topright{gap:5px}.site{font-size:10px}.nav button{min-width:96px}.nav-copy b{font-size:9px}}
+
+/* Responsive hardening */
+.nav{min-width:0}
+.nav button{min-width:0;white-space:normal}
+.nav-copy{overflow-wrap:anywhere}
+.topbar,.topright,.brand{min-width:0}
+.workspace,.frame-wrap{min-width:0;min-height:0}
+iframe{min-width:0}
+@media(max-width:850px){
+ .app{height:100svh;height:100dvh;grid-template-columns:minmax(0,1fr);grid-template-rows:62px 66px minmax(0,1fr);overflow:hidden}
+ .topbar{min-width:0;gap:8px;padding-inline:10px}
+ .brand{gap:8px;flex:1 1 auto}
+ .brand strong{font-size:12px;white-space:nowrap}
+ .brand small{font-size:8px;letter-spacing:.7px;white-space:nowrap}
+ .topright{flex:0 0 auto;gap:6px}
+ .secure{font-size:0;width:30px;height:30px;justify-content:center;padding:0;flex:0 0 30px}
+ .secure .dot{margin:0}
+ .site{font-size:10px;white-space:nowrap;padding:7px 9px}
+ .sidebar{min-width:0;width:100%;padding:7px 9px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none}
+ .sidebar::-webkit-scrollbar{display:none}
+ .nav{display:flex;flex-wrap:nowrap;gap:7px;width:max-content;min-width:100%}
+ .nav button{flex:0 0 auto;width:auto;min-width:116px;max-width:145px;min-height:48px;padding:6px 9px;gap:7px;white-space:nowrap}
+ .nav-copy{min-width:0}
+ .nav-copy b{font-size:10px;white-space:nowrap}
+ .workspace{padding:8px;gap:7px;overflow:hidden}
+ .workspace-head{flex:0 0 34px;min-height:34px}
+ .crumb strong{font-size:12px}
+ .reload{font-size:10px;padding:7px 9px;white-space:nowrap}
+ .frame-wrap{flex:1 1 auto;width:100%;min-height:0;overflow:hidden}
+}
+@media(max-width:380px){
+ .brand strong{font-size:10px}
+ .brand small{font-size:7px}
+ .logo{width:31px;height:31px;flex:0 0 31px}
+ .site{font-size:9px;padding:6px 7px}
+ .nav button{min-width:108px}
+}
 </style></head>
 <body><div class="app">
 <header class="topbar"><div class="brand"><div class="logo" aria-hidden="true"></div><div><strong>ALISHAMS STUDIO</strong><small>UNIFIED MANAGEMENT CENTER</small></div></div><div class="topright"><span class="secure"><i class="dot"></i> محیط مدیریتی امن</span><a class="site" href="/" target="_blank" rel="noopener">مشاهده سایت ↗</a></div></header>
@@ -41,7 +78,24 @@ function activate(key,src,updateHash=true){const btn=nav.querySelector('[data-ke
 nav.addEventListener('click',e=>{const b=e.target.closest('button[data-key]');if(b)activate(b.dataset.key,b.dataset.src)});
 reload.addEventListener('click',()=>{try{frame.contentWindow.location.reload()}catch{frame.src=frame.src}});
 window.addEventListener('message',e=>{if(e.origin!==location.origin||e.data?.type!=='alishams-admin-nav')return;const b=nav.querySelector('[data-src="'+e.data.path.replace(/^\//,'')+'"]');if(b)activate(b.dataset.key,b.dataset.src)});
-frame.addEventListener('load',()=>{try{frame.contentDocument.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a)return;const path=new URL(a.href,location.href).pathname.split('/').pop();const b=nav.querySelector('[data-src="'+path+'"]');if(b){e.preventDefault();activate(b.dataset.key,b.dataset.src)}} ,true)}catch{}});
+frame.addEventListener('load',()=>{try{
+ const doc=frame.contentDocument;
+ if(!doc.querySelector('meta[name="viewport"]')){const meta=doc.createElement('meta');meta.name='viewport';meta.content='width=device-width,initial-scale=1,viewport-fit=cover';doc.head.appendChild(meta)}
+ if(!doc.getElementById('unified-admin-mobile-fix')){const style=doc.createElement('style');style.id='unified-admin-mobile-fix';style.textContent=`
+ @media(max-width:850px){
+ html,body{max-width:100%!important;overflow-x:hidden!important}
+ *,*:before,*:after{box-sizing:border-box}
+ img,video,canvas,svg{max-width:100%;height:auto}
+ table{display:block;max-width:100%;overflow-x:auto}
+ input,select,textarea{max-width:100%;min-width:0}
+ button{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+ .container,.wrapper,.content,.main-content,.admin-container,.dashboard-container{width:100%!important;max-width:100%!important;min-width:0!important}
+ .grid,.stats-grid,.cards-grid,.dashboard-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))!important}
+ .actions,.toolbar,.filters,.header-actions{display:flex;flex-wrap:wrap;gap:8px}
+ }
+ `;doc.head.appendChild(style)}
+ doc.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a)return;const path=new URL(a.href,location.href).pathname.split('/').pop();const b=nav.querySelector('[data-src="'+path+'"]');if(b){e.preventDefault();activate(b.dataset.key,b.dataset.src)}},true)
+ }catch(e){console.warn('Admin module mobile enhancement:',e)}});
 const initial=location.hash.slice(1);const btn=nav.querySelector('[data-key="'+initial+'"]');if(btn)activate(btn.dataset.key,btn.dataset.src,false);
 })();
 </script></body></html>
