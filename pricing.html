@@ -31,6 +31,9 @@
 .calc-result{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;min-height:220px;padding:24px;border:1px solid #d9ff723b;border-radius:20px;background:linear-gradient(145deg,#d9ff7210,#b6a0ff08);text-align:center}.calc-result .result-label{color:var(--muted);font-size:11px}.calc-result output{display:block;color:var(--lime);font-size:clamp(24px,4vw,36px);font-weight:900;line-height:1.6;margin:7px 0}.calc-result p{font-size:11px;color:#b9bac2;margin:0}.calc-result .btn{align-self:center;margin-top:17px}.calc-disclaimer{margin:17px 0 0;color:#9699a3;font-size:10px;line-height:2}
 @media(max-width:760px){.calc-head{align-items:flex-start;flex-direction:column}.calc-grid{grid-template-columns:1fr}.calc-result{min-height:190px}}
 
+
+/* Premium multi-service calculator picker */
+.calc-service-field{position:relative;z-index:5}.calc-picker-trigger{width:100%;min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 15px;border:1px solid #d9ff7250;border-radius:15px;background:linear-gradient(135deg,#1b2025,#101116);color:var(--ink);text-align:right;cursor:pointer;box-shadow:0 10px 30px #0003;transition:.22s}.calc-picker-trigger:hover,.calc-picker-trigger[aria-expanded=true]{border-color:var(--lime);box-shadow:0 0 0 3px #d9ff7210,0 14px 35px #0005}.calc-picker-trigger span{display:grid;gap:2px}.calc-picker-trigger b{font-size:13px}.calc-picker-trigger small{font-size:10px;color:var(--muted)}.calc-picker-trigger i{font-style:normal;color:var(--lime);font-size:22px;transition:transform .2s}.calc-picker-trigger[aria-expanded=true] i{transform:rotate(180deg)}.calc-picker-popup{position:absolute;top:calc(100% + 9px);right:0;left:0;z-index:50;padding:13px;border:1px solid #d9ff7260;border-radius:19px;background:rgba(16,18,23,.98);box-shadow:0 25px 75px #000c;backdrop-filter:blur(24px);animation:calcPopupIn .2s ease both}.calc-picker-popup[hidden]{display:none}@keyframes calcPopupIn{from{opacity:0;transform:translateY(-7px) scale(.985)}to{opacity:1;transform:none}}.calc-picker-head,.calc-picker-foot{display:flex;align-items:center;justify-content:space-between;gap:10px}.calc-picker-head{padding:3px 3px 11px;border-bottom:1px solid #ffffff12}.calc-picker-head strong{font-size:12px}.calc-picker-head span{font-size:9px;color:var(--lime);padding:4px 8px;border-radius:20px;background:#d9ff7212}.calc-picker-list{display:grid;grid-template-columns:1fr 1fr;gap:7px;max-height:235px;overflow:auto;padding:11px 2px}.calc-picker-option{display:flex;align-items:center;gap:9px;padding:9px 10px;border:1px solid #ffffff12;border-radius:11px;background:#ffffff04;color:#e8e8ed;font-size:10px;cursor:pointer;transition:.18s}.calc-picker-option:has(input:checked){border-color:#d9ff7280;background:#d9ff7210;color:var(--lime)}.calc-picker-option input{width:15px;height:15px;margin:0;accent-color:#d9ff72}.calc-picker-foot{padding-top:10px;border-top:1px solid #ffffff12}.calc-picker-foot span{font-size:10px;color:var(--muted)}.calc-picker-foot button{border:0;border-radius:9px;padding:8px 15px;background:var(--lime);color:#111;font:700 11px Estedad;cursor:pointer}.calc-selected-rows{display:grid;gap:7px;margin-top:9px}.calc-selected-row{display:grid;grid-template-columns:1fr 95px auto;align-items:center;gap:9px;padding:9px 11px;border:1px solid #ffffff14;border-radius:12px;background:#ffffff05}.calc-selected-row span{font-size:10px;color:#eee}.calc-selected-row input{width:100%;min-width:0;padding:6px 8px;border:1px solid #ffffff20;border-radius:8px;background:#0b0d12;color:#fff;font:12px Estedad}.calc-selected-row small{font-size:9px;color:var(--muted)}.calc-selected-row button{border:0;background:transparent;color:#ff9b91;font-size:17px;cursor:pointer;padding:0 3px}@media(max-width:520px){.calc-picker-list{grid-template-columns:1fr;max-height:210px}.calc-selected-row{grid-template-columns:1fr 78px auto}.calc-picker-popup{position:relative;top:auto;margin-top:8px}}
 </style>
 <meta property="og:image" content="https://alishams.ir/assets/images/alishams-studio-workspace.jpg">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://alishams.ir/assets/images/alishams-studio-workspace.jpg"><meta name="twitter:image:alt" content="قیمت‌گذاری خدمات دیجیتال علی شمس">
@@ -64,8 +67,8 @@
 <section class="section" id="priceCalculator"><div class="wrap"><div class="price-calculator">
 <div class="calc-head"><div><span class="eyebrow">SMART PRICE ESTIMATOR</span><h2>برآورد هوشمند هزینه</h2></div><p>خدمت و تعداد موردنیازت را انتخاب کن تا بر اساس تعرفه‌های اعلام‌شده، یک برآورد اولیه ببینی.</p></div>
 <div class="calc-grid"><div class="calc-controls">
-<div class="calc-field"><label for="calcService">چه خدمتی مدنظرت است؟</label><select id="calcService">
-<option value="motion">موشن‌گرافیک</option><option value="website">طراحی قالب وب‌سایت</option><option value="reels">ساخت ریلز اینستاگرام</option><option value="trailer">تیزر تبلیغاتی</option><option value="security">امنیت شبکه‌های اجتماعی</option><option value="logo">طراحی لوگو</option><option value="article">نگارش مقاله وب‌سایت</option><option value="consult">مشاوره کسب‌وکار آنلاین</option><option value="seo">خدمات SEO</option><option value="igfollowers">فالوور اینستاگرام (هر ۱۰۰۰ عدد)</option><option value="iglikes">لایک اینستاگرام (هر ۱۰۰۰ عدد)</option><option value="social">سایر خدمات شبکه‌های اجتماعی</option><option value="ads">تبلیغات و معرفی</option></select></div>
+<div class="calc-field calc-service-field"><label>چه خدمتی مدنظرت است؟</label><button type="button" class="calc-picker-trigger" id="calcPickerTrigger" aria-expanded="false" aria-controls="calcPickerPopup"><span><b id="calcPickerTitle">انتخاب خدمات</b><small id="calcPickerSubtitle">یک یا چند خدمت را انتخاب کن</small></span><i>⌄</i></button><div class="calc-picker-popup" id="calcPickerPopup" hidden><div class="calc-picker-head"><strong>خدمات موردنیاز را انتخاب کن</strong><span>انتخاب چندگانه</span></div><div class="calc-picker-list" id="calcPickerList"></div><div class="calc-picker-foot"><span id="calcPickerCount">۰ خدمت انتخاب شده</span><button type="button" id="calcPickerDone">تأیید انتخاب‌ها</button></div></div><div class="calc-selected-rows" id="calcSelectedRows"></div></div>
+<div class="calc-field" hidden><select id="calcService"><option value="motion">موشن‌گرافیک</option></select></div>
 <div class="calc-field"><label for="calcQuantity" id="calcQuantityLabel">تعداد پروژه</label><input id="calcQuantity" type="number" min="1" max="100" step="1" value="1" inputmode="numeric"><small id="calcQuantityHint">برای برآورد چند پروژه، تعداد را تغییر بده.</small></div>
 <div class="calc-field" id="calcModeWrap" hidden><label for="calcMode">نوع سفارش</label><select id="calcMode"><option value="session">جلسه مشاوره</option><option value="project">پروژه مشاوره</option></select></div>
 </div>
@@ -177,27 +180,64 @@ const calcData={
  logo:{name:'طراحی لوگو',min:900000,max:3000000,unit:'پروژه',label:'تعداد لوگو'},
  article:{name:'نگارش مقاله وب‌سایت',min:400000,max:400000,unit:'مقاله',label:'تعداد مقاله'},
  consult:{name:'مشاوره کسب‌وکار آنلاین',min:750000,max:750000,unit:'جلسه',label:'تعداد جلسه'},
- seo:{name:'خدمات SEO',min:1000000,max:5000000,unit:'ماه/پروژه',label:'تعداد واحد'},
- igfollowers:{name:'خدمات اینستاگرام',min:312000,max:312000,unit:'هر ۱۰۰۰ فالوور',label:'تعداد بسته ۱۰۰۰تایی'},
- iglikes:{name:'خدمات اینستاگرام',min:89000,max:89000,unit:'هر ۱۰۰۰ لایک',label:'تعداد بسته ۱۰۰۰تایی'}
+ seo:{name:'خدمات SEO',min:1000000,max:5000000,unit:'واحد',label:'تعداد واحد'},
+ igfollowers:{name:'فالوور اینستاگرام (هر ۱۰۰۰ عدد)',min:312000,max:312000,unit:'بسته ۱۰۰۰تایی',label:'تعداد بسته'},
+ iglikes:{name:'لایک اینستاگرام (هر ۱۰۰۰ عدد)',min:89000,max:89000,unit:'بسته ۱۰۰۰تایی',label:'تعداد بسته'},
+ social:{name:'سایر خدمات شبکه‌های اجتماعی',quote:true},
+ ads:{name:'تبلیغات و معرفی',quote:true}
 };
-const calcService=document.getElementById('calcService'),calcQuantity=document.getElementById('calcQuantity'),calcAmount=document.getElementById('calcAmount'),calcExplanation=document.getElementById('calcExplanation'),calcOrder=document.getElementById('calcOrder'),calcQuantityLabel=document.getElementById('calcQuantityLabel'),calcQuantityHint=document.getElementById('calcQuantityHint'),calcModeWrap=document.getElementById('calcModeWrap'),calcMode=document.getElementById('calcMode');
+const calcService=document.getElementById('calcService'),calcAmount=document.getElementById('calcAmount'),calcExplanation=document.getElementById('calcExplanation'),calcOrder=document.getElementById('calcOrder');
+const pickerTrigger=document.getElementById('calcPickerTrigger'),pickerPopup=document.getElementById('calcPickerPopup'),pickerList=document.getElementById('calcPickerList'),pickerRows=document.getElementById('calcSelectedRows');
+const pickerTitle=document.getElementById('calcPickerTitle'),pickerSubtitle=document.getElementById('calcPickerSubtitle'),pickerCount=document.getElementById('calcPickerCount');
 const toman=n=>Math.round(n).toLocaleString('fa-IR')+' تومان';
-function updateCalculator(){
- const key=calcService.value,qty=Math.max(1,Math.min(100,Number.parseInt(calcQuantity.value||'1',10)||1));calcQuantity.value=qty;
- let d=calcData[key],serviceName=d?.name||({social:'خدمات شبکه‌های اجتماعی',ads:'تبلیغات و معرفی'}[key]);
- let min=d?.min||0,max=d?.max||0,unit=d?.unit||'';
- if(key==='consult'&&calcMode.value==='project'){min=max=4000000;unit='پروژه';}\n if(key==='seo'&&calcMode.value==='monthly'){min=max=1000000;unit='ماه خدمات ماهانه';}\n if(key==='seo'&&calcMode.value==='project'){min=max=5000000;unit='پروژه سئو';}
- if(key==='seo'){unit='واحد';calcQuantityHint.textContent='برای سئو، هر واحد را یک ماه خدمات ماهانه یا یک پروژه مستقل در نظر بگیر؛ این دو مدل جداگانه قیمت‌گذاری می‌شوند.';}
- else if(d){calcQuantityHint.textContent='قیمت درج‌شده برای هر '+d.unit+' است؛ تعداد را وارد کن.';}
- if(key==='consult'){calcModeWrap.hidden=false;calcQuantityLabel.textContent=calcMode.value==='project'?'تعداد پروژه':'تعداد جلسه';}
- else{calcModeWrap.hidden=true;calcQuantityLabel.textContent=d?.label||'تعداد';}
- const quote=['social','ads'].includes(key);
- if(quote){calcAmount.textContent='استعلام قیمت';calcExplanation.textContent='هزینه به نوع خدمت، پلتفرم، تعداد و جزئیات سفارش بستگی دارد.';}
- else{const low=min*qty,high=max*qty;calcAmount.textContent=min===max?toman(low):toman(low)+' تا '+toman(high);calcExplanation.textContent='برآورد برای '+qty.toLocaleString('fa-IR')+' '+unit+'؛ مبلغ نهایی پس از بررسی جزئیات تأیید می‌شود.';}
- const href='index.html?service='+encodeURIComponent(serviceName)+'&openOrder=1';calcOrder.href=href;
+let chosenCalcServices=[];
+function renderCalcPicker(){
+ pickerList.innerHTML='';
+ Object.entries(calcData).forEach(([key,d])=>{
+  const label=document.createElement('label');label.className='calc-picker-option';
+  const box=document.createElement('input');box.type='checkbox';box.value=key;box.checked=chosenCalcServices.includes(key);
+  box.addEventListener('change',()=>{if(box.checked){if(!chosenCalcServices.includes(key))chosenCalcServices.push(key)}else chosenCalcServices=chosenCalcServices.filter(x=>x!==key);renderCalcPicker();renderCalcRows();});
+  const name=document.createElement('span');name.textContent=d.name;label.append(box,name);pickerList.append(label);
+ });
+ pickerCount.textContent=new Intl.NumberFormat('fa-IR').format(chosenCalcServices.length)+' خدمت انتخاب شده';
 }
-calcService.addEventListener('change',updateCalculator);calcQuantity.addEventListener('input',updateCalculator);calcMode.addEventListener('change',updateCalculator);updateCalculator();
+function renderCalcRows(){
+ pickerRows.innerHTML='';
+ chosenCalcServices.forEach(key=>{
+  const d=calcData[key],row=document.createElement('div');row.className='calc-selected-row';
+  const name=document.createElement('span');name.textContent=d.name;
+  const qty=document.createElement('input');qty.type='number';qty.min='1';qty.max='100';qty.step='1';qty.value='1';qty.inputMode='numeric';qty.setAttribute('aria-label','تعداد '+d.name);qty.addEventListener('input',updateCalculator);
+  const unit=document.createElement('small');unit.textContent=d.unit||'استعلام';
+  const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.setAttribute('aria-label','حذف '+d.name);remove.addEventListener('click',()=>{chosenCalcServices=chosenCalcServices.filter(x=>x!==key);renderCalcPicker();renderCalcRows();updateCalculator()});
+  row.dataset.key=key;row.append(name,qty,unit,remove);pickerRows.append(row);
+ });
+ pickerTitle.textContent=chosenCalcServices.length?chosenCalcServices.length+' خدمت انتخاب شده':'انتخاب خدمات';
+ pickerSubtitle.textContent=chosenCalcServices.length?chosenCalcServices.map(k=>calcData[k].name).join('، '):'یک یا چند خدمت را انتخاب کن';
+ calcService.innerHTML='';chosenCalcServices.forEach(k=>calcService.add(new Option(calcData[k].name,k)));
+ updateCalculator();
+}
+function updateCalculator(){
+ let minTotal=0,maxTotal=0,hasQuote=false,notes=[];
+ pickerRows.querySelectorAll('.calc-selected-row').forEach(row=>{
+  const key=row.dataset.key,d=calcData[key],qty=Math.max(1,Math.min(100,Number.parseInt(row.querySelector('input').value||'1',10)||1));row.querySelector('input').value=qty;
+  if(d.quote){hasQuote=true;notes.push(d.name+': نیازمند استعلام');return;}
+  let low=d.min,high=d.max,unit=d.unit;
+  if(key==='consult'){low=high=750000;unit='جلسه مشاوره';}
+  if(key==='seo'){low=1000000;high=5000000;unit='ماه/پروژه؛ بسته به مدل سفارش';}
+  minTotal+=low*qty;maxTotal+=high*qty;notes.push(d.name+' × '+qty.toLocaleString('fa-IR'));
+ });
+ if(!chosenCalcServices.length){calcAmount.textContent='خدمتی انتخاب نشده';calcExplanation.textContent='برای مشاهده برآورد، ابتدا یک یا چند خدمت را انتخاب کن.';calcOrder.href='index.html?openOrder=1';}
+ else{
+  calcAmount.textContent=hasQuote?(minTotal||maxTotal?toman(minTotal)+' تا '+toman(maxTotal)+' + استعلام':'استعلام قیمت'):minTotal===maxTotal?toman(minTotal):toman(minTotal)+' تا '+toman(maxTotal);
+  calcExplanation.textContent=notes.join(' · ')+(hasQuote?' — بخشی از خدمات نیازمند استعلام است.':' — برآورد اولیه؛ مبلغ نهایی پس از بررسی جزئیات تأیید می‌شود.');
+  calcOrder.href='index.html?services='+encodeURIComponent(chosenCalcServices.map(k=>calcData[k].name).join('|'))+'&openOrder=1';
+ }
+}
+pickerTrigger.addEventListener('click',()=>{const open=pickerTrigger.getAttribute('aria-expanded')!=='true';pickerTrigger.setAttribute('aria-expanded',String(open));pickerPopup.hidden=!open;});
+document.getElementById('calcPickerDone').addEventListener('click',()=>{pickerPopup.hidden=true;pickerTrigger.setAttribute('aria-expanded','false');});
+document.addEventListener('click',e=>{if(!e.target.closest('.calc-service-field')){pickerPopup.hidden=true;pickerTrigger.setAttribute('aria-expanded','false')}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){pickerPopup.hidden=true;pickerTrigger.setAttribute('aria-expanded','false')}});
+renderCalcPicker();renderCalcRows();
 
 </script>
 </body></html>
