@@ -213,7 +213,24 @@ $("projectDetailsList").addEventListener("click",async e=>{
  try{const d=await api("download_project_file",{file_id:btn.dataset.fileId});const a=document.createElement("a");a.href=d.signed_url;a.download=d.file_name||"";a.rel="noopener";document.body.append(a);a.click();a.remove();btn.textContent="دانلود شد ✓"}catch(err){notice("dashNotice",err.message||"دانلود فایل انجام نشد.","error");btn.textContent=old;btn.disabled=false}
 });
 $("markAllNotificationsRead")?.addEventListener("click",async()=>{const ids=(dashboardData?.notifications||[]).filter(n=>!n.read_at).map(n=>n.id);if(!ids.length)return;try{await api("mark_notification_read",{notification_ids:ids});await loadDashboard()}catch(e){notice("dashNotice",e.message,"error")}});
-$("enablePhoneNotifications")?.addEventListener("click",async()=>{const el=$("phoneNotificationStatus");if(!("Notification" in window)){el.textContent="مرورگر از اعلان وب پشتیبانی نمی‌کند.";return}const permission=await Notification.requestPermission();el.textContent=permission==="granted"?"اجازه اعلان مرورگر فعال شد؛ برای دریافت اعلان در حالت بسته بودن سایت باید Push سمت سرور هم پیکربندی شود.":"اجازه اعلان داده نشد."});
+function pushKeyBytes(value){const pad="=".repeat((4-value.length%4)%4);const raw=atob((value+pad).replace(/-/g,"+").replace(/_/g,"/"));return Uint8Array.from(raw,ch=>ch.charCodeAt(0))}
+$("enablePhoneNotifications")?.addEventListener("click",async()=>{
+ const el=$("phoneNotificationStatus"),btn=$("enablePhoneNotifications");btn.disabled=true;el.textContent="در حال آماده‌سازی اعلان گوشی…";
+ try{
+  if(!("serviceWorker" in navigator)||!("PushManager" in window)||!("Notification" in window))throw new Error("این مرورگر از اعلان وب پشتیبانی نمی‌کند.");
+  if(!window.isSecureContext)throw new Error("برای فعال‌سازی اعلان باید سایت با HTTPS باز شود.");
+  const config=await api("push_config");
+  if(!config.enabled||!config.public_key)throw new Error("کلید عمومی Push هنوز در تنظیمات امن سرور ثبت نشده است.");
+  const permission=await Notification.requestPermission();if(permission!=="granted")throw new Error("اجازه ارسال اعلان داده نشد.");
+  const registration=await navigator.serviceWorker.register("/sw.js",{scope:"/"});
+  await navigator.serviceWorker.ready;
+  let subscription=await registration.pushManager.getSubscription();
+  if(!subscription)subscription=await registration.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:pushKeyBytes(config.public_key)});
+  await api("save_push_subscription",{subscription:subscription.toJSON()});
+  el.textContent="اعلان گوشی با موفقیت فعال شد. از این پس پیام‌های پشتیبانی و به‌روزرسانی پروژه برای این دستگاه ارسال می‌شوند.";
+ }catch(err){el.textContent=err.message||"فعال‌سازی اعلان انجام نشد."}
+ finally{btn.disabled=false}
+});
 $("loginForm").addEventListener("submit",async e=>{e.preventDefault();notice("loginNotice","در حال ورود…");const {data,error}=await sb.auth.signInWithPassword({email:$("loginEmail").value.trim(),password:$("loginPassword").value});if(error){notice("loginNotice",error.message==="Invalid login credentials"?"ایمیل یا رمز عبور اشتباه است.":error.message,"error");return}session=data.session;await loadDashboard()});
 $("signupForm").addEventListener("submit",async e=>{e.preventDefault();notice("signupNotice","در حال ساخت حساب…");const email=$("signupEmail").value.trim().toLowerCase(),full_name=$("signupName").value.trim(),phone=$("signupPhone").value.trim(),password=$("signupPassword").value;const {data,error}=await sb.auth.signUp({email,password,options:{data:{full_name,phone},emailRedirectTo:REDIRECT}});if(error){notice("signupNotice",error.message,"error");return}if(data.session){session=data.session;await loadDashboard()}else{notice("signupNotice","حساب ثبت شد. اگر تأیید ایمیل فعال باشد، لینک تأیید را از ایمیلت باز کن؛ سپس به همین صفحه برگرد و وارد شو.","success");$("loginEmail").value=email}});
 $("resetBtn").addEventListener("click",async()=>{const email=$("loginEmail").value.trim();if(!email){notice("loginNotice","اول ایمیل خودت را وارد کن.","error");return}const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:REDIRECT});notice("loginNotice",error?error.message:"اگر حسابی با این ایمیل وجود داشته باشد، لینک بازیابی برایت ارسال می‌شود.","success")});
