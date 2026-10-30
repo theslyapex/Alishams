@@ -187,7 +187,7 @@ function updateCalculator(){
  const key=calcService.value,qty=Math.max(1,Math.min(100,Number.parseInt(calcQuantity.value||'1',10)||1));calcQuantity.value=qty;
  let d=calcData[key],serviceName=d?.name||({social:'خدمات شبکه‌های اجتماعی',ads:'تبلیغات و معرفی'}[key]);
  let min=d?.min||0,max=d?.max||0,unit=d?.unit||'';
- if(key==='consult'&&calcMode.value==='project'){min=max=4000000;unit='پروژه';}
+ if(key==='consult'&&calcMode.value==='project'){min=max=4000000;unit='پروژه';}\n if(key==='seo'&&calcMode.value==='monthly'){min=max=1000000;unit='ماه خدمات ماهانه';}\n if(key==='seo'&&calcMode.value==='project'){min=max=5000000;unit='پروژه سئو';}
  if(key==='seo'){unit='واحد';calcQuantityHint.textContent='برای سئو، هر واحد را یک ماه خدمات ماهانه یا یک پروژه مستقل در نظر بگیر؛ این دو مدل جداگانه قیمت‌گذاری می‌شوند.';}
  else if(d){calcQuantityHint.textContent='قیمت درج‌شده برای هر '+d.unit+' است؛ تعداد را وارد کن.';}
  if(key==='consult'){calcModeWrap.hidden=false;calcQuantityLabel.textContent=calcMode.value==='project'?'تعداد پروژه':'تعداد جلسه';}
