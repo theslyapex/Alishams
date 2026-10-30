@@ -1206,7 +1206,7 @@ const giftFields=document.getElementById('telegramGiftFields');
 const giftDetail=document.getElementById('telegramGiftDetail');
 const socialHint=document.getElementById('socialServiceHint');
 function updateSocialServiceFields(){
- const platform=document.getElementById('serviceSelect').value;
+ const platform=selectedServices.length===1?selectedServices[0]:'';
  const options=socialServiceOptions[platform];
  socialFields.hidden=!options;
  giftFields.hidden=true;giftDetail.required=false;giftDetail.value='';
@@ -1218,7 +1218,7 @@ function updateSocialServiceFields(){
  const platformHints={'خدمات اینستاگرام':'نوع تعامل اینستاگرامی را دقیق انتخاب کن. لینک پست، ریلز، استوری یا حساب موردنظر را در توضیحات سفارش بنویس.','خدمات تلگرام':'نوع خدمت تلگرام را انتخاب کن. لینک گروه، کانال یا پست موردنظر را در توضیحات سفارش بنویس.','خدمات یوتیوب':'نوع خدمت یوتیوب را انتخاب کن و لینک کانال، ویدئو یا لایو را در توضیحات سفارش بنویس.','خدمات واتساپ':'نوع خدمت واتساپ را انتخاب کن و لینک کانال یا اطلاعات مقصد را در توضیحات سفارش بنویس.','خدمات ایکس(توییتر)':'نوع تعامل موردنظر در ایکس (توییتر) را انتخاب کن و لینک پست یا حساب را در توضیحات سفارش بنویس.','خدمات فیسبوک':'نوع خدمت فیسبوک را انتخاب کن و لینک صفحه، پست یا لایو را در توضیحات سفارش بنویس.'};socialHint.textContent=platformHints[platform]||'نوع خدمت را انتخاب کن و لینک مقصد را در توضیحات سفارش بنویس.';
 }
 document.getElementById('serviceSelect').addEventListener('change',updateSocialServiceFields);
-updateSocialServiceFields();
+setSelectedServices(serviceParam?[serviceParam]:(serviceSelect.options[0]?[serviceSelect.options[0].value]:[]));
 socialType.addEventListener('change',()=>{
  const isGift=selectedServices.length===1&&selectedServices[0]==='خدمات تلگرام'&&socialType.value==='گیفت تلگرام';
  giftFields.hidden=!isGift;giftDetail.required=isGift;
@@ -1234,9 +1234,9 @@ let orderSummaryText = '';
 document.getElementById('makeSummary').addEventListener('click',async()=>{
  const val=id=>document.getElementById(id).value.trim();
  const clientName=val('clientName'),projectName=val('projectName'),projectDetails=val('projectDetails'),contactInfo=val('contactInfo'),clientEmail=val('clientEmail');
- const selectedService=val('serviceSelect'),selectedSocialType=val('socialServiceType'),giftValue=val('telegramGiftDetail');
- const isSocialService=Boolean(socialServiceOptions[selectedService]);
- const finalDetails=projectDetails+(isSocialService?'\n\nنوع دقیق خدمت: '+selectedSocialType+(selectedService==='خدمات تلگرام'&&selectedSocialType==='گیفت تلگرام'?'\nنام گیفت / ارزش دلاری: '+giftValue:''):'');
+ const selectedService=selectedServices.join('، '),selectedSocialType=val('socialServiceType'),giftValue=val('telegramGiftDetail');
+ const isSocialService=selectedServices.length===1&&Boolean(socialServiceOptions[selectedServices[0]]);
+ const finalDetails='خدمات انتخاب‌شده: '+selectedService+'\n\n'+projectDetails+(isSocialService?'\n\nنوع دقیق خدمت: '+selectedSocialType+(selectedServices[0]==='خدمات تلگرام'&&selectedSocialType==='گیفت تلگرام'?'\nنام گیفت / ارزش دلاری: '+giftValue:''):'');
  const feedback=document.getElementById('copyFeedback'),btn=document.getElementById('makeSummary');
  if(!selectedServices.length||!clientName||!projectName||!projectDetails||!contactInfo||!clientEmail||!document.getElementById('clientEmail').checkValidity()||(isSocialService&&!selectedSocialType)||(selectedServices.length===1&&selectedServices[0]==='خدمات تلگرام'&&selectedSocialType==='گیفت تلگرام'&&!giftValue)){
   feedback.textContent='لطفاً نام، عنوان، توضیحات، شماره تلفن و ایمیل معتبر را تکمیل کن.';
@@ -1245,7 +1245,7 @@ document.getElementById('makeSummary').addEventListener('click',async()=>{
  }
  btn.disabled=true;btn.textContent='در حال ثبت سفارش…';feedback.textContent='';
  try{
-  const response=await fetch('https://srfldjfrzmtnlabusssq.supabase.co/functions/v1/order-submit',{method:'POST',headers:{'Content-Type':'application/json','apikey':'sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB'},body:JSON.stringify({client_name:clientName,client_email:clientEmail,contact_info:contactInfo,service:val('serviceSelect'),title:projectName,details:finalDetails,budget:val('budget')})});
+  const response=await fetch('https://srfldjfrzmtnlabusssq.supabase.co/functions/v1/order-submit',{method:'POST',headers:{'Content-Type':'application/json','apikey':'sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB'},body:JSON.stringify({client_name:clientName,client_email:clientEmail,contact_info:contactInfo,service:selectedService,title:projectName,details:finalDetails,budget:val('budget')})});
   const data=await response.json();if(!response.ok||!data.ok)throw new Error(data.error||'ثبت سفارش انجام نشد.');
   orderSummaryText='اطلاعات پیگیری سفارش Alishams Studio\nکد پیگیری: '+data.tracking_code+'\nکلید خصوصی: '+data.access_token+'\nصفحه پیگیری: '+location.origin+'/order-tracking.html\n\nاین کلید خصوصی را نگه دار؛ برای پیگیری سفارش به هر دو مورد نیاز داری.';
   document.getElementById('summaryText').textContent=orderSummaryText;
