@@ -553,6 +553,18 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 @media(max-width:390px){.all-portfolio-panel{padding:22px 15px}.all-portfolio-copy h2{font-size:32px}.all-portfolio-copy>p{font-size:12px}.all-portfolio-cta{width:100%;gap:12px;padding:0 12px;font-size:12px}.all-portfolio-art{min-height:290px}.all-portfolio-art-top,.all-portfolio-art-bottom{padding:13px}.all-portfolio-stack{inset:56px 12px 48px}}
 @media(prefers-reduced-motion:reduce){.all-portfolio-orbit--one,.all-portfolio-orbit--two{animation:none!important}.all-portfolio-art,.all-portfolio-tile--front,.all-portfolio-cta,.all-portfolio-cta b{transition:none!important}}
 </style>
+
+.multi-service-picker{margin:10px 0 18px;padding:15px;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018))}
+.multi-service-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.multi-service-top strong{font-size:13px;color:var(--text,#f4f5ff)}#selectedServiceCount{font-size:11px;color:#b8a0ff;background:rgba(155,124,255,.12);padding:5px 9px;border-radius:30px;white-space:nowrap}
+.multi-service-picker>p{font-size:11px;color:var(--muted,#aeb4c7);margin:7px 0 12px}
+.multi-service-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;max-height:220px;overflow:auto;padding:2px}
+.multi-service-option{display:flex;align-items:center;gap:9px;min-width:0;padding:10px;border:1px solid rgba(255,255,255,.09);border-radius:11px;background:rgba(255,255,255,.025);font-size:11px;color:#e9eaf0;cursor:pointer;transition:.2s}
+.multi-service-option:has(input:checked){border-color:rgba(155,124,255,.65);background:rgba(155,124,255,.12);color:#fff}
+.multi-service-option input{width:16px;height:16px;flex:0 0 16px;accent-color:#a78bfa;margin:0}
+.selected-service-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.selected-service-tag{font-size:10px;padding:5px 9px;border-radius:30px;background:rgba(88,217,238,.1);border:1px solid rgba(88,217,238,.22);color:#9cebf4}
+@media(max-width:520px){.multi-service-options{grid-template-columns:1fr;max-height:190px}.multi-service-picker{padding:12px}}
+</style>
 <style id="principles-redesign">
 /* Scoped redesign: WORK PRINCIPLES section only */
 #reviews{position:relative;overflow:hidden;background:radial-gradient(ellipse at 15% 48%,#d9ff7208,transparent 38%),#0c0d10;border-block:1px solid #ffffff0b}
@@ -1101,7 +1113,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
     <strong>بعد از تأیید سفارش، همه‌چیز در حساب کاربری‌ات دنبال می‌شود.</strong>
     <p>پس از بررسی و تأیید درخواست، سفارش به <b>پروژه</b> تبدیل می‌شود. وضعیت و مراحل پیشرفت پروژه را در بخش «پروژه‌ها»ی حساب کاربری‌ات می‌بینی؛ فایل‌های نهایی و فاکتورهای مربوط به پروژه هم از همان بخش برای مشاهده و دانلود در دسترس خواهند بود.</p>
   </div>
-</div><label for="serviceSelect">خدمت موردنظر</label><select id="serviceSelect"><option>موشن‌گرافیک</option><option>طراحی قالب وب‌سایت</option><option>طراحی قالب وبلاگ</option><option>پک اقتصادی طراحی سایت</option><option>پک اقتصادی طراحی لوگو و موشن‌گرافیک</option><option>خدمات شبکه‌های اجتماعی</option><option>ساخت ریلز اینستاگرام</option><option>تیزر تبلیغاتی</option><option>خدمات اینستاگرام</option><option>خدمات تلگرام</option><option>خدمات واتساپ</option><option>خدمات ایکس(توییتر)</option><option>خدمات یوتیوب</option><option>خدمات تردز</option><option>خدمات توییچ</option><option>خدمات فیسبوک</option><option>خدمات تیک‌تاک</option><option>خدمات لینکدین</option><option>خدمات وی‌کی</option><option>خدمات دیسکورد</option><option>خدمات کورا</option><option>خدمات بیگو لایو</option><option>خدمات کلاب هاوس</option><option>خدمات کیک</option><option>خدمات ساندکلود</option><option>خدمات اسپاتیفای</option><option>خدمات میکس‌کلود</option><option>خدمات ردیت</option><option>خدمات imdb</option><option>خدمات لایکی</option><option>خدمات تامبل </option><option>خدمات ایتا</option><option>خدمات روبیکا</option><option>خدمات آیگپ</option><option>خدمات گپ</option><option>خدمات بله</option><option>خدمات سروش</option><option>خدمات آپارات</option><option>امنیت شبکه‌های اجتماعی</option><option>طراحی لوگو</option><option>نگارش مقاله وب‌سایت</option><option>تبلیغات و معرفی</option><option>مشاوره کسب‌وکار آنلاین</option><option>خدمات SEO</option><option>هنوز مطمئن نیستم</option></select><div id="socialServiceFields" class="social-service-fields" hidden><label for="socialServiceType">نوع دقیق خدمت <span aria-hidden="true">*</span></label><select id="socialServiceType"></select><p class="social-service-hint" id="socialServiceHint">نوع خدمت موردنظرت را انتخاب کن تا درخواست دقیق ثبت شود.</p><div id="telegramGiftFields" hidden><label for="telegramGiftDetail">نام گیفت یا ارزش دلاری آن</label><input id="telegramGiftDetail" placeholder="مثلاً 5 دلار یا نام گیفت موردنظر"></div></div><label for="clientName">نام و نام خانوادگی</label><input id="clientName" placeholder="نامت را وارد کن" autocomplete="name"><label for="projectName">عنوان پروژه</label><input id="projectName" placeholder="مثلاً معرفی محصول جدید"><label for="projectDetails">کمی درباره ایده‌ات توضیح بده</label><textarea id="projectDetails" placeholder="هدفت چیه و چه خروجی‌ای لازم داری؟"></textarea><label for="budget">بودجه تقریبی (اختیاری)</label><select id="budget"><option>فعلاً مشخص نیست</option><option>اقتصادی</option><option>متوسط</option><option>حرفه‌ای / اختصاصی</option></select><label for="contactInfo">شماره تلفن همراه <span aria-hidden="true">*</span></label><input id="contactInfo" type="tel" placeholder="مثلاً 09123456789" dir="auto" autocomplete="tel" required><label for="clientEmail">ایمیل <span aria-hidden="true">*</span></label><input id="clientEmail" type="email" placeholder="name@example.com" dir="ltr" autocomplete="email" inputmode="email" required><button class="btn btn-primary" id="makeSummary">ثبت سفارش و دریافت کد پیگیری ↗︎</button><div id="resultArea" hidden><p>سفارش ثبت شده است. کد پیگیری و کلید خصوصی را در جای امن نگه دار؛ برای مشاهده وضعیت از صفحه پیگیری استفاده کن.</p><div class="modal-result" id="summaryText"></div><div class="order-result-actions"><a class="btn btn-primary tracking-link" id="sendOrderTracking" href="order-tracking.html">رفتن به صفحه پیگیری سفارش <span class="arrow">↗︎</span></a><button type="button" class="btn btn-quiet copy-summary-btn" id="copySummary">کپی اطلاعات پیگیری <span aria-hidden="true">▣</span></button></div><p class="copy-feedback" id="copyFeedback" role="status" aria-live="polite"></p></div></div></dialog>
+</div><label for="serviceSelect">خدمت یا خدمات موردنظر</label><select id="serviceSelect" aria-hidden="true" tabindex="-1" style="display:none"><option>موشن‌گرافیک</option><option>طراحی قالب وب‌سایت</option><option>طراحی قالب وبلاگ</option><option>پک اقتصادی طراحی سایت</option><option>پک اقتصادی طراحی لوگو و موشن‌گرافیک</option><option>خدمات شبکه‌های اجتماعی</option><option>ساخت ریلز اینستاگرام</option><option>تیزر تبلیغاتی</option><option>خدمات اینستاگرام</option><option>خدمات تلگرام</option><option>خدمات واتساپ</option><option>خدمات ایکس(توییتر)</option><option>خدمات یوتیوب</option><option>خدمات تردز</option><option>خدمات توییچ</option><option>خدمات فیسبوک</option><option>خدمات تیک‌تاک</option><option>خدمات لینکدین</option><option>خدمات وی‌کی</option><option>خدمات دیسکورد</option><option>خدمات کورا</option><option>خدمات بیگو لایو</option><option>خدمات کلاب هاوس</option><option>خدمات کیک</option><option>خدمات ساندکلود</option><option>خدمات اسپاتیفای</option><option>خدمات میکس‌کلود</option><option>خدمات ردیت</option><option>خدمات imdb</option><option>خدمات لایکی</option><option>خدمات تامبل </option><option>خدمات ایتا</option><option>خدمات روبیکا</option><option>خدمات آیگپ</option><option>خدمات گپ</option><option>خدمات بله</option><option>خدمات سروش</option><option>خدمات آپارات</option><option>امنیت شبکه‌های اجتماعی</option><option>طراحی لوگو</option><option>نگارش مقاله وب‌سایت</option><option>تبلیغات و معرفی</option><option>مشاوره کسب‌وکار آنلاین</option><option>خدمات SEO</option><option>هنوز مطمئن نیستم</option></select><div class="multi-service-picker" id="multiServicePicker"><div class="multi-service-top"><strong>چه خدماتی نیاز داری؟</strong><span id="selectedServiceCount">۰ خدمت انتخاب شده</span></div><p>می‌توانی هم‌زمان چند خدمت را انتخاب کنی.</p><div class="multi-service-options" id="multiServiceOptions"></div><div class="selected-service-tags" id="selectedServiceTags" aria-live="polite"></div></div><div id="socialServiceFields" class="social-service-fields" hidden><label for="socialServiceType">نوع دقیق خدمت <span aria-hidden="true">*</span></label><select id="socialServiceType"></select><p class="social-service-hint" id="socialServiceHint">نوع خدمت موردنظرت را انتخاب کن تا درخواست دقیق ثبت شود.</p><div id="telegramGiftFields" hidden><label for="telegramGiftDetail">نام گیفت یا ارزش دلاری آن</label><input id="telegramGiftDetail" placeholder="مثلاً 5 دلار یا نام گیفت موردنظر"></div></div><label for="clientName">نام و نام خانوادگی</label><input id="clientName" placeholder="نامت را وارد کن" autocomplete="name"><label for="projectName">عنوان پروژه</label><input id="projectName" placeholder="مثلاً معرفی محصول جدید"><label for="projectDetails">کمی درباره ایده‌ات توضیح بده</label><textarea id="projectDetails" placeholder="هدفت چیه و چه خروجی‌ای لازم داری؟"></textarea><label for="budget">بودجه تقریبی (اختیاری)</label><select id="budget"><option>فعلاً مشخص نیست</option><option>اقتصادی</option><option>متوسط</option><option>حرفه‌ای / اختصاصی</option></select><label for="contactInfo">شماره تلفن همراه <span aria-hidden="true">*</span></label><input id="contactInfo" type="tel" placeholder="مثلاً 09123456789" dir="auto" autocomplete="tel" required><label for="clientEmail">ایمیل <span aria-hidden="true">*</span></label><input id="clientEmail" type="email" placeholder="name@example.com" dir="ltr" autocomplete="email" inputmode="email" required><button class="btn btn-primary" id="makeSummary">ثبت سفارش و دریافت کد پیگیری ↗︎</button><div id="resultArea" hidden><p>سفارش ثبت شده است. کد پیگیری و کلید خصوصی را در جای امن نگه دار؛ برای مشاهده وضعیت از صفحه پیگیری استفاده کن.</p><div class="modal-result" id="summaryText"></div><div class="order-result-actions"><a class="btn btn-primary tracking-link" id="sendOrderTracking" href="order-tracking.html">رفتن به صفحه پیگیری سفارش <span class="arrow">↗︎</span></a><button type="button" class="btn btn-quiet copy-summary-btn" id="copySummary">کپی اطلاعات پیگیری <span aria-hidden="true">▣</span></button></div><p class="copy-feedback" id="copyFeedback" role="status" aria-live="polite"></p></div></div></dialog>
 <script>
 document.documentElement.classList.add('js');
 const menu=document.getElementById('menuToggle'), nav=document.getElementById('navlinks');
@@ -1156,6 +1168,38 @@ const serviceParam=new URLSearchParams(location.search).get('service');if(servic
  'خدمات ایکس(توییتر)':['فالوور','لایک','ویو','ایمپرشن','ری‌توییت','رأی نظرسنجی'],
  'خدمات فیسبوک':['فالوور','لایک','بازدید لایو','ری‌اکشن','بازدید','اشتراک‌گذاری پست']
 };
+const serviceSelect=document.getElementById('serviceSelect');
+const multiServiceOptions=document.getElementById('multiServiceOptions');
+const selectedServiceTags=document.getElementById('selectedServiceTags');
+const selectedServiceCount=document.getElementById('selectedServiceCount');
+let selectedServices=[];
+function renderServicePicker(){
+ multiServiceOptions.innerHTML='';
+ [...serviceSelect.options].forEach((option,index)=>{
+  const label=document.createElement('label');label.className='multi-service-option';
+  const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.value=option.value;checkbox.checked=selectedServices.includes(option.value);
+  checkbox.addEventListener('change',()=>{
+   if(checkbox.checked){if(!selectedServices.includes(option.value))selectedServices.push(option.value)}
+   else selectedServices=selectedServices.filter(item=>item!==option.value);
+   syncSelectedServices();
+  });
+  const text=document.createElement('span');text.textContent=option.textContent.trim();
+  label.append(checkbox,text);multiServiceOptions.append(label);
+ });
+}
+function syncSelectedServices(){
+ serviceSelect.value=selectedServices[0]||'';
+ [...serviceSelect.options].forEach(o=>o.selected=selectedServices.includes(o.value));
+ selectedServiceCount.textContent=new Intl.NumberFormat('fa-IR').format(selectedServices.length)+' خدمت انتخاب شده';
+ selectedServiceTags.innerHTML='';
+ selectedServices.forEach(name=>{const tag=document.createElement('span');tag.className='selected-service-tag';tag.textContent=name;selectedServiceTags.append(tag)});
+ renderServicePicker();
+ updateSocialServiceFields();
+}
+function setSelectedServices(items){
+ selectedServices=[...new Set(items)].filter(name=>[...serviceSelect.options].some(o=>o.value===name));
+ syncSelectedServices();
+}
 const socialFields=document.getElementById('socialServiceFields');
 const socialType=document.getElementById('socialServiceType');
 const giftFields=document.getElementById('telegramGiftFields');
@@ -1176,7 +1220,7 @@ function updateSocialServiceFields(){
 document.getElementById('serviceSelect').addEventListener('change',updateSocialServiceFields);
 updateSocialServiceFields();
 socialType.addEventListener('change',()=>{
- const isGift=document.getElementById('serviceSelect').value==='خدمات تلگرام'&&socialType.value==='گیفت تلگرام';
+ const isGift=selectedServices.length===1&&selectedServices[0]==='خدمات تلگرام'&&socialType.value==='گیفت تلگرام';
  giftFields.hidden=!isGift;giftDetail.required=isGift;
  if(isGift)socialHint.textContent='نام دقیق گیفت یا ارزش دلاری آن را وارد کن؛ لینک یا شناسه مقصد را هم در توضیحات سفارش بنویس.';
 });
@@ -1184,8 +1228,8 @@ const dlg=document.getElementById('orderDialog');document.getElementById('openOr
 async function customerHasSession(){try{const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");const sb=createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB");const {data}=await sb.auth.getSession();return !!data.session}catch(err){console.error("Customer session check failed",err);return false}}
 (async()=>{const accountLink=document.querySelector(".account-cta");const status=accountLink?.querySelector(".account-cta-status");if(!accountLink||!status)return;const signedIn=await customerHasSession();if(signedIn){accountLink.classList.add("is-authenticated");accountLink.href="/account.html";accountLink.setAttribute("aria-label","حساب کاربری؛ واردشده‌اید");accountLink.title="حساب کاربری — واردشده‌اید";status.hidden=false;}else{status.hidden=true;}})();
 function sendToLogin(next){location.href="/login.html?next="+encodeURIComponent(next)}
-document.querySelectorAll('[data-service]').forEach(b=>b.addEventListener('click',async()=>{const serviceSelect=document.getElementById('serviceSelect');serviceSelect.value=b.dataset.service;serviceSelect.dispatchEvent(new Event('change',{bubbles:true}));if(await customerHasSession()){dlg.showModal();return}sendToLogin("/index.html?service="+encodeURIComponent(b.dataset.service)+"&openOrder=1")}));
-if(new URLSearchParams(location.search).get("openOrder")==="1"){(async()=>{if(await customerHasSession()){const sel=document.getElementById("serviceSelect");const service=new URLSearchParams(location.search).get("service");if(service){const opt=[...sel.options].find(o=>o.textContent.trim()===service.trim());if(opt)sel.value=opt.value;else{const fallback=[...sel.options].find(o=>o.textContent.trim()==="هنوز مطمئن نیستم");if(fallback)sel.value=fallback.value;}}sel.dispatchEvent(new Event("change",{bubbles:true}));dlg.showModal()}else{sendToLogin(location.pathname+location.search+location.hash)}})()}
+document.querySelectorAll('[data-service]').forEach(b=>b.addEventListener('click',async()=>{const serviceSelect=document.getElementById('serviceSelect');setSelectedServices([b.dataset.service]);serviceSelect.dispatchEvent(new Event('change',{bubbles:true}));if(await customerHasSession()){dlg.showModal();return}sendToLogin("/index.html?service="+encodeURIComponent(b.dataset.service)+"&openOrder=1")}));
+if(new URLSearchParams(location.search).get("openOrder")==="1"){(async()=>{if(await customerHasSession()){const sel=document.getElementById("serviceSelect");const service=new URLSearchParams(location.search).get("service");if(service){const opt=[...sel.options].find(o=>o.textContent.trim()===service.trim());if(opt)setSelectedServices([opt.value]);else{const fallback=[...sel.options].find(o=>o.textContent.trim()==="هنوز مطمئن نیستم");if(fallback)setSelectedServices([fallback.value]);}}sel.dispatchEvent(new Event("change",{bubbles:true}));dlg.showModal()}else{sendToLogin(location.pathname+location.search+location.hash)}})()}
 let orderSummaryText = '';
 document.getElementById('makeSummary').addEventListener('click',async()=>{
  const val=id=>document.getElementById(id).value.trim();
@@ -1194,10 +1238,10 @@ document.getElementById('makeSummary').addEventListener('click',async()=>{
  const isSocialService=Boolean(socialServiceOptions[selectedService]);
  const finalDetails=projectDetails+(isSocialService?'\n\nنوع دقیق خدمت: '+selectedSocialType+(selectedService==='خدمات تلگرام'&&selectedSocialType==='گیفت تلگرام'?'\nنام گیفت / ارزش دلاری: '+giftValue:''):'');
  const feedback=document.getElementById('copyFeedback'),btn=document.getElementById('makeSummary');
- if(!clientName||!projectName||!projectDetails||!contactInfo||!clientEmail||!document.getElementById('clientEmail').checkValidity()||(isSocialService&&!selectedSocialType)||(selectedService==='خدمات تلگرام'&&selectedSocialType==='گیفت تلگرام'&&!giftValue)){
+ if(!selectedServices.length||!clientName||!projectName||!projectDetails||!contactInfo||!clientEmail||!document.getElementById('clientEmail').checkValidity()||(isSocialService&&!selectedSocialType)||(selectedServices.length===1&&selectedServices[0]==='خدمات تلگرام'&&selectedSocialType==='گیفت تلگرام'&&!giftValue)){
   feedback.textContent='لطفاً نام، عنوان، توضیحات، شماره تلفن و ایمیل معتبر را تکمیل کن.';
   document.getElementById('resultArea').hidden=true;
-  (!clientName?document.getElementById('clientName'):!projectName?document.getElementById('projectName'):!projectDetails?document.getElementById('projectDetails'):!contactInfo?document.getElementById('contactInfo'):document.getElementById('clientEmail')).focus();return;
+  (!selectedServices.length?document.getElementById('multiServicePicker'):!clientName?document.getElementById('clientName'):!projectName?document.getElementById('projectName'):!projectDetails?document.getElementById('projectDetails'):!contactInfo?document.getElementById('contactInfo'):document.getElementById('clientEmail')).scrollIntoView({behavior:'smooth',block:'center'});return;
  }
  btn.disabled=true;btn.textContent='در حال ثبت سفارش…';feedback.textContent='';
  try{
