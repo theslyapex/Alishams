@@ -21,7 +21,7 @@ async function ensureAdminMfa(session){
  const verified=(factorData?.totp||[]).filter(x=>x.status==="verified");
  if(!verified.length){
   $("app").classList.add("hidden");
-  $("notice").innerHTML='<b>🔐 فعال‌سازی ورود دومرحله‌ای</b><p>برای محافظت از پنل مدیریت، ابتدا Google Authenticator را به حساب مدیر متصل کن.</p><button class="btn" id="mfaStart">ساخت کد QR و شروع فعال‌سازی</button><div id="mfaBox"></div>';
+  $("notice").innerHTML='<b>🔐 فعال‌سازی ورود دومرحله‌ای</b><p>برای محافظت از پنل مدیریت، ابتدا Google Authenticator را به حساب مدیر متصل کن.</p><button class="btn" id="mfaStart">ساخت کلید دستی و شروع فعال‌سازی</button><div id="mfaBox"></div>';
   $("mfaStart").onclick=async()=>{
    const b=$("mfaStart");b.disabled=true;
    try{
@@ -30,8 +30,9 @@ async function ensureAdminMfa(session){
     const {data,error}=await sb.auth.mfa.enroll({factorType:"totp",friendlyName:"Alishams Admin"});
     if(error)throw error;
     const box=$("mfaBox");
-    box.innerHTML='<div class="notice"><p>۱) Google Authenticator را باز کن و QR زیر را اسکن کن.</p><img id="mfaQr" alt="کد QR ورود دومرحله‌ای" style="display:block;width:210px;max-width:100%;background:#fff;padding:10px;border-radius:12px;margin:12px auto"><p>اگر اسکن ممکن نیست، کلید دستی را وارد کن:</p><code id="mfaSecret" style="display:block;direction:ltr;word-break:break-all"></code><p>۲) کد ۶ رقمی برنامه را وارد و تأیید کن.</p><input id="mfaCode" class="search" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="کد ۶ رقمی"><button class="btn" id="mfaVerify">تأیید و فعال‌سازی</button></div>';
-    $("mfaQr").src=data.totp.qr_code;$("mfaSecret").textContent=data.totp.secret;
+    box.innerHTML='<div class="notice"><p>۱) چون با همین گوشی وارد سایت و Google Authenticator می‌شوی، نیازی به QR نیست.</p><p>۲) برنامه Google Authenticator را باز کن، روی علامت + بزن و گزینه «Enter a setup key / وارد کردن کلید راه‌اندازی» را انتخاب کن.</p><p>نام حساب</p><code style="display:block;direction:ltr;text-align:left">Alishams Admin</code><p>کلید راه‌اندازی (این کلید را در Google Authenticator وارد کن)</p><code id="mfaSecret" style="display:block;direction:ltr;word-break:break-all;font-size:15px;padding:12px;background:#090a0d;border-radius:9px"></code><button class="btn" id="mfaCopy" type="button">کپی کلید راه‌اندازی</button><p>نوع کلید: مبتنی بر زمان (Time based / TOTP)</p><p>۳) پس از افزودن حساب، کد ۶ رقمی نمایش‌داده‌شده در Google Authenticator را اینجا وارد کن.</p><input id="mfaCode" class="search" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="کد ۶ رقمی"><button class="btn" id="mfaVerify">تأیید و فعال‌سازی</button></div>';
+    $("mfaSecret").textContent=data.totp.secret;
+    $("mfaCopy").onclick=async()=>{try{await navigator.clipboard.writeText(data.totp.secret);$("mfaCopy").textContent="کلید کپی شد ✓"}catch(e){$("mfaCopy").textContent="کلید را دستی کپی کن"}};
     $("mfaVerify").onclick=async()=>{
      const code=$("mfaCode").value.replace(/\D/g,"");
      if(code.length!==6){$("notice").textContent="کد باید ۶ رقم باشد.";return}
