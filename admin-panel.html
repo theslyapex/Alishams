@@ -82,6 +82,18 @@ frame.addEventListener('load',()=>{try{
  const doc=frame.contentDocument;
  if(!doc.querySelector('meta[name="viewport"]')){const meta=doc.createElement('meta');meta.name='viewport';meta.content='width=device-width,initial-scale=1,viewport-fit=cover';doc.head.appendChild(meta)}
  if(!doc.getElementById('unified-admin-mobile-fix')){const style=doc.createElement('style');style.id='unified-admin-mobile-fix';style.textContent=`
+ /* Admin dashboard header action layout */
+ header.top{display:flex!important;align-items:center!important;justify-content:space-between!important;flex-wrap:wrap!important;gap:12px!important}
+ header.top>div{display:flex!important;align-items:center!important;justify-content:flex-end!important;flex-wrap:wrap!important;gap:8px!important;min-width:0!important;max-width:100%!important}
+ header.top .btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;white-space:nowrap!important;flex:0 1 auto!important;margin:0!important;min-height:38px!important;line-height:1.4!important}
+ @media(max-width:850px){
+ header.top{align-items:stretch!important;flex-direction:column!important;gap:10px!important}
+ header.top>div{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;width:100%!important}
+ header.top .btn{width:100%!important;min-width:0!important;padding:9px 7px!important;font-size:11px!important}
+ }
+ @media(max-width:360px){
+ header.top>div{grid-template-columns:minmax(0,1fr)!important}
+ }
  @media(max-width:850px){
  html,body{max-width:100%!important;overflow-x:hidden!important}
  *,*:before,*:after{box-sizing:border-box}
