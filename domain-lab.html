@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#090a0d">
-<meta name="description" content="ابزار بررسی آزاد بودن دامنه، جست‌وجوی هم‌زمان دامنه‌ها، پیشنهاد نام برند و مشاهده تعرفه دامنه در استودیو دیجیتال علی شمس.">
+<meta name="description" content="ابزار بررسی آزاد بودن دامنه، جست‌وجوی هم‌زمان دامنه‌ها و مشاهده تعرفه و ثبت دامنه در استودیو دیجیتال علی شمس.">
 <link rel="canonical" href="https://alishams.ir/domain-lab.html">
-<meta property="og:type" content="website"><meta property="og:title" content="آزمایشگاه دامنه | بررسی و انتخاب نام دامنه — علی شمس"><meta property="og:description" content="نام مناسب برندت را پیدا کن، دامنه‌ها را بررسی کن و هزینه نهایی را شفاف ببین.">
+<meta property="og:type" content="website"><meta property="og:title" content="آزمایشگاه دامنه | بررسی و انتخاب نام دامنه — علی شمس"><meta property="og:description" content="دامنه دلخواهت را بررسی کن، تعرفه را ببین و برای ثبت آن درخواست بده.">
 <title>آزمایشگاه دامنه | بررسی و انتخاب نام دامنه — علی شمس</title>
 <link rel="icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,6 +51,8 @@ input,textarea,select,button{ -webkit-user-select:none;user-select:none}
 @keyframes selectReveal{from{opacity:0;transform:translateY(-5px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:640px){.custom-select-menu{max-height:min(270px,42vh);padding:6px;border-radius:14px}.custom-select-option{min-height:46px;padding:10px 12px;font-size:12px}.domain-entry .custom-select-shell{flex-basis:82px}}
 @media(prefers-reduced-motion:reduce){.custom-select-menu,.custom-select-trigger,.custom-select-option{animation:none!important;transition:none!important}}
+/* Keep custom dropdown fully inside the viewport on narrow screens */
+.custom-select-menu{position:fixed!important;top:var(--select-menu-top,100px)!important;left:var(--select-menu-left,12px)!important;right:auto!important;width:var(--select-menu-width,min(260px,calc(100vw - 24px)))!important;max-width:calc(100vw - 24px)!important;z-index:10050!important}
 </style>
 </head>
 <body>
@@ -88,8 +90,8 @@ input,textarea,select,button{ -webkit-user-select:none;user-select:none}
 <article class="price-card"><div class="price-top"><b>.com</b><span>دامنه بین‌المللی</span></div><div class="price-amount">۳٬۶۰۵٬۰۰۰ <small>تومان</small></div></article>
 <article class="price-card"><div class="price-top"><b>.net</b><span>دامنه بین‌المللی</span></div><div class="price-amount">۴٬۷۲۲٬۰۰۰ <small>تومان</small></div></article>
 </div>
-<div class="notice">قیمت‌ها ممکن است با توجه به نرخ روز رجیسترار تغییر کنند؛ بااین‌حال، پیش از پرداخت استعلام نهایی گرفته می‌شود.</div></section>
-<section class="section"><div class="section-heading"><div><span class="eyebrow">HOW IT WORKS</span><h2>چطور از این ابزار استفاده کنی؟</h2><p>سه قدم کوتاه تا انتخاب نام مناسب.</p></div></div><div class="how-grid"><article class="how-card"><i>01 / SEARCH</i><b>نام دلخواهت را جست‌وجو کن</b><p>نام و پسوند را وارد کن یا چند دامنه را به‌صورت گروهی بررسی کن.</p></article><article class="how-card"><i>02 / EXPLORE</i><b>ایده‌های جایگزین بساز</b><p>حوزه کسب‌وکارت را توضیح بده و پیشنهادهای نام را با سلیقه‌ات محدود کن.</p></article><article class="how-card"><i>03 / DECIDE</i><b>هزینه را شفاف مقایسه کن</b><p>وضعیت دامنه و تعرفه را ببین و برای ثبت نهایی درخواست بده.</p></article></div></section>
+<div class="notice">قیمت‌ها ممکن است با توجه به نرخ روز رجیسترار تغییر کنند؛ بااین‌حال، پیش از پرداخت استعلام نهایی گرفته می‌شود.</div><div class="notice" style="margin-top:10px">ثبت و خرید تمامی پسوندها و دامنه‌ها از طریق استودیو دیجیتال علی شمس امکان‌پذیر است؛ حتی اگر تعرفه دامنه‌ای در این صفحه درج نشده باشد، برای استعلام قیمت و ثبت آن می‌توانی درخواستت را ارسال کنی.</div></section>
+<section class="section"><div class="section-heading"><div><span class="eyebrow">HOW IT WORKS</span><h2>چطور از این ابزار استفاده کنی؟</h2><p>دو قدم کوتاه برای بررسی و ثبت دامنه.</p></div></div><div class="how-grid"><article class="how-card"><i>01 / SEARCH</i><b>نام دلخواهت را جست‌وجو کن</b><p>نام و پسوند را وارد کن یا چند دامنه را به‌صورت گروهی بررسی کن.</p></article><article class="how-card"><i>03 / DECIDE</i><b>هزینه را شفاف مقایسه کن</b><p>وضعیت دامنه و تعرفه را ببین و برای ثبت نهایی درخواست بده.</p></article></div></section>
 <div class="footer-cta"><div><h3>دامنه مناسب پیدا کردی؟</h3><p>برای بررسی نهایی، ثبت دامنه یا اتصال آن به وب‌سایتت با من در ارتباط باش.</p></div><a class="btn" href="/contact-center.html">درخواست مشاوره و ثبت دامنه ←</a></div>
 </div></main>
 <script>
@@ -136,7 +138,9 @@ function slug(s){return s.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,18)}
      });
    }
    draw();
-   trigger.addEventListener('click',()=>{const open=!shell.classList.contains('is-open');closeAll(shell);shell.classList.toggle('is-open',open);trigger.setAttribute('aria-expanded',String(open));if(open){const active=menu.querySelector('[aria-selected=true]');active?.scrollIntoView({block:'nearest'})}});
+   function placeMenu(){const r=trigger.getBoundingClientRect(),gap=8,w=Math.min(Math.max(r.width,150),window.innerWidth-24);let left=Math.max(12,Math.min(r.left,window.innerWidth-w-12));let top=r.bottom+gap;const maxH=Math.min(310,window.innerHeight*.48);if(top+maxH>window.innerHeight-12&&r.top-maxH-gap>12)top=r.top-maxH-gap;menu.style.setProperty('--select-menu-left',left+'px');menu.style.setProperty('--select-menu-top',top+'px');menu.style.setProperty('--select-menu-width',w+'px')}
+   trigger.addEventListener('click',()=>{const open=!shell.classList.contains('is-open');closeAll(shell);shell.classList.toggle('is-open',open);trigger.setAttribute('aria-expanded',String(open));if(open){placeMenu();const active=menu.querySelector('[aria-selected=true]');active?.scrollIntoView({block:'nearest'})}});
+   window.addEventListener('resize',()=>{if(shell.classList.contains('is-open'))placeMenu()});window.addEventListener('scroll',()=>{if(shell.classList.contains('is-open'))placeMenu()},true);
    trigger.addEventListener('keydown',e=>{if(['ArrowDown','Enter',' '].includes(e.key)){e.preventDefault();if(!shell.classList.contains('is-open'))trigger.click();menu.querySelector('[aria-selected=true]')?.focus()}});
    menu.addEventListener('keydown',e=>{const items=[...menu.querySelectorAll('button')],at=items.indexOf(document.activeElement);if(e.key==='Escape'){shell.classList.remove('is-open');trigger.setAttribute('aria-expanded','false');trigger.focus()}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();items[Math.max(0,Math.min(items.length-1,at+(e.key==='ArrowDown'?1:-1))) ]?.focus()}else if(e.key==='Tab'){shell.classList.remove('is-open');trigger.setAttribute('aria-expanded','false')}});
    select.addEventListener('change',draw);
