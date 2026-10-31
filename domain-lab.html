@@ -10,7 +10,7 @@
 <link rel="icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Estedad:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/site-header.css">
+
 
 <style>
 :root{--bg:#090a0d;--panel:#111318;--panel2:#171b22;--ink:#f5f3ee;--muted:#a5a5ad;--line:#ffffff19;--lime:#d9ff72;--lav:#b6a0ff;--cyan:#78d9e8;--max:1160px}
@@ -28,7 +28,20 @@ input,textarea,select,button{ -webkit-user-select:none;user-select:none}
 </style>
 </head>
 <body>
-<script src="/site-header.js" defer></script>
+<header class="simple-lab-header">
+  <div class="simple-lab-header-inner">
+    <span class="simple-lab-brand">ALISHAMS DIGITAL STUDIO</span>
+    <a class="simple-lab-home" href="/">صفحه اصلی</a>
+  </div>
+</header>
+<style>
+.simple-lab-header{position:sticky;top:0;z-index:999;width:100%;background:rgba(9,10,13,.9);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.simple-lab-header-inner{width:min(1160px,calc(100% - 40px));min-height:68px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.simple-lab-brand{direction:ltr;text-align:left;color:#f5f3ee;font:800 13px/1.2 Manrope,Arial,sans-serif;letter-spacing:1.1px}
+.simple-lab-home{color:#f5f3ee;font:600 12px/1.5 Estedad,Tahoma,sans-serif;padding:8px 0;text-decoration:none}
+.simple-lab-home:hover{color:var(--lime)}
+@media(max-width:640px){.simple-lab-header-inner{width:calc(100% - 28px);min-height:60px}.simple-lab-brand{font-size:11px;letter-spacing:.7px}.simple-lab-home{font-size:11px}}
+</style>
 <section class="hero"><div class="wrap hero-grid">
 <div class="hero-copy"><span class="eyebrow">ALISHAMS DOMAIN LAB · 2026</span><h1>اسم برندت را پیدا کن؛<br><em>دامنه‌اش را بسنج.</em></h1><p>از اولین ایده تا انتخاب آدرس نهایی؛ نام دامنه را جست‌وجو کن، چند پسوند را کنار هم مقایسه کن و قبل از تصمیم‌گیری، هزینه را شفاف ببین.</p><div class="hero-badges"><span>بررسی زنده دامنه‌های پشتیبانی‌شده</span><span>جست‌وجوی گروهی تا ۲۰ دامنه</span><span>پیشنهاد نام برند</span></div></div>
 <div class="hero-art" aria-hidden="true"><div class="radar"><i class="radar-dot dot-a"></i><i class="radar-dot dot-b"></i><div class="radar-core"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5M8 11h5M10.5 8.5v5"/></svg></div></div><span class="art-label a">DOMAIN / DISCOVERY</span><span class="art-label b">نام مناسب، شروع یک هویت</span></div>
