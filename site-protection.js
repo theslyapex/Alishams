@@ -1,4 +1,19 @@
 /* Site-wide deterrent against casual text/image copying. This cannot stop screenshots, developer tools, or direct asset URLs. */
+
+/* Google Analytics 4 */
+(function(){
+  if (window.__alishamsGoogleAnalyticsLoaded) return;
+  window.__alishamsGoogleAnalyticsLoaded = true;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+  window.gtag('js', new Date());
+  window.gtag('config', 'G-GDMXC80P21');
+  var script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-GDMXC80P21';
+  document.head.appendChild(script);
+})();
+
 (function(){
   if (window.__alishamsProtectionLoaded) return;
   window.__alishamsProtectionLoaded = true;
