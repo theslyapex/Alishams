@@ -24,6 +24,9 @@
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding-bottom:28px}.cluster{border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#171920,#101115);padding:22px;min-width:0}.cluster h2{font-size:20px;margin:0 0 7px}.cluster>p{color:#b9bac2;font-size:13px;margin:0 0 14px}.links{display:grid;gap:8px}.links a{display:block;padding:9px 12px;border:1px solid #ffffff0c;border-radius:11px;color:#e4e4e8;font-size:13px;transition:.2s}.links a:before{content:"↗";color:var(--lime);margin-left:9px}.links a:hover{border-color:#d9ff7250;background:#d9ff7208}
 .plan{margin:18px 0 50px;border:1px solid var(--line);border-radius:20px;padding:24px;background:linear-gradient(120deg,#b6a0ff0c,#d9ff7208)}.plan h2{margin-top:0}.plan ol{padding-right:22px;color:#c5c5cd}.plan li{padding:4px 0}.footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:12px}.footrow{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
 @media(max-width:680px){.grid{grid-template-columns:1fr}.hero{padding:40px 0 30px}.toplinks{gap:10px;font-size:11px}.wrap{width:calc(100% - 28px)}}
+
+/* محدودسازی انتخاب و کپی متن در این صفحه */
+html,body,body *{-webkit-user-select:none!important;-moz-user-select:none!important;-ms-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}
 </style>
 </head>
 <body>
@@ -46,4 +49,15 @@
 <section class="plan"><h2>از کجا شروع کنیم؟ یک برنامه عملی چهار هفته‌ای</h2><ol><li><strong>هفته اول، شناخت وضعیت:</strong> نوع حساب، بیو، دسته‌بندی، Account Status و آمار پایه را بررسی کنید. هدف اصلی پیج را مشخص کنید.</li><li><strong>هفته دوم، طراحی محتوا:</strong> سه ستون محتوایی انتخاب کنید و برای هرکدام چند ایده ریلز، استوری و کاروسل بنویسید.</li><li><strong>هفته سوم، آزمایش کنترل‌شده:</strong> زمان‌های مختلف، قلاب‌های متفاوت و در صورت دسترسی Trial Reels را آزمایش کنید. هر بار فقط چند متغیر را تغییر دهید.</li><li><strong>هفته چهارم، تحلیل و اصلاح:</strong> ریچ غیردنبال‌کنندگان، زمان تماشا، ذخیره، ارسال، بازدید پروفایل و پیام‌های دریافتی را مقایسه کنید. قالب‌های موفق را با ایده‌های تازه ادامه دهید.</li></ol><p>این برنامه نسخه ثابت برای همه پیج‌ها نیست. آن را با ظرفیت تولید، حوزه فعالیت و داده‌های واقعی حساب خود تنظیم کنید.</p></section>
 </div></main>
 <footer class="footer"><div class="wrap footrow"><span>© ۱۴۰۵ علی شمس · تمامی حقوق محفوظ است.</span><a href="/blog.html">بازگشت به مجله آموزشی ↑</a></div></footer>
+<script>
+(()=>{
+  const block=e=>{e.preventDefault();e.stopPropagation();return false};
+  ['contextmenu','copy','cut','selectstart','dragstart'].forEach(type=>document.addEventListener(type,block,true));
+  document.addEventListener('keydown',e=>{
+    const k=(e.key||'').toLowerCase();
+    if((e.ctrlKey||e.metaKey)&&['a','c','x','s','u','p'].includes(k)) block(e);
+    if(e.key==='F12') block(e);
+  },true);
+})();
+</script>
 </body></html>
