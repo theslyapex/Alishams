@@ -27,36 +27,50 @@
 @media(max-width:620px){.wrap{width:min(100% - 28px,var(--max))}.hero{padding:58px 0 36px}.hero h1{letter-spacing:-1px}.plans{padding:22px 0 64px}.plans-grid{grid-template-columns:1fr;gap:15px}.plan,.plan.gold{grid-column:auto;max-width:none;padding:24px 20px 20px}.plan.silver{order:-1}.desc{min-height:0}.price{font-size:32px}.breadcrumb{padding-top:14px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
-/* Shared Alishams navigation — scoped so package cards stay untouched */
-#alishamsSharedHeader{position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(9,10,13,.88);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);direction:rtl}
-#alishamsSharedHeader .site-shared-nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}
-#alishamsSharedHeader .brand{display:flex;align-items:center;gap:11px;flex:0 0 auto;font-size:15px;font-weight:800;white-space:nowrap}
-#alishamsSharedHeader .brand-mark{width:46px;height:46px;flex:0 0 46px;display:flex;align-items:center;justify-content:center;padding:4px;overflow:hidden;border:1px solid rgba(255,255,255,.18);border-radius:13px;background:transparent!important;transform:none;box-shadow:0 5px 22px #0005}
+
+/* Shared Alishams header — visual system aligned with the main website */
+#alishamsSharedHeader{position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(9,10,13,.76);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);direction:rtl}
+#alishamsSharedHeader .site-shared-nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+#alishamsSharedHeader .brand{display:flex;align-items:center;gap:12px;flex:0 0 auto;font-weight:800;white-space:nowrap}
+#alishamsSharedHeader .brand-mark{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;padding:3px;border:1px solid rgba(255,255,255,.16);border-radius:13px;background:linear-gradient(135deg,#ffffff12,#ffffff04)!important;color:var(--lime);transform:none;overflow:hidden}
 #alishamsSharedHeader .brand-logo img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;border-radius:9px}
-#alishamsSharedHeader .brand small{display:block;margin-top:-4px;color:var(--muted);font-size:9px;font-weight:400;letter-spacing:.35px;line-height:1.5}
-#alishamsSharedHeader .navlinks{display:flex;align-items:center;justify-content:center;gap:clamp(10px,1.35vw,20px);min-width:0;color:#c5c5cb;font-size:12px;white-space:nowrap}
-#alishamsSharedHeader .navlinks>a{padding:9px 0;transition:color .2s}
+#alishamsSharedHeader .brand small{display:block;color:var(--muted);font-size:10px;font-weight:400;letter-spacing:.4px;margin-top:-3px}
+#alishamsSharedHeader .navlinks{display:flex;align-items:center;gap:clamp(12px,1.45vw,23px);color:#c3c3ca;font-size:12px;white-space:nowrap}
+#alishamsSharedHeader .navlinks>a{padding:9px 0;transition:color .25s}
 #alishamsSharedHeader .navlinks a:hover,#alishamsSharedHeader .nav-dropdown-toggle:hover{color:var(--lime)}
 #alishamsSharedHeader .nav-dropdown{position:relative;display:flex;align-items:center}
-#alishamsSharedHeader .nav-dropdown-toggle{display:inline-flex;align-items:center;gap:6px;padding:9px 0;border:0;background:transparent;color:inherit;font:inherit;white-space:nowrap;cursor:pointer}
-#alishamsSharedHeader .nav-dropdown-toggle span{font-size:14px;transition:transform .2s}
+#alishamsSharedHeader .nav-dropdown-toggle{display:inline-flex;align-items:center;gap:7px;padding:10px 0;border:0;background:transparent;color:inherit;font:inherit;white-space:nowrap;cursor:pointer;transition:color .2s}
+#alishamsSharedHeader .nav-dropdown-toggle span{font-size:15px;transition:transform .2s}
 #alishamsSharedHeader .nav-dropdown-toggle[aria-expanded=true] span{transform:rotate(180deg)}
-#alishamsSharedHeader .nav-dropdown-menu{position:absolute;top:calc(100% + 9px);right:-12px;z-index:120;display:none;min-width:190px;padding:8px;border:1px solid rgba(255,255,255,.12);border-radius:15px;background:rgba(17,19,24,.98);box-shadow:0 18px 45px #0009;backdrop-filter:blur(18px)}
+#alishamsSharedHeader .nav-dropdown-menu{position:absolute;top:calc(100% + 8px);right:-14px;z-index:120;display:none;min-width:190px;padding:8px;border:1px solid rgba(255,255,255,.12);border-radius:15px;background:rgba(17,19,24,.97);box-shadow:0 18px 45px #0009;backdrop-filter:blur(18px)}
 #alishamsSharedHeader .nav-dropdown.open .nav-dropdown-menu{display:grid;gap:2px}
-#alishamsSharedHeader .nav-dropdown-menu a{display:block;padding:9px 11px;border-radius:9px;white-space:nowrap}
+#alishamsSharedHeader .nav-dropdown-menu a{display:block;padding:10px 12px;border-radius:9px;white-space:nowrap}
 #alishamsSharedHeader .nav-dropdown-menu a:hover{background:rgba(217,255,114,.08)}
 #alishamsSharedHeader .nav-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto;direction:ltr}
-#alishamsSharedHeader .account-cta{position:relative;display:flex;align-items:center;justify-content:center;gap:7px;width:42px;height:42px;min-height:42px;padding:0;border:1px solid rgba(217,255,114,.24);border-radius:12px;background:#d9ff7208;color:var(--lime)}
-#alishamsSharedHeader .account-cta svg{width:21px;height:21px;flex:0 0 21px}
-#alishamsSharedHeader .account-cta-label,#alishamsSharedHeader .account-cta-status{display:none}
-#alishamsSharedHeader .account-cta.is-authenticated{flex-direction:column;gap:1px;width:58px;height:48px;min-height:48px;padding:2px;border-radius:12px}
-#alishamsSharedHeader .account-cta.is-authenticated .account-cta-label{display:block;font-size:9px;line-height:1.2}
-#alishamsSharedHeader .account-cta.is-authenticated .account-cta-status{display:block;font-size:8px;line-height:1.2;color:#c8e88b}
-#alishamsSharedHeader .menu-toggle{display:none;width:42px;height:42px;align-items:center;justify-content:center;padding:0;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:#ffffff05;color:var(--ink);font-size:19px;cursor:pointer}
+#alishamsSharedHeader .account-cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;width:auto;height:auto;padding:9px 15px;border:1px solid #d9ff7255;border-radius:999px;background:linear-gradient(135deg,#d9ff7214,#b6a0ff0b);color:var(--lime);font-size:12px;font-weight:800;white-space:nowrap}
+#alishamsSharedHeader .account-cta svg{width:20px;height:20px;flex:0 0 20px}
+#alishamsSharedHeader .account-cta-label{display:inline;font-size:12px}
+#alishamsSharedHeader .account-cta-status{display:none;font-size:10px;line-height:1.3;font-weight:600;color:#c8e88b}
+#alishamsSharedHeader .account-cta.is-authenticated{flex-direction:column;gap:3px;min-height:66px;padding:7px 12px;border-radius:16px}
+#alishamsSharedHeader .account-cta.is-authenticated .account-cta-label{display:inline}
+#alishamsSharedHeader .account-cta.is-authenticated .account-cta-status{display:block}
+#alishamsSharedHeader .menu-toggle{display:none;align-items:center;justify-content:center;gap:7px;background:#ffffff06;border:1px solid var(--line);border-radius:12px;padding:8px 12px;color:var(--ink);font:700 12px Estedad,sans-serif;cursor:pointer}
 #alishamsSharedHeader a:focus-visible,#alishamsSharedHeader button:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
-@media(max-width:1000px){#alishamsSharedHeader .site-shared-nav{gap:12px}#alishamsSharedHeader .navlinks{gap:10px;font-size:11px}}
-@media(max-width:820px){#alishamsSharedHeader .site-shared-nav{height:68px}#alishamsSharedHeader .menu-toggle{display:flex}#alishamsSharedHeader .navlinks{display:none;position:absolute;top:68px;right:14px;left:14px;max-height:calc(100vh - 90px);overflow-y:auto;padding:12px;border:1px solid var(--line);border-radius:17px;background:rgba(17,19,24,.98);box-shadow:0 20px 50px #000b;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:2px;white-space:normal}#alishamsSharedHeader .navlinks.open{display:flex}#alishamsSharedHeader .navlinks>a{padding:10px 9px;border-radius:9px}#alishamsSharedHeader .nav-dropdown{display:block;width:100%}#alishamsSharedHeader .nav-dropdown-toggle{width:100%;justify-content:space-between;padding:10px 9px}#alishamsSharedHeader .nav-dropdown-menu{position:static;min-width:0;margin:0 7px 7px;padding:5px;border-radius:11px;background:#0d0f14;box-shadow:none}#alishamsSharedHeader .nav-dropdown.open .nav-dropdown-menu{display:grid}#alishamsSharedHeader .nav-dropdown-menu a{white-space:normal;padding:9px}#alishamsSharedHeader .brand-mark{width:40px;height:40px;flex-basis:40px}}
-@media(max-width:440px){#alishamsSharedHeader .site-shared-nav{height:64px}#alishamsSharedHeader .brand{font-size:13px;gap:8px}#alishamsSharedHeader .brand small{font-size:8px}#alishamsSharedHeader .brand-mark{width:37px;height:37px;flex-basis:37px;padding:3px}#alishamsSharedHeader .navlinks{top:64px}}
+@media(max-width:1000px){#alishamsSharedHeader .site-shared-nav{gap:14px}#alishamsSharedHeader .navlinks{gap:11px;font-size:11px}}
+@media(max-width:760px){#alishamsSharedHeader .site-shared-nav{height:68px}#alishamsSharedHeader .menu-toggle{display:flex}#alishamsSharedHeader .navlinks{display:none;position:absolute;top:68px;right:16px;left:16px;max-height:calc(100vh - 90px);overflow:auto;padding:12px;border:1px solid var(--line);border-radius:18px;background:#111318;box-shadow:0 20px 50px #0009;flex-direction:column;align-items:stretch;gap:0;white-space:normal;font-size:13px}#alishamsSharedHeader .navlinks.open{display:flex}#alishamsSharedHeader .navlinks>a{padding:11px 8px;border-radius:9px}#alishamsSharedHeader .nav-dropdown{display:block;width:100%}#alishamsSharedHeader .nav-dropdown-toggle{width:100%;justify-content:space-between;padding:11px 8px}#alishamsSharedHeader .nav-dropdown-menu{position:static;min-width:0;margin:0 7px 7px;padding:6px;border-radius:11px;background:#0b0d11;box-shadow:none}#alishamsSharedHeader .nav-dropdown.open .nav-dropdown-menu{display:grid}#alishamsSharedHeader .nav-dropdown-menu a{white-space:normal;padding:10px}#alishamsSharedHeader .account-cta{width:42px;height:42px;min-height:42px;padding:0;border-radius:13px;flex:0 0 42px}#alishamsSharedHeader .account-cta-label{display:none}#alishamsSharedHeader .account-cta.is-authenticated{width:44px;height:48px;min-height:48px;padding:2px;border-radius:12px}#alishamsSharedHeader .account-cta.is-authenticated .account-cta-label{display:block;font-size:8px;line-height:1.2}#alishamsSharedHeader .account-cta.is-authenticated .account-cta-status{font-size:7px;line-height:1.1}}
+@media(max-width:440px){#alishamsSharedHeader .site-shared-nav{height:64px}#alishamsSharedHeader .brand{font-size:13px;gap:8px}#alishamsSharedHeader .brand small{font-size:8px}#alishamsSharedHeader .brand-mark{width:38px;height:38px;flex-basis:38px}#alishamsSharedHeader .navlinks{top:64px}#alishamsSharedHeader .menu-toggle{padding:7px 9px}}
+
+.package-contact-cta{position:relative;isolation:isolate;display:grid;grid-template-columns:130px minmax(0,1fr) auto;align-items:center;gap:25px;margin:44px auto 0;padding:30px 34px;max-width:1040px;overflow:hidden;border:1px solid #b6a0ff45;border-radius:28px;background:radial-gradient(ellipse at 12% 50%,#b6a0ff20,transparent 40%),radial-gradient(ellipse at 92% 0%,#d9ff7210,transparent 42%),linear-gradient(125deg,#1a1b24,#101116 72%);box-shadow:0 24px 75px #0006,inset 0 1px #ffffff12}
+.package-contact-cta:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(115deg,transparent 15%,#ffffff08 48%,transparent 78%)}
+.package-contact-copy h2{margin:8px 0 5px;font-size:clamp(19px,2.6vw,27px);line-height:1.6}.package-contact-copy p{margin:0;color:var(--muted);font-size:12px;line-height:2;max-width:560px}
+.package-contact-orbit{position:relative;width:112px;height:112px;display:grid;place-items:center;border:1px solid #b6a0ff55;border-radius:50%;box-shadow:0 0 0 13px #b6a0ff0b,0 0 45px #b6a0ff18}
+.package-contact-orbit span,.package-contact-orbit i{position:absolute;inset:12px;border:1px dashed #d9ff7255;border-radius:50%;animation:packageOrbit 18s linear infinite}.package-contact-orbit i{inset:-8px;border-color:#ffffff22;animation-direction:reverse}
+.package-contact-orbit b{width:55px;height:55px;display:grid;place-items:center;border:1px solid #d9ff7266;border-radius:18px;background:linear-gradient(145deg,#d9ff7225,#b6a0ff22);color:var(--lime);font:800 27px Manrope;box-shadow:0 0 35px #d9ff7220}
+.package-contact-button{display:inline-flex;align-items:center;justify-content:center;gap:17px;min-height:54px;padding:12px 20px;border-radius:15px;background:linear-gradient(110deg,#d9ff72,#b9df55);color:#14170d;font-size:12px;font-weight:900;white-space:nowrap;box-shadow:0 12px 35px #d9ff7220;transition:transform .25s,box-shadow .25s}
+.package-contact-button:hover{transform:translateY(-3px);box-shadow:0 17px 42px #d9ff7235}.package-contact-button b{font:800 19px Manrope}
+@keyframes packageOrbit{to{transform:rotate(360deg)}}
+@media(max-width:760px){.package-contact-cta{grid-template-columns:70px minmax(0,1fr);gap:15px;padding:22px 18px;border-radius:22px;margin-top:28px}.package-contact-orbit{width:68px;height:68px;box-shadow:0 0 0 8px #b6a0ff0b}.package-contact-orbit span{inset:7px}.package-contact-orbit i{inset:-5px}.package-contact-orbit b{width:38px;height:38px;border-radius:13px;font-size:20px}.package-contact-button{grid-column:1/-1;width:100%;min-height:50px}.package-contact-copy p{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.package-contact-orbit span,.package-contact-orbit i{animation:none!important}}
 </style>
 </head>
 <body>
@@ -70,7 +84,7 @@
 <h2>طراحی سایت فروشگاهی برنزی</h2><p class="desc">فروشگاه اینترنتی آماده و خوش‌ساخت؛ برای شروع سریع و ورود مطمئن به فروش آنلاین.</p>
 <div class="price-area"><div class="old-price">۸٬۹۰۰٬۰۰۰ تومان</div><div class="price-line"><span class="price">۷٬۴۹۹٬۰۰۰</span><span class="currency">تومان</span></div><div class="saving">۱٬۴۰۱٬۰۰۰ تومان صرفه‌جویی در هزینه</div></div>
 <p class="features-title">امکانات پکیج</p><ul class="features"><li>قالب فروشگاهی آماده و کاملاً ریسپانسیو</li><li>سبد خرید و امکان اتصال به درگاه پرداخت</li><li>مدیریت آسان محصولات و سفارش‌ها</li><li>بهینه‌سازی پایه برای موتورهای جست‌وجو و SSL</li><li>آموزش اولیه کار با فروشگاه و پنل مدیریت</li><li>جزئیات هاست، دامنه و پشتیبانی پیش از شروع شفاف‌سازی می‌شود</li></ul>
-<div class="plan-foot"><a class="cta" href="/?service=%D8%B7%D8%B1%D8%A7%D8%AD%DB%8C%20%D9%88%D8%A8%D8%B3%D8%A7%DB%8C%D8%AA%20%D9%88%20%D9%82%D8%A7%D9%84%D8%A8%20%D9%88%D8%A8%D9%84%D8%A7%DA%AF">سفارش پکیج برنزی <span class="arrow">↗</span></a><p class="fineprint">پس از ثبت درخواست، جزئیات و محدوده اجرای پروژه با شما هماهنگ می‌شود.</p></div>
+<div class="plan-foot"><a class="cta" href="/?service=%D9%BE%DA%A9%DB%8C%D8%AC%20%D8%A8%D8%B1%D9%86%D8%B2%DB%8C%20%D8%B7%D8%B1%D8%A7%D8%AD%DB%8C%20%D9%88%D8%A8%D8%B3%D8%A7%DB%8C%D8%AA&openOrder=1">سفارش پکیج برنزی <span class="arrow">↗</span></a><p class="fineprint">پس از ثبت درخواست، جزئیات و محدوده اجرای پروژه با شما هماهنگ می‌شود.</p></div>
 </article>
 <article class="plan silver">
 <span class="popular">محبوب‌ترین انتخاب</span>
@@ -78,7 +92,7 @@
 <h2>طراحی سایت فروشگاهی نقره‌ای</h2><p class="desc">فروشگاهی حرفه‌ای با ظاهر هماهنگ با برند شما و ابزارهایی برای تجربه خرید بهتر و افزایش فروش.</p>
 <div class="price-area"><div class="old-price">۲۱٬۰۰۰٬۰۰۰ تومان</div><div class="price-line"><span class="price">۱۴٬۳۹۹٬۰۰۰</span><span class="currency">تومان</span></div><div class="saving">۶٬۶۰۱٬۰۰۰ تومان صرفه‌جویی در هزینه</div></div>
 <p class="features-title">امکانات پکیج</p><ul class="features"><li>شخصی‌سازی ظاهر فروشگاه بر اساس هویت برند</li><li>فیلترهای کاربردی و جست‌وجوی سریع محصولات</li><li>کد تخفیف، جشنواره و پیشنهادهای ویژه</li><li>امکان اطلاع‌رسانی پیامکی سفارش‌ها</li><li>بهینه‌سازی سئوی محصولات و سرعت بارگذاری</li><li>آموزش کار با پنل و مدیریت فروشگاه</li><li>جزئیات هاست، دامنه و پشتیبانی در توافق نهایی مشخص می‌شود</li></ul>
-<div class="plan-foot"><a class="cta" href="/?service=%D8%B7%D8%B1%D8%A7%D8%AD%DB%8C%20%D9%88%D8%A8%D8%B3%D8%A7%DB%8C%D8%AA%20%D9%88%20%D9%82%D8%A7%D9%84%D8%A8%20%D9%88%D8%A8%D9%84%D8%A7%DA%AF">سفارش پکیج نقره‌ای <span class="arrow">↗</span></a><p class="fineprint">امکانات و زمان‌بندی دقیق پیش از آغاز، نهایی و تأیید می‌شود.</p></div>
+<div class="plan-foot"><a class="cta" href="/?service=%D9%BE%DA%A9%DB%8C%D8%AC%20%D9%86%D9%82%D8%B1%D9%87%E2%80%8C%D8%A7%DB%8C%20%D8%B7%D8%B1%D8%A7%D8%AD%DB%8C%20%D9%88%D8%A8%D8%B3%D8%A7%DB%8C%D8%AA&openOrder=1">سفارش پکیج نقره‌ای <span class="arrow">↗</span></a><p class="fineprint">امکانات و زمان‌بندی دقیق پیش از آغاز، نهایی و تأیید می‌شود.</p></div>
 </article>
 <article class="plan gold">
 <div class="plan-top"><div class="metal"><span class="metal-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 2 2.8 6.2 6.7.8-4.9 4.7 1.2 6.6-5.8-3.2-5.8 3.2 1.2-6.6-4.9-4.7 6.7-.8z"/><path d="M8 22h8"/></svg></span>پکیج طلایی</div><span class="tag">راهکار اختصاصی</span></div>
@@ -88,8 +102,12 @@
 <div class="plan-foot"><a class="cta" href="/contact-center.html">مشاوره و سفارش پکیج طلایی <span class="arrow">↗</span></a><p class="fineprint">برای بررسی نیازها و دریافت پیشنهاد اختصاصی، وارد مرکز گفت‌وگو شوید.</p></div>
 </article>
 </div>
-<div class="bottom-note">هنوز مطمئن نیستی کدام گزینه مناسب توست؟ <strong>از طریق مرکز گفت‌وگو</strong> نیاز کسب‌وکارت را مطرح کن تا مسیر مناسب را با هم مشخص کنیم. <a href="/contact-center.html" style="color:var(--lime);font-weight:800">شروع گفت‌وگو ↗</a></div>
-</div></section>
+<div class="package-contact-cta">
+    <div class="package-contact-orbit" aria-hidden="true"><span></span><i></i><b>↗</b></div>
+    <div class="package-contact-copy"><span class="eyebrow">LET'S BUILD YOUR STORE</span><h2>هنوز برای انتخاب مطمئن نیستی؟</h2><p>در مرکز گفت‌وگو، درباره مدل کسب‌وکارت، امکانات موردنیاز و مسیر مناسب راه‌اندازی فروشگاهت صحبت کنیم.</p></div>
+    <a class="package-contact-button" href="/contact-center.html"><span>ورود به مرکز گفت‌وگو</span><b aria-hidden="true">↗</b></a>
+  </div>
+  </div></section>
 </main>
 <script src="/site-header.js" defer></script>
 </body></html>
