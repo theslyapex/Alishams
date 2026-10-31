@@ -71,6 +71,58 @@
 @keyframes packageOrbit{to{transform:rotate(360deg)}}
 @media(max-width:760px){.package-contact-cta{grid-template-columns:70px minmax(0,1fr);gap:15px;padding:22px 18px;border-radius:22px;margin-top:28px}.package-contact-orbit{width:68px;height:68px;box-shadow:0 0 0 8px #b6a0ff0b}.package-contact-orbit span{inset:7px}.package-contact-orbit i{inset:-5px}.package-contact-orbit b{width:38px;height:38px;border-radius:13px;font-size:20px}.package-contact-button{grid-column:1/-1;width:100%;min-height:50px}.package-contact-copy p{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.package-contact-orbit span,.package-contact-orbit i{animation:none!important}}
+
+/* Exact homepage header treatment — same structure, sizing and controls */
+#alishamsSharedHeader.topbar{position:sticky!important;top:0!important;z-index:100!important;border-bottom:1px solid rgba(255,255,255,.07)!important;background:rgba(9,10,13,.76)!important;backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important;direction:rtl}
+#alishamsSharedHeader .nav{height:78px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:22px!important;position:relative}
+#alishamsSharedHeader .brand{display:flex!important;align-items:center!important;gap:12px!important;min-width:0!important;flex:0 1 auto!important;font-weight:800!important;white-space:nowrap!important;color:var(--ink)!important}
+#alishamsSharedHeader .brand-mark.brand-logo{width:46px!important;height:46px!important;min-width:46px!important;flex:0 0 46px!important;padding:4px!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:transparent!important;border:1px solid rgba(255,255,255,.18)!important;border-radius:13px!important;transform:none!important;box-shadow:0 5px 22px #0005!important}
+#alishamsSharedHeader .brand-logo img{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;border-radius:9px!important}
+#alishamsSharedHeader .brand>span:last-child{display:block;min-width:0;white-space:nowrap;font-size:15px}
+#alishamsSharedHeader .brand small{display:block!important;color:var(--muted)!important;font-size:10px!important;font-weight:400!important;letter-spacing:.4px!important;margin-top:-3px!important}
+#alishamsSharedHeader .navlinks{position:static!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:clamp(12px,1.45vw,23px)!important;width:auto!important;max-width:none!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#c3c3ca!important;font-size:12px!important;white-space:nowrap!important;transform:none!important}
+#alishamsSharedHeader .navlinks>a{padding:9px 0!important;transition:color .25s!important}
+#alishamsSharedHeader .navlinks a:hover,#alishamsSharedHeader .nav-dropdown-toggle:hover{color:var(--lime)!important}
+#alishamsSharedHeader .nav-dropdown{position:relative!important;display:flex!important;align-items:center!important}
+#alishamsSharedHeader .nav-dropdown-toggle{display:inline-flex!important;align-items:center!important;gap:7px!important;padding:10px 0!important;border:0!important;background:transparent!important;color:inherit!important;font:inherit!important;white-space:nowrap!important;cursor:pointer!important}
+#alishamsSharedHeader .nav-dropdown-toggle span{font-size:15px!important;transition:transform .2s!important}
+#alishamsSharedHeader .nav-dropdown-toggle[aria-expanded=true] span{transform:rotate(180deg)!important}
+#alishamsSharedHeader .nav-dropdown-menu{position:absolute!important;top:calc(100% + 8px)!important;right:-14px!important;z-index:120!important;display:none!important;min-width:190px!important;padding:8px!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:15px!important;background:rgba(17,19,24,.97)!important;box-shadow:0 18px 45px #0009!important;backdrop-filter:blur(18px)!important}
+#alishamsSharedHeader .nav-dropdown.open .nav-dropdown-menu{display:grid!important;gap:2px!important}
+#alishamsSharedHeader .nav-dropdown-menu a{display:block!important;padding:10px 12px!important;border-radius:9px!important;white-space:nowrap!important}
+#alishamsSharedHeader .nav-dropdown-menu a:hover{background:rgba(217,255,114,.08)!important}
+#alishamsSharedHeader .nav-actions{display:flex!important;align-items:flex-start!important;gap:8px!important;flex:0 0 auto!important;direction:ltr!important;margin-inline-start:0!important;margin-inline-end:0!important}
+#alishamsSharedHeader .nav-actions .menu-toggle,#alishamsSharedHeader .nav-actions .account-cta{box-sizing:border-box!important;width:38px!important;min-width:38px!important;height:42px!important;min-height:42px!important;flex:0 0 38px!important;margin:0!important;padding:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;gap:2px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;transform:none!important;color:#fff!important;overflow:visible!important;white-space:normal!important}
+#alishamsSharedHeader .nav-actions .menu-toggle{display:none!important;font-size:0!important;line-height:1!important;cursor:pointer!important}
+#alishamsSharedHeader .nav-actions .header-control-icon{display:flex!important;align-items:center!important;justify-content:center!important;width:20px!important;height:20px!important;flex:0 0 20px!important;font-family:Arial,sans-serif!important;font-size:22px!important;line-height:20px!important;font-weight:400!important;color:#fff!important}
+#alishamsSharedHeader .nav-actions .account-cta svg{display:block!important;width:20px!important;height:20px!important;flex:0 0 20px!important;margin:0!important;color:#fff!important;stroke:#fff!important}
+#alishamsSharedHeader .nav-actions .header-control-label,#alishamsSharedHeader .nav-actions .account-cta .account-cta-label{display:block!important;width:100%!important;height:12px!important;margin:0!important;padding:0!important;text-align:center!important;white-space:nowrap!important;font-family:Estedad,Vazirmatn,Tahoma,sans-serif!important;font-size:9px!important;font-weight:600!important;line-height:12px!important;letter-spacing:0!important;color:#fff!important;opacity:1!important}
+#alishamsSharedHeader .nav-actions .account-cta .account-cta-status{display:none!important}
+#alishamsSharedHeader .nav-actions .account-cta.is-authenticated .account-cta-status{display:block!important;font-size:8px!important;line-height:10px!important}
+#alishamsSharedHeader .nav-actions .menu-toggle:hover,#alishamsSharedHeader .nav-actions .account-cta:hover{background:transparent!important;border:0!important;box-shadow:none!important;transform:none!important;color:var(--lime)!important}
+#alishamsSharedHeader a:focus-visible,#alishamsSharedHeader button:focus-visible{outline:2px solid var(--lime)!important;outline-offset:3px!important}
+@media(max-width:1000px){
+ #alishamsSharedHeader .nav{height:68px!important;gap:10px!important;position:relative!important}
+ #alishamsSharedHeader .brand{min-width:0!important;gap:9px!important;flex:0 1 auto!important}
+ #alishamsSharedHeader .brand>span:last-child{min-width:0!important;white-space:nowrap!important;font-size:14px!important}
+ #alishamsSharedHeader .brand small{font-size:9px!important;letter-spacing:0!important}
+ #alishamsSharedHeader .navlinks{display:none!important;position:absolute!important;top:68px!important;right:12px!important;left:12px!important;width:auto!important;max-width:none!important;max-height:calc(100vh - 90px)!important;overflow:auto!important;transform:none!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;gap:0!important;padding:12px!important;border:1px solid var(--line)!important;border-radius:18px!important;background:#111318!important;box-shadow:0 20px 50px #0009!important;white-space:normal!important;font-size:14px!important;z-index:1000!important}
+ #alishamsSharedHeader .navlinks.open{display:flex!important}
+ #alishamsSharedHeader .navlinks>a{padding:11px 8px!important}
+ #alishamsSharedHeader .nav-dropdown{display:block!important;width:100%!important}
+ #alishamsSharedHeader .nav-dropdown-toggle{width:100%!important;justify-content:space-between!important;padding:11px 8px!important}
+ #alishamsSharedHeader .nav-dropdown-menu{position:static!important;min-width:0!important;margin:0 7px 7px!important;padding:6px!important;border-radius:11px!important;background:#0b0d11!important;box-shadow:none!important}
+ #alishamsSharedHeader .nav-dropdown-menu a{white-space:normal!important}
+ #alishamsSharedHeader .nav-actions{align-items:flex-start!important;gap:8px!important;margin-inline-start:0!important;margin-inline-end:auto!important}
+ #alishamsSharedHeader .nav-actions .menu-toggle{display:flex!important}
+}
+@media(max-width:440px){
+ #alishamsSharedHeader .brand{font-size:13px!important;gap:8px!important}
+ #alishamsSharedHeader .brand-mark.brand-logo{width:38px!important;height:38px!important;min-width:38px!important;flex-basis:38px!important;padding:3px!important}
+}
+.package-contact-orbit b{width:70px;height:70px;padding:7px;display:grid;place-items:center;border:1px solid #d9ff7266;border-radius:22px;background:linear-gradient(145deg,#d9ff7225,#b6a0ff22);box-shadow:0 0 35px #d9ff7220}
+.package-contact-orbit img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 5px 8px #0006)}
+@media(max-width:760px){.package-contact-orbit b{width:48px;height:48px;border-radius:16px;padding:5px}}
 </style>
 </head>
 <body>
@@ -103,7 +155,7 @@
 </article>
 </div>
 <div class="package-contact-cta">
-    <div class="package-contact-orbit" aria-hidden="true"><span></span><i></i><b>↗</b></div>
+    <div class="package-contact-orbit" aria-hidden="true"><span></span><i></i><b><img src="https://img.icons8.com/fluency/96/chat-message.png" alt=""></b></div>
     <div class="package-contact-copy"><span class="eyebrow">LET'S BUILD YOUR STORE</span><h2>هنوز برای انتخاب مطمئن نیستی؟</h2><p>در مرکز گفت‌وگو، درباره مدل کسب‌وکارت، امکانات موردنیاز و مسیر مناسب راه‌اندازی فروشگاهت صحبت کنیم.</p></div>
     <a class="package-contact-button" href="/contact-center.html"><span>ورود به مرکز گفت‌وگو</span><b aria-hidden="true">↗</b></a>
   </div>
