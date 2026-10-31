@@ -1,5 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://alishams.ir/videos.html?v=motion-graphic-04</loc>
+    <video:video>
+      <video:thumbnail_loc>https://my.uploadkon.ir/d/bSSgeTgUnqp0o7HRvKaMNGxcLgneEn/OTUxNzZ8cGFkZA.jpg</video:thumbnail_loc>
+      <video:title>پک اقتصادی طراحی سایت، شروع حرفه‌ای کسب‌وکار تو!</video:title>
+      <video:description>با پک اقتصادی علی شمس، حضوری حرفه‌ای در دنیای دیجیتال داشته باش! از طراحی وب‌سایت اختصاصی و لوگو تا هاست، سئو، موشن‌گرافیک تبلیغاتی و ایمیل سازمانی، همه در یک پکیج. فقط با ۶٬۴۹۹٬۰۰۰ تومان کسب‌وکارت رو آنلاین کن</video:description>
+      <video:content_loc>https://my.uploadkon.ir/d/iBHa2sAheG0Az8LPY2JB82PK0VfZpe/OTUxNzN8cGFkZA.mp4</video:content_loc>
+      <video:publication_date>2026-10-31T20:09:19Z</video:publication_date>
+    </video:video>
+  </url>
   <url>
     <loc>https://alishams.ir/videos.html?v=motion-graphic-03</loc>
     <video:video>
