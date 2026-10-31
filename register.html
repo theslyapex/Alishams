@@ -38,6 +38,29 @@ form.addEventListener("submit", async event => {
   if (password.length < 8) { notice("رمز عبور باید حداقل ۸ کاراکتر باشد.", "error"); passwordField.focus(); return; }
   if (password !== confirmPasswordField.value) { notice("رمز عبور و تکرار آن یکسان نیستند. لطفاً دوباره بررسی کن.", "error"); confirmPasswordField.focus(); confirmPasswordField.setAttribute("aria-invalid", "true"); return; }
   confirmPasswordField.removeAttribute("aria-invalid");
+  if (referral_code) {
+    button.disabled = true;
+    button.textContent = "در حال بررسی کد معرف…";
+    try {
+      const check = await fetch(URL + "/functions/v1/referral-check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "apikey": KEY },
+        body: JSON.stringify({ code: referral_code, email })
+      });
+      const result = await check.json().catch(() => ({}));
+      if (!check.ok || !result.valid) {
+        notice(result.error || "کد معرف معتبر نیست.", "error");
+        $("referralCode").focus();
+        return;
+      }
+    } catch (error) {
+      notice("بررسی کد معرف انجام نشد. اتصال اینترنت را بررسی کن.", "error");
+      return;
+    } finally {
+      button.disabled = false;
+      button.innerHTML = 'ساخت حساب کاربری <span aria-hidden="true">↗</span>';
+    }
+  }
   button.disabled = true;
   button.textContent = "در حال ساخت حساب…";
   notice("در حال اتصال به سامانه ثبت‌نام…");
