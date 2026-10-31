@@ -1,6 +1,6 @@
 /* Alishams share widget — glassmorphism */
-#alishamsShareRoot{position:fixed;left:22px;bottom:22px;z-index:990;direction:rtl;font-family:Estedad,Manrope,Tahoma,sans-serif;color:#f7f7f5}
-#alishamsShareRoot *{box-sizing:border-box}
+#alishamsShareRoot{position:fixed;left:22px;bottom:22px;z-index:990;direction:rtl;font-family:Vazirmatn,Tahoma,sans-serif;color:#f7f7f5}
+#alishamsShareRoot *{box-sizing:border-box;font-family:inherit}
 #alishamsShareRoot .as-share-toggle{display:flex;align-items:center;gap:10px;min-height:52px;padding:10px 17px;border:1px solid rgba(200,255,95,.36);border-radius:18px;background:linear-gradient(135deg,rgba(29,35,34,.94),rgba(13,18,22,.92));color:#f7f7f5;box-shadow:0 12px 38px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:transform .25s,border-color .25s,box-shadow .25s}
 #alishamsShareRoot .as-share-toggle:hover{transform:translateY(-3px);border-color:rgba(200,255,95,.8);box-shadow:0 16px 42px rgba(0,0,0,.4),0 0 22px rgba(200,255,95,.1)}
 #alishamsShareRoot .as-share-icon{width:28px;height:28px;display:grid;place-items:center;border-radius:10px;background:rgba(200,255,95,.12);color:#c8ff5f;flex:0 0 auto}
