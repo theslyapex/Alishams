@@ -80,14 +80,7 @@ input,textarea,select,button{ -webkit-user-select:none;user-select:none}
 <div class="batch-toggle" id="batchToggle" role="button" tabindex="0" aria-expanded="false"><span>بررسی هم‌زمان چند دامنه <small>(حداکثر ۲۰ مورد؛ هر دامنه در یک خط)</small></span><b id="batchChevron">＋</b></div>
 <div class="batch-box" id="batchBox"><label class="field-label" for="batchInput">فهرست دامنه‌ها</label><textarea id="batchInput" placeholder="brandname.com&#10;brandname.net&#10;brandname.org&#10;brandname.ir"></textarea><div class="batch-actions"><small id="batchCount">۰ از ۲۰ دامنه</small><button class="btn" id="checkBatch">بررسی همه دامنه‌ها</button></div><div id="batchResults" class="result-area" aria-live="polite"></div></div>
 </div></section>
-<section class="panel ai-panel" aria-labelledby="ideaTitle"><div class="panel-head"><div class="panel-title"><span class="icon-box"><svg viewBox="0 0 24 24"><path d="m12 2 1.6 6.4L20 10l-6.4 1.6L12 18l-1.6-6.4L4 10l6.4-1.6L12 2Z"/><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></svg></span><div><h2 id="ideaTitle">پیشنهادگر نام برند</h2><p>از توضیح کسب‌وکارت، ایده‌های تازه بساز.</p></div></div><span class="tag">NAME IDEAS</span></div>
-<div class="panel-body"><div class="ai-fields"><div><label for="businessIdea">حوزه فعالیت یا توضیح ایده</label><textarea id="businessIdea" placeholder="مثلاً فروشگاه آنلاین محصولات مراقبت پوست با تمرکز بر محصولات طبیعی..."></textarea></div>
-<div class="two-fields"><div><label for="nameTone">حال‌وهوای نام</label><select id="nameTone"><option value="creative">خلاقانه و متفاوت</option><option value="formal">رسمی و حرفه‌ای</option><option value="friendly">صمیمی و ساده</option></select></div><div><label for="nameLength">طول نام</label><select id="nameLength"><option value="8">حداکثر ۸ حرف</option><option value="12" selected>حداکثر ۱۲ حرف</option><option value="16">حداکثر ۱۶ حرف</option></select></div></div>
-<div class="two-fields"><div><label for="mustWords">کلمات الزامی (اختیاری)</label><input id="mustWords" placeholder="مثلاً skin, care"></div><div><label for="avoidWords">کلمات ممنوع (اختیاری)</label><input id="avoidWords" placeholder="مثلاً shop, pro"></div></div>
-<div><label for="ideaExt">پسوندهای پیشنهادی</label><select id="ideaExt"><option value="com,net,org">.com · .net · .org</option><option value="com,ir,net">.com · .ir · .net</option><option value="com,co,online">.com · .co · .online</option><option value="com,store,shop">.com · .store · .shop</option></select></div>
-<button class="btn ai-submit" id="generateIdeas">✦ ساخت پیشنهادهای نام</button></div>
-<div id="suggestions" class="suggestions" aria-live="polite"></div>
-<p class="disclaimer">این بخش با ترکیب واژه‌ها و الگوهای نام‌گذاری، پیشنهادهای اولیه تولید می‌کند؛ خروجی آن مدل زبانی یا مشاوره حقوقی برند نیست. برای اطمینان از آزاد بودن هر نام، آن را بررسی کن.</p></div></section>
+
 </div>
 <section class="section" id="domainPrices"><div class="section-heading"><div><span class="eyebrow">TRANSPARENT PRICING</span><h2>تعرفه دامنه‌ها</h2></div><span class="price-note">قیمت به تومان</span></div>
 <div class="price-grid">
@@ -117,14 +110,13 @@ $('checkBatch').addEventListener('click',()=>{const list=$('batchInput').value.s
 const stop=new Set(['the','and','with','from','your','online','company','business','shop','store','for','best','new','official','ای','و','برای','با','از','در','یک','به','را','فروشگاه','شرکت','خدمات','محصولات','کسب','کار']);
 function tokens(text){return (text.toLowerCase().match(/[a-z0-9]{2,}|[\u0600-\u06ff]{3,}/g)||[]).filter(w=>!stop.has(w))}
 function slug(s){return s.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,18)}
-$('generateIdeas').addEventListener('click',()=>{const desc=$('businessIdea').value.trim();if(!desc){$('suggestions').innerHTML='<div class="empty-state">اول حوزه فعالیت یا ایده کسب‌وکارت را بنویس.</div>';return}const tone=$('nameTone').value,max=Number($('nameLength').value),must=tokens($('mustWords').value),avoid=tokens($('avoidWords').value),words=[...new Set(tokens(desc).concat(must))].filter(w=>w.length>2&&w.length<=max);const roots=words.length?words:['brand','nova','nexa'];const endings=tone==='formal'?['group','studio','global','works','labs']:tone==='friendly'?['buddy','nest','ly','hub','mate']:['ora','ify','ora','nest','nova','verse','ly','io'];let ideas=[];for(let i=0;i<roots.length;i++){for(let j=0;j<endings.length;j++){let a=slug(roots[i]),b=slug(endings[(i+j)%endings.length]);let name=(i%2===0?a+b:b+a);if(name.length>=4&&name.length<=max&&!avoid.some(x=>name.includes(slug(x)))&&!ideas.includes(name))ideas.push(name)}}if(ideas.length<15){['nexora','velora','lumio','novexa','bravio','zenora','orvix','avento','nuvora','elvian','virelo','monexa'].forEach(x=>{if(x.length<=max&&!ideas.includes(x)&&!avoid.some(a=>x.includes(slug(a))))ideas.push(x)})}ideas=ideas.slice(0,15);const ext=$('ideaExt').value.split(',');$('suggestions').innerHTML=ideas.map(n=>'<div class="suggestion"><b>'+escapeHtml(n+'.'+ext[0])+'</b><button type="button" data-name="'+escapeHtml(n)+'">بررسی این نام ←</button></div>').join('');$('suggestions').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{$('domainName').value=b.dataset.name;$('domainExt').value='.'+ext[0];$('checkOne').click();$('singleResult').scrollIntoView({behavior:'smooth',block:'center'})}))});
 })();
 </script>
 <script>
 
 /* Replace native browser select popups with branded, accessible menus */
 (function(){
- const selects=[...document.querySelectorAll('select#domainExt,select#nameTone,select#nameLength,select#ideaExt')];
+ const selects=[...document.querySelectorAll('select#domainExt')];
  const closeAll=(except)=>document.querySelectorAll('.custom-select-shell.is-open').forEach(w=>{if(w!==except){w.classList.remove('is-open');w.querySelector('.custom-select-trigger')?.setAttribute('aria-expanded','false')}});
  selects.forEach((select,index)=>{
    if(select.dataset.customized)return;
