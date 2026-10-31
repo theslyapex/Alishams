@@ -118,5 +118,6 @@ document.addEventListener('selectstart',e=>{if(!e.target.closest('input,textarea
 document.addEventListener('dragstart',e=>e.preventDefault());
 document.addEventListener('copy',e=>e.preventDefault());
 document.addEventListener('cut',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&['a','c','x'].includes(e.key.toLowerCase()))e.preventDefault()});
 </script>
 </body></html>
