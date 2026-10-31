@@ -827,6 +827,30 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .all-portfolio-art--persian .portfolio-frame-icon--motion{color:#b9e8ff;background:linear-gradient(145deg,#75caff20,#75caff08);border-color:#75caff66}
 .all-portfolio-art--persian .portfolio-frame-icon--design{color:#e2c5ff;background:linear-gradient(145deg,#c59aff20,#c59aff08);border-color:#c59aff66}
 @media(max-width:600px){.all-portfolio-art--persian .portfolio-frame-icon{width:32px;height:32px}.all-portfolio-art--persian .portfolio-frame-icon svg{width:19px;height:19px}}
+</style><style id="compact-persian-portfolio-visual">
+/* Compact, fully Persian portfolio gateway */
+.portfolio-compact-art{min-height:0!important;height:auto;aspect-ratio:auto;padding:19px 20px 15px;display:flex!important;flex-direction:column;justify-content:initial!important;gap:16px;border-radius:22px;background:radial-gradient(ellipse at 50% 0%,#d9ff7210,transparent 58%),linear-gradient(145deg,#171b1d,#0d1013 78%);transition:transform .25s,border-color .25s}
+.compact-portfolio-head,.compact-portfolio-foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.compact-portfolio-head{padding-bottom:12px;border-bottom:1px solid #ffffff16}
+.compact-portfolio-head span{font-size:12px;font-weight:900;color:#eaffad}
+.compact-portfolio-head b{font-size:10px;color:#929a8b;font-weight:600}
+.compact-portfolio-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.compact-portfolio-item{display:grid;grid-template-columns:35px minmax(0,1fr);grid-template-rows:auto auto;align-items:center;column-gap:10px;min-width:0;padding:12px;border:1px solid #ffffff13;border-radius:14px;background:linear-gradient(145deg,#ffffff0b,#ffffff03);transition:transform .22s,border-color .22s,background .22s}
+.compact-portfolio-item:hover{transform:translateY(-2px);border-color:#d9ff7255;background:#d9ff7209}
+.compact-portfolio-item>i{grid-row:1/3;display:grid;place-items:center;width:35px;height:35px;border:1px solid #d9ff7250;border-radius:11px;background:#d9ff7210;color:#d9ff72}
+.compact-portfolio-item>i svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.compact-portfolio-item>b{font-size:11px;color:#f1f3eb;line-height:1.6}
+.compact-portfolio-item>small{font-size:9px;color:#969e91;line-height:1.6;margin-top:2px}
+.compact-motion>i{color:#a9dfff;border-color:#a9dfff55;background:#a9dfff10}
+.compact-graphic>i{color:#d5b7ff;border-color:#d5b7ff55;background:#d5b7ff10}
+.compact-tools>i{color:#d9ff72}
+.compact-portfolio-foot{padding-top:12px;border-top:1px solid #ffffff16}
+.compact-portfolio-foot>span{font-size:10px;color:#a4aa9e}
+.compact-portfolio-foot>b{display:inline-flex;align-items:center;gap:7px;font-size:10px;color:#d9ff72}
+.compact-portfolio-foot>b i{font-style:normal;font-size:15px;transition:transform .2s}
+.portfolio-compact-art:hover .compact-portfolio-foot>b i{transform:translate(2px,-2px)}
+@media(max-width:760px){.portfolio-compact-art{width:100%;min-height:0!important;max-height:none;aspect-ratio:auto;padding:16px 14px 13px;gap:12px;border-radius:18px}.compact-portfolio-grid{gap:8px}.compact-portfolio-item{grid-template-columns:31px minmax(0,1fr);column-gap:8px;padding:10px 8px;border-radius:12px}.compact-portfolio-item>i{width:31px;height:31px;border-radius:9px}.compact-portfolio-item>i svg{width:17px;height:17px}.compact-portfolio-item>b{font-size:10px}.compact-portfolio-item>small{font-size:8px}.compact-portfolio-head span{font-size:11px}.compact-portfolio-head b,.compact-portfolio-foot>span,.compact-portfolio-foot>b{font-size:9px}}
+@media(max-width:360px){.compact-portfolio-item{grid-template-columns:1fr;justify-items:start;gap:5px}.compact-portfolio-item>i{grid-row:auto}.compact-portfolio-item>small{display:none}}
 </style></head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="علی شمس"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی">
@@ -977,7 +1001,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
  <div class="wrap">
   <div class="all-portfolio-panel reveal">
    <div class="all-portfolio-copy">
-    <span class="eyebrow">THE FULL CREATIVE ARCHIVE · 2026</span>
+    <span class="eyebrow">نمونه‌کارها و پروژه‌های خلاقانه</span>
     <h2 id="allPortfolioPromoTitle">همه‌ی ایده‌ها،<br><span>در یک قاب.</span></h2>
     <p>از طراحی وب‌سایت و ابزارهای آنلاین تا ویدئوها و پروژه‌های دیجیتال؛ نگاهی کامل‌تر به مسیر ایده تا اجرا داشته باش.</p>
     <div class="all-portfolio-points">
@@ -986,19 +1010,17 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
      <span><i aria-hidden="true">✓</i> دسترسی مستقیم به جزئیات هر اثر</span>
     </div>
     <a class="all-portfolio-cta" href="portfolio.html">ورود به همه‌ی نمونه‌کارها <b aria-hidden="true">↗</b></a>
-    <span class="all-portfolio-footnote">PORTFOLIO INDEX <i aria-hidden="true"></i> SELECTED DIGITAL WORKS</span>
+    
    </div>
-   <a class="all-portfolio-art all-portfolio-art--persian" href="portfolio.html" aria-label="مشاهده همه نمونه‌کارهای علی شمس">
-    <div class="portfolio-constellation">
-     <div class="portfolio-constellation-head"><span>گنجینه آثار</span><b>مجموعه نمونه‌کارها</b><i>● ● ●</i></div>
-     <div class="portfolio-constellation-glow"></div>
-     <div class="portfolio-frame portfolio-frame--web"><span class="portfolio-frame-icon portfolio-frame-icon--web"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2.5"/><path d="M3 8h18M8 21h8m-4-3v3M7 6h.01M10 6h.01M7 12l2 2 4-4"/></svg></span><b>طراحی وب‌سایت</b><small>از ایده تا تجربه</small><div class="portfolio-frame-lines"><i></i><i></i><i></i></div></div>
-     <div class="portfolio-frame portfolio-frame--motion"><span class="portfolio-frame-icon portfolio-frame-icon--motion"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3zM6 2v3m12-3v3M6 19v3m12-3v3"/></svg></span><b>موشن و ویدئو</b><small>تصویر در حرکت</small><div class="portfolio-frame-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-     <div class="portfolio-frame portfolio-frame--design"><span class="portfolio-frame-icon portfolio-frame-icon--design"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a2 2 0 0 0 1.5-3.3 1.8 1.8 0 0 1 1.4-3h.9A4 4 0 0 0 21 10.6C21 6.4 17 3 12 3Z"/><path d="M7.5 10h.01M10 7h.01M15 7.5h.01M17 11h.01"/></svg></span><b>طراحی گرافیک</b><small>هویت و خلاقیت</small><div class="portfolio-frame-shapes"><i></i><i></i><i></i></div></div>
-     <div class="portfolio-frame portfolio-frame--tools"><span class="portfolio-frame-icon">◈</span><b>ابزارهای آنلاین</b><small>راهکارهای کاربردی</small><div class="portfolio-frame-dots">••••••</div></div>
-     <div class="portfolio-constellation-center"><strong>ایده</strong><span>تا</span><strong>اجرا</strong><i>✦</i></div>
-     <div class="portfolio-constellation-foot"><span>هر اثر، روایتی از یک ایده</span><b>مشاهده مجموعه <i>↗</i></b></div>
+   <a class="all-portfolio-art all-portfolio-art--persian portfolio-compact-art" href="portfolio.html" aria-label="مشاهده همه نمونه‌کارهای علی شمس">
+    <div class="compact-portfolio-head"><span>دسته‌بندی نمونه‌کارها</span><b>چهار مسیر خلاقیت</b></div>
+    <div class="compact-portfolio-grid">
+     <span class="compact-portfolio-item compact-web"><i aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2.5"/><path d="M3 8h18M8 21h8m-4-3v3"/></svg></i><b>طراحی وب‌سایت</b><small>وب‌سایت و تجربه کاربری</small></span>
+     <span class="compact-portfolio-item compact-motion"><i aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z"/></svg></i><b>موشن و ویدئو</b><small>تصویر و روایت متحرک</small></span>
+     <span class="compact-portfolio-item compact-graphic"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1.2a2 2 0 0 0 1.5-3.3 1.8 1.8 0 0 1 1.4-3h.9A4 4 0 0 0 21 10.6C21 6.4 17 3 12 3Z"/><path d="M7.5 10h.01M10 7h.01M15 7.5h.01"/></svg></i><b>طراحی گرافیک</b><small>هویت بصری و خلاقیت</small></span>
+     <span class="compact-portfolio-item compact-tools"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 12h5M8 15h3"/></svg></i><b>ابزارهای آنلاین</b><small>راهکارهای کاربردی</small></span>
     </div>
+    <div class="compact-portfolio-foot"><span>از ایده تا اجرای حرفه‌ای</span><b>مشاهده همه نمونه‌کارها <i aria-hidden="true">↗</i></b></div>
    </a>
   </div>
  </div>
