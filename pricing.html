@@ -287,4 +287,18 @@ function refreshCustomOfferPrice(){
 refreshCustomOfferPrice();setInterval(refreshCustomOfferPrice,60000);
 
 </script>
+
+<script>
+(function(){
+ const deadline=Date.UTC(2027,4,1,0,0,0);
+ const ids=['customOfferDays','customOfferHours','customOfferMinutes','customOfferSeconds'];
+ function updateOfferCountdown(){
+  const left=Math.max(0,deadline-Date.now());
+  const values=[Math.floor(left/86400000),Math.floor(left/3600000)%24,Math.floor(left/60000)%60,Math.floor(left/1000)%60];
+  ids.forEach((id,i)=>{const el=document.getElementById(id);if(el)el.textContent=String(values[i]).padStart(i===0?3:2,'0')});
+  if(left<=0){const timer=document.getElementById('customOfferCountdown');if(timer)timer.hidden=true;const label=document.querySelector('.custom-offer-countdown-label');if(label)label.textContent='مهلت قیمت ویژه به پایان رسیده است';}
+ }
+ updateOfferCountdown();window.setInterval(updateOfferCountdown,1000);
+})();
+</script>
 </body></html>
