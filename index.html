@@ -1645,5 +1645,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 
 
-</body></html>
+<script>
+(()=>{const deadline=Date.UTC(2027,4,1,0,0,0);function expired(){return Date.now()>=deadline}function update(){if(!expired())return;document.querySelectorAll('.custom-brand-offer .economic-package-price').forEach(box=>{box.childNodes.forEach(n=>{if(n.nodeType===Node.TEXT_NODE&&n.textContent.trim())n.textContent='۹٬۰۸۰٬۰۰۰ تومان '});const old=box.querySelector('del');if(old)old.hidden=true;const b=box.querySelector('b');if(b)b.textContent='قیمت عادی · مشاهده جزئیات'});}update();setInterval(update,60000)})();
+</script></body></html>
 <style id="ad-visual-replacement">.ad-visual-mark--back svg{filter:drop-shadow(0 0 10px #d9ff7255)}.ad-visual-mark--front svg{filter:drop-shadow(0 0 10px #d9ff7277)}.ad-visual-mark--back svg .prism-shadow{transform-origin:center;animation:prismPulse 4s ease-in-out infinite}@keyframes prismPulse{0%,100%{opacity:.55;transform:scale(.97)}50%{opacity:1;transform:scale(1.03)}}@media(prefers-reduced-motion:reduce){.ad-visual-mark--back svg .prism-shadow{animation:none!important}}</style>
