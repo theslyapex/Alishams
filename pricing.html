@@ -280,7 +280,7 @@ const customOfferDeadline=Date.UTC(2027,4,1,0,0,0);
 function refreshCustomOfferPrice(){
  if(Date.now()<customOfferDeadline)return;
  const d=calcData.customBrandWebsite;if(d){d.min=9080000;d.max=9080000;d.name='طراحی اختصاصی برند و وب‌سایت';}
- document.querySelectorAll('.custom-brand-offer .economic-package-price').forEach(box=>{box.childNodes.forEach(n=>{if(n.nodeType===Node.TEXT_NODE&&n.textContent.trim())n.textContent='۹٬۰۸۰٬۰۰۰ تومان '});const old=box.querySelector('del');if(old)old.hidden=true;const b=box.querySelector('b');if(b)b.textContent='قیمت عادی · مشاهده جزئیات';});
+ document.querySelectorAll('.custom-brand-offer .economic-package-price').forEach(box=>{box.childNodes.forEach(n=>{if(n.nodeType===Node.TEXT_NODE&&n.textContent.trim())n.textContent='۹٬۰۸۰٬۰۰۰ تومان '});const price=box.querySelector('.custom-offer-price');if(price)price.textContent='۹٬۰۸۰٬۰۰۰ تومان';const timer=box.querySelector('.custom-offer-countdown');if(timer)timer.hidden=true;const label=box.querySelector('.custom-offer-countdown-label');if(label)label.textContent='مهلت قیمت ویژه به پایان رسیده است';const old=box.querySelector('del');if(old)old.hidden=true;const b=box.querySelector('b');if(b)b.textContent='قیمت عادی · مشاهده جزئیات';});
  const card=document.querySelector('.custom-brand-service-card .card-bottom');if(card){const strong=card.querySelector('strong');if(strong)strong.textContent='۹٬۰۸۰٬۰۰۰ تومان';const old=card.querySelector('del');if(old)old.hidden=true;}
  if(chosenCalcServices.includes('customBrandWebsite'))updateCalculator();
 }
