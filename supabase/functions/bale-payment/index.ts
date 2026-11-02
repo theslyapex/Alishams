@@ -48,7 +48,7 @@ Deno.serve(async(req:Request)=>{
    const {data:projects,error:pe}=await db.from("client_projects").select("id").ilike("client_email",pattern);if(pe)throw pe;
    const ids=(projects||[]).map((x:any)=>x.id);if(!ids.length)return out({ok:true,enabled,mode,intents:[]},200,origin);
    const {data:intents,error}=await db.from("bale_payment_intents").select("id,project_id,amount_toman,status,payment_mode,created_at,updated_at,paid_at,expires_at").in("project_id",ids).eq("customer_user_id",user.id).order("created_at",{ascending:false}).limit(100);
-   if(error)throw error;return out({ok:true,enabled,mode,intents:intents||[]},200,origin);
+   if(error)throw error;const now=Date.now();const visible=(intents||[]).map((item:any)=>({...item,status:(["pending","precheckout"].includes(item.status)&&item.expires_at&&new Date(item.expires_at).getTime()<=now?"expired":item.status)}));return out({ok:true,enabled,mode,intents:visible},200,origin);
   }
   if(action==="create_invoice"){
    if(!enabled)return out({error:"پرداخت کیف پول بله هنوز در حالت غیرفعال است."},503,origin);
