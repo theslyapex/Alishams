@@ -189,14 +189,12 @@
 <dialog id="credentialConfirmDialog" class="account-dialog" aria-labelledby="credentialConfirmTitle"><span class="eyebrow">SECURITY CONFIRMATION</span><h2 id="credentialConfirmTitle">تأیید عملیات</h2><p id="credentialConfirmText"></p><div class="dialog-actions"><button id="credentialConfirmYes" class="btn primary" type="button">بله، کلید جدید صادر شود</button><button id="credentialConfirmNo" class="btn" type="button">انصراف</button></div></dialog><footer class="footer">ALISHAMS STUDIO · فضای خصوصی مشتریان</footer>
 </div>
 <script>
-if(!window.supabase?.createClient){
-  const box=document.createElement("div");
-  box.style.cssText="margin:18px auto;padding:16px;max-width:900px;border:1px solid #ff8392;border-radius:14px;background:#241319;color:#fff;font:14px/2 Tahoma,sans-serif";
-  box.textContent="کتابخانه ورود بارگذاری نشد. صفحه را با اینترنت پایدار دوباره بارگذاری کنید.";
-  document.querySelector(".shell")?.appendChild(box);
-  throw new Error("Supabase UMD SDK did not load");
-}
-const createClient=window.supabase.createClient;
+(async function accountBootstrap(){
+const supabaseLibrary=window.supabase?.createClient
+  ? window.supabase
+  : await import("https://esm.sh/@supabase/supabase-js@2");
+if(typeof supabaseLibrary.createClient!=="function") throw new Error("Supabase SDK در دسترس نیست");
+const createClient=supabaseLibrary.createClient;
 const URL="https://srfldjfrzmtnlabusssq.supabase.co";
 const KEY="sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB";
 const API=URL+"/functions/v1/customer-account";
@@ -381,6 +379,23 @@ initializeAccount().catch(error=>{
  document.addEventListener("keydown",event=>{if(event.key==="Escape")close()});
 })();
 
+})().catch(error=>{
+ console.error("Account bootstrap failed:",error);
+ const dashboard=document.getElementById("dashboard");
+ const panel=document.getElementById("dashNotice");
+ if(dashboard) dashboard.classList.remove("hidden");
+ if(panel){
+  panel.textContent="راه‌اندازی حساب کامل نشد: "+(error?.message||"خطای ناشناخته")+" — صفحه را دوباره بارگذاری کنید.";
+  panel.className="notice error";
+ }
+ const shell=document.querySelector(".shell");
+ if(shell&&!panel){
+  const box=document.createElement("div");
+  box.style.cssText="margin:18px auto;padding:16px;max-width:900px;border:1px solid #ff8392;border-radius:14px;background:#241319;color:#fff;font:14px/2 Tahoma,sans-serif";
+  box.textContent="راه‌اندازی حساب کامل نشد: "+(error?.message||"خطای ناشناخته");
+  shell.appendChild(box);
+ }
+});
 </script>
 
 <script>
