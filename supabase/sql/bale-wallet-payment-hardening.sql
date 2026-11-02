@@ -187,3 +187,48 @@ end;
 $$;
 revoke all on function public.create_bale_payment_intent(uuid,uuid,text,text,text,text) from public,anon,authenticated;
 grant execute on function public.create_bale_payment_intent(uuid,uuid,text,text,text,text) to service_role;
+
+
+-- Test-mode settlement is recorded on the intent only; it never enters project_payments.
+create or replace function public.finalize_bale_payment(
+  p_intent_id uuid,p_bale_charge_id text,p_provider_charge_id text,p_raw_successful_payment jsonb,p_bale_user_id text
+) returns jsonb language plpgsql security definer set search_path=pg_catalog,public as $$
+declare
+  v_project_id uuid;
+  v_project public.client_projects%rowtype;
+  v_intent public.bale_payment_intents%rowtype;
+  v_paid numeric(18,2);
+  v_remaining numeric(18,2);
+begin
+  select project_id into v_project_id from public.bale_payment_intents where id=p_intent_id;
+  if not found then raise exception 'Payment intent not found'; end if;
+  select * into v_project from public.client_projects where id=v_project_id for update;
+  if not found then raise exception 'Project not found'; end if;
+  select * into v_intent from public.bale_payment_intents where id=p_intent_id for update;
+  if not found then raise exception 'Payment intent not found'; end if;
+  if v_intent.status in ('paid','test_paid') then
+    if v_intent.bale_charge_id=p_bale_charge_id and v_intent.provider_charge_id=p_provider_charge_id then
+      return jsonb_build_object('ok',true,'duplicate',true,'test',v_intent.status='test_paid');
+    end if;
+    raise exception 'Payment intent was already finalized with a different transaction';
+  end if;
+  if v_intent.status not in ('pending','precheckout') then raise exception 'Payment intent is not payable'; end if;
+  if nullif(p_bale_charge_id,'') is null or nullif(p_provider_charge_id,'') is null or nullif(p_bale_user_id,'') is null then raise exception 'Payment transaction identifiers are required'; end if;
+  if v_intent.bale_user_id is null or v_intent.bale_user_id<>p_bale_user_id then raise exception 'Bale user does not match pre-checkout user'; end if;
+  select coalesce(sum(amount),0) into v_paid from public.project_payments where project_id=v_project_id and confirmed=true;
+  v_remaining:=greatest(0,coalesce(v_project.total_price,0)-v_paid);
+  if v_intent.amount_toman>v_remaining then raise exception 'Payment exceeds current outstanding project balance'; end if;
+  if v_intent.payment_mode='test' then
+    update public.bale_payment_intents set status='test_paid',bale_charge_id=p_bale_charge_id,provider_charge_id=p_provider_charge_id,
+      raw_successful_payment=p_raw_successful_payment,paid_at=now(),updated_at=now() where id=v_intent.id;
+    return jsonb_build_object('ok',true,'duplicate',false,'test',true);
+  end if;
+  insert into public.project_payments(project_id,amount,method,note,confirmed,payment_intent_id)
+  values(v_project_id,v_intent.amount_toman,'online','پرداخت کیف پول بله | تراکنش '||p_provider_charge_id,true,v_intent.id);
+  update public.bale_payment_intents set status='paid',bale_charge_id=p_bale_charge_id,provider_charge_id=p_provider_charge_id,
+    raw_successful_payment=p_raw_successful_payment,paid_at=now(),updated_at=now() where id=v_intent.id;
+  return jsonb_build_object('ok',true,'duplicate',false,'test',false);
+end;
+$$;
+revoke all on function public.finalize_bale_payment(uuid,text,text,jsonb,text) from public,anon,authenticated;
+grant execute on function public.finalize_bale_payment(uuid,text,text,jsonb,text) to service_role;
