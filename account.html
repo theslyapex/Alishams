@@ -188,7 +188,45 @@
 <dialog id="credentialConfirmDialog" class="account-dialog" aria-labelledby="credentialConfirmTitle"><span class="eyebrow">SECURITY CONFIRMATION</span><h2 id="credentialConfirmTitle">تأیید عملیات</h2><p id="credentialConfirmText"></p><div class="dialog-actions"><button id="credentialConfirmYes" class="btn primary" type="button">بله، کلید جدید صادر شود</button><button id="credentialConfirmNo" class="btn" type="button">انصراف</button></div></dialog><footer class="footer">ALISHAMS STUDIO · فضای خصوصی مشتریان</footer>
 </div>
 <script type="module">
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+async function loadSupabaseCreateClient(){
+ const moduleSources=[
+  "https://esm.sh/@supabase/supabase-js@2?bundle",
+  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+ ];
+ const failures=[];
+ for(const source of moduleSources){
+  try{
+   const mod=await import(source);
+   if(typeof mod.createClient==="function")return mod.createClient;
+   failures.push(source+": تابع createClient پیدا نشد");
+  }catch(error){failures.push(source+": "+(error?.message||"خطای بارگذاری"))}
+ }
+ const scriptSources=[
+  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js",
+  "https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"
+ ];
+ for(const source of scriptSources){
+  try{
+   await new Promise((resolve,reject)=>{
+    const script=document.createElement("script");
+    script.src=source;script.async=true;
+    script.onload=()=>resolve();
+    script.onerror=()=>reject(new Error("بارگذاری اسکریپت ناموفق بود"));
+    document.head.appendChild(script);
+   });
+   if(typeof window.supabase?.createClient==="function")return window.supabase.createClient;
+   failures.push(source+": کتابخانه بارگذاری شد اما API در دسترس نیست");
+  }catch(error){failures.push(source+": "+(error?.message||"خطای بارگذاری"))}
+ }
+ const box=document.createElement("div");
+ box.dir="rtl";
+ box.style.cssText="position:relative;z-index:9999;margin:18px auto;padding:16px;max-width:720px;border:1px solid #ff8392;border-radius:14px;background:#241318;color:#fff;font:14px/2 Tahoma,sans-serif";
+ box.innerHTML="<strong>بارگذاری سامانه حساب کاربری ناموفق بود.</strong><br>اتصال مرورگر به سرویس احراز هویت برقرار نشد. اینترنت یا محدودیت دسترسی مرورگر به سرویس‌های خارجی را بررسی و صفحه را دوباره بارگذاری کن.";
+ (document.querySelector("main")||document.body).prepend(box);
+ console.error("Supabase SDK load failed:",failures);
+ throw new Error("بارگذاری کتابخانه حساب کاربری از همه مسیرهای جایگزین ناموفق بود.");
+}
+const createClient=await loadSupabaseCreateClient();
 const URL="https://srfldjfrzmtnlabusssq.supabase.co";
 const KEY="sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB";
 const API=URL+"/functions/v1/customer-account";
