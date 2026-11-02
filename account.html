@@ -187,9 +187,8 @@
 <section id="recoveryBox" class="card hidden" style="max-width:520px;margin:10px auto 50px"><h2>تنظیم رمز عبور جدید</h2><p class="muted">یک رمز جدید برای حساب خود انتخاب کن.</p><form id="passwordForm"><div class="field"><label for="newPassword">رمز عبور جدید (حداقل ۸ کاراکتر)</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required></div><div class="field"><label for="confirmPassword">تکرار رمز عبور</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></div><button class="btn primary wide" type="submit">ذخیره رمز جدید</button></form><p id="recoveryNotice" class="notice" aria-live="polite"></p></section>
 <dialog id="credentialConfirmDialog" class="account-dialog" aria-labelledby="credentialConfirmTitle"><span class="eyebrow">SECURITY CONFIRMATION</span><h2 id="credentialConfirmTitle">تأیید عملیات</h2><p id="credentialConfirmText"></p><div class="dialog-actions"><button id="credentialConfirmYes" class="btn primary" type="button">بله، کلید جدید صادر شود</button><button id="credentialConfirmNo" class="btn" type="button">انصراف</button></div></dialog><footer class="footer">ALISHAMS STUDIO · فضای خصوصی مشتریان</footer>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script type="module">
-const createClient = window.supabase?.createClient || (await import("https://esm.sh/@supabase/supabase-js@2")).createClient;
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const URL="https://srfldjfrzmtnlabusssq.supabase.co";
 const KEY="sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB";
 const API=URL+"/functions/v1/customer-account";
@@ -336,7 +335,7 @@ $("newConversationForm").addEventListener("submit",async e=>{e.preventDefault();
 
 window.Bale?.WebApp?.ready?.();
 sb.auth.onAuthStateChange((event,newSession)=>{if(event==="PASSWORD_RECOVERY"){session=newSession;showRecovery()}else if(newSession&&event==="SIGNED_IN"){session=newSession;loadDashboard()}else if(!newSession&&event==="SIGNED_OUT"){session=null;showAuth()}});
-const {data:{session:initialSession}}=await sb.auth.getSession();window.__ALISHAMS_ACCOUNT_BOOTED__=true;const requestedNext=new URLSearchParams(location.search).get("next");if(initialSession&&requestedNext){try{const target=new URL(requestedNext,location.origin);if(target.origin===location.origin){location.replace(target.pathname+target.search+target.hash)}else{session=initialSession;await loadDashboard()}}catch{session=initialSession;await loadDashboard()}}else if(location.hash.includes("type=recovery")){session=initialSession;showRecovery()}else if(initialSession){session=initialSession;await loadDashboard()}else{session=null;location.replace("/login.html"+(location.search||""))}
+const {data:{session:initialSession}}=await sb.auth.getSession();const requestedNext=new URLSearchParams(location.search).get("next");if(initialSession&&requestedNext){try{const target=new URL(requestedNext,location.origin);if(target.origin===location.origin){location.replace(target.pathname+target.search+target.hash)}else{session=initialSession;await loadDashboard()}}catch{session=initialSession;await loadDashboard()}}else if(location.hash.includes("type=recovery")){session=initialSession;showRecovery()}else if(initialSession){session=initialSession;await loadDashboard()}else{session=null;location.replace("/login.html"+(location.search||""))}
 
 /* Accessible custom category dropdown */
 (()=>{
@@ -392,7 +391,5 @@ input, textarea, select, [contenteditable="true"], [role="textbox"] {
 </style>
 
 <script type="module" src="/comments.js?v=4"></script>
-<script>
-setTimeout(()=>{if(window.__ALISHAMS_ACCOUNT_BOOTED__)return;const n=document.createElement("div");n.setAttribute("role","alert");n.dir="rtl";n.style.cssText="max-width:1120px;margin:12px auto;padding:14px 18px;border:1px solid #ff8392;border-radius:14px;background:#24151a;color:#ffd9df;font:13px/2 Vazirmatn,Tahoma,sans-serif";n.textContent="بارگذاری بخش حساب کاربری کامل نشد. احتمالاً فایل اتصال سامانه حساب از شبکه در دسترس نیست؛ صفحه را با اینترنت دیگری باز کنید. کد تشخیص: ACCOUNT_BOOT_FAILED";document.querySelector(".shell")?.append(n);},9000);
-</script>
+
 </body></html>
