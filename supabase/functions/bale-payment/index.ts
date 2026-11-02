@@ -65,7 +65,7 @@ Deno.serve(async(req:Request)=>{
    try{
     const providerToken=mode==="test"?["WALLET","TEST","1111111111111111"].join("-"):(Deno.env.get("BALE_PAYMENT_TOKEN")||"");
     if(!providerToken)throw new Error("Live provider token is not configured");
-    const invoice=await bale(botToken,"createInvoiceLink",{title:"پرداخت پروژه Alishams",description:("تسویه مانده پروژه "+String(project.title||"")).slice(0,255),payload,provider_token:providerToken,currency:"IRR",prices:[{label:"مانده پروژه",amount:Number(intent.amount_rial)}]});
+    const invoice=await bale(botToken,"createInvoiceLink",{title:"پرداخت پروژه Alishams",description:("تسویه مانده پروژه "+String(project.title||"")).slice(0,255),payload,provider_token:providerToken,prices:[{label:"مانده پروژه",amount:Number(intent.amount_rial)}]});
     if(typeof invoice!=="string"||!invoice)throw new Error("Invalid invoice reference");
     const {error:saveError}=await db.from("bale_payment_intents").update({invoice_url:invoice,updated_at:new Date().toISOString()}).eq("id",intent.id).eq("status","pending");
     if(saveError)throw saveError;
