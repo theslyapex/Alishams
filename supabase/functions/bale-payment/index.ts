@@ -55,10 +55,11 @@ Deno.serve(async(req:Request)=>{
    const projectId=String(body?.project_id||"");if(!/^[0-9a-f-]{36}$/i.test(projectId))return out({error:"شناسه پروژه معتبر نیست."},400,origin);
    const {data:project,error:projectError}=await db.from("client_projects").select("id,title,client_email").eq("id",projectId).ilike("client_email",pattern).maybeSingle();
    if(projectError||!project||String(project.client_email||"").trim().toLowerCase()!==email)return out({error:"این پروژه به حساب شما تعلق ندارد."},404,origin);
-   await verifyInitData(String(body?.init_data||""),botToken);
+   const baleUserId=await verifyInitData(String(body?.init_data||""),botToken);
    const payload="alishams_"+crypto.randomUUID();
-   const {data:intent,error:intentError}=await db.rpc("create_bale_payment_intent",{p_project_id:projectId,p_customer_user_id:user.id,p_customer_email:email,p_invoice_payload:payload,p_payment_mode:mode});
+   const {data:intent,error:intentError}=await db.rpc("create_bale_payment_intent",{p_project_id:projectId,p_customer_user_id:user.id,p_customer_email:email,p_bale_user_id:baleUserId,p_invoice_payload:payload,p_payment_mode:mode});
    if(intentError||!intent?.id){console.error("Bale intent create failed",intentError?.code||"unknown");return out({error:"ساخت درخواست پرداخت انجام نشد. مانده پروژه را بررسی و دوباره تلاش کنید."},409,origin)}
+   if(intent.user_mismatch)return out({error:"برای این پروژه یک فاکتور فعال با حساب بله دیگری وجود دارد؛ پس از انقضای آن دوباره تلاش کنید."},409,origin);
    if(intent.invoice_url)return out({ok:true,reused:true,intent_id:intent.id,invoice_params:intent.invoice_url,amount_toman:intent.amount_toman,amount_rial:intent.amount_rial,expires_at:intent.expires_at,mode},200,origin);
    if(intent.existing)return out({error:"فاکتور قبلی در حال آماده‌سازی است؛ چند ثانیه دیگر دوباره تلاش کنید."},409,origin);
    try{
