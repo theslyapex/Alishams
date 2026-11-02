@@ -188,7 +188,13 @@
 <dialog id="credentialConfirmDialog" class="account-dialog" aria-labelledby="credentialConfirmTitle"><span class="eyebrow">SECURITY CONFIRMATION</span><h2 id="credentialConfirmTitle">تأیید عملیات</h2><p id="credentialConfirmText"></p><div class="dialog-actions"><button id="credentialConfirmYes" class="btn primary" type="button">بله، کلید جدید صادر شود</button><button id="credentialConfirmNo" class="btn" type="button">انصراف</button></div></dialog><footer class="footer">ALISHAMS STUDIO · فضای خصوصی مشتریان</footer>
 </div>
 <script type="module">
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+let createClient;
+try {
+  ({ createClient } = await import("https://esm.sh/@supabase/supabase-js@2"));
+} catch (primaryImportError) {
+  console.warn("Supabase SDK primary CDN unavailable; trying fallback CDN.", primaryImportError);
+  ({ createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"));
+}
 const URL="https://srfldjfrzmtnlabusssq.supabase.co";
 const KEY="sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB";
 const API=URL+"/functions/v1/customer-account";
