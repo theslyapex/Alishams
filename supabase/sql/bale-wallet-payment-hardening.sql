@@ -142,3 +142,48 @@ revoke all on function public.finalize_bale_payment(uuid,text,text,jsonb,text) f
 grant execute on function public.create_bale_payment_intent(uuid,uuid,text,text,text) to service_role;
 grant execute on function public.validate_bale_precheckout(text,bigint,text,text,text,text) to service_role;
 grant execute on function public.finalize_bale_payment(uuid,text,text,jsonb,text) to service_role;
+
+
+-- The current create routine also binds the invoice to the HMAC-verified Mini App user.
+drop function if exists public.create_bale_payment_intent(uuid,uuid,text,text,text);
+
+create function public.create_bale_payment_intent(
+  p_project_id uuid,p_customer_user_id uuid,p_customer_email text,p_bale_user_id text,p_invoice_payload text,p_payment_mode text
+) returns jsonb language plpgsql security definer set search_path=pg_catalog,public as $$
+declare
+  v_project public.client_projects%rowtype;
+  v_existing public.bale_payment_intents%rowtype;
+  v_paid numeric(18,2);
+  v_remaining numeric(18,2);
+  v_rial numeric(20,0);
+  v_new public.bale_payment_intents%rowtype;
+begin
+  if p_payment_mode not in ('test','live') then raise exception 'Payment mode is invalid'; end if;
+  if p_customer_user_id is null or nullif(trim(p_customer_email),'') is null or nullif(p_bale_user_id,'') is null then raise exception 'Customer identity is required'; end if;
+  if length(coalesce(p_invoice_payload,''))<1 or octet_length(p_invoice_payload)>128 then raise exception 'Invoice payload is invalid'; end if;
+  select * into v_project from public.client_projects where id=p_project_id for update;
+  if not found or lower(trim(v_project.client_email))<>lower(trim(p_customer_email)) then raise exception 'Project does not belong to customer'; end if;
+  select coalesce(sum(amount),0) into v_paid from public.project_payments where project_id=p_project_id and confirmed=true;
+  v_remaining:=greatest(0,coalesce(v_project.total_price,0)-v_paid);
+  if v_remaining<=0 then raise exception 'Project is already settled'; end if;
+  if v_remaining*10<>trunc(v_remaining*10) then raise exception 'Project balance cannot be represented in Rial'; end if;
+  v_rial:=(v_remaining*10)::numeric(20,0);
+  if v_rial>2147483647 then raise exception 'Project balance exceeds Bale invoice limit'; end if;
+  select * into v_existing from public.bale_payment_intents where project_id=p_project_id and payment_mode=p_payment_mode
+    and status in ('pending','precheckout') and expires_at>now() order by created_at desc limit 1 for update;
+  if found then
+    if v_existing.bale_user_id is not null and v_existing.bale_user_id<>p_bale_user_id then
+      return jsonb_build_object('id',v_existing.id,'existing',true,'user_mismatch',true);
+    end if;
+    return jsonb_build_object('id',v_existing.id,'amount_toman',v_existing.amount_toman,'amount_rial',v_existing.amount_rial,
+      'invoice_url',v_existing.invoice_url,'expires_at',v_existing.expires_at,'status',v_existing.status,'existing',true);
+  end if;
+  insert into public.bale_payment_intents(project_id,customer_user_id,customer_email,bale_user_id,amount_toman,amount_rial,currency,invoice_payload,status,payment_mode,expires_at)
+  values(p_project_id,p_customer_user_id,lower(trim(p_customer_email)),p_bale_user_id,v_remaining,v_rial,'IRR',p_invoice_payload,'pending',p_payment_mode,now()+interval '15 minutes')
+  returning * into v_new;
+  return jsonb_build_object('id',v_new.id,'amount_toman',v_new.amount_toman,'amount_rial',v_new.amount_rial,
+    'invoice_url',v_new.invoice_url,'expires_at',v_new.expires_at,'status',v_new.status,'existing',false);
+end;
+$$;
+revoke all on function public.create_bale_payment_intent(uuid,uuid,text,text,text,text) from public,anon,authenticated;
+grant execute on function public.create_bale_payment_intent(uuid,uuid,text,text,text,text) to service_role;
