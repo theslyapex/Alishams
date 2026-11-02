@@ -265,13 +265,19 @@ $("projectDetailsList").addEventListener("click",async e=>{
   try{
    const invoice=await baleApi("create_invoice",{project_id:pay.dataset.projectId,init_data:window.Bale.WebApp.initData});
    window.Bale.WebApp.openInvoice(invoice.invoice_params,async result=>{
-    if(result?.status==="paid"&&invoice.mode==="test")notice("dashNotice","پرداخت آزمایشی با موفقیت انجام شد؛ هیچ تغییری در سوابق مالی واقعی ایجاد نشد.","success");
-    else if(result?.status==="paid")notice("dashNotice","پرداخت با موفقیت انجام شد؛ در حال به‌روزرسانی سوابق مالی…","success");
-    else if(result?.status==="pending")notice("dashNotice","پرداخت در حال پردازش است؛ وضعیت را چند لحظه دیگر بررسی می‌کنیم.","success");
-    else if(result?.status==="failed")notice("dashNotice","پرداخت ناموفق بود. می‌توانید دوباره تلاش کنید.","error");
-    else notice("dashNotice","فرایند پرداخت لغو شد؛ مانده پروژه تغییری نکرد.","");
-    await new Promise(resolve=>setTimeout(resolve,1800));await loadDashboard();
-    if(result?.status==="pending")setTimeout(()=>loadDashboard(),4000);
+    if(result?.status==="cancelled"){notice("dashNotice","فرایند پرداخت لغو شد؛ مانده پروژه تغییری نکرد.","");await loadDashboard();return}
+    if(result?.status==="failed"){notice("dashNotice","پرداخت در بله ناموفق اعلام شد؛ مانده پروژه تغییری نکرد.","error");await loadDashboard();return}
+    notice("dashNotice","پاسخ بله دریافت شد؛ در حال تأیید نهایی پرداخت از سرور…","");
+    let verified=null;
+    for(let attempt=0;attempt<6;attempt++){
+     try{const check=await baleApi("status",{intent_id:invoice.intent_id});verified=check.intent;if(["paid","test_paid","failed","expired"].includes(verified?.status))break}catch(e){console.warn("Bale payment status check failed",e)}
+     await new Promise(resolve=>setTimeout(resolve,1500));
+    }
+    if(verified?.status==="paid")notice("dashNotice","پرداخت توسط سرور تأیید و در سوابق مالی ثبت شد.","success");
+    else if(verified?.status==="test_paid")notice("dashNotice","پرداخت آزمایشی توسط سرور تأیید شد؛ سوابق مالی واقعی و مانده پروژه تغییر نکرده است.","success");
+    else if(verified?.status==="failed"||verified?.status==="expired")notice("dashNotice","پرداخت تأیید نشد یا فاکتور منقضی شده است؛ مانده پروژه تغییر نکرد.","error");
+    else notice("dashNotice","بله پایان فرایند را اعلام کرد، اما تأیید نهایی سرور هنوز دریافت نشده است. تا تأیید سرور، پرداخت موفق محسوب نمی‌شود.","error");
+    await loadDashboard();
    });
   }catch(err){notice("dashNotice",err.message||"ساخت فاکتور پرداخت انجام نشد.","error");pay.disabled=false;pay.textContent=old}
   return;
