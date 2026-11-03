@@ -1504,6 +1504,8 @@ const serviceParam=new URLSearchParams(location.search).get('service');if(servic
  'خدمات فیسبوک':['فالوور','لایک','بازدید لایو','ری‌اکشن','بازدید','اشتراک‌گذاری پست']
 };
 const serviceSelect=document.getElementById('serviceSelect');
+const disabledOrderServices=new Set(['ساخت ریلز اینستاگرام','تیزر تبلیغاتی','امنیت شبکه‌های اجتماعی','تبلیغات و معرفی','مشاوره کسب‌وکار آنلاین','خدمات شبکه‌های اجتماعی']);
+[...serviceSelect.options].forEach(option=>{if(disabledOrderServices.has(option.textContent.trim())){option.disabled=true;option.dataset.serviceStatus='disabled';}});
 const multiServiceOptions=document.getElementById('multiServiceOptions');
 const selectedServiceTags=document.getElementById('selectedServiceTags');
 const selectedServiceCount=document.getElementById('selectedServiceCount');
@@ -1511,8 +1513,8 @@ let selectedServices=[];
 function renderServicePicker(){
  multiServiceOptions.innerHTML='';
  [...serviceSelect.options].forEach((option,index)=>{
-  const label=document.createElement('label');label.className='multi-service-option';
-  const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.value=option.value;checkbox.checked=selectedServices.includes(option.value);
+  const label=document.createElement('label');label.className='multi-service-option'+(option.disabled?' is-disabled':'');
+  const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.value=option.value;checkbox.checked=selectedServices.includes(option.value);checkbox.disabled=option.disabled;if(option.disabled){label.setAttribute('aria-disabled','true');label.title='این خدمت در حال حاضر غیرفعال است';}
   checkbox.addEventListener('change',()=>{
    if(checkbox.checked){if(!selectedServices.includes(option.value))selectedServices.push(option.value)}
    else selectedServices=selectedServices.filter(item=>item!==option.value);
@@ -1537,7 +1539,7 @@ const serviceSelectTrigger=document.getElementById('serviceSelectTrigger'),servi
 serviceSelectTrigger.addEventListener('click',()=>{const open=serviceSelectPanel.hidden;serviceSelectPanel.hidden=!open;serviceSelectTrigger.setAttribute('aria-expanded',String(open));});
 document.getElementById('serviceSelectDone').addEventListener('click',()=>{serviceSelectPanel.hidden=true;serviceSelectTrigger.setAttribute('aria-expanded','false');});
 function setSelectedServices(items){
- selectedServices=[...new Set(items)].filter(name=>[...serviceSelect.options].some(o=>o.value===name));
+ selectedServices=[...new Set(items)].filter(name=>[...serviceSelect.options].some(o=>o.value===name&&!o.disabled));
  syncSelectedServices();
 }
 const domainPurchaseFields=document.getElementById('domainPurchaseFields');
