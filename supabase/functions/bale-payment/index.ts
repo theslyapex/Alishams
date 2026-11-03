@@ -12,9 +12,9 @@ async function verifyInitData(raw:string,botToken:string){
  if(!hash||!authDate||!userRaw)throw new Error("اطلاعات ورود مینی‌اپ بله کامل نیست.");
  const now=Math.floor(Date.now()/1000);
  if(authDate>now+60||now-authDate>900)throw new Error("نشست مینی‌اپ بله منقضی شده است؛ صفحه را دوباره باز کنید.");
- const check=[...p.entries()].filter(([k])=>k!=="hash").sort(([a],[b])=>a.localeCompare(b)).map(([k,v])=>k+"="+v).join("\n");
- const key=await crypto.subtle.importKey("raw",enc.encode(botToken),{name:"HMAC",hash:"SHA-256"},false,["sign"]);
- const secret=await crypto.subtle.sign("HMAC",key,enc.encode("WebAppData"));
+ const check=[...p.entries()].filter(([k])=>k!=="hash").sort(([a],[b])=>a<b?-1:a>b?1:0).map(([k,v])=>k+"="+v).join("\n");
+ const key=await crypto.subtle.importKey("raw",enc.encode("WebAppData"),{name:"HMAC",hash:"SHA-256"},false,["sign"]);
+ const secret=await crypto.subtle.sign("HMAC",key,enc.encode(botToken));
  const key2=await crypto.subtle.importKey("raw",secret,{name:"HMAC",hash:"SHA-256"},false,["sign"]);
  const calculated=toHex(await crypto.subtle.sign("HMAC",key2,enc.encode(check)));
  if(!equal(calculated,hash.toLowerCase()))throw new Error("اعتبار اطلاعات مینی‌اپ بله تأیید نشد.");
@@ -27,6 +27,18 @@ async function bale(token:string,method:string,body:unknown){
  const j=await r.json().catch(()=>({}));
  if(!r.ok||j?.ok!==true){console.error("Bale API failure",method,r.status,j?.error_code||"unknown");throw new Error("ارتباط با سرویس پرداخت بله برقرار نشد.")}
  return j.result;
+}
+
+async function ensureBaleWebhook(token:string){
+ const secret=Deno.env.get("BALE_WEBHOOK_SECRET")||"";
+ if(!secret)throw new Error("Webhook secret is not configured");
+ const webhookUrl="https://srfldjfrzmtnlabusssq.supabase.co/functions/v1/bale-payment-webhook/"+secret;
+ const info=await bale(token,"getWebhookInfo",{});
+ if(String(info?.url||"")===webhookUrl)return;
+ await bale(token,"setWebhook",{url:webhookUrl,allowed_updates:["pre_checkout_query","message"]});
+ const verified=await bale(token,"getWebhookInfo",{});
+ if(String(verified?.url||"")!==webhookUrl)throw new Error("Bale webhook registration could not be verified");
+ console.log("Bale webhook configured and verified");
 }
 Deno.serve(async(req:Request)=>{
  const origin=req.headers.get("origin")||"";
@@ -50,8 +62,27 @@ Deno.serve(async(req:Request)=>{
    const {data:intents,error}=await db.from("bale_payment_intents").select("id,project_id,amount_toman,status,payment_mode,created_at,updated_at,paid_at,expires_at").in("project_id",ids).eq("customer_user_id",user.id).order("created_at",{ascending:false}).limit(100);
    if(error)throw error;const now=Date.now();const visible=(intents||[]).map((item:any)=>({...item,status:(["pending","precheckout"].includes(item.status)&&item.expires_at&&new Date(item.expires_at).getTime()<=now?"expired":item.status)}));return out({ok:true,enabled,mode,intents:visible},200,origin);
   }
+  if(action==="create_plus_invoice"){
+   if(!enabled)return out({error:"پرداخت کیف پول بله هنوز فعال نیست."},503,origin);
+   await ensureBaleWebhook(botToken);
+   const baleUserId=await verifyInitData(String(body?.init_data||""),botToken);
+   const payload="alishams_plus_"+crypto.randomUUID();
+   const expiresAt=new Date(Date.now()+15*60*1000).toISOString();
+   const {data:intent,error:intentError}=await db.from("plus_payment_intents").insert({user_id:user.id,email,bale_user_id:baleUserId,payment_mode:mode,invoice_payload:payload,expires_at:expiresAt}).select("id,amount_toman,amount_rial").single();
+   if(intentError||!intent)return out({error:"ساخت فاکتور پلاس+ انجام نشد. دوباره تلاش کن."},409,origin);
+   try{
+    const providerToken=mode==="test"?["WALLET","TEST","1111111111111111"].join("-"):(Deno.env.get("BALE_PAYMENT_TOKEN")||"");
+    if(!providerToken)throw new Error("Live provider token is not configured");
+    const invoice=await bale(botToken,"createInvoiceLink",{title:"عضویت پلاس+ Alishams",description:"عضویت ویژه ۳۰ روزه پلاس+ با تخفیف خدمات و هدیه روزانه",payload,provider_token:providerToken,prices:[{label:"عضویت پلاس+",amount:20000000}]});
+    if(typeof invoice!=="string"||!invoice)throw new Error("Invalid invoice reference");
+    const {error:saveError}=await db.from("plus_payment_intents").update({invoice_url:invoice,updated_at:new Date().toISOString()}).eq("id",intent.id).eq("status","pending");
+    if(saveError)throw saveError;
+    return out({ok:true,intent_id:intent.id,invoice_params:invoice,amount_toman:2000000,expires_at:expiresAt,mode},201,origin);
+   }catch(e){await db.from("plus_payment_intents").update({status:"failed",updated_at:new Date().toISOString()}).eq("id",intent.id);console.error("Plus invoice creation failed",e);return out({error:"ایجاد فاکتور پلاس+ در بله ناموفق بود."},502,origin)}
+  }
   if(action==="create_invoice"){
    if(!enabled)return out({error:"پرداخت کیف پول بله هنوز در حالت غیرفعال است."},503,origin);
+   await ensureBaleWebhook(botToken);
    const projectId=String(body?.project_id||"");if(!/^[0-9a-f-]{36}$/i.test(projectId))return out({error:"شناسه پروژه معتبر نیست."},400,origin);
    const {data:project,error:projectError}=await db.from("client_projects").select("id,title,client_email").eq("id",projectId).ilike("client_email",pattern).maybeSingle();
    if(projectError||!project||String(project.client_email||"").trim().toLowerCase()!==email)return out({error:"این پروژه به حساب شما تعلق ندارد."},404,origin);
