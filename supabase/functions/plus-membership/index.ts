@@ -61,13 +61,14 @@ Deno.serve(async(req:Request)=>{
    const users:any[]=[];for(let page=1;page<=20;page++){const {data,error}=await db.auth.admin.listUsers({page,perPage:100});if(error)throw error;for(const u of data.users||[]){const email=String(u.email||"").toLowerCase(),name=String(u.user_metadata?.full_name||"").toLowerCase();if(email.includes(q)||name.includes(q)||u.id===q)users.push({id:u.id,email:u.email,name:u.user_metadata?.full_name||"",created_at:u.created_at});}if(!data.users||data.users.length<100||users.length>=30)break;}return out({ok:true,users:users.slice(0,30)},200,origin);
   }
   if(action==="admin_list"){
-   const [{data:members,error:me},{data:reels,error:re},{data:domains,error:de}]=await Promise.all([
+   const [{data:members,error:me},{data:reels,error:re},{data:domains,error:de},{data:payments,error:pe}]=await Promise.all([
     db.from("plus_memberships").select("*").order("updated_at",{ascending:false}).limit(500),
     db.from("plus_reel_requests").select("*").order("created_at",{ascending:false}).limit(500),
-    db.from("plus_domain_requests").select("*").order("created_at",{ascending:false}).limit(300)
-   ]);if(me||re||de)throw me||re||de;
+    db.from("plus_domain_requests").select("*").order("created_at",{ascending:false}).limit(300),
+    db.from("plus_payment_intents").select("id,user_id,email,amount_toman,status,paid_at,created_at,bale_charge_id").order("created_at",{ascending:false}).limit(500)
+   ]);if(me||re||de||pe)throw me||re||de||pe;
    const users=await Promise.all((members||[]).map(async(m:any)=>{const {data}=await db.auth.admin.getUserById(m.user_id);return {...m,email:m.email||data?.user?.email||"",is_active:active(m)}}));
-   return out({ok:true,members:users,reels:reels||[],domains:domains||[]},200,origin);
+   return out({ok:true,members:users,reels:reels||[],domains:domains||[],payments:payments||[]},200,origin);
   }
   if(action==="admin_set"){
    const uid=str(b.user_id,50);if(!/^[0-9a-f-]{36}$/i.test(uid))return out({error:"شناسه کاربر معتبر نیست."},400,origin);
