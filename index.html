@@ -1522,6 +1522,16 @@ const serviceParam=new URLSearchParams(location.search).get('service');if(servic
  'خدمات فیسبوک':['فالوور','لایک','بازدید لایو','ری‌اکشن','بازدید','اشتراک‌گذاری پست']
 };
 const serviceSelect=document.getElementById('serviceSelect');
+// The native select is only the internal data source; never show it beside the custom picker.
+serviceSelect.hidden=true;
+serviceSelect.setAttribute('aria-hidden','true');
+serviceSelect.tabIndex=-1;
+serviceSelect.style.setProperty('display','none','important');
+serviceSelect.style.setProperty('visibility','hidden','important');
+serviceSelect.style.setProperty('position','fixed','important');
+serviceSelect.style.setProperty('left','-10000px','important');
+serviceSelect.style.setProperty('width','0','important');
+serviceSelect.style.setProperty('height','0','important');
 const normalizeServiceLabel=value=>value.toLocaleLowerCase('fa').replace(/[ي]/g,'ی').replace(/[ك]/g,'ک').replace(/[\u200c\u200f\s()_،-]/g,'');
 const disabledOrderServices=new Set([
 'خدمات شبکه های اجتماعی','ساخت ریلز اینستاکرام','ساخت ریلز اینستاگرام','خدمات اینستاگرام','خدمات تلگرام','خدمات واتساپ','خدمات ایکس(توییتر)','خدمات یوتیوب','خدمات تردز','خدمات توییچ','خدمات فیسبوک','خدمات لینکدین','خدمات وی کی','خدمات دیسکورد','خدمات کورا','خدمات بیگولایو','خدمات کلاب هاوس','خدمات کیک','خدمات ساند کلود','خدمات اسپاتیفای','خدمات میکس کلود','خدمات ردیت','خدمات تیک تاک','خدمات imdb','خدمات لایکی','خدمات تامبل','خدمات ایتا','خدمات روبیکا','خدمات آیگپ','خدمات بله','خدمات سروش','خدمات آپارات','امنیت شبکه های اجتماعی','تبلیغات و معرفی','مشاوره کسب و کار آنلاین'
