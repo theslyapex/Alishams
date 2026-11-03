@@ -13,7 +13,7 @@ const markup =
 '</nav><div class="nav-actions"><button class="menu-toggle" id="alishamsSharedMenuToggle" type="button" aria-label="باز کردن منو" aria-expanded="false"><span class="header-control-icon" aria-hidden="true">☰</span><span class="header-control-label">منو</span></button>'+
 '<a class="account-cta" id="alishamsSharedAccount" href="/login.html" aria-label="ورود به حساب کاربری و ثبت‌نام" title="ورود به حساب کاربری و ثبت‌نام">'+
 '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-1.5a4.5 4.5 0 0 0-4.5-4.5h-7A4.5 4.5 0 0 0 4 19.5V21"/><circle cx="12" cy="7.5" r="4"/><path d="M18.5 8.5h3m-1.5-1.5v3"/></svg>'+
-'<span class="account-cta-label">حساب کاربری</span><span class="account-cta-status" hidden>واردشده‌اید</span><span class="account-plus-mark" hidden aria-label="کاربر پلاس پلاس">+</span></a></div></div></header>';
+'<span class="account-cta-label">حساب کاربری</span><span class="account-status-row"><span class="account-cta-status" hidden>واردشده‌اید</span><span class="account-plus-mark" hidden aria-label="کاربر پلاس پلاس">+</span></span></a></div></div></header>';
 function install(){
  if(document.getElementById(HEADER_ID))return;
  const existing=document.querySelector('header');
