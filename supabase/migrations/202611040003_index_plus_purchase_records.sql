@@ -1,0 +1,1 @@
+create index if not exists plus_purchase_records_user_idx on public.plus_purchase_records(user_id,created_at desc);
