@@ -1565,8 +1565,7 @@ let selectedServices=[];
 function renderServicePicker(){
  multiServiceOptions.innerHTML='';
  // آیگپ نیز در وضعیت غیرفعال قرار می‌گیرد؛ ابتدا همه خدمات فعال و سپس غیرفعال‌ها نمایش داده می‌شوند.
- disabledOrderServices.add(normalizeServiceLabel('خدمات آیگپ'));
- const orderedOptions=[...serviceSelect.options].map(option=>{
+  const orderedOptions=[...serviceSelect.options].map(option=>{
   const disabled=disabledOrderServices.has(normalizeServiceLabel(option.textContent.trim()));
   option.disabled=disabled;
   option.dataset.serviceStatus=disabled?'disabled':'active';
@@ -1595,6 +1594,24 @@ function syncSelectedServices(){
  renderServicePicker();
  updateSocialServiceFields();
  updateDomainPurchaseFields();
+}
+async function loadServiceSettings(){
+ try{
+  const response=await fetch("https://srfldjfrzmtnlabusssq.supabase.co/functions/v1/service-settings",{method:"POST",headers:{"Content-Type":"application/json","apikey":"sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB"},body:JSON.stringify({action:"public_list"})});
+  const settings=await response.json();if(!response.ok||!settings.ok)throw new Error("settings unavailable");
+  disabledOrderServices.clear();
+  Object.entries(settings.order_services||{}).forEach(([name,active])=>{if(active===false)disabledOrderServices.add(normalizeServiceLabel(name));});
+  [...serviceSelect.options].forEach(option=>{const off=disabledOrderServices.has(normalizeServiceLabel(option.textContent.trim()));option.disabled=off;option.dataset.serviceStatus=off?'disabled':'active';});
+  const homeNames=["موشن‌گرافیک","طراحی وبسایت و قالب وبلاگ","ریلز و محتوای ویدئویی","تیزر تبلیغاتی","امنیت شبکه‌های اجتماعی","نگارش مقاله وب‌سایت","تبلیغات و معرفی","مشاوره کسب‌وکار آنلاین","خدمات شبکه‌های اجتماعی","طراحی لوگو اختصاصی","خدمات SEO"];
+  document.querySelectorAll(".services-grid .service").forEach((card,index)=>{
+   const active=(settings.homepage_services||{})[homeNames[index]]!==false;
+   card.classList.toggle("service-disabled",!active);
+   const badge=card.querySelector(".service-status");
+   if(badge){badge.classList.toggle("service-status--active",active);badge.innerHTML='<i aria-hidden="true"></i>'+(active?'فعال':'غیرفعال');}
+  });
+  selectedServices=selectedServices.filter(name=>!disabledOrderServices.has(normalizeServiceLabel(name)));
+  syncSelectedServices();
+ }catch(error){console.warn("Service settings could not be loaded; existing fallback statuses remain.",error)}
 }
 const serviceSelectTrigger=document.getElementById('serviceSelectTrigger'),serviceSelectPanel=document.getElementById('serviceSelectPanel');
 serviceSelectTrigger.addEventListener('click',()=>{const open=serviceSelectPanel.hidden;serviceSelectPanel.hidden=!open;serviceSelectTrigger.setAttribute('aria-expanded',String(open));});
