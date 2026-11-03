@@ -897,7 +897,9 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 #orderDialog .single-service-picker{display:block;margin:18px 0 16px}
 #orderDialog .single-service-label{display:block;margin:0 0 8px;font-size:12px;color:var(--muted,#aeb4c7);line-height:1.8}
 #orderDialog .single-service-trigger{width:100%;min-height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 15px;border:1px solid rgba(255,255,255,.16);border-radius:13px;background:#171922;color:var(--text,#f4f5ff);font:inherit;font-size:13px;cursor:pointer;text-align:right}
-#orderDialog .single-service-options{display:grid;grid-template-columns:1fr;gap:6px;max-height:245px;overflow:auto;margin-top:8px;padding:9px;border:1px solid rgba(255,255,255,.12);border-radius:13px;background:#11141d}
+#orderDialog .single-service-picker{position:relative}
+#orderDialog .single-service-options{position:absolute;top:calc(100% + 7px);right:0;left:0;z-index:10050;display:grid;grid-template-columns:1fr;gap:6px;max-height:245px;overflow:auto;margin:0;padding:9px;border:1px solid rgba(255,255,255,.16);border-radius:13px;background:#11141d;box-shadow:0 16px 38px rgba(0,0,0,.48)}
+#orderDialog .single-service-options[hidden]{display:none!important}
 #orderDialog .single-service-option{display:flex;align-items:center;gap:10px;min-height:38px;padding:7px 10px;border-radius:9px;color:var(--text,#f4f5ff);font-size:12px;cursor:pointer}
 #orderDialog .single-service-option:hover{background:rgba(255,255,255,.06)}
 #orderDialog .single-service-option input{accent-color:#b7f34b}
