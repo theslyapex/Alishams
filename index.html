@@ -1613,6 +1613,7 @@ async function loadServiceSettings(){
   syncSelectedServices();
  }catch(error){console.warn("Service settings could not be loaded; existing fallback statuses remain.",error)}
 }
+loadServiceSettings();
 const serviceSelectTrigger=document.getElementById('serviceSelectTrigger'),serviceSelectPanel=document.getElementById('serviceSelectPanel');
 serviceSelectTrigger.addEventListener('click',()=>{const open=serviceSelectPanel.hidden;serviceSelectPanel.hidden=!open;serviceSelectTrigger.setAttribute('aria-expanded',String(open));});
 document.getElementById('serviceSelectDone').addEventListener('click',()=>{serviceSelectPanel.hidden=true;serviceSelectTrigger.setAttribute('aria-expanded','false');});
