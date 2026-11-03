@@ -218,7 +218,7 @@ const calcData={
  social:{name:'سایر خدمات شبکه‌های اجتماعی',quote:true},
  logoMotionPack:{name:'پک اقتصادی طراحی لوگو و موشن‌گرافیک',min:570000,max:570000,unit:'پک',label:'تعداد پک'},
  websitePack:{name:'پک اقتصادی طراحی سایت حرفه‌ای',min:6499000,max:6499000,unit:'پک',label:'تعداد پک'},
- customBrandWebsite:{name:'طراحی اختصاصی برند و وب‌سایت',min:4930000,max:4930000,unit:'پروژه',label:'تعداد پروژه'},
+ customBrandWebsite:{name:'طراحی اختصاصی برند و وب‌سایت',min:11300000,max:11300000,unit:'پروژه',label:'تعداد پروژه'},
  bronzeStore:{name:'پکیج برنزی طراحی وبسایت',min:7499000,max:7499000,unit:'پکیج',label:'تعداد پکیج'},
  silverStore:{name:'پکیج نقره‌ای طراحی وبسایت',min:14399000,max:14399000,unit:'پکیج',label:'تعداد پکیج'},
  goldStore:{name:'پکیج طلایی طراحی وبسایت',quote:true},
@@ -279,7 +279,7 @@ renderCalcPicker();renderCalcRows();
 const customOfferDeadline=Date.UTC(2027,4,1,0,0,0);
 function refreshCustomOfferPrice(){
  if(Date.now()<customOfferDeadline)return;
- const d=calcData.customBrandWebsite;if(d){d.min=9080000;d.max=9080000;d.name='طراحی اختصاصی برند و وب‌سایت';}
+ const d=calcData.customBrandWebsite;if(d){d.min=19000000;d.max=19000000;d.name='طراحی اختصاصی برند و وب‌سایت';}
  document.querySelectorAll('.custom-brand-offer .economic-package-price').forEach(box=>{box.childNodes.forEach(n=>{if(n.nodeType===Node.TEXT_NODE&&n.textContent.trim())n.textContent='۱۹٬۰۰۰٬۰۰۰ تومان '});const price=box.querySelector('.custom-offer-price');if(price)price.textContent='۱۹٬۰۰۰٬۰۰۰ تومان';const timer=box.querySelector('.custom-offer-countdown');if(timer)timer.hidden=true;const label=box.querySelector('.custom-offer-countdown-label');if(label)label.textContent='مهلت قیمت ویژه به پایان رسیده است';const old=box.querySelector('del');if(old)old.hidden=true;const b=box.querySelector('b');if(b)b.textContent='قیمت عادی · مشاهده جزئیات';});
  const card=document.querySelector('.custom-brand-service-card .card-bottom');if(card){const strong=card.querySelector('strong');if(strong)strong.textContent='۱۹٬۰۰۰٬۰۰۰ تومان';const old=card.querySelector('del');if(old)old.hidden=true;}
  if(chosenCalcServices.includes('customBrandWebsite'))updateCalculator();
