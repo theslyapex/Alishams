@@ -900,6 +900,25 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 #orderDialog select#serviceSelect{display:none!important;visibility:hidden!important;position:absolute!important;width:0!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;opacity:0!important;pointer-events:none!important}
 #orderDialog #multiServicePicker{display:block!important;visibility:visible!important}
 </style>
+<style id="service-select-data-hard-hide">
+/* The original native service select is only a hidden data source, never a visible form field. */
+#serviceSelectData,
+#serviceSelectData[hidden],
+#serviceSelectData select#serviceSelect{
+  display:none!important;
+  visibility:hidden!important;
+  position:absolute!important;
+  width:0!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+</style>
 </head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="علی شمس"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی">
