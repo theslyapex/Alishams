@@ -1851,5 +1851,27 @@ document.getElementById('year').textContent=new Date().getFullYear();
 #orderDialog label.single-service-label[for="serviceSelect"],#orderDialog #serviceSelect{display:none!important;visibility:hidden!important;position:absolute!important;width:1px!important;height:1px!important;max-height:1px!important;margin:0!important;padding:0!important;opacity:0!important;pointer-events:none!important;clip-path:inset(50%)!important}
 #orderDialog #multiServicePicker{display:block!important;visibility:visible!important}
 </style>
-</body></html>
+</body>
+<style id="remove-visible-legacy-order-service">
+/* Keep the native select only as the form's hidden data source; the custom picker below is the sole visible control. */
+html body dialog#orderDialog div.modal > select#serviceSelect,
+html body dialog#orderDialog select#serviceSelect {
+  display:none !important;
+  visibility:hidden !important;
+  position:fixed !important;
+  inset:auto auto auto -10000px !important;
+  width:0 !important;
+  height:0 !important;
+  min-height:0 !important;
+  max-height:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+  clip:rect(0 0 0 0) !important;
+  clip-path:inset(50%) !important;
+}
+</style>
+</html>
 <style id="ad-visual-replacement">.ad-visual-mark--back svg{filter:drop-shadow(0 0 10px #d9ff7255)}.ad-visual-mark--front svg{filter:drop-shadow(0 0 10px #d9ff7277)}.ad-visual-mark--back svg .prism-shadow{transform-origin:center;animation:prismPulse 4s ease-in-out infinite}@keyframes prismPulse{0%,100%{opacity:.55;transform:scale(.97)}50%{opacity:1;transform:scale(1.03)}}@media(prefers-reduced-motion:reduce){.ad-visual-mark--back svg .prism-shadow{animation:none!important}}</style>
