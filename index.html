@@ -1564,7 +1564,15 @@ const selectedServiceCount=document.getElementById('selectedServiceCount');
 let selectedServices=[];
 function renderServicePicker(){
  multiServiceOptions.innerHTML='';
- [...serviceSelect.options].forEach((option,index)=>{
+ // آیگپ نیز در وضعیت غیرفعال قرار می‌گیرد؛ ابتدا همه خدمات فعال و سپس غیرفعال‌ها نمایش داده می‌شوند.
+ disabledOrderServices.add(normalizeServiceLabel('خدمات آیگپ'));
+ const orderedOptions=[...serviceSelect.options].map(option=>{
+  const disabled=disabledOrderServices.has(normalizeServiceLabel(option.textContent.trim()));
+  option.disabled=disabled;
+  option.dataset.serviceStatus=disabled?'disabled':'active';
+  return option;
+ }).sort((a,b)=>Number(a.disabled)-Number(b.disabled));
+ orderedOptions.forEach((option,index)=>{
   const label=document.createElement('label');label.className='multi-service-option '+(option.disabled?'is-disabled':'is-active');
   const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.value=option.value;checkbox.checked=selectedServices.includes(option.value);checkbox.disabled=option.disabled;if(option.disabled){label.setAttribute('aria-disabled','true');label.title='این خدمت در حال حاضر غیرفعال است';}
   checkbox.addEventListener('change',()=>{
