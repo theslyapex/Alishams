@@ -765,6 +765,16 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 #orderDialog .multi-service-option{display:flex;align-items:center;gap:9px;min-width:0;padding:10px;border:1px solid #ffffff18;border-radius:10px;background:#ffffff06;color:#e9eaf0;font-size:11px;cursor:pointer}
 #orderDialog .multi-service-option:has(input:checked){border-color:#a78bfa;background:#9b7cff20;color:#fff}
 #orderDialog .multi-service-option input{width:16px;height:16px;flex:0 0 16px;margin:0;accent-color:#a78bfa}
+#orderDialog .multi-service-option{gap:8px}
+#orderDialog .multi-service-option-name{flex:1;min-width:0}
+#orderDialog .multi-service-option-light{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#8cff42;box-shadow:0 0 5px #8cff42,0 0 11px #8cff42;animation:orderServiceGreenBlink 1.8s ease-in-out infinite}
+#orderDialog .multi-service-option.is-disabled{border-color:#ff62624a;background:linear-gradient(110deg,#351719aa,#211619aa);color:#ffb4b4;cursor:not-allowed;opacity:.82}
+#orderDialog .multi-service-option.is-disabled input{cursor:not-allowed;accent-color:#ff6262}
+#orderDialog .multi-service-option.is-disabled .multi-service-option-light{background:#ff4545;box-shadow:0 0 5px #ff4545,0 0 11px #ff4545;animation:orderServiceRedBlink 1.8s ease-in-out infinite}
+#orderDialog .multi-service-option.is-disabled:has(input:checked){border-color:#ff62624a;background:linear-gradient(110deg,#351719aa,#211619aa);color:#ffb4b4}
+@keyframes orderServiceGreenBlink{0%,100%{opacity:1;box-shadow:0 0 5px #8cff42,0 0 11px #8cff42}50%{opacity:.35;box-shadow:0 0 2px #8cff42,0 0 5px #8cff42}}
+@keyframes orderServiceRedBlink{0%,100%{opacity:1;box-shadow:0 0 5px #ff4545,0 0 11px #ff4545}50%{opacity:.35;box-shadow:0 0 2px #ff4545,0 0 5px #ff4545}}
+@media(prefers-reduced-motion:reduce){#orderDialog .multi-service-option-light{animation:none}}
 #orderDialog .service-select-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid #ffffff16}
 #orderDialog .service-select-actions span{font-size:10px;color:var(--muted,#aeb4c7)}
 #orderDialog .service-select-actions button{border:0;border-radius:9px;padding:9px 14px;background:#a78bfa;color:#111;font:700 11px inherit;cursor:pointer}
@@ -1504,8 +1514,11 @@ const serviceParam=new URLSearchParams(location.search).get('service');if(servic
  'خدمات فیسبوک':['فالوور','لایک','بازدید لایو','ری‌اکشن','بازدید','اشتراک‌گذاری پست']
 };
 const serviceSelect=document.getElementById('serviceSelect');
-const disabledOrderServices=new Set(['ساخت ریلز اینستاگرام','تیزر تبلیغاتی','امنیت شبکه‌های اجتماعی','تبلیغات و معرفی','مشاوره کسب‌وکار آنلاین','خدمات شبکه‌های اجتماعی']);
-[...serviceSelect.options].forEach(option=>{if(disabledOrderServices.has(option.textContent.trim())){option.disabled=true;option.dataset.serviceStatus='disabled';}});
+const normalizeServiceLabel=value=>value.toLocaleLowerCase('fa').replace(/[\u200c\u200f\u064a\u0643\s()_،-]/g,'');
+const disabledOrderServices=new Set([
+'خدمات شبکه های اجتماعی','ساخت ریلز اینستاکرام','خدمات اینستاگرام','خدمات تلگرام','خدمات واتساپ','خدمات ایکس(توییتر)','خدمات یوتیوب','خدمات تردز','خدمات توییچ','خدمات فیسبوک','خدمات لینکدین','خدمات وی کی','خدمات دیسکورد','خدمات کورا','خدمات بیگولایو','خدمات کلاب هاوس','خدمات کیک','خدمات ساند کلود','خدمات اسپاتیفای','خدمات میکس کلود','خدمات ردیت','خدمات تیک تاک','خدمات imdb','خدمات لایکی','خدمات تامبل','خدمات ایتا','خدمات روبیکا','خدمات آیگپ','خدمات بله','خدمات سروش','خدمات آپارات','امنیت شبکه های اجتماعی','تبلیغات و معرفی','مشاوره کسب و کار آنلاین'
+].map(normalizeServiceLabel));
+[...serviceSelect.options].forEach(option=>{const disabled=disabledOrderServices.has(normalizeServiceLabel(option.textContent.trim()));option.disabled=disabled;option.dataset.serviceStatus=disabled?'disabled':'active';});
 const multiServiceOptions=document.getElementById('multiServiceOptions');
 const selectedServiceTags=document.getElementById('selectedServiceTags');
 const selectedServiceCount=document.getElementById('selectedServiceCount');
@@ -1513,15 +1526,16 @@ let selectedServices=[];
 function renderServicePicker(){
  multiServiceOptions.innerHTML='';
  [...serviceSelect.options].forEach((option,index)=>{
-  const label=document.createElement('label');label.className='multi-service-option'+(option.disabled?' is-disabled':'');
+  const label=document.createElement('label');label.className='multi-service-option '+(option.disabled?'is-disabled':'is-active');
   const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.value=option.value;checkbox.checked=selectedServices.includes(option.value);checkbox.disabled=option.disabled;if(option.disabled){label.setAttribute('aria-disabled','true');label.title='این خدمت در حال حاضر غیرفعال است';}
   checkbox.addEventListener('change',()=>{
    if(checkbox.checked){if(!selectedServices.includes(option.value))selectedServices.push(option.value)}
    else selectedServices=selectedServices.filter(item=>item!==option.value);
    syncSelectedServices();
   });
-  const text=document.createElement('span');text.textContent=option.textContent.trim();
-  label.append(checkbox,text);multiServiceOptions.append(label);
+  const text=document.createElement('span');text.className='multi-service-option-name';text.textContent=option.textContent.trim();
+  const status=document.createElement('i');status.className='multi-service-option-light';status.setAttribute('aria-hidden','true');
+  label.append(checkbox,text,status);multiServiceOptions.append(label);
  });
 }
 function syncSelectedServices(){
