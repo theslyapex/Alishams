@@ -36,7 +36,7 @@ Deno.serve(async(req:Request)=>{
    const host=parsed.hostname.toLowerCase(),path=parsed.pathname;
    if(!["instagram.com","www.instagram.com","m.instagram.com"].includes(host)||!(path.startsWith("/reel/")||path.startsWith("/reels/")||path.startsWith("/p/")))return out({error:"فقط لینک مستقیم یک Reel اینستاگرام را وارد کن."},400,origin);
    const day=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Tehran",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
-   const {count:used,error:countError}=await db.from("plus_reel_requests").select("id",{count:"exact",head:true}).eq("user_id",user.id).gte("created_at",m.starts_at).lt("created_at",m.ends_at);if(countError)throw countError;
+   const {count:used,error:countError}=await db.from("plus_reel_requests").select("id",{count:"exact",head:true}).eq("user_id",user.id).gte("created_at",m.last_purchase_at||m.starts_at).lt("created_at",m.ends_at);if(countError)throw countError;
    if((used||0)>=30)return out({error:"سهمیه ۳۰ روزه بازدید هدیه این دوره عضویت تکمیل شده است."},409,origin);
    const {data:row,error}=await db.from("plus_reel_requests").insert({user_id:user.id,reel_url:parsed.toString(),request_day:day}).select("id,reel_url,request_day,status,created_at").single();
    if(error?.code==="23505")return out({error:"سهمیه امروزت قبلاً ثبت شده است. هر روز فقط یک درخواست ۵۰۰ ویویی امکان‌پذیر است."},409,origin);if(error)throw error;
@@ -50,7 +50,7 @@ Deno.serve(async(req:Request)=>{
    const {data:orders,error:orderError}=await db.from("client_orders").select("id,title,service,services").ilike("client_email",user.email).order("created_at",{ascending:false}).limit(100);if(orderError)throw orderError;
    const eligible=(orders||[]).some((o:any)=>{const text=[o.title,o.service,...(Array.isArray(o.services)?o.services:[])].join(" ").toLowerCase();const matches=text.includes("وبسایت")||text.includes("وب سایت")||text.includes("پک اقتصادی طراحی سایت");return matches&&String(o.title||"").trim().toLowerCase()===order.toLowerCase()});
    if(!eligible)return out({error:"برای دریافت دامنه هدیه باید یک سفارش طراحی وب‌سایت یا پک اقتصادی طراحی سایت با همین حساب ثبت کرده باشی."},403,origin);
-   const period=new Date(m.starts_at).toISOString();
+   const period=new Date(m.last_purchase_at||m.starts_at).toISOString();
    const {data:row,error}=await db.from("plus_domain_requests").insert({user_id:user.id,email:user.email,brand_name:brand,desired_domain:domain,related_order:order,membership_period_start:period}).select("id,brand_name,desired_domain,status,created_at").single();
    if(error?.code==="23505")return out({error:"سهمیه دامنه هدیه این دوره عضویت قبلاً استفاده شده است."},409,origin);if(error)throw error;
    return out({ok:true,request:row},201,origin);
