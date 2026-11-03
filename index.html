@@ -781,10 +781,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 #orderDialog .selected-service-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
 #orderDialog .selected-service-tag{font-size:10px;padding:5px 9px;border-radius:30px;background:#58d9ee18;border:1px solid #58d9ee40;color:#9cebf4}
 @media(max-width:520px){#orderDialog .multi-service-options{grid-template-columns:1fr;max-height:190px}}
-</style><style id="hide-legacy-service-select">#orderDialog #serviceSelect{display:none!important;visibility:hidden!important;position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}</style><style id="single-service-select-visible">
-#orderDialog .single-service-label{display:block;margin:18px 0 8px;font-size:12px;color:var(--muted,#aeb4c7);line-height:1.8}
-#orderDialog #serviceSelect{display:block!important;width:100%;min-height:54px;margin:0 0 18px;padding:0 14px;border:1px solid rgba(255,255,255,.15);border-radius:13px;background:#171922;color:var(--text,#f4f5ff);font:inherit;font-size:13px;direction:rtl}
-</style>
+</style><style id="hide-legacy-service-select">#orderDialog #serviceSelect{display:none!important;visibility:hidden!important;position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}</style>
 <style id="ad-showcase-cinematic-replacement">
 /* Advertising showcase: replace the two-card illustration with a cinematic optical signal sculpture */
 .portfolio-showcase--ads .portfolio-showcase-panel{direction:ltr;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(30px,5vw,72px)}
@@ -894,6 +891,11 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 @media(max-width:360px){.compact-portfolio-item{grid-template-columns:1fr;justify-items:start;gap:5px}.compact-portfolio-item>i{grid-row:auto}.compact-portfolio-item>small{display:none}}
 </style><style id="final-hide-legacy-service-select">#orderDialog #serviceSelect{display:none!important;visibility:hidden!important;position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}</style>
 
+<style id="unified-order-service-picker">
+#orderDialog label.single-service-label[for="serviceSelect"],
+#orderDialog #serviceSelect{display:none!important;visibility:hidden!important;position:absolute!important;width:1px!important;height:1px!important;max-height:1px!important;margin:0!important;padding:0!important;opacity:0!important;pointer-events:none!important;clip-path:inset(50%)!important}
+#orderDialog #multiServicePicker{display:block!important;visibility:visible!important}
+</style>
 </head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="علی شمس"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی">
