@@ -30,6 +30,41 @@
 @media(max-width:760px){.wrap{width:min(100% - 30px,var(--max))}.nav{height:68px}.navlinks{display:flex}.hero{padding:40px 0 35px}.hero-grid{grid-template-columns:1fr;gap:10px;margin-top:24px}.hero h1{font-size:clamp(39px,11vw,60px);letter-spacing:-1.5px}.visual{min-height:360px}.visual-card{max-width:340px}.section{padding:42px 0}.support-layout{grid-template-columns:1fr}.side-info{display:grid;grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr}.footer-inner{align-items:flex-start;flex-direction:column}.footer-links{gap:14px}.closing{align-items:flex-start;flex-direction:column}}
 @media(max-width:420px){.wrap{width:calc(100% - 24px)}.brand{font-size:13px}.hero-actions .btn{flex:1}.visual{min-height:325px}.visual-card{padding:23px}.visual-icon{width:95px;height:95px;margin:24px auto 15px}.visual-icon svg{width:68px;height:68px}.side-info{grid-template-columns:1fr}.card-number{padding:15px 12px;font-size:16px;letter-spacing:.5px}.owner-row{align-items:flex-start;flex-direction:column}.foot-bottom{flex-direction:column}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* Support page typography and icon refinements */
+.visual-icon{transform:none!important}
+.visual-icon svg{width:86px;height:86px;overflow:visible;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35))}
+.hero-copy,.hero-grid>*,.support-layout>*,.side-info>*{min-width:0}
+.hero h1,.section-head h2,.bank-card h3,.info-card h3,.step h3,.closing h2,.faq summary{
+  text-wrap:balance;
+  word-break:normal;
+  overflow-wrap:normal;
+}
+.hero-copy>p,.section-head>p,.info-card p,.step p,.faq details p,.closing p{
+  word-break:normal;
+  overflow-wrap:normal;
+  text-wrap:pretty;
+}
+.bank-head span,.owner-badge,.bank-head i,.visual-top span,.visual-top b,.visual-bottom span,.visual-bottom strong{
+  flex-shrink:0;
+}
+.card-number{min-width:0}
+.card-number span{min-width:0;letter-spacing:clamp(.1px,.18vw,1.2px)}
+.info-card h3,.step h3{max-width:100%;line-height:1.65}
+@media(max-width:760px){
+ .hero h1{font-size:clamp(36px,9.2vw,54px);letter-spacing:-1px;line-height:1.42}
+ .section-head h2{font-size:clamp(25px,7vw,35px);line-height:1.6}
+ .info-card h3,.step h3{font-size:14px}
+ .visual-icon svg{width:74px;height:74px}
+}
+@media(max-width:380px){
+ .hero h1{font-size:35px}
+ .bank-card{padding:21px 16px}
+ .card-number{gap:7px;padding:14px 10px;font-size:clamp(14px,4vw,16px)}
+ .bank-head{gap:8px}
+ .bank-head span{font-size:10px}
+}
+
 </style>
 </head>
 <body>
@@ -40,7 +75,7 @@
 <main id="top">
 <section class="hero"><div class="wrap"><div class="crumb"><a href="/">صفحه اصلی</a> / حمایت مالی</div><div class="hero-grid">
 <div class="hero-copy"><span class="eyebrow">A LITTLE SUPPORT · A BIG DIFFERENCE</span><h1>برای ادامه این مسیر،<br><span class="accent">همراه من باش.</span></h1><p>اینجا جایی است برای قدردانی از کسانی که دوست دارند در ادامه مسیر ساخت ابزارهای آنلاین، تجربه‌های دیجیتال و محتوای کاربردی سهمی داشته باشند. اگر چیزی در این سایت برایت مفید بوده، حمایت داوطلبانه‌ات می‌تواند به ادامه و بهتر شدن این مسیر کمک کند.</p><div class="hero-actions"><a class="btn btn-primary" href="#bank-card">حمایت مالی <span aria-hidden="true">↙</span></a><a class="btn" href="#about-support">بیشتر بدانم</a></div><div class="hero-note"><i>✦</i><span>کاملاً داوطلبانه؛ به هر میزان که خودت مایل باشی.</span></div></div>
-<div class="visual" aria-label="تصویر گرافیکی حمایت مالی"><div class="visual-glow"></div><div class="orbit"></div><div class="visual-card"><div class="visual-top"><span>ALISHAMS / SUPPORT</span><b>THANK YOU</b></div><div class="visual-icon" aria-hidden="true"><svg viewBox="0 0 96 96" role="img" focusable="false"><defs><linearGradient id="supportCardFill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eaffad"/><stop offset="1" stop-color="#a9d94c"/></linearGradient></defs><rect x="10" y="20" width="76" height="56" rx="12" fill="none" stroke="url(#supportCardFill)" stroke-width="3.5"/><path d="M11 37h74" stroke="#d9ff72" stroke-width="5"/><rect x="19" y="48" width="17" height="13" rx="3" fill="#d9ff72" opacity=".95"/><path d="M46 53h25M46 61h16" stroke="#d9ff72" stroke-width="3" stroke-linecap="round" opacity=".8"/><path d="m69 11 5 5 10-10" fill="none" stroke="#b6a0ff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h2>حمایت از خلاقیت</h2><p>ساختن، بهتر کردن، ادامه دادن.</p><div class="visual-bottom"><span>ONE STEP FORWARD · DIGITAL SUPPORT</span><strong>✳ ۱۴۰۵</strong></div></div></div>
+<div class="visual" aria-label="تصویر گرافیکی حمایت مالی"><div class="visual-glow"></div><div class="orbit"></div><div class="visual-card"><div class="visual-top"><span>ALISHAMS / SUPPORT</span><b>THANK YOU</b></div><div class="visual-icon" aria-hidden="true"><svg viewBox="0 0 96 96" role="img" focusable="false" aria-label="کارت بانکی"><rect x="9" y="19" width="78" height="58" rx="12" fill="#111820" stroke="#d9ff72" stroke-width="3.5"/><path d="M10 36h76" stroke="#d9ff72" stroke-width="6"/><rect x="19" y="48" width="18" height="14" rx="3" fill="#d9ff72"/><path d="M49 52h25M49 60h17" fill="none" stroke="#d9ff72" stroke-width="3.2" stroke-linecap="round"/><path d="M69 9c7 5 10 12 10 19M76 5c10 7 15 17 15 28" fill="none" stroke="#b6a0ff" stroke-width="3" stroke-linecap="round"/></svg></div><h2>حمایت از خلاقیت</h2><p>ساختن، بهتر کردن، ادامه دادن.</p><div class="visual-bottom"><span>ONE STEP FORWARD · DIGITAL SUPPORT</span><strong>✳ ۱۴۰۵</strong></div></div></div>
 </div></div></section>
 <section class="section" id="bank-card"><div class="wrap"><div class="section-head reveal"><span class="eyebrow">DIRECT CARD TRANSFER</span><h2>یک همراهی کوچک، برای <span class="accent">ادامه راه.</span></h2><p>برای حمایت، می‌توانی از طریق کارت‌به‌کارت واریز انجام بدهی. اطلاعات کارت را با دقت بررسی کن.</p></div>
 <div class="support-layout">
