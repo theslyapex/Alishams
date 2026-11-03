@@ -62,3 +62,5 @@
 @media(min-width:761px){.site-shared-header .nav-actions .menu-toggle{display:none!important}}
 
 .account-plus-mark{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;margin-right:4px;border-radius:6px;background:linear-gradient(135deg,#c4b5fd,#7c3aed);color:#fff;font-size:14px;font-weight:900;line-height:1;box-shadow:0 0 14px #8b5cf655;vertical-align:middle}.account-plus-mark[hidden]{display:none!important}
+
+.account-status-row{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:16px}.account-cta.is-authenticated .account-status-row{display:inline-flex}
