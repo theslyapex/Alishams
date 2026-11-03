@@ -1820,5 +1820,25 @@ document.getElementById('year').textContent=new Date().getFullYear();
 @media(max-width:800px){.instagram-studio-card{grid-template-columns:1fr;gap:14px;padding:30px 25px}.instagram-studio-copy{max-width:100%}.instagram-studio-visual{min-height:350px;margin-top:3px}.instagram-profile-preview{width:min(100%,420px)}.instagram-tag-top{right:2%}.instagram-tag-bottom{left:2%}}
 @media(max-width:480px){.instagram-studio-section{padding-top:28px;padding-bottom:40px}.instagram-studio-card{padding:25px 18px;border-radius:25px;gap:8px}.instagram-studio-copy h2{font-size:31px}.instagram-studio-copy>p{font-size:12px}.instagram-follow-button{width:100%}.instagram-studio-visual{min-height:310px;margin:4px -3px 0}.instagram-profile-preview{padding:13px;border-radius:19px}.instagram-avatar-ring{flex-basis:57px;width:57px;height:57px}.instagram-preview-identity strong{font-size:13px}.instagram-preview-tile{min-height:100px;padding:8px 6px}.instagram-preview-tile>b{font-size:12px}.instagram-floating-tag{font-size:7px;padding:8px 9px}.instagram-tag-top{top:2px}.instagram-tag-bottom{bottom:0}}
 @media(prefers-reduced-motion:reduce){.instagram-live-dot,.instagram-visual-glow,.instagram-orbit,.instagram-profile-preview,.instagram-floating-tag,.instagram-spark{animation:none!important}.instagram-follow-button,.instagram-follow-button svg{transition:none!important}}
+</style><style id="order-service-picker-final-override">
+/* The custom service picker is the only visible service selector inside the order dialog. */
+#orderDialog #serviceSelect,
+#orderDialog select#serviceSelect{
+  display:none!important;
+  visibility:hidden!important;
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+#orderDialog #multiServicePicker,
+#orderDialog .multi-service-picker{
+  display:block!important;
+  visibility:visible!important;
+}
 </style></body></html>
 <style id="ad-visual-replacement">.ad-visual-mark--back svg{filter:drop-shadow(0 0 10px #d9ff7255)}.ad-visual-mark--front svg{filter:drop-shadow(0 0 10px #d9ff7277)}.ad-visual-mark--back svg .prism-shadow{transform-origin:center;animation:prismPulse 4s ease-in-out infinite}@keyframes prismPulse{0%,100%{opacity:.55;transform:scale(.97)}50%{opacity:1;transform:scale(1.03)}}@media(prefers-reduced-motion:reduce){.ad-visual-mark--back svg .prism-shadow{animation:none!important}}</style>
