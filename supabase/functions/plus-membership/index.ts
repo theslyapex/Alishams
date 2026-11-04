@@ -27,7 +27,8 @@ Deno.serve(async(req:Request)=>{
     db.from("plus_domain_requests").select("id,brand_name,desired_domain,related_order,status,admin_note,created_at").eq("user_id",user.id).order("created_at",{ascending:false}).limit(20)
    ]);if(re||de)throw re||de;
    const {data:latestPayment,error:paymentError}=await db.from("plus_payment_intents").select("id,status,amount_toman,created_at,paid_at").eq("user_id",user.id).order("created_at",{ascending:false}).limit(1).maybeSingle();if(paymentError)throw paymentError;
-   return out({ok:true,membership:membership?{...membership,is_active:active(membership)}:null,reels:reels||[],domains:domains||[],latest_payment:latestPayment||null},200,origin);
+   const {data:latestManual,error:manualError}=await db.from("plus_purchase_records").select("id,payment_status,amount_toman,created_at,paid_at,admin_note").eq("user_id",user.id).eq("payment_provider","card_transfer").order("created_at",{ascending:false}).limit(1).maybeSingle();if(manualError)throw manualError;
+   return out({ok:true,membership:membership?{...membership,is_active:active(membership)}:null,reels:reels||[],domains:domains||[],latest_payment:latestPayment||null,latest_manual_payment:latestManual||null},200,origin);
   }
   if(action==="reel_submit"){
    const {data:m,error:me}=await db.from("plus_memberships").select("*").eq("user_id",user.id).maybeSingle();if(me)throw me;
@@ -55,20 +56,36 @@ Deno.serve(async(req:Request)=>{
    if(error?.code==="23505")return out({error:"سهمیه دامنه هدیه این دوره عضویت قبلاً استفاده شده است."},409,origin);if(error)throw error;
    return out({ok:true,request:row},201,origin);
   }
+  if(action==="manual_submit"){
+   const mime=str(b.mime_type,40).toLowerCase(),base64=String(b.image_base64||"");
+   if(!new Set(["image/jpeg","image/png","image/webp"]).has(mime)||!base64||base64.length>7000000)return out({error:"فقط تصویر JPG، PNG یا WebP تا حجم ۵ مگابایت پذیرفته می‌شود."},400,origin);
+   const {data:pending,error:pendingError}=await db.from("plus_purchase_records").select("id").eq("user_id",user.id).eq("payment_provider","card_transfer").eq("payment_status","pending").limit(1).maybeSingle();if(pendingError)throw pendingError;
+   if(pending)return out({error:"یک رسید پلاس+ در انتظار بررسی مدیر داری. تا تعیین نتیجه، رسید جدید ارسال نکن."},409,origin);
+   const raw=base64.replace(/^data:image\/[a-zA-Z0-9.+-]+;base64,/,"");let bytes:Uint8Array;
+   try{const binary=atob(raw);bytes=new Uint8Array(binary.length);for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i)}catch{return out({error:"خواندن تصویر رسید انجام نشد."},400,origin)}
+   if(!bytes.length||bytes.length>5*1024*1024)return out({error:"حجم تصویر باید حداکثر ۵ مگابایت باشد."},400,origin);
+   const ext=mime==="image/jpeg"?"jpg":mime==="image/png"?"png":"webp",path="plus/"+user.id+"/"+crypto.randomUUID()+"."+ext;
+   const {error:uploadError}=await db.storage.from("project-deliverables").upload(path,bytes,{contentType:mime,upsert:false});if(uploadError)throw uploadError;
+   const {data:row,error:insertError}=await db.from("plus_purchase_records").insert({user_id:user.id,email:user.email,amount_toman:2000000,discount_percent:35,payment_status:"pending",payment_provider:"card_transfer",payment_reference:"PLUS-CARD-"+crypto.randomUUID(),receipt_path:path,receipt_mime_type:mime}).select("id,payment_status,amount_toman,created_at").single();
+   if(insertError){await db.storage.from("project-deliverables").remove([path]);throw insertError}
+   return out({ok:true,payment:row},201,origin);
+  }
   if(!isAdmin)return out({error:"دسترسی مدیریت مجاز نیست."},403,origin);
   if(action==="admin_search"){
    const q=str(b.query,180).toLowerCase();if(q.length<2)return out({ok:true,users:[]},200,origin);
    const users:any[]=[];for(let page=1;page<=20;page++){const {data,error}=await db.auth.admin.listUsers({page,perPage:100});if(error)throw error;for(const u of data.users||[]){const email=String(u.email||"").toLowerCase(),name=String(u.user_metadata?.full_name||"").toLowerCase();if(email.includes(q)||name.includes(q)||u.id===q)users.push({id:u.id,email:u.email,name:u.user_metadata?.full_name||"",created_at:u.created_at});}if(!data.users||data.users.length<100||users.length>=30)break;}return out({ok:true,users:users.slice(0,30)},200,origin);
   }
   if(action==="admin_list"){
-   const [{data:members,error:me},{data:reels,error:re},{data:domains,error:de},{data:payments,error:pe}]=await Promise.all([
+   const [{data:members,error:me},{data:reels,error:re},{data:domains,error:de},{data:payments,error:pe},{data:manualRows,error:manualError}]=await Promise.all([
     db.from("plus_memberships").select("*").order("updated_at",{ascending:false}).limit(500),
     db.from("plus_reel_requests").select("*").order("created_at",{ascending:false}).limit(500),
     db.from("plus_domain_requests").select("*").order("created_at",{ascending:false}).limit(300),
-    db.from("plus_payment_intents").select("id,user_id,email,amount_toman,status,paid_at,created_at,bale_charge_id").order("created_at",{ascending:false}).limit(500)
-   ]);if(me||re||de||pe)throw me||re||de||pe;
+    db.from("plus_payment_intents").select("id,user_id,email,amount_toman,status,paid_at,created_at,bale_charge_id").order("created_at",{ascending:false}).limit(500),
+    db.from("plus_purchase_records").select("id,user_id,email,amount_toman,payment_status,payment_provider,created_at,paid_at,receipt_path,admin_note").eq("payment_provider","card_transfer").order("created_at",{ascending:false}).limit(500)
+   ]);if(me||re||de||pe||manualError)throw me||re||de||pe||manualError;
    const users=await Promise.all((members||[]).map(async(m:any)=>{const {data}=await db.auth.admin.getUserById(m.user_id);return {...m,email:m.email||data?.user?.email||"",is_active:active(m)}}));
-   return out({ok:true,members:users,reels:reels||[],domains:domains||[],payments:payments||[]},200,origin);
+   const manualPayments=await Promise.all((manualRows||[]).map(async(p:any)=>{const {data}=await db.storage.from("project-deliverables").createSignedUrl(p.receipt_path,86400);return {...p,receipt_url:data?.signedUrl||null}}));
+   return out({ok:true,members:users,reels:reels||[],domains:domains||[],payments:payments||[],manual_payments:manualPayments},200,origin);
   }
   if(action==="admin_set"){
    const uid=str(b.user_id,50);if(!/^[0-9a-f-]{36}$/i.test(uid))return out({error:"شناسه کاربر معتبر نیست."},400,origin);
@@ -93,6 +110,17 @@ Deno.serve(async(req:Request)=>{
     if(error)throw error;row=data;
    }
    return out({ok:true,membership:{...row,is_active:active(row)}},200,origin);
+  }
+  if(action==="admin_manual_update"){
+   const id=str(b.id,50),decision=str(b.decision,20),note=str(b.admin_note,1000);
+   if(!/^[0-9a-f-]{36}$/i.test(id)||!["approve","reject"].includes(decision))return out({error:"درخواست یا تصمیم معتبر نیست."},400,origin);
+   if(decision==="approve"){
+    const {data,error}=await db.rpc("finalize_manual_plus_purchase",{p_purchase_id:id});if(error)throw error;
+    return out({ok:true,result:data},200,origin);
+   }
+   const {data:row,error}=await db.from("plus_purchase_records").update({payment_status:"failed",admin_note:note,reviewed_at:new Date().toISOString()}).eq("id",id).eq("payment_provider","card_transfer").eq("payment_status","pending").select("id,payment_status").single();
+   if(error)throw error;
+   return out({ok:true,payment:row},200,origin);
   }
   if(action==="admin_reel_update"){
    const id=str(b.id,50),status=str(b.status,20);if(!["pending","approved","delivered","rejected"].includes(status))return out({error:"وضعیت درخواست معتبر نیست."},400,origin);
