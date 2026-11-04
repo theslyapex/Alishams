@@ -74,11 +74,23 @@ Deno.serve(async(req:Request)=>{
    const uid=str(b.user_id,50);if(!/^[0-9a-f-]{36}$/i.test(uid))return out({error:"شناسه کاربر معتبر نیست."},400,origin);
    const {data:target,error:te}=await db.auth.admin.getUserById(uid);if(te||!target?.user?.email)return out({error:"کاربر پیدا نشد."},404,origin);
    const {data:old,error:oe}=await db.from("plus_memberships").select("*").eq("user_id",uid).maybeSingle();if(oe)throw oe;
-   const enabled=!!b.enabled,now=new Date(),start=b.starts_at?new Date(b.starts_at):now,end=b.ends_at?new Date(b.ends_at):new Date(now.getTime()+30*86400000);
-   if(enabled&&(!Number.isFinite(start.getTime())||!Number.isFinite(end.getTime())||end<=start))return out({error:"تاریخ شروع و پایان معتبر نیست."},400,origin);
-   const patch:any={user_id:uid,email:target.user.email,status:enabled?"active":"inactive",starts_at:enabled?start.toISOString():null,ends_at:enabled?end.toISOString():null,discount_percent:Number(b.discount_percent)===50?50:35,admin_note:str(b.admin_note,1000),updated_at:now.toISOString()};
-   if(!old)patch.purchase_count=0;
-   const {data:row,error}=await db.from("plus_memberships").upsert(patch,{onConflict:"user_id"}).select("*").single();if(error)throw error;
+   const enabled=b.enabled===true,now=new Date();
+   let start:Date|null=null,end:Date|null=null;
+   if(enabled){
+    start=b.starts_at?new Date(b.starts_at):(old?.status==="active"&&old?.ends_at&&new Date(old.ends_at)>now?new Date(old.ends_at):now);
+    end=b.ends_at?new Date(b.ends_at):new Date(start.getTime()+30*86400000);
+    if(!Number.isFinite(start.getTime())||!Number.isFinite(end.getTime())||end<=start)return out({error:"تاریخ شروع و پایان معتبر نیست."},400,origin);
+   }
+   const patch:any={email:target.user.email,status:enabled?"active":"inactive",starts_at:enabled?start!.toISOString():null,ends_at:enabled?end!.toISOString():null,discount_percent:Number(b.discount_percent)===50?50:35,admin_note:str(b.admin_note,1000),updated_at:now.toISOString()};
+   if(enabled)patch.last_purchase_at=now.toISOString();
+   let row:any=null;
+   if(old){
+    const {data,error}=await db.from("plus_memberships").update(patch).eq("user_id",uid).select("*").single();
+    if(error)throw error;row=data;
+   }else{
+    const {data,error}=await db.from("plus_memberships").insert({user_id:uid,...patch,purchase_count:0}).select("*").single();
+    if(error)throw error;row=data;
+   }
    return out({ok:true,membership:{...row,is_active:active(row)}},200,origin);
   }
   if(action==="admin_reel_update"){
