@@ -63,22 +63,7 @@ Deno.serve(async(req:Request)=>{
    if(error)throw error;const now=Date.now();const visible=(intents||[]).map((item:any)=>({...item,status:(["pending","precheckout"].includes(item.status)&&item.expires_at&&new Date(item.expires_at).getTime()<=now?"expired":item.status)}));return out({ok:true,enabled,mode,intents:visible},200,origin);
   }
   if(action==="create_plus_invoice"){
-   if(!enabled)return out({error:"پرداخت کیف پول بله هنوز فعال نیست."},503,origin);
-   await ensureBaleWebhook(botToken);
-   const baleUserId=await verifyInitData(String(body?.init_data||""),botToken);
-   const payload="alishams_plus_"+crypto.randomUUID();
-   const expiresAt=new Date(Date.now()+15*60*1000).toISOString();
-   const {data:intent,error:intentError}=await db.from("plus_payment_intents").insert({user_id:user.id,email,bale_user_id:baleUserId,payment_mode:mode,invoice_payload:payload,expires_at:expiresAt}).select("id,amount_toman,amount_rial").single();
-   if(intentError||!intent)return out({error:"ساخت فاکتور پلاس+ انجام نشد. دوباره تلاش کن."},409,origin);
-   try{
-    const providerToken=mode==="test"?["WALLET","TEST","1111111111111111"].join("-"):(Deno.env.get("BALE_PAYMENT_TOKEN")||"");
-    if(!providerToken)throw new Error("Live provider token is not configured");
-    const invoice=await bale(botToken,"createInvoiceLink",{title:"عضویت پلاس+ Alishams",description:"عضویت ویژه ۳۰ روزه پلاس+ با تخفیف خدمات و هدیه روزانه",payload,provider_token:providerToken,prices:[{label:"عضویت پلاس+",amount:20000000}]});
-    if(typeof invoice!=="string"||!invoice)throw new Error("Invalid invoice reference");
-    const {error:saveError}=await db.from("plus_payment_intents").update({invoice_url:invoice,updated_at:new Date().toISOString()}).eq("id",intent.id).eq("status","pending");
-    if(saveError)throw saveError;
-    return out({ok:true,intent_id:intent.id,invoice_params:invoice,amount_toman:2000000,expires_at:expiresAt,mode},201,origin);
-   }catch(e){await db.from("plus_payment_intents").update({status:"failed",updated_at:new Date().toISOString()}).eq("id",intent.id);console.error("Plus invoice creation failed",e);return out({error:"ایجاد فاکتور پلاس+ در بله ناموفق بود."},502,origin)}
+   return out({error:"خرید عضویت پلاس+ از طریق بله غیرفعال شده است؛ برای خرید از روش کارت‌به‌کارت در صفحه پلاس+ استفاده کنید."},410,origin);
   }
   if(action==="create_invoice"){
    if(!enabled)return out({error:"پرداخت کیف پول بله هنوز در حالت غیرفعال است."},503,origin);
