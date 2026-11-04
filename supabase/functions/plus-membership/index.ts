@@ -77,8 +77,9 @@ Deno.serve(async(req:Request)=>{
    const enabled=b.enabled===true,now=new Date();
    let start:Date|null=null,end:Date|null=null;
    if(enabled){
-    start=b.starts_at?new Date(b.starts_at):(old?.status==="active"&&old?.ends_at&&new Date(old.ends_at)>now?new Date(old.ends_at):now);
-    end=b.ends_at?new Date(b.ends_at):new Date(start.getTime()+30*86400000);
+    const currentStillActive=old?.status==="active"&&old?.ends_at&&new Date(old.ends_at)>now;
+    start=b.starts_at?new Date(b.starts_at):(currentStillActive&&old?.starts_at?new Date(old.starts_at):now);
+    end=b.ends_at?new Date(b.ends_at):(currentStillActive?new Date(new Date(old.ends_at).getTime()+30*86400000):new Date(start.getTime()+30*86400000));
     if(!Number.isFinite(start.getTime())||!Number.isFinite(end.getTime())||end<=start)return out({error:"تاریخ شروع و پایان معتبر نیست."},400,origin);
    }
    const patch:any={email:target.user.email,status:enabled?"active":"inactive",starts_at:enabled?start!.toISOString():null,ends_at:enabled?end!.toISOString():null,discount_percent:Number(b.discount_percent)===50?50:35,admin_note:str(b.admin_note,1000),updated_at:now.toISOString()};
