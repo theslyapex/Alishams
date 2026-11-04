@@ -750,7 +750,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 @keyframes videoPlayRing{0%,100%{transform:scale(.94);opacity:.65}50%{transform:scale(1.1);opacity:.18}}
 @media(prefers-reduced-motion:reduce){.video-showcase-clapper,.video-showcase-play,.video-showcase-play:before{animation:none!important}}
 </style>  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
-<meta name="discount-system" content="enabled"><script src="/discount-ui.js?v=1" defer></script><style id="service-select-dropdown-fix">
+<meta name="discount-system" content="enabled"><script src="/discount-ui.js?v=2" defer></script><style id="service-select-dropdown-fix">
 #orderDialog .multi-service-picker{margin:10px 0 18px;padding:0;border:0;background:transparent}
 #orderDialog .multi-service-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 9px}
 #orderDialog .multi-service-top strong{font-size:13px}
@@ -1533,7 +1533,7 @@ if(principlesSlider){
  showPrinciple(0);startPrincipleTimer();
 }
 document.querySelectorAll('.faq button').forEach(b=>b.addEventListener('click',()=>{const box=b.parentElement,open=box.classList.toggle('open');b.setAttribute('aria-expanded',String(open));b.lastElementChild.textContent=open?'−':'＋'}));
-const serviceParam=new URLSearchParams(location.search).get('service');if(serviceParam){const sel=document.getElementById('serviceSelect');const match=[...sel.options].find(o=>o.textContent.trim()===serviceParam.trim());if(match){sel.value=match.value}else{const fallback=[...sel.options].find(o=>o.textContent.trim()==='هنوز مطمئن نیستم');if(fallback)sel.value=fallback.value;const details=document.getElementById('projectDetails');if(details&&!details.value)details.value='خدمت موردنظر: '+serviceParam+'\\n';}}const socialServiceOptions={
+const serviceParam=new URLSearchParams(location.search).get('service');if(serviceParam){const sel=document.getElementById('serviceSelect');const match=[...sel.options].find(o=>o.textContent.trim()===serviceParam.trim());if(match){sel.value=match.value}else{const fallback=[...sel.options].find(o=>o.textContent.trim()==='هنوز مطمئن نیستم');if(fallback)sel.value=fallback.value;const details=document.getElementById('projectDetails');if(details&&!details.value)details.value='خدمت موردنظر: '+serviceParam+'\n';}}const socialServiceOptions={
  'خدمات اینستاگرام':[
   'لایک پست','لایک ریلز','لایک استوری','لایک کامنت','کامنت پست و ریلز خارجی','کامنت پست و ریلز ایرانی','کامنت استوری','رأی نظرسنجی استوری','رأی نظرسنجی پست و ریلز','فالوور ارزان','فالوور گران','شیر پست و ریلز','سیو پست و ریلز','ریپست'
  ],
@@ -1681,7 +1681,7 @@ document.getElementById('makeSummary').addEventListener('click',async()=>{
   const data=await response.json();if(!response.ok||!data.ok)throw new Error(data.error||'ثبت سفارش انجام نشد.');
   const plusApplied=String(data.discount_code||'').startsWith('PLUS')&&Number(data.discount_percent)>0;
   const discountLine=Number(data.discount_percent)>0?'\nتخفیف اعمال‌شده: '+data.discount_percent+'٪'+(plusApplied?' (عضویت پلاس+)':''):'\nتخفیف اعمال‌شده: ندارد';
-  orderSummaryText='اطلاعات پیگیری سفارش Alishams Studio\\nکد پیگیری: '+data.tracking_code+'\\nکلید خصوصی: '+data.access_token+'\\nصفحه پیگیری: '+location.origin+'/order-tracking.html'+discountLine+'\\n\\nاین کلید خصوصی را نگه دار؛ برای پیگیری سفارش به هر دو مورد نیاز داری.';
+  orderSummaryText='اطلاعات پیگیری سفارش Alishams Studio\nکد پیگیری: '+data.tracking_code+'\nکلید خصوصی: '+data.access_token+'\nصفحه پیگیری: '+location.origin+'/order-tracking.html'+discountLine+'\n\nاین کلید خصوصی را نگه دار؛ برای پیگیری سفارش به هر دو مورد نیاز داری.';
   document.getElementById('summaryText').textContent=orderSummaryText;
   const oldPlusNotice=document.getElementById('plusOrderSuccess');if(oldPlusNotice)oldPlusNotice.remove();
   if(plusApplied){const plusNotice=document.createElement('div');plusNotice.id='plusOrderSuccess';plusNotice.className='plus-order-success';plusNotice.innerHTML='<strong>تخفیف پلاس+ با موفقیت اعمال شد ✓</strong><br>'+Number(data.discount_percent)+'٪ تخفیف ویژه عضویت شما برای این سفارش ثبت شد.';document.getElementById('resultArea').insertBefore(plusNotice,document.getElementById('summaryText'));}
