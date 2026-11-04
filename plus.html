@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>عضویت ویژه پلاس+ | مزایای اختصاصی علی شمس</title><meta name="description" content="با عضویت پلاس+ از تخفیف ۳۵ تا ۵۰ درصدی خدمات، روزانه ۵۰۰ بازدید هدیه ریلز و امکان دریافت دامنه ir بهره‌مند شوید."><link rel="canonical" href="https://alishams.ir/plus.html"><meta property="og:type" content="website"><meta property="og:title" content="عضویت ویژه پلاس+ | علی شمس"><meta property="og:description" content="۳۰ روز مزایای ویژه؛ تخفیف خدمات، بازدید هدیه ریلز و دامنه ir."><meta property="og:url" content="https://alishams.ir/plus.html">
 <link rel="stylesheet" href="/site-header.css"><link rel="stylesheet" href="/share-page.css?v=3"><script src="/site-protection.js" defer></script><script src="/share-page.js?v=2" defer></script>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Estedad:wght@400;500;600;700;800;900&family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:dark;--bg:#09090f;--card:#14121d;--line:#a78bfa38;--purple:#a78bfa;--text:#f6f3ff;--muted:#aaa4b8}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#7c3aed2b,transparent 48%),var(--bg);color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif}.wrap{width:min(1100px,calc(100% - 32px));margin:auto}.hero{padding:75px 0 35px;text-align:center}.eyebrow{color:#c4b5fd;border:1px solid var(--line);background:#8b5cf61c;border-radius:99px;padding:7px 14px;font-size:12px}.hero h1{font-size:clamp(38px,7vw,70px);margin:24px 0 10px;letter-spacing:-2px}.hero h1 span{color:#c4b5fd}.hero p{max-width:680px;margin:0 auto;color:var(--muted);line-height:2.2}.price-card{max-width:780px;margin:28px auto 65px;padding:clamp(22px,5vw,42px);border:1px solid #a78bfa75;border-radius:28px;background:linear-gradient(145deg,#211632,#11101a 65%);box-shadow:0 30px 100px #6d28d922}.price{font-size:clamp(32px,6vw,52px);font-weight:900;color:#ddd0ff}.price small{font-size:15px;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:26px 0}.benefit{padding:16px;text-align:right;border:1px solid var(--line);border-radius:16px;background:#ffffff06}.benefit strong{display:block;color:#d7c7ff;margin-bottom:5px}.benefit span{font-size:12px;line-height:1.9;color:var(--muted)}button,.btn{font:inherit;cursor:pointer;border:0;border-radius:13px;padding:14px 22px;background:linear-gradient(120deg,#a78bfa,#7c3aed);color:white;font-weight:800;text-decoration:none;display:inline-flex;justify-content:center;align-items:center;gap:8px}.btn.secondary{background:#ffffff0b;border:1px solid #ffffff20}.note{color:var(--muted);font-size:12px;line-height:2;margin-top:14px}.notice{min-height:24px;margin-top:12px;font-size:13px;color:#d8ccff}.notice.error{color:#fca5a5}.notice.success{color:#86efac}.fine{font-size:11px;color:#817b8e;line-height:2;margin-top:20px}@media(max-width:650px){.grid{grid-template-columns:1fr}.hero{padding-top:55px}.price-card{margin-bottom:35px}}
 
@@ -50,8 +50,44 @@ const sb=createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true}}
 const note=document.getElementById("buyNotice"),btn=document.getElementById("buyPlus");
 const say=(m,t="")=>{note.textContent=m;note.className="notice "+t};
 async function call(path,action,extra={}){const {data,error}=await sb.auth.getSession();if(error||!data.session)throw new Error("برای خرید پلاس+ ابتدا وارد حساب کاربری شو.");const r=await fetch(URL+"/functions/v1/"+path,{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+data.session.access_token},body:JSON.stringify({action,...extra})});const d=await r.json().catch(()=>({}));if(!r.ok||!d.ok)throw new Error(d.error||"درخواست انجام نشد.");return d}
-async function baleApp(){if(window.Bale?.WebApp)return window.Bale.WebApp;await new Promise((resolve,reject)=>{const s=document.createElement("script");s.src="https://tapi.bale.ai/miniapp.js?3";s.onload=resolve;s.onerror=reject;document.head.appendChild(s)});if(!window.Bale?.WebApp)throw new Error("مینی‌اپ بله در دسترس نیست.");return window.Bale.WebApp}
-btn.addEventListener("click",async()=>{btn.disabled=true;try{const app=await baleApp();if(!app.initData||typeof app.openInvoice!=="function")throw new Error("برای پرداخت، ابتدا وارد پیام‌رسان بله شو، بازوی استودیو دیجیتال را باز کن و همین صفحه را از داخل آن اجرا کن.");say("در حال ساخت فاکتور امن…");const invoice=await call("bale-payment","create_plus_invoice",{init_data:app.initData});app.openInvoice(invoice.invoice_params,async result=>{if(result?.status==="cancelled"){say("پرداخت لغو شد؛ عضویت فعال نشد.");btn.disabled=false;return}if(result?.status==="failed"){say("پرداخت ناموفق بود؛ دوباره تلاش کن.","error");btn.disabled=false;return}say("در حال بررسی تأیید نهایی پرداخت…");for(let i=0;i<10;i++){await new Promise(r=>setTimeout(r,1800));try{const d=await call("plus-membership","status");if(d.latest_payment?.status==="paid"&&d.membership?.is_active&&new Date(d.membership.ends_at).getTime()>Date.now()){say("پرداخت تأیید شد؛ عضویت پلاس+ شما فعال است. وارد داشبورد شو.","success");btn.textContent="عضویت فعال شد ✓";return}}catch(e){}}say("هنوز تأیید نهایی از سرور دریافت نشده است. وضعیت عضویت را در داشبورد بررسی کن.");btn.disabled=false})}catch(e){say(e.message||"پرداخت شروع نشد.","error");btn.disabled=false}});
+let baleSdkPromise=null;
+async function baleApp(){
+ if(window.Bale?.WebApp)return window.Bale.WebApp;
+ if(!baleSdkPromise)baleSdkPromise=new Promise((resolve,reject)=>{const existing=document.querySelector('script[data-bale-miniapp-sdk]');if(existing){existing.addEventListener("load",()=>resolve(window.Bale?.WebApp));existing.addEventListener("error",()=>reject(new Error("بارگذاری امکانات بله انجام نشد.")));return}const s=document.createElement("script");s.src="https://tapi.bale.ai/miniapp.js?3";s.dataset.baleMiniappSdk="1";s.onload=()=>window.Bale?.WebApp?resolve(window.Bale.WebApp):reject(new Error("SDK بله بارگذاری شد اما رابط مینی‌اپ در دسترس نیست."));s.onerror=()=>reject(new Error("بارگذاری امکانات مینی‌اپ بله ناموفق بود."));document.head.appendChild(s)});
+ return await baleSdkPromise;
+}
+function readBaleInitData(app){
+ const direct=String(app?.initData||window.Bale?.WebApp?.initData||"").trim();if(direct)return direct;
+ const sources=[location.hash.startsWith("#")?location.hash.slice(1):location.hash,location.search.startsWith("?")?location.search.slice(1):location.search];
+ for(const source of sources){if(!source)continue;const params=new URLSearchParams(source);let value=params.get("tgWebAppData")||params.get("baleWebAppData")||params.get("initData")||"";if(value){try{if(!value.includes("hash=")&&/%[0-9a-f]{2}/i.test(value))value=decodeURIComponent(value)}catch{}return value.trim()}}
+ return "";
+}
+async function baleContext(){
+ const app=await baleApp();
+ try{app.ready?.();app.expand?.()}catch{}
+ let initData="";
+ for(let i=0;i<12&&!initData;i++){initData=readBaleInitData(app);if(!initData)await new Promise(r=>setTimeout(r,250))}
+ if(!initData)throw new Error("اطلاعات ورود بله دریافت نشد. صفحه باید از دکمه «باز کردن مینی‌اپ» داخل بازوی استودیو دیجیتال اجرا شود؛ بازکردن لینک در مرورگر یا پنجره معمولی بله کافی نیست. صفحه را ببند و از منوی مینی‌اپ بازو دوباره وارد شو.");
+ if(typeof app.openInvoice!=="function")throw new Error("نسخه فعلی بله امکان بازکردن فاکتور درون‌برنامه‌ای را فراهم نمی‌کند. بله را به‌روزرسانی و دوباره امتحان کن.");
+ return {app,initData};
+}
+btn.addEventListener("click",async()=>{
+ btn.disabled=true;const original=btn.textContent;
+ try{
+  say("در حال بررسی اتصال امن به بله…");
+  const {app,initData}=await baleContext();
+  say("در حال ساخت فاکتور امن…");
+  const invoice=await call("bale-payment","create_plus_invoice",{init_data:initData});
+  app.openInvoice(invoice.invoice_params,async result=>{
+   if(result?.status==="cancelled"){say("پرداخت لغو شد؛ عضویت فعال نشد.");btn.disabled=false;return}
+   if(result?.status==="failed"){say("پرداخت ناموفق بود؛ دوباره تلاش کن.","error");btn.disabled=false;return}
+   say("در حال بررسی تأیید نهایی پرداخت…");
+   for(let i=0;i<15;i++){await new Promise(r=>setTimeout(r,1800));try{const d=await call("plus-membership","status");if(d.latest_payment?.status==="paid"&&d.membership?.is_active&&new Date(d.membership.ends_at).getTime()>Date.now()){say("پرداخت تأیید شد؛ عضویت پلاس+ شما فعال است. وارد داشبورد شو.","success");btn.textContent="عضویت فعال شد ✓";return}}catch(e){}}
+   say("هنوز تأیید نهایی از سرور دریافت نشده است. دوباره پرداخت نکن؛ وضعیت عضویت را در داشبورد بررسی کن.");
+   btn.disabled=false;
+  });
+ }catch(e){say(e.message||"پرداخت شروع نشد.","error");btn.disabled=false;btn.textContent=original}
+});
 </script>
 <script>document.addEventListener("dragstart",e=>e.preventDefault(),true);document.addEventListener("drop",e=>e.preventDefault(),true);document.addEventListener("contextmenu",e=>e.preventDefault(),true);document.addEventListener("selectstart",e=>e.preventDefault(),true);document.addEventListener("copy",e=>e.preventDefault(),true);document.addEventListener("cut",e=>e.preventDefault(),true);</script>
 </body></html>
