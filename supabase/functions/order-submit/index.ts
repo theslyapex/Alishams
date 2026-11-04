@@ -19,7 +19,7 @@ if(availabilityError)throw availabilityError;
 const unavailable=services.filter((name:string)=>availability?.order_services?.[name]===false);
 if(unavailable.length)return res({error:"یکی از خدمات انتخاب‌شده در حال حاضر غیرفعال است: "+unavailable.join("، ")},400,o);
 let plusDiscount=0;
-const bearer=(req.headers.get("Authorization")||"").replace(/^Bearer\\s+/i,"");
+const bearer=(req.headers.get("Authorization")||"").replace(/^Bearer\s+/i,"");
 if(bearer){
  try{
   const anon=Deno.env.get("SUPABASE_ANON_KEY")||"";
