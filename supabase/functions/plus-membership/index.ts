@@ -115,7 +115,8 @@ Deno.serve(async(req:Request)=>{
    const id=str(b.id,50),decision=str(b.decision,20),note=str(b.admin_note,1000);
    if(!/^[0-9a-f-]{36}$/i.test(id)||!["approve","reject"].includes(decision))return out({error:"درخواست یا تصمیم معتبر نیست."},400,origin);
    if(decision==="approve"){
-    const {data,error}=await db.rpc("finalize_manual_plus_purchase",{p_purchase_id:id});if(error)throw error;
+    const {data,error}=await db.rpc("finalize_manual_plus_purchase",{p_purchase_id:id});if(error)return out({error:"خطای پایگاه داده هنگام فعال‌سازی: "+str(error.message,350)},500,origin);
+    if(!data||data.ok!==true)return out({error:"پایگاه داده فعال‌سازی را تأیید نکرد؛ نتیجه نامعتبر دریافت شد."},500,origin);
     return out({ok:true,result:data},200,origin);
    }
    const {data:row,error}=await db.from("plus_purchase_records").update({payment_status:"failed",admin_note:note,reviewed_at:new Date().toISOString()}).eq("id",id).eq("payment_provider","card_transfer").eq("payment_status","pending").select("id,payment_status").single();
