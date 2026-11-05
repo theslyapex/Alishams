@@ -22,6 +22,8 @@ const notice = (message, type = "") => {
 };
 const referralFromUrl = new URLSearchParams(location.search).get("ref");
 if (referralFromUrl && /^[A-Z0-9_-]{3,24}$/i.test(referralFromUrl)) $("referralCode").value = referralFromUrl.toUpperCase();
+function isReservedAdminName(value,email){if(String(email||"").trim().toLowerCase()==="theslyapex@gmail.com")return false;const normalized=String(value||"").toLowerCase().replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\s\u200c._-]+/g,"");return ["علیشمس","علیشمسالدینی","alishams","alishamsodini","alishmas"].includes(normalized)}
+const reservedNameMessage="لطفاً نام حساب کاربری دیگری انتخاب کنید؛ امکان استفاده از این نام وجود ندارد.";
 form.addEventListener("submit", async event => {
   event.preventDefault();
   if (button.disabled) return;
@@ -35,6 +37,7 @@ form.addEventListener("submit", async event => {
   const password = passwordField.value;
   const referral_code = $("referralCode").value.trim().toUpperCase().replace(/[^A-Z0-9_-]/g, "").slice(0,24);
   if (!full_name) { notice("نام و نام خانوادگی را وارد کن.", "error"); nameField.focus(); return; }
+  if (isReservedAdminName(full_name,email)) { notice(reservedNameMessage, "error"); nameField.focus(); return; }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { notice("ایمیل را با قالب درست وارد کن؛ مثلاً name@example.com.", "error"); emailField.focus(); return; }
   if (password.length < 8) { notice("رمز عبور باید حداقل ۸ کاراکتر باشد.", "error"); passwordField.focus(); return; }
   if (password !== confirmPasswordField.value) { notice("رمز عبور و تکرار آن یکسان نیستند. لطفاً دوباره بررسی کن.", "error"); confirmPasswordField.focus(); confirmPasswordField.setAttribute("aria-invalid", "true"); return; }
@@ -74,7 +77,8 @@ form.addEventListener("submit", async event => {
       console.error("Registration error:", error);
       const friendly = {
         "User already registered": "برای این ایمیل قبلاً حساب ساخته شده؛ از صفحه ورود استفاده کن.",
-        "Signup is disabled": "ثبت‌نام در حال حاضر در سامانه غیرفعال است."
+        "Signup is disabled": "ثبت‌نام در حال حاضر در سامانه غیرفعال است.",
+        "RESERVED_DISPLAY_NAME": reservedNameMessage
       };
       notice(friendly[error.message] || error.message || "ثبت‌نام انجام نشد. دوباره امتحان کن.", "error");
       return;
