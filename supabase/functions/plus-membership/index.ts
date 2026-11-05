@@ -66,7 +66,7 @@ Deno.serve(async(req:Request)=>{
    if(!bytes.length||bytes.length>5*1024*1024)return out({error:"حجم تصویر باید حداکثر ۵ مگابایت باشد."},400,origin);
    const ext=mime==="image/jpeg"?"jpg":mime==="image/png"?"png":"webp",path="plus/"+user.id+"/"+crypto.randomUUID()+"."+ext;
    const {error:uploadError}=await db.storage.from("project-deliverables").upload(path,bytes,{contentType:mime,upsert:false});if(uploadError)throw uploadError;
-   const {data:row,error:insertError}=await db.from("plus_purchase_records").insert({user_id:user.id,email:user.email,amount_toman:2000000,discount_percent:35,payment_status:"pending",payment_provider:"card_transfer",payment_reference:"PLUS-CARD-"+crypto.randomUUID(),receipt_path:path,receipt_mime_type:mime}).select("id,payment_status,amount_toman,created_at").single();
+   const {data:row,error:insertError}=await db.from("plus_purchase_records").insert({user_id:user.id,email:user.email,amount_toman:2890000,discount_percent:35,payment_status:"pending",payment_provider:"card_transfer",payment_reference:"PLUS-CARD-"+crypto.randomUUID(),receipt_path:path,receipt_mime_type:mime}).select("id,payment_status,amount_toman,created_at").single();
    if(insertError){await db.storage.from("project-deliverables").remove([path]);throw insertError}
    return out({ok:true,payment:row},201,origin);
   }
