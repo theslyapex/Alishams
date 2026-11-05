@@ -98,6 +98,7 @@ $("notificationToggle").onclick=async()=>{
  updateNotificationButton();toast("اعلان پیام جدید فعال شد");
 };
 updateNotificationButton();
+document.addEventListener("pointerdown",async()=>{if(notificationEnabled&&!notificationAudio){try{const AudioCtx=window.AudioContext||window.webkitAudioContext;if(AudioCtx){notificationAudio=new AudioCtx();if(notificationAudio.state==="suspended")await notificationAudio.resume()}}catch{}}},{once:true});
 function clearReply(){replyTarget=null;$("replying").style.display="none"}
 function setReply(m){replyTarget=m;$("replyLabel").textContent="پاسخ به "+(profiles[m.user_id]?.display_name||"عضو")+": "+(m.body||"پیوست");$("replying").style.display="flex";$("messageInput").focus()}
 async function getProfiles(ids){const missing=[...new Set(ids)].filter(id=>!profiles[id]);if(!missing.length)return;const {data}=await sb.from("user_profiles").select("user_id,display_name,avatar_url").in("user_id",missing);(data||[]).forEach(p=>profiles[p.user_id]=p)}
