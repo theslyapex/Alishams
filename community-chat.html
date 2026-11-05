@@ -35,11 +35,72 @@ input,textarea,.messages,.messages *{user-select:text;-webkit-user-select:text}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes popIn{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
 @media(max-width:500px){.voice-card{min-width:0}.confirm-card{padding:21px}.confirm-actions button{font-size:12px}}
 
+
+/* Alishams brand refresh — charcoal + signature lime */
+:root{--bg:#0c100b;--panel:#121810;--panel2:#192117;--line:#2b3827;--text:#f4f7ef;--muted:#a3ad9a;--purple:#d9ff72;--purple2:#a8d84b;--lime:#d9ff72;--danger:#ff7185;--shadow:0 24px 80px #0009}
+body{background:radial-gradient(ellipse at 12% -5%,#d9ff7214,transparent 35%),radial-gradient(ellipse at 95% 100%,#d9ff720c,transparent 33%),#0c100b;font-family:Estedad,Vazirmatn,Tahoma,sans-serif}
+.wrap{max-width:1540px;padding:24px clamp(12px,2.4vw,34px)}
+.top{padding:3px 4px 17px;border-bottom:1px solid #d9ff721b;margin-bottom:20px}
+.brand{gap:13px;font-size:18px;letter-spacing:-.2px}
+.brand-mark{width:48px;height:48px;padding:5px;border-radius:15px;background:linear-gradient(145deg,#d9ff7224,#d9ff7208);border:1px solid #d9ff7255;box-shadow:0 8px 28px #d9ff721c;overflow:hidden}
+.brand-mark img{width:100%;height:100%;object-fit:contain;border-radius:10px}
+.top-actions .soft{border-radius:999px;padding:10px 17px;border-color:#d9ff7244;background:#d9ff720b;color:#e6ffb3}
+.soft,.icon-btn{border-color:#34412e;background:#ffffff06;transition:transform .2s,border-color .2s,background .2s,color .2s}
+.soft:hover,.icon-btn:hover{border-color:#d9ff72;color:#d9ff72;background:#d9ff720d;transform:translateY(-1px)}
+.layout{height:calc(100dvh - 126px);min-height:620px;gap:18px}
+.side,.chat{background:linear-gradient(155deg,#151d13f5,#10160ff5);border-color:#34422d;border-radius:25px;box-shadow:0 24px 75px #0008,0 0 0 1px #d9ff7208}
+.side{padding:22px}.side h2{font-size:15px;letter-spacing:-.2px}
+.online-count{color:#d9ff72;background:#d9ff7211;border-color:#d9ff7238}
+.search{background:#0d130c;border-color:#34422d;border-radius:14px}
+.search:focus{border-color:#d9ff72;box-shadow:0 0 0 3px #d9ff7214}
+.room{background:linear-gradient(115deg,#d9ff721b,#d9ff7205);border-color:#d9ff7240;border-radius:17px;padding:16px}
+.room-icon{width:46px;height:46px;flex:none;display:grid;place-items:center;overflow:hidden;border-radius:14px;background:#d9ff7213;border:1px solid #d9ff7240;box-shadow:inset 0 1px #ffffff20}
+.room-icon img{width:100%;height:100%;padding:5px;object-fit:contain}
+.chat-title .room-icon{width:48px;height:48px}
+.chat-head{height:82px;padding:0 24px;border-bottom-color:#d9ff721c;background:linear-gradient(90deg,#d9ff7207,transparent 70%)}
+.chat-title h1{font-size:16px;letter-spacing:-.3px}.chat-title p{color:#a5b19b}
+.head-tools .soft{border-radius:12px}
+.messages{padding:25px clamp(14px,2.4vw,30px);background-color:#0e140d;background-image:radial-gradient(#d9ff7210 1px,transparent 1px);background-size:24px 24px}
+.day span{background:#1a2417;border-color:#3a4a32;color:#d5e2c9}
+.msg{gap:11px;margin-bottom:19px}.avatar{background:#1b2916;border-color:#d9ff7230}
+.sender{color:#d9ff72;font-size:11px;font-weight:800;letter-spacing:.1px}
+.bubble{background:linear-gradient(145deg,#1c2819,#172016);border-color:#34462d;border-radius:18px 18px 18px 6px;padding:11px 15px;box-shadow:0 5px 18px #0002}
+.mine .bubble{background:linear-gradient(145deg,#304222,#24351b);border-color:#8ebc4a;border-radius:18px 18px 6px 18px}
+.body{font-size:13px;line-height:2}.meta{color:#a9b69e}
+.mini{background:#d9ff720c;color:#dce9d2;border:1px solid #d9ff7218;border-radius:9px;padding:5px 9px}
+.mini:hover{color:#0e140d;background:#d9ff72;border-color:#d9ff72}
+.composer{background:linear-gradient(180deg,#141c12,#10160f);border-top-color:#d9ff7224;padding:16px 20px 18px}
+.input-wrap{background:#0d140c;border-color:#394a31;border-radius:17px}
+.input-wrap:focus-within{border-color:#d9ff72;box-shadow:0 0 0 3px #d9ff7214}
+.input-wrap textarea{font-family:inherit}
+.send{background:linear-gradient(135deg,#e2ff91,#b6e45b);color:#15200d;box-shadow:0 7px 22px #b6e45b35;font-weight:900}
+.send:hover{transform:translateY(-2px);box-shadow:0 10px 26px #b6e45b50}
+.replying{background:#d9ff7210;color:#e0f5bd;border:1px solid #d9ff7225}
+.reply-ref{border-right-color:#d9ff72;background:#d9ff720a;color:#dce8d2}
+.emoji-panel{background:#182216;border-color:#405136}
+.toast{background:#1a2516;border-color:#4a6038;color:#f2f8e9}
+.gate{background:linear-gradient(145deg,#172115,#10160f);border-color:#3a4a32}
+.gate a{background:linear-gradient(135deg,#d9ff72,#a8d84b);color:#17200f;font-weight:800}
+.typing{color:#d9ff72}
+.pinned-banner{border-color:#d9ff7266;background:linear-gradient(100deg,#d9ff7218,#d9ff7206)}
+.pinned-banner .pin-icon{background:#d9ff7220;color:#d9ff72}.pinned-banner b{color:#d9ff72}
+.msg.is-admin .bubble{background:linear-gradient(145deg,#27351e,#192317);border:1px solid #d9ff7280;box-shadow:0 8px 28px #d9ff720c,inset 0 1px #ffffff0d}
+.msg.is-admin .sender{color:#e1ff9a}
+.admin-badge{border-color:#d9ff7270;background:#d9ff7218;color:#ddff8b}
+.msg.is-admin .avatar{border-color:#d9ff72;box-shadow:0 0 0 2px #d9ff7222}
+.reaction-pill{border-color:#d9ff7225;background:#d9ff7209;color:#e8f3df}.reaction-pill span{color:#b9c8ae}
+.reaction-pill.mine{border-color:#d9ff72;background:#d9ff7222;color:#e8ffb4}.reaction-pill:hover{border-color:#d9ff72}
+.voice-card{border-color:#d9ff7240;background:linear-gradient(125deg,#d9ff7217,#d9ff7207),#151e12}
+.voice-play{background:linear-gradient(145deg,#d9ff72,#9dcf43);color:#18210f;box-shadow:0 5px 18px #b6e45b40}
+.voice-wave i,.voice-wave i:nth-child(3n){background:#d9ff72}
+.confirm-card{background:radial-gradient(ellipse at 90% 0%,#d9ff7212,transparent 48%),linear-gradient(145deg,#202b1b,#121a10)}
+@media(max-width:800px){.wrap{padding:10px}.top{padding:5px 4px 12px;margin-bottom:12px}.brand-mark{width:42px;height:42px}.layout{height:calc(100dvh - 78px);min-height:0}.chat-head{height:70px;padding:0 13px}.messages{padding:17px 12px}.composer{padding:11px 9px max(12px,env(safe-area-inset-bottom))}.head-tools .soft{padding:8px 10px}.side,.chat{border-radius:18px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header class="top"><a class="brand" href="/"><span class="brand-mark">A</span><span>Alishams <span style="color:var(--purple)">Community</span></span></a><div class="top-actions"><a class="soft" href="/account.html">حساب کاربری ↗</a></div></header>
+<header class="top"><a class="brand" href="/"><span class="brand-mark"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی Alishams"></span><span>Alishams <span style="color:var(--lime)">Community</span></span></a><div class="top-actions"><a class="soft" href="/account.html">حساب کاربری ↗</a></div></header>
 <div id="app"><div class="loading">در حال بررسی حساب کاربری…</div></div>
 </div><div class="toast" id="toast"></div><div class="confirm-backdrop" id="confirmBackdrop" role="dialog" aria-modal="true" aria-labelledby="confirmTitle"><div class="confirm-card"><div class="confirm-icon">⌫</div><h3 id="confirmTitle">حذف پیام</h3><p id="confirmText">از حذف این پیام مطمئن هستید؟ این عملیات قابل بازگشت نیست.</p><div class="confirm-actions"><button type="button" id="confirmCancel">انصراف</button><button type="button" class="danger" id="confirmAccept">بله، حذف شود</button></div></div></div>
 <script>
@@ -66,10 +127,10 @@ $("app").innerHTML=`
 <div class="layout">
 <aside class="side"><div class="side-head"><h2>فضای گفتگو</h2><span class="online-count" id="onlineCount">● آنلاین</span></div>
 <input class="search" id="searchMessages" placeholder="جست‌وجو در پیام‌ها…">
-<div class="room"><div class="room-icon">✦</div><div><strong>گفت‌وگوی عمومی</strong><small>همه اعضای Alishams در یک جمع</small></div></div>
+<div class="room"><div class="room-icon"><img src="/assets/images/alishams-studio-logo.png" alt=""></div><div><strong>گفت‌وگوی عمومی</strong><small>همه اعضای Alishams در یک جمع</small></div></div>
 <div style="margin-top:18px;color:var(--muted);font-size:12px;line-height:2.1">به جمع کاربران Alishams خوش آمدید. گفتگو کنید، تجربه‌هایتان را به اشتراک بگذارید و به یکدیگر کمک کنید.</div>
 <div class="side-info">برای حفظ کیفیت گفتگو، از ارسال محتوای تبلیغاتی ناخواسته و فایل‌های مشکوک خودداری کنید.<br><span style="color:var(--lime)">●</span> اتصال زنده فعال</div></aside>
-<section class="chat"><header class="chat-head"><div class="chat-title"><div class="room-icon">✦</div><div><h1>گفت‌وگوی عمومی</h1><p id="subline">اتصال به انجمن…</p></div></div><div class="head-tools"><button class="soft" id="notificationToggle" type="button">🔔 اعلان‌ها</button><button class="soft" id="scrollLatest">آخرین پیام‌ها ↓</button></div></header>
+<section class="chat"><header class="chat-head"><div class="chat-title"><div class="room-icon"><img src="/assets/images/alishams-studio-logo.png" alt=""></div><div><h1>گفت‌وگوی عمومی</h1><p id="subline">اتصال به انجمن…</p></div></div><div class="head-tools"><button class="soft" id="notificationToggle" type="button">🔔 اعلان‌ها</button><button class="soft" id="scrollLatest">آخرین پیام‌ها ↓</button></div></header>
 <div class="pinned-banner" id="pinnedBanner"><span class="pin-icon">⌖</span><div class="pin-copy"><b>پیام سنجاق‌شده</b><span id="pinnedText"></span></div><span>↙</span></div>
 <div class="messages" id="messages"><div class="loading">در حال دریافت پیام‌ها…</div></div><div class="typing" id="typing"></div>
 <footer class="composer"><div class="replying" id="replying"><span id="replyLabel">در پاسخ به…</span><button class="mini" id="cancelReply">✕</button></div>
@@ -105,7 +166,7 @@ async function getProfiles(ids){const missing=[...new Set(ids)].filter(id=>!prof
 async function fileUrl(path){if(!path)return null;if(signed[path])return signed[path];const {data,error}=await sb.storage.from("community-chat").createSignedUrl(path,3600);if(error)return null;signed[path]=data.signedUrl;return data.signedUrl}
 function renderAttachment(m,url){if(!url)return "";const mime=m.attachment_mime||"",name=esc(m.attachment_name||"فایل پیوست");if(m.message_type==="image")return '<a class="attachment" href="'+url+'" target="_blank"><img src="'+url+'" alt="'+name+'" loading="lazy"></a>';if(m.message_type==="video")return '<div class="attachment"><video src="'+url+'" controls playsinline preload="metadata"></video></div>';if(m.message_type==="voice")return '<div class="voice-card"><button class="voice-play" type="button" aria-label="پخش پیام صوتی">▶</button><div class="voice-main"><div class="voice-wave" role="slider" aria-label="موقعیت پخش پیام صوتی" tabindex="0">'+Array.from({length:40},(_,i)=>'<i style="--h:'+(7+((i*17+11)%17))+'px"></i>').join("")+'</div><div class="voice-details"><span class="voice-current">۰۰:۰۰</span><span class="voice-duration">در حال بارگذاری…</span></div></div><audio src="'+url+'" preload="metadata"></audio></div>';if(m.message_type==="audio")return '<div class="attachment"><audio src="'+url+'" controls preload="metadata"></audio></div>';return '<a class="file-card" href="'+url+'" target="_blank" rel="noopener"><span style="font-size:25px">📎</span><span><b>'+name+'</b><small>'+size(m.attachment_size||0)+'</small></span></a>'}
 async function renderMessage(m,prepend=false){await getProfiles([m.user_id,...(m.reply_to&&m.reply_user?[m.reply_user]:[])]);const p=profiles[m.user_id]||{},mine=m.user_id===user.id,url=await fileUrl(m.attachment_path),avatar=p.avatar_url?'<img class="avatar" src="'+esc(p.avatar_url)+'" alt="">':'<div class="avatar"></div>';let reply="";if(m.reply_to){const {data:r}=await sb.from("community_messages").select("body,user_id").eq("id",m.reply_to).maybeSingle();if(r){await getProfiles([r.user_id]);reply='<div class="reply-ref">'+esc(profiles[r.user_id]?.display_name||"عضو")+': '+esc(r.body||"پیوست")+'</div>'}}
-const isAdminMessage=m.user_id===ADMIN_USER_ID;const adminName=isAdminMessage?"مدیر سایت":(p.display_name||"عضو");const html='<article class="msg '+(isAdminMessage?"is-admin ":"")+(mine?"mine":"")+'" data-id="'+m.id+'">'+avatar+'<div class="bubble-wrap">'+(isAdminMessage?'<div class="sender">'+esc(adminName)+' <span class="admin-badge">✦ مدیر سایت</span></div>':(!mine?'<div class="sender">'+esc(p.display_name||"عضو")+'</div>':""))+'<div class="bubble">'+reply+(m.deleted_at?'<div class="body" style="color:#aaa">این پیام حذف شده است.</div>':(m.body?'<div class="body">'+esc(m.body)+'</div>':"")+renderAttachment(m,url))+'<div class="meta"><span>'+(m.edited_at?"ویرایش‌شده · ":"")+time(m.created_at)+'</span>'+(mine?'<span>✓</span>':"")+'</div><div class="reaction-strip" aria-label="واکنش‌ها"></div></div><div class="msg-actions"><button class="mini reply-action">پاسخ</button><button class="mini react-action">❤️</button>'+(mine&&!m.deleted_at?'<button class="mini edit-action">ویرایش</button><button class="mini delete-action">حذف</button>':"")+'<button class="mini report-action">گزارش</button></div></div></article>';
+const isAdminMessage=m.user_id===ADMIN_USER_ID;const adminName=isAdminMessage?"علی شمس":(p.display_name||"عضو");const html='<article class="msg '+(isAdminMessage?"is-admin ":"")+(mine?"mine":"")+'" data-id="'+m.id+'">'+avatar+'<div class="bubble-wrap">'+(isAdminMessage?'<div class="sender">'+esc(adminName)+' <span class="admin-badge">✦ مدیر سایت</span></div>':(!mine?'<div class="sender">'+esc(p.display_name||"عضو")+'</div>':""))+'<div class="bubble">'+reply+(m.deleted_at?'<div class="body" style="color:#aaa">این پیام حذف شده است.</div>':(m.body?'<div class="body">'+esc(m.body)+'</div>':"")+renderAttachment(m,url))+'<div class="meta"><span>'+(m.edited_at?"ویرایش‌شده · ":"")+time(m.created_at)+'</span>'+(mine?'<span>✓</span>':"")+'</div><div class="reaction-strip" aria-label="واکنش‌ها"></div></div><div class="msg-actions"><button class="mini reply-action">پاسخ</button><button class="mini react-action">❤️</button>'+(mine&&!m.deleted_at?'<button class="mini edit-action">ویرایش</button><button class="mini delete-action">حذف</button>':"")+'<button class="mini report-action">گزارش</button></div></div></article>';
 const box=document.createElement("div");box.innerHTML=html;const node=box.firstElementChild;
 const voice=node.querySelector(".voice-card");if(voice){const audio=voice.querySelector("audio"),play=voice.querySelector(".voice-play"),wave=voice.querySelector(".voice-wave"),cur=voice.querySelector(".voice-current"),dur=voice.querySelector(".voice-duration"),fmt=t=>{if(!Number.isFinite(t))return "۰۰:۰۰";const mm=Math.floor(t/60),ss=Math.floor(t%60);return [mm,ss].map(v=>String(v).padStart(2,"0")).join(":").replace(/[0-9]/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d])};audio.onloadedmetadata=()=>dur.textContent=fmt(audio.duration);audio.ontimeupdate=()=>{cur.textContent=fmt(audio.currentTime);const pct=audio.duration?audio.currentTime/audio.duration:0;wave.querySelectorAll("i").forEach((bar,i)=>bar.style.opacity=i/40<=pct?"1":".45")};audio.onplay=()=>play.textContent="Ⅱ";audio.onpause=()=>play.textContent="▶";play.onclick=()=>audio.paused?audio.play():audio.pause();const seek=e=>{const rect=wave.getBoundingClientRect(),x=Math.max(0,Math.min(rect.width,rect.right-e.clientX));if(audio.duration)audio.currentTime=(x/rect.width)*audio.duration};wave.onclick=seek;wave.onkeydown=e=>{if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();audio.currentTime=Math.max(0,Math.min(audio.duration||0,audio.currentTime+(e.key==="ArrowRight"?5:-5)))}}}
 node.querySelector(".reply-action").onclick=()=>setReply(m);
@@ -139,14 +200,15 @@ $("pinnedBanner").onclick=()=>{const id=$("pinnedBanner").dataset.id;const node=
 async function loadMessages(before=null){let q=sb.from("community_messages").select("*").is("deleted_at",null).order("created_at",{ascending:false}).limit(35);if(before)q=q.lt("created_at",before);const {data,error}=await q;if(error){toast("دریافت پیام‌ها با خطا روبه‌رو شد");return}const rows=(data||[]).reverse();if(rows.length){oldest=rows[0].created_at;for(const m of rows)await renderMessage(m,!!before)}if(!before&&rows.length)$("messages").scrollTop=$("messages").scrollHeight;if(!rows.length&&!before)$("messages").innerHTML='<div class="empty"><div><strong>هنوز پیامی ارسال نشده</strong>اولین پیام این جمع را شما بفرستید ✨</div></div>'}
 await loadMessages();
 await loadPinned();
-if(isAdmin)$("scrollLatest").insertAdjacentHTML("beforebegin",'<a class="soft" href="/community-admin.html">مدیریت انجمن ✦</a>');
+
 $("subline").textContent="گفتگوی زنده اعضا · شما: "+(profile.display_name||"عضو");
 const channelName="community-public-room";
 channel=sb.channel(channelName,{config:{presence:{key:user.id}}});
 channel.on("presence",{event:"sync"},()=>{const state=channel.presenceState();$("onlineCount").textContent="● "+fa(Object.keys(state).length)+" آنلاین"});
 channel.on("broadcast",{event:"typing"},({payload})=>{if(payload?.user_id!==user.id){$("typing").textContent=(payload?.name||"یکی از اعضا")+" در حال نوشتن است…";clearTimeout(typingTimer);typingTimer=setTimeout(()=>$("typing").textContent="",1800)}});
 channel.on("postgres_changes",{event:"INSERT",schema:"public",table:"community_messages"},async payload=>{if(payload.new.user_id===user.id)return;const exists=$("messages").querySelector('[data-id="'+payload.new.id+'"]');if(!exists)await renderMessage(payload.new);notifyNewMessage(payload.new)});
-channel.on("postgres_changes",{event:"UPDATE",schema:"public",table:"community_messages"},async payload=>{const node=$("messages").querySelector('[data-id="'+payload.new.id+'"]');if(node){node.remove();await renderMessage(payload.new)}await loadPinned()});
+channel.on("postgres_changes",{event:"UPDATE",schema:"public",table:"community_messages"},async payload=>{const node=$("messages").querySelector('[data-id="'+payload.new.id+'"]');if(node)node.remove();if(!payload.new.deleted_at)await renderMessage(payload.new);await loadPinned()});
+channel.on("postgres_changes",{event:"DELETE",schema:"public",table:"community_messages"},async payload=>{const id=payload.old?.id;if(id){$("messages").querySelector('[data-id="'+id+'"]')?.remove();queueReactionRefresh(id)}await loadPinned()});
 channel.on("postgres_changes",{event:"INSERT",schema:"public",table:"community_message_reactions"},payload=>queueReactionRefresh(payload.new.message_id));
 channel.on("postgres_changes",{event:"DELETE",schema:"public",table:"community_message_reactions"},()=>refreshVisibleReactions());
 await channel.subscribe(async status=>{if(status==="SUBSCRIBED"){await channel.track({user_id:user.id,name:profile.display_name||"عضو",online_at:new Date().toISOString()});$("subline").textContent="گفتگوی زنده اعضا · اتصال برقرار است"}});
