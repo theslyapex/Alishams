@@ -616,6 +616,13 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 #faqMoreButton .faq-more-arrow{display:grid!important;place-items:center!important;flex:0 0 32px!important;width:32px!important;height:32px!important;margin:0!important;padding:0!important;line-height:1!important;text-align:center!important;font-size:18px!important}
 #faqMoreButton[aria-expanded="true"] .faq-more-arrow{transform:rotate(-90deg)}
 @media(max-width:420px){#faqMoreButton{gap:8px!important}#faqMoreButton .faq-more-icon{flex-basis:30px!important;width:30px!important;height:30px!important}#faqMoreButton .faq-more-arrow{flex-basis:29px!important;width:29px!important;height:29px!important}#faqMoreButton .faq-more-label{font-size:10px!important}}
+
+/* FAQ CTA final layout fix */
+#faqMoreButton{direction:rtl!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important}
+#faqMoreButton .faq-more-icon{order:0!important;flex:0 0 34px!important;display:grid!important;place-items:center!important;line-height:0!important}
+#faqMoreButton .faq-more-label{order:1!important;flex:1 1 auto!important;text-align:center!important;white-space:nowrap!important}
+#faqMoreButton .faq-more-arrow{order:2!important;flex:0 0 32px!important;width:32px!important;height:32px!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important;margin:0!important;line-height:1!important;text-align:center!important;font-size:18px!important}
+@media(max-width:420px){#faqMoreButton{gap:8px!important}#faqMoreButton .faq-more-icon{flex-basis:30px!important}#faqMoreButton .faq-more-arrow{flex-basis:29px!important;width:29px!important;height:29px!important}}
 </style>
 <style id="multi-service-picker-styles">
 .multi-service-picker{margin:10px 0 18px;padding:15px;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018))}
@@ -1612,7 +1619,7 @@ if(principlesSlider){
 }
 document.querySelectorAll('.faq button').forEach(b=>b.addEventListener('click',()=>{const box=b.parentElement,open=box.classList.toggle('open');b.setAttribute('aria-expanded',String(open));b.lastElementChild.textContent=open?'−':'＋'}));
 const faqMoreButton=document.getElementById('faqMoreButton');
-if(faqMoreButton){faqMoreButton.addEventListener('click',()=>{const expanded=faqMoreButton.getAttribute('aria-expanded')==='true';faqMoreButton.setAttribute('aria-expanded',String(!expanded));document.querySelectorAll('#faq .faq-extra').forEach(item=>item.classList.toggle('is-visible',!expanded));const faqMoreLabel=faqMoreButton.querySelector('.faq-more-label');if(faqMoreLabel)faqMoreLabel.textContent=expanded?'دیدن همه سوالات متداول':'نمایش سوالات کمتر';if(expanded)document.getElementById('faq').scrollIntoView({behavior:'smooth',block:'start'});});}
+if(faqMoreButton){faqMoreButton.addEventListener('click',()=>{const expanded=faqMoreButton.getAttribute('aria-expanded')==='true';const nextExpanded=!expanded;faqMoreButton.setAttribute('aria-expanded',String(nextExpanded));document.querySelectorAll('#faq .faq-extra').forEach(item=>item.classList.toggle('is-visible',nextExpanded));const label=faqMoreButton.querySelector('.faq-more-label');if(label)label.textContent=nextExpanded?'نمایش سوالات کمتر':'دیدن همه سوالات متداول';const icon=faqMoreButton.querySelector('.faq-more-icon');if(icon&&!icon.querySelector('svg'))icon.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h9"/><path d="m16 15 3 3 3-3"/></svg>';if(expanded)document.getElementById('faq').scrollIntoView({behavior:'smooth',block:'start'});});}
 
 const serviceParam=new URLSearchParams(location.search).get('service');if(serviceParam){const sel=document.getElementById('serviceSelect');const match=[...sel.options].find(o=>o.textContent.trim()===serviceParam.trim());if(match){sel.value=match.value}else{const fallback=[...sel.options].find(o=>o.textContent.trim()==='هنوز مطمئن نیستم');if(fallback)sel.value=fallback.value;const details=document.getElementById('projectDetails');if(details&&!details.value)details.value='خدمت موردنظر: '+serviceParam+'\n';}}const socialServiceOptions={
  'خدمات اینستاگرام':[
