@@ -629,9 +629,10 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 
 /* FAQ CTA state icon: plus when collapsed, minus when expanded */
 #faqMoreButton .faq-more-arrow{display:grid!important;place-items:center!important;flex:0 0 34px!important;width:34px!important;height:34px!important;padding:0!important;margin:0!important;border:1px solid #d9ff72!important;border-radius:12px!important;background:linear-gradient(145deg,#d9ff72,#b5e83e)!important;color:#17200c!important;box-shadow:0 4px 13px #d9ff7233!important;line-height:0!important;transition:transform .25s,box-shadow .25s!important}
-#faqMoreButton .faq-more-arrow svg{display:block!important;width:17px!important;height:17px!important;fill:none!important;stroke:currentColor!important;stroke-width:2.2!important;stroke-linecap:round!important}
-#faqMoreButton[aria-expanded="true"] .faq-more-arrow{transform:rotate(180deg);box-shadow:0 0 0 4px #d9ff7218,0 4px 13px #d9ff7233!important}
-#faqMoreButton[aria-expanded="true"] .faq-more-arrow svg{transform:scale(.92)}
+#faqMoreButton .faq-more-arrow svg{display:block!important;width:17px!important;height:17px!important;fill:none!important;stroke:currentColor!important;stroke-width:2.2!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+#faqMoreButton .faq-more-arrow svg path{d:path("M12 5v14M5 12h14")}
+#faqMoreButton[aria-expanded="true"] .faq-more-arrow svg{transform:rotate(45deg) scale(.92)}
+#faqMoreButton[aria-expanded="true"] .faq-more-arrow{box-shadow:0 0 0 4px #d9ff7218,0 4px 13px #d9ff7233!important}
 @media(max-width:420px){#faqMoreButton .faq-more-arrow{flex-basis:31px!important;width:31px!important;height:31px!important}}
 </style>
 <style id="multi-service-picker-styles">
