@@ -97,6 +97,45 @@ body{background:radial-gradient(ellipse at 12% -5%,#d9ff7214,transparent 35%),ra
 .confirm-card{background:radial-gradient(ellipse at 90% 0%,#d9ff7212,transparent 48%),linear-gradient(145deg,#202b1b,#121a10)}
 @media(max-width:800px){.wrap{padding:10px}.top{padding:5px 4px 12px;margin-bottom:12px}.brand-mark{width:42px;height:42px}.layout{height:calc(100dvh - 78px);min-height:0}.chat-head{height:70px;padding:0 13px}.messages{padding:17px 12px}.composer{padding:11px 9px max(12px,env(safe-area-inset-bottom))}.head-tools .soft{padding:8px 10px}.side,.chat{border-radius:18px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+/* Premium responsive messenger experience */
+:root{--ease-out:cubic-bezier(.2,.8,.2,1)}
+html,body{height:100%;overscroll-behavior:none}
+body{overflow:hidden;background:radial-gradient(ellipse at 50% -15%,#d9ff721b,transparent 42%),radial-gradient(ellipse at 100% 80%,#d9ff7209,transparent 35%),#0a0f09}
+.wrap{height:100%;display:flex;flex-direction:column;padding:clamp(12px,2vw,28px)}
+.top{flex:none}.layout{flex:1;min-height:0;height:auto}.chat{position:relative;isolation:isolate}
+.chat:before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 80% 0%,#d9ff7209,transparent 42%)}
+.chat-head{flex:none;min-height:78px}.chat-title h1{font-size:clamp(15px,1.2vw,18px);font-weight:900}
+.head-tools{align-items:center;gap:9px}
+.tool-chip{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 14px;border:1px solid #d9ff722b;border-radius:14px;background:linear-gradient(145deg,#d9ff720d,#ffffff03);color:#dce8d2;font-size:12px;font-weight:700;transition:all .25s var(--ease-out);overflow:hidden}
+.tool-chip:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent,#ffffff0b,transparent);transform:translateX(-120%);transition:transform .55s}.tool-chip:hover:before{transform:translateX(120%)}
+.tool-chip:hover{transform:translateY(-2px);border-color:#d9ff7280;box-shadow:0 8px 25px #d9ff7212}
+.tool-icon{font-size:17px;line-height:1;color:#d9ff72}.notify-state{width:6px;height:6px;border-radius:50%;background:#899184;box-shadow:0 0 0 3px #89918418}
+.tool-chip.is-on .notify-state{background:#d9ff72;box-shadow:0 0 0 3px #d9ff7222,0 0 12px #d9ff72}
+.room-symbol{width:44px;height:44px;display:grid;place-items:center;flex:none;border-radius:14px;background:linear-gradient(145deg,#d9ff7222,#d9ff7208);border:1px solid #d9ff7240;color:#d9ff72;font-size:20px}
+.messages{overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#536543 transparent}.messages::-webkit-scrollbar{width:6px}.messages::-webkit-scrollbar-thumb{background:#53654380;border-radius:10px}
+.msg{animation:messageIn .38s var(--ease-out) both}@keyframes messageIn{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.bubble{transition:border-color .2s,box-shadow .2s,transform .2s}.msg:hover .bubble{border-color:#d9ff7260;box-shadow:0 9px 28px #0003}
+.msg-actions{opacity:0;transform:translateY(4px);transition:all .2s}.msg:hover .msg-actions,.msg:focus-within .msg-actions{opacity:1;transform:none}
+.composer{flex:none;backdrop-filter:blur(18px)}.input-wrap{min-height:58px;box-shadow:inset 0 1px #ffffff08;transition:all .25s}.input-wrap:focus-within{box-shadow:0 0 0 4px #d9ff7210,0 12px 34px #0003}
+.send,.icon-btn{transition:transform .2s var(--ease-out),box-shadow .2s}.send:active,.icon-btn:active{transform:scale(.92)}
+@media(max-width:800px){
+html,body{height:100%;height:100dvh}.wrap{height:100dvh;padding:0;max-width:none}
+.top{height:72px;min-height:72px;margin:0;padding:0 17px;border-bottom:1px solid #d9ff721c;background:#0c120bdc;backdrop-filter:blur(18px)}
+.brand{font-size:17px;gap:10px}.brand-mark{width:40px;height:40px;border-radius:13px}.top-actions .soft{padding:9px 13px;font-size:11px}
+.layout{height:auto;flex:1;min-height:0;display:flex;gap:0}.chat{width:100%;height:100%;border:0;border-radius:0;box-shadow:none}
+.chat-head{height:76px;min-height:76px;padding:0 16px;gap:10px}.chat-title{min-width:0}.chat-title h1{font-size:15px}.chat-title p{font-size:10px;white-space:nowrap}
+.head-tools{gap:7px;flex:none}.tool-chip{width:42px;height:42px;min-height:42px;padding:0;border-radius:13px}.tool-label{display:none}.tool-icon{font-size:18px}
+.messages{padding:20px 14px 24px;background-size:26px 26px}.msg{max-width:92%;gap:8px;margin-bottom:18px}.avatar{width:30px;height:30px}
+.bubble{padding:11px 13px;border-radius:17px 17px 17px 6px}.body{font-size:13px;line-height:1.95}.msg-actions{opacity:1;transform:none;gap:4px;flex-wrap:wrap}.mini{font-size:10px;padding:5px 8px}
+.composer{padding:10px 12px max(12px,env(safe-area-inset-bottom));background:linear-gradient(180deg,#141d12f2,#0e150dfc);box-shadow:0 -12px 35px #0003}
+.compose-row{align-items:center;gap:8px}.compose-tools{gap:6px}.icon-btn{width:43px;height:46px;border-radius:14px;font-size:18px}
+.input-wrap{min-height:54px;border-radius:17px;padding:5px}.input-wrap textarea{min-height:40px;font-size:13px;padding:8px 9px}.send{width:42px;height:42px;border-radius:14px}
+.hint{display:none}.typing{height:auto;min-height:0;padding:0 16px}.pinned-banner{margin:0 12px 8px}
+.emoji-panel{position:absolute;bottom:calc(100% + 8px);right:12px;max-width:calc(100vw - 24px)}
+.toast{bottom:calc(82px + env(safe-area-inset-bottom));max-width:calc(100vw - 32px);white-space:normal;text-align:center}
+}
+@media(max-width:420px){.top{height:66px;min-height:66px;padding:0 12px}.brand{font-size:15px;gap:8px}.brand-mark{width:36px;height:36px}.top-actions .soft{font-size:10px;padding:8px 10px}.chat-head{height:68px;min-height:68px;padding:0 12px}.chat-title h1{font-size:14px}.chat-title p{font-size:9px}.tool-chip{width:39px;height:39px;min-height:39px}.messages{padding:16px 10px 20px}.msg{max-width:96%}.composer{padding-left:9px;padding-right:9px}.compose-row{gap:6px}.icon-btn{width:39px;height:43px}.send{width:39px;height:39px}.compose-tools{gap:4px}}
+@media(prefers-reduced-motion:reduce){.msg{animation:none!important}}
 </style>
 </head>
 <body>
@@ -128,10 +167,10 @@ $("app").innerHTML=`
 <div class="layout">
 <aside class="side"><div class="side-head"><h2>فضای گفتگو</h2><span class="online-count" id="onlineCount">● آنلاین</span></div>
 <input class="search" id="searchMessages" placeholder="جست‌وجو در پیام‌ها…">
-<div class="room"><div class="room-icon"><img src="/assets/images/alishams-studio-logo.png" alt=""></div><div><strong>گفت‌وگوی عمومی</strong><small>همه اعضای Alishams در یک جمع</small></div></div>
+<div class="room"><div class="room-symbol" aria-hidden="true">✦</div><div><strong>گفت‌وگوی عمومی</strong><small>همه اعضای Alishams در یک جمع</small></div></div>
 <div style="margin-top:18px;color:var(--muted);font-size:12px;line-height:2.1">به جمع کاربران Alishams خوش آمدید. گفتگو کنید، تجربه‌هایتان را به اشتراک بگذارید و به یکدیگر کمک کنید.</div>
 <div class="side-info">برای حفظ کیفیت گفتگو، از ارسال محتوای تبلیغاتی ناخواسته و فایل‌های مشکوک خودداری کنید.<br><span style="color:var(--lime)">●</span> اتصال زنده فعال</div></aside>
-<section class="chat"><header class="chat-head"><div class="chat-title"><div class="room-icon"><img src="/assets/images/alishams-studio-logo.png" alt=""></div><div><h1>گفت‌وگوی عمومی</h1><p id="subline">اتصال به انجمن…</p></div></div><div class="head-tools"><button class="soft" id="notificationToggle" type="button">🔔 اعلان‌ها</button><button class="soft" id="scrollLatest">آخرین پیام‌ها ↓</button></div></header>
+<section class="chat"><header class="chat-head"><div class="chat-title"><div><h1>گفت‌وگوی عمومی</h1><p id="subline">اتصال به انجمن…</p></div></div><div class="head-tools"><button class="tool-chip" id="notificationToggle" type="button" aria-label="اعلان‌ها" title="اعلان‌ها"><span class="tool-icon">♧</span><span class="tool-label">اعلان‌ها</span></button><button class="tool-chip" id="scrollLatest" type="button" aria-label="رفتن به آخرین پیام‌ها" title="رفتن به آخرین پیام‌ها"><span class="tool-icon">↓</span><span class="tool-label">آخرین پیام‌ها</span></button></div></header>
 <div class="pinned-banner" id="pinnedBanner"><span class="pin-icon">⌖</span><div class="pin-copy"><b>پیام سنجاق‌شده</b><span id="pinnedText"></span></div><span>↙</span></div>
 <div class="messages" id="messages"><div class="loading">در حال دریافت پیام‌ها…</div></div><div class="typing" id="typing"></div>
 <footer class="composer"><div class="replying" id="replying"><span id="replyLabel">در پاسخ به…</span><button class="mini" id="cancelReply">✕</button></div>
@@ -147,7 +186,7 @@ $("emojiBtn").onclick=()=>$("emojiPanel").style.display=$("emojiPanel").style.di
 $("fileBtn").onclick=()=>$("fileInput").click();
 $("cancelReply").onclick=clearReply;
 $("scrollLatest").onclick=()=>{$("messages").scrollTop=$("messages").scrollHeight};
-function updateNotificationButton(){const b=$("notificationToggle");if(!b)return;b.textContent=notificationEnabled?"🔔 اعلان‌ها روشن":"🔕 اعلان‌ها خاموش";b.style.borderColor=notificationEnabled?"#c9f36a77":"";b.style.color=notificationEnabled?"var(--lime)":""}
+function updateNotificationButton(){const b=$("notificationToggle");if(!b)return;b.innerHTML='<span class="tool-icon">🔔</span><span class="tool-label">اعلان‌ها</span><i class="notify-state"></i>';b.classList.toggle("is-on",notificationEnabled);b.setAttribute("aria-label",notificationEnabled?"خاموش‌کردن اعلان‌ها":"روشن‌کردن اعلان‌ها");b.title=notificationEnabled?"اعلان‌ها روشن است":"اعلان‌ها خاموش است"}
 function playMessageAlert(){if(!notificationEnabled||!notificationAudio)return;try{const ctx=notificationAudio,now=ctx.currentTime;[0,.16].forEach((delay,i)=>{const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type="sine";osc.frequency.value=i?880:660;gain.gain.setValueAtTime(.0001,now+delay);gain.gain.exponentialRampToValueAtTime(.075,now+delay+.018);gain.gain.exponentialRampToValueAtTime(.0001,now+delay+.13);osc.connect(gain);gain.connect(ctx.destination);osc.start(now+delay);osc.stop(now+delay+.14)})}catch{}}
 function notifyNewMessage(m){if(!notificationEnabled||!document.hidden)return;playMessageAlert();if("Notification" in window&&Notification.permission==="granted"){const n=new Notification("پیام جدید در Alishams Community",{body:"یک پیام جدید در گفت‌وگوی عمومی ارسال شد."});n.onclick=()=>{window.focus();n.close();$("messages").querySelector('[data-id="'+m.id+'"]')?.scrollIntoView({behavior:"smooth",block:"center"})}}}
 $("notificationToggle").onclick=async()=>{
@@ -198,7 +237,17 @@ function queueReactionRefresh(ids){
 function refreshVisibleReactions(){queueReactionRefresh([...$("messages").querySelectorAll(".msg")].map(n=>n.dataset.id))}
 async function loadPinned(){const {data}=await sb.from("community_messages").select("id,body,message_type,attachment_name").eq("is_pinned",true).is("deleted_at",null).order("pinned_at",{ascending:false}).limit(1);const row=data?.[0],bar=$("pinnedBanner");if(!row){bar.classList.remove("show");return}$("pinnedText").textContent=row.body||({image:"تصویر پیوست‌شده",video:"ویدیوی پیوست‌شده",voice:"پیام صوتی",audio:"فایل صوتی"}[row.message_type]||row.attachment_name||"پیوست");bar.dataset.id=row.id;bar.classList.add("show")}
 $("pinnedBanner").onclick=()=>{const id=$("pinnedBanner").dataset.id;const node=$("messages").querySelector('[data-id="'+id+'"]');if(node)node.scrollIntoView({behavior:"smooth",block:"center"});else toast("برای مشاهده این پیام، کمی در تاریخچه گفتگو جست‌وجو کنید")};
-async function loadMessages(before=null){let q=sb.from("community_messages").select("*").is("deleted_at",null).order("created_at",{ascending:false}).limit(35);if(before)q=q.lt("created_at",before);const {data,error}=await q;if(error){toast("دریافت پیام‌ها با خطا روبه‌رو شد");return}const rows=(data||[]).reverse();if(rows.length){oldest=rows[0].created_at;for(const m of rows)await renderMessage(m,!!before)}if(!before&&rows.length)$("messages").scrollTop=$("messages").scrollHeight;if(!rows.length&&!before)$("messages").innerHTML='<div class="empty"><div><strong>هنوز پیامی ارسال نشده</strong>اولین پیام این جمع را شما بفرستید ✨</div></div>'}
+async function loadMessages(before=null){
+ let q=sb.from("community_messages").select("*").is("deleted_at",null).order("created_at",{ascending:false}).limit(35);
+ if(before)q=q.lt("created_at",before);
+ const {data,error}=await q;
+ if(error){if(!before) $("messages").innerHTML='<div class="empty"><div><strong>دریافت پیام‌ها انجام نشد</strong>اتصال را بررسی کنید و صفحه را تازه‌سازی کنید.</div></div>';toast("دریافت پیام‌ها با خطا روبه‌رو شد");return}
+ const rows=(data||[]).reverse();
+ if(!before)$("messages").innerHTML="";
+ if(rows.length){oldest=rows[0].created_at;for(const m of rows)await renderMessage(m,!!before)}
+ if(!before&&rows.length)$("messages").scrollTop=$("messages").scrollHeight;
+ if(!rows.length&&!before)$("messages").innerHTML='<div class="empty"><div><strong>هنوز پیامی ارسال نشده</strong>اولین پیام این جمع را شما بفرستید ✨</div></div>';
+}
 await loadMessages();
 await loadPinned();
 
