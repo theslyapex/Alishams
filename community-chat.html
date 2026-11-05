@@ -184,6 +184,30 @@ html,body{height:100%;height:100dvh}.wrap{height:100dvh;padding:0;max-width:none
  #notificationToggle .notify-state{top:5px;right:5px}
 }
 
+
+/* Centered paperclip attachment control */
+.icon-btn.file-trigger{
+ display:grid!important;
+ place-items:center!important;
+ padding:0!important;
+ line-height:1!important;
+}
+.icon-btn.file-trigger .attachment-pin{
+ display:block;
+ width:22px;
+ height:22px;
+ margin:0;
+ fill:none;
+ stroke:currentColor;
+ stroke-width:1.9;
+ stroke-linecap:round;
+ stroke-linejoin:round;
+ flex:none;
+}
+@media(max-width:420px){
+ .icon-btn.file-trigger .attachment-pin{width:21px;height:21px}
+}
+
 </style>
 </head>
 <body>
@@ -223,7 +247,7 @@ $("app").innerHTML=`
 <div class="messages" id="messages"><div class="loading">در حال دریافت پیام‌ها…</div></div><div class="typing" id="typing"></div>
 <footer class="composer"><div class="replying" id="replying"><span id="replyLabel">در پاسخ به…</span><button class="mini" id="cancelReply">✕</button></div>
 <div class="emoji-panel" id="emojiPanel"></div><div class="compose-row"><div class="compose-tools">
-<button class="icon-btn" id="emojiBtn" title="ایموجی">☺</button><button class="icon-btn file-trigger" id="fileBtn" title="ارسال فایل">＋</button><input id="fileInput" type="file" hidden accept="image/*,video/mp4,video/webm,audio/*,.pdf,.zip,.doc,.docx,.xls,.xlsx,.txt">
+<button class="icon-btn" id="emojiBtn" title="ایموجی">☺</button><button class="icon-btn file-trigger" id="fileBtn" type="button" title="پیوست فایل" aria-label="پیوست فایل"><svg class="attachment-pin" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.4 11.1 12.2 20.3a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/></svg></button><input id="fileInput" type="file" hidden accept="image/*,video/mp4,video/webm,audio/*,.pdf,.zip,.doc,.docx,.xls,.xlsx,.txt">
 <button class="icon-btn" id="voiceBtn" title="ضبط پیام صوتی">🎙</button></div>
 <div class="input-wrap"><textarea id="messageInput" rows="1" maxlength="5000" placeholder="پیامت رو بنویس…"></textarea><button class="send" id="sendBtn" title="ارسال">➤</button></div></div>
 <div class="hint">Enter برای ارسال · Shift + Enter برای خط جدید · حداکثر حجم فایل ۵۰ مگابایت</div></footer></section></div>`;
