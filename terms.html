@@ -31,6 +31,10 @@
 @media(max-width:900px){.links{gap:12px}.highlights{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}.toc{position:relative;top:auto;max-height:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}.toc-title{grid-column:1/-1}.toc a{padding:5px 8px}}
 @media(max-width:600px){.wrap{width:calc(100% - 28px)}.nav{height:62px}.links{display:none}.nav-cta{font-size:10px;padding:7px 11px}.hero{padding:42px 0 30px}h1{font-size:36px}.hero p{font-size:12px}.notice{grid-template-columns:34px 1fr;padding:13px;gap:10px}.notice-icon{width:34px;height:34px}.highlights{gap:8px;padding-top:18px}.highlight{padding:12px}.highlight b{font-size:11px}.highlight span{font-size:9px}.layout{padding:22px 0 45px;gap:15px}.toc{padding:13px;grid-template-columns:1fr 1fr}.toc a{font-size:9px}.section{padding:17px;margin-bottom:10px;border-radius:17px}.section h2{font-size:15px}.section p,.section ul,.section ol{font-size:11px}.section-head{gap:9px}.section-no{width:30px;height:30px;flex-basis:30px}.sources{grid-template-columns:1fr}.contact-card{align-items:flex-start;flex-direction:column}.contact-card a{align-self:flex-start}.footer-row{align-items:flex-start;flex-direction:column}}
 @media(prefers-reduced-motion:no-preference){.section{animation:rise .55s ease both}.section:nth-child(2n){animation-delay:.04s}@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}}
+.page-share{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 13px;border:1px solid #58d9ee55;border-radius:999px;background:#58d9ee0b;color:var(--cyan);font:600 10px Estedad,Tahoma,sans-serif;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}.page-share:hover{background:#58d9ee18;border-color:#58d9ee99;transform:translateY(-1px)}.page-share svg{width:15px;height:15px;flex:0 0 15px}.page-share:focus-visible{outline:2px solid var(--lime);outline-offset:3px}.share-status{color:var(--lime);font-size:10px;min-width:1px}@media(max-width:600px){.page-share{padding:7px 11px;font-size:9px}}
+/* محدودسازی انتخاب و کپی متن در این صفحه */
+html,body,.hero,.content,.toc,.footer{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none}
+img,svg{-webkit-user-drag:none;user-drag:none}
 @media print{body{background:#fff;color:#111}body:before,.topbar,.toc,.footer,.nav-cta{display:none!important}.hero{padding:20px 0}.hero p,.section p,.section ul,.section ol,.section td{color:#222}.section,.highlight{break-inside:avoid;background:#fff;border:1px solid #ccc;color:#111}.section h2,.section h3,.section strong{color:#111}.layout{display:block;padding:10px 0}.section{box-shadow:none}.highlight span{color:#333}}
 </style>
 </head>
@@ -45,7 +49,7 @@
 <span class="eyebrow">TERMS · ORDER · REFUND · INTELLECTUAL PROPERTY</span>
 <h1>شرایط و قوانین<br><span>سفارش و همکاری</span></h1>
 <p>این صفحه چارچوب همکاری میان مشتری و استودیو دیجیتال علی شمس را روشن می‌کند؛ از ثبت درخواست و تأیید پیشنهاد تا اجرای پروژه، انصراف، تسویه، تحویل و حقوق استفاده از خروجی‌ها. هدف، شفافیت پیش از پرداخت و جلوگیری از اختلاف در ادامه مسیر است.</p>
-<div class="hero-meta"><span class="meta-pill">نسخه <strong>۱.۲</strong></span><span class="meta-pill">آخرین بازنگری: <strong>۱۴ آبان ۱۴۰۵</strong></span><span class="meta-pill">مرجع: قوانین لازم‌الاجرای جمهوری اسلامی ایران</span></div>
+<div class="hero-meta"><span class="meta-pill">نسخه <strong>۱.۲</strong></span><span class="meta-pill">آخرین بازنگری: <strong>۱۴ آبان ۱۴۰۵</strong></span><span class="meta-pill">مرجع: قوانین لازم‌الاجرای جمهوری اسلامی ایران</span><button class="page-share" id="pageShare" type="button" aria-label="هم‌رسانی صفحه شرایط و قوانین"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"></path></svg>هم‌رسانی این صفحه</button><span class="share-status" id="shareStatus" role="status" aria-live="polite"></span></div>
 <div class="notice"><span class="notice-icon" aria-hidden="true">§</span><div><strong>این مقررات جایگزین حقوق آمره مشتری نیست.</strong><p>هیچ بندی از این صفحه حق انصراف قانونی مصرف‌کننده، حقوق ناشی از عدم انجام تعهد یا سایر حقوقی را که طبق قوانین لازم‌الاجرا قابل اسقاط نیستند، از بین نمی‌برد. در صورت تعارض، حکم آمره قانون و تصمیم مرجع صالح مقدم است.</p></div></div>
 </div></section>
 <div class="wrap">
@@ -179,6 +183,30 @@
 </main>
 <footer class="footer"><div class="wrap footer-row"><span>© ۱۴۰۵ علی شمس · شرایط همکاری نسخه ۱.۲</span><div class="footer-links"><a href="/">صفحه اصلی</a><a href="/pricing.html">قیمت‌گذاری</a><a href="/contact-center.html">پشتیبانی</a><a href="/#faq">پرسش‌های متداول</a></div><a href="#top">بازگشت به بالا ↑</a></div></footer>
 <script>
+// هم‌رسانی صفحه با Web Share API و جایگزین کپی پیوند
+const shareButton=document.getElementById('pageShare');
+const shareStatus=document.getElementById('shareStatus');
+if(shareButton){
+  shareButton.addEventListener('click',async()=>{
+    const shareData={title:document.title,text:'شرایط و قوانین سفارش و همکاری استودیو دیجیتال علی شمس',url:location.href};
+    try{
+      if(navigator.share){await navigator.share(shareData);shareStatus.textContent='';}
+      else if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(location.href);shareStatus.textContent='پیوند صفحه کپی شد';}
+      else{shareStatus.textContent='امکان هم‌رسانی در این مرورگر فراهم نیست';}
+    }catch(error){if(error.name!=='AbortError')shareStatus.textContent='هم‌رسانی انجام نشد';}
+  });
+}
+// جلوگیری از انتخاب، کپی، برش و منوی کلیک راست در محتوای صفحه
+['contextmenu','copy','cut','selectstart','dragstart'].forEach(eventName=>{
+  document.addEventListener(eventName,event=>event.preventDefault());
+});
+document.addEventListener('keydown',event=>{
+  const key=(event.key||'').toLowerCase();
+  if((event.ctrlKey||event.metaKey)&&['c','x','u'].includes(key)){
+    event.preventDefault();
+    event.stopPropagation();
+  }
+});
 const links=[...document.querySelectorAll('.toc a')];
 const sections=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
 if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(a=>a.classList.toggle('active',a.hash==='#'+entry.target.id));}}),{rootMargin:'-18% 0px -70% 0px'});sections.forEach(s=>observer.observe(s));}
