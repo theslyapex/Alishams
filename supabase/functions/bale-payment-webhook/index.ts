@@ -60,7 +60,7 @@ Deno.serve(async(req:Request)=>{
     if(tx?.status!=="paid"||Number(tx?.amount)!==Number(intent.amount_rial)||(tx?.userID!=null&&String(tx.userID)!==userId)||(tx?.id!=null&&String(tx.id)!==chargeId))return json({error:"Plus transaction not verified"},409);
     const {data:finalized,error:finalizeError}=await db.rpc("finalize_plus_payment",{p_intent_id:intent.id,p_bale_charge_id:chargeId,p_provider_charge_id:providerId,p_raw_successful_payment:payment,p_bale_user_id:userId});
     if(finalizeError){console.error("Plus payment finalization failed",finalizeError.code||"unknown");return json({error:"Plus payment finalization requires review"},409)}
-    if(!finalized?.duplicate)await notifyTelegram("💜 عضویت پلاس+ با موفقیت خریداری شد\\n\\nایمیل: "+intent.email+"\\nمبلغ: ۲٬۰۰۰٬۰۰۰ تومان\\nتخفیف فعال: "+String(finalized.discount_percent)+"٪\\nپایان عضویت: "+String(finalized.ends_at));
+    if(!finalized?.duplicate)await notifyTelegram("💜 عضویت پلاس+ با موفقیت خریداری شد\\n\\nایمیل: "+intent.email+"\\nمبلغ: ۲٬۸۹۰٬۰۰۰ تومان\\nتخفیف فعال: "+String(finalized.discount_percent)+"٪\\nپایان عضویت: "+String(finalized.ends_at));
     return json({ok:true,plus:true,duplicate:!!finalized?.duplicate});
    }
    const {data:intent,error}=await db.from("bale_payment_intents").select("id,project_id,amount_toman,amount_rial,status,bale_user_id,payment_mode,bale_charge_id,provider_charge_id").eq("invoice_payload",payload).maybeSingle();
