@@ -1895,6 +1895,7 @@ socialType.addEventListener('change',()=>{
 const dlg=document.getElementById('orderDialog');
 const orderAuthNotice=document.getElementById('orderAuthNotice');
 async function openOrderDialog(serviceNames){
+ const termsBox=document.getElementById("orderTermsAccepted");if(termsBox)termsBox.checked=false;
  if(serviceNames?.length)setSelectedServices(serviceNames);
  if(!dlg.open)dlg.showModal();
  const submit=document.getElementById('makeSummary');
