@@ -52,7 +52,7 @@ const fa=n=>Number(n||0).toLocaleString("fa-IR");
 const time=s=>new Date(s).toLocaleTimeString("fa-IR",{hour:"2-digit",minute:"2-digit"});
 const size=n=>n<1048576?(n/1024).toFixed(0)+" KB":(n/1048576).toFixed(1)+" MB";
 const toast=t=>{const el=$("toast");if(!el)return;el.textContent=t;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2800)};
-let user,profile,channel,replyTarget=null,recording=null,recorder=null,mediaStream=null,typingTimer,profiles={},signed={},lastDate="",loadingOlder=false,oldest=null,reactionRefreshQueue=new Set(),reactionRefreshTimer=null;
+let user,profile,channel,replyTarget=null,recording=null,recorder=null,mediaStream=null,typingTimer,profiles={},signed={},lastDate="",loadingOlder=false,oldest=null,reactionRefreshQueue=new Set(),reactionRefreshTimer=null,notificationEnabled=localStorage.getItem("alishamsCommunityNotifications")==="on",notificationAudio=null;
 const gate=(title,desc,link=true)=>{$("app").innerHTML='<section class="gate"><div class="symbol">💬</div><h1>'+title+'</h1><p>'+desc+'</p>'+(link?'<a href="/account.html">ورود به حساب کاربری</a>':'')+'</section>'};
 const {data:{session}}=await sb.auth.getSession();
 if(!session){gate("برای ورود به انجمن، وارد حساب کاربری شوید","گفت‌وگوی عمومی Alishams فقط برای اعضای واردشده در دسترس است.");return}
@@ -69,7 +69,7 @@ $("app").innerHTML=`
 <div class="room"><div class="room-icon">✦</div><div><strong>گفت‌وگوی عمومی</strong><small>همه اعضای Alishams در یک جمع</small></div></div>
 <div style="margin-top:18px;color:var(--muted);font-size:12px;line-height:2.1">به جمع کاربران Alishams خوش آمدید. گفتگو کنید، تجربه‌هایتان را به اشتراک بگذارید و به یکدیگر کمک کنید.</div>
 <div class="side-info">برای حفظ کیفیت گفتگو، از ارسال محتوای تبلیغاتی ناخواسته و فایل‌های مشکوک خودداری کنید.<br><span style="color:var(--lime)">●</span> اتصال زنده فعال</div></aside>
-<section class="chat"><header class="chat-head"><div class="chat-title"><div class="room-icon">✦</div><div><h1>گفت‌وگوی عمومی</h1><p id="subline">اتصال به انجمن…</p></div></div><div class="head-tools"><button class="soft" id="scrollLatest">آخرین پیام‌ها ↓</button></div></header>
+<section class="chat"><header class="chat-head"><div class="chat-title"><div class="room-icon">✦</div><div><h1>گفت‌وگوی عمومی</h1><p id="subline">اتصال به انجمن…</p></div></div><div class="head-tools"><button class="soft" id="notificationToggle" type="button">🔔 اعلان‌ها</button><button class="soft" id="scrollLatest">آخرین پیام‌ها ↓</button></div></header>
 <div class="pinned-banner" id="pinnedBanner"><span class="pin-icon">⌖</span><div class="pin-copy"><b>پیام سنجاق‌شده</b><span id="pinnedText"></span></div><span>↙</span></div>
 <div class="messages" id="messages"><div class="loading">در حال دریافت پیام‌ها…</div></div><div class="typing" id="typing"></div>
 <footer class="composer"><div class="replying" id="replying"><span id="replyLabel">در پاسخ به…</span><button class="mini" id="cancelReply">✕</button></div>
@@ -85,6 +85,19 @@ $("emojiBtn").onclick=()=>$("emojiPanel").style.display=$("emojiPanel").style.di
 $("fileBtn").onclick=()=>$("fileInput").click();
 $("cancelReply").onclick=clearReply;
 $("scrollLatest").onclick=()=>{$("messages").scrollTop=$("messages").scrollHeight};
+function updateNotificationButton(){const b=$("notificationToggle");if(!b)return;b.textContent=notificationEnabled?"🔔 اعلان‌ها روشن":"🔕 اعلان‌ها خاموش";b.style.borderColor=notificationEnabled?"#c9f36a77":"";b.style.color=notificationEnabled?"var(--lime)":""}
+function playMessageAlert(){if(!notificationEnabled||!notificationAudio)return;try{const ctx=notificationAudio,now=ctx.currentTime;[0,.16].forEach((delay,i)=>{const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type="sine";osc.frequency.value=i?880:660;gain.gain.setValueAtTime(.0001,now+delay);gain.gain.exponentialRampToValueAtTime(.075,now+delay+.018);gain.gain.exponentialRampToValueAtTime(.0001,now+delay+.13);osc.connect(gain);gain.connect(ctx.destination);osc.start(now+delay);osc.stop(now+delay+.14)})}catch{}}
+function notifyNewMessage(m){if(!notificationEnabled||!document.hidden)return;playMessageAlert();if("Notification" in window&&Notification.permission==="granted"){const n=new Notification("پیام جدید در Alishams Community",{body:"یک پیام جدید در گفت‌وگوی عمومی ارسال شد."});n.onclick=()=>{window.focus();n.close();$("messages").querySelector('[data-id="'+m.id+'"]')?.scrollIntoView({behavior:"smooth",block:"center"})}}}
+$("notificationToggle").onclick=async()=>{
+ if(notificationEnabled){notificationEnabled=false;localStorage.setItem("alishamsCommunityNotifications","off");toast("اعلان‌ها خاموش شد");updateNotificationButton();return}
+ if(!("Notification" in window)){toast("اعلان مرورگر در این دستگاه پشتیبانی نمی‌شود");return}
+ let permission=Notification.permission;if(permission==="default")permission=await Notification.requestPermission();
+ if(permission!=="granted"){toast("برای فعال‌سازی اعلان‌ها، اجازه مرورگر لازم است");return}
+ notificationEnabled=true;localStorage.setItem("alishamsCommunityNotifications","on");
+ try{const AudioCtx=window.AudioContext||window.webkitAudioContext;if(AudioCtx){notificationAudio=new AudioCtx();if(notificationAudio.state==="suspended")await notificationAudio.resume()}}catch{}
+ updateNotificationButton();toast("اعلان پیام جدید فعال شد");
+};
+updateNotificationButton();
 function clearReply(){replyTarget=null;$("replying").style.display="none"}
 function setReply(m){replyTarget=m;$("replyLabel").textContent="پاسخ به "+(profiles[m.user_id]?.display_name||"عضو")+": "+(m.body||"پیوست");$("replying").style.display="flex";$("messageInput").focus()}
 async function getProfiles(ids){const missing=[...new Set(ids)].filter(id=>!profiles[id]);if(!missing.length)return;const {data}=await sb.from("user_profiles").select("user_id,display_name,avatar_url").in("user_id",missing);(data||[]).forEach(p=>profiles[p.user_id]=p)}
@@ -131,7 +144,7 @@ const channelName="community-public-room";
 channel=sb.channel(channelName,{config:{presence:{key:user.id}}});
 channel.on("presence",{event:"sync"},()=>{const state=channel.presenceState();$("onlineCount").textContent="● "+fa(Object.keys(state).length)+" آنلاین"});
 channel.on("broadcast",{event:"typing"},({payload})=>{if(payload?.user_id!==user.id){$("typing").textContent=(payload?.name||"یکی از اعضا")+" در حال نوشتن است…";clearTimeout(typingTimer);typingTimer=setTimeout(()=>$("typing").textContent="",1800)}});
-channel.on("postgres_changes",{event:"INSERT",schema:"public",table:"community_messages"},async payload=>{if(payload.new.user_id===user.id)return;const exists=$("messages").querySelector('[data-id="'+payload.new.id+'"]');if(!exists)await renderMessage(payload.new)});
+channel.on("postgres_changes",{event:"INSERT",schema:"public",table:"community_messages"},async payload=>{if(payload.new.user_id===user.id)return;const exists=$("messages").querySelector('[data-id="'+payload.new.id+'"]');if(!exists)await renderMessage(payload.new);notifyNewMessage(payload.new)});
 channel.on("postgres_changes",{event:"UPDATE",schema:"public",table:"community_messages"},async payload=>{const node=$("messages").querySelector('[data-id="'+payload.new.id+'"]');if(node){node.remove();await renderMessage(payload.new)}await loadPinned()});
 channel.on("postgres_changes",{event:"INSERT",schema:"public",table:"community_message_reactions"},payload=>queueReactionRefresh(payload.new.message_id));
 channel.on("postgres_changes",{event:"DELETE",schema:"public",table:"community_message_reactions"},()=>refreshVisibleReactions());
