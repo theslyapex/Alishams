@@ -358,6 +358,37 @@ html,body{height:100%;height:100dvh}.wrap{height:100dvh;padding:0;max-width:none
  #app>.gate .symbol{width:60px;height:60px}
 }
 
+
+/* Compact single-line login heading and balanced two-line helper copy */
+@media(max-width:800px){
+ #app>.gate h1{
+  white-space:nowrap;
+  font-size:clamp(11px,3.45vw,14px);
+  line-height:1.6;
+  letter-spacing:-.25px;
+ }
+ #app>.gate p{
+  max-width:310px;
+  margin-inline:auto;
+  text-wrap:pretty;
+ }
+}
+.plus-badge{
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ vertical-align:middle;
+ margin-inline:4px;
+ padding:2px 6px;
+ min-height:17px;
+ border-radius:6px;
+ background:linear-gradient(135deg,#a855f7,#7c3aed);
+ color:#fff;
+ font:800 9px/1 Arial,sans-serif;
+ letter-spacing:.55px;
+ box-shadow:0 0 12px #a855f733;
+}
+
 </style>
 </head>
 <body>
@@ -384,6 +415,9 @@ const ADMIN_USER_ID="20e3df23-9f5a-4d88-8adc-093f75feb5df";
 const isAdmin=user.id===ADMIN_USER_ID;
 let pr=await sb.from("user_profiles").select("user_id,display_name,avatar_url").eq("user_id",user.id).maybeSingle();
 profile=pr.data;
+let plusUsers=new Set();
+const {data:plusIds,error:plusError}=await sb.rpc("community_plus_user_ids");
+if(!plusError&&Array.isArray(plusIds))plusUsers=new Set(plusIds.map(x=>typeof x==="string"?x:(x?.community_plus_user_ids||x?.user_id)).filter(Boolean));
 if(!profile||!profile.avatar_url){gate("تکمیل پروفایل الزامی است","برای حفظ هویت اعضا، فقط حساب‌هایی می‌توانند پیام بفرستند که تصویر پروفایل داشته باشند. ابتدا از بخش پروفایل حساب کاربری عکس اضافه کنید.");return}
 $("app").innerHTML=`
 <div class="layout">
@@ -428,7 +462,7 @@ async function getProfiles(ids){const missing=[...new Set(ids)].filter(id=>!prof
 async function fileUrl(path){if(!path)return null;if(signed[path])return signed[path];const {data,error}=await sb.storage.from("community-chat").createSignedUrl(path,3600);if(error)return null;signed[path]=data.signedUrl;return data.signedUrl}
 function renderAttachment(m,url){if(!url)return "";const mime=m.attachment_mime||"",name=esc(m.attachment_name||"فایل پیوست");if(m.message_type==="image")return '<a class="attachment" href="'+url+'" target="_blank"><img src="'+url+'" alt="'+name+'" loading="lazy"></a>';if(m.message_type==="video")return '<div class="attachment"><video src="'+url+'" controls playsinline preload="metadata"></video></div>';if(m.message_type==="voice")return '<div class="voice-card"><button class="voice-play" type="button" aria-label="پخش پیام صوتی">▶</button><div class="voice-main"><div class="voice-wave" role="slider" aria-label="موقعیت پخش پیام صوتی" tabindex="0">'+Array.from({length:40},(_,i)=>'<i style="--h:'+(7+((i*17+11)%17))+'px"></i>').join("")+'</div><div class="voice-details"><span class="voice-current">۰۰:۰۰</span><span class="voice-duration">در حال بارگذاری…</span></div></div><audio src="'+url+'" preload="metadata"></audio></div>';if(m.message_type==="audio")return '<div class="attachment"><audio src="'+url+'" controls preload="metadata"></audio></div>';return '<a class="file-card" href="'+url+'" target="_blank" rel="noopener"><span style="font-size:25px">📎</span><span><b>'+name+'</b><small>'+size(m.attachment_size||0)+'</small></span></a>'}
 async function renderMessage(m,prepend=false){await getProfiles([m.user_id,...(m.reply_to&&m.reply_user?[m.reply_user]:[])]);const p=profiles[m.user_id]||{},mine=m.user_id===user.id,url=await fileUrl(m.attachment_path),avatar=p.avatar_url?'<img class="avatar" src="'+esc(p.avatar_url)+'" alt="">':'<div class="avatar"></div>';let reply="";if(m.reply_to){const {data:r}=await sb.from("community_messages").select("body,user_id").eq("id",m.reply_to).maybeSingle();if(r){await getProfiles([r.user_id]);reply='<div class="reply-ref">'+esc(profiles[r.user_id]?.display_name||"عضو")+': '+esc(r.body||"پیوست")+'</div>'}}
-const isAdminMessage=m.user_id===ADMIN_USER_ID;const adminName=isAdminMessage?"علی شمس":(p.display_name||"عضو");const html='<article class="msg '+(isAdminMessage?"is-admin ":"")+(mine?"mine":"")+'" data-id="'+m.id+'">'+avatar+'<div class="bubble-wrap">'+(isAdminMessage?'<div class="sender">'+esc(adminName)+' <span class="admin-badge">✦ مدیر سایت</span></div>':(!mine?'<div class="sender">'+esc(p.display_name||"عضو")+'</div>':""))+'<div class="bubble">'+reply+(m.deleted_at?'<div class="body" style="color:#aaa">این پیام حذف شده است.</div>':(m.body?'<div class="body">'+esc(m.body)+'</div>':"")+renderAttachment(m,url))+'<div class="meta"><span>'+(m.edited_at?"ویرایش‌شده · ":"")+time(m.created_at)+'</span>'+(mine?'<span>✓</span>':"")+'</div><div class="reaction-strip" aria-label="واکنش‌ها"></div></div><div class="msg-actions"><button class="mini reply-action">پاسخ</button><button class="mini react-action">❤️</button>'+(mine&&!m.deleted_at?'<button class="mini edit-action">ویرایش</button><button class="mini delete-action">حذف</button>':"")+'<button class="mini report-action">گزارش</button></div></div></article>';
+const isAdminMessage=m.user_id===ADMIN_USER_ID;const adminName=isAdminMessage?"علی شمس":(p.display_name||"عضو");const plusBadge=plusUsers.has(m.user_id)?' <span class="plus-badge" title="عضویت فعال پلاس" aria-label="عضویت فعال پلاس">PLUS</span>':"";const html='<article class="msg '+(isAdminMessage?"is-admin ":"")+(mine?"mine":"")+'" data-id="'+m.id+'">'+avatar+'<div class="bubble-wrap">'+'<div class="sender">'+esc(adminName)+plusBadge+(isAdminMessage?' <span class="admin-badge">✦ مدیر سایت</span>':"")+'</div>'+'<div class="bubble">'+reply+(m.deleted_at?'<div class="body" style="color:#aaa">این پیام حذف شده است.</div>':(m.body?'<div class="body">'+esc(m.body)+'</div>':"")+renderAttachment(m,url))+'<div class="meta"><span>'+(m.edited_at?"ویرایش‌شده · ":"")+time(m.created_at)+'</span>'+(mine?'<span>✓</span>':"")+'</div><div class="reaction-strip" aria-label="واکنش‌ها"></div></div><div class="msg-actions"><button class="mini reply-action">پاسخ</button><button class="mini react-action">❤️</button>'+(mine&&!m.deleted_at?'<button class="mini edit-action">ویرایش</button><button class="mini delete-action">حذف</button>':"")+'<button class="mini report-action">گزارش</button></div></div></article>';
 const box=document.createElement("div");box.innerHTML=html;const node=box.firstElementChild;
 const voice=node.querySelector(".voice-card");if(voice){const audio=voice.querySelector("audio"),play=voice.querySelector(".voice-play"),wave=voice.querySelector(".voice-wave"),cur=voice.querySelector(".voice-current"),dur=voice.querySelector(".voice-duration"),fmt=t=>{if(!Number.isFinite(t))return "۰۰:۰۰";const mm=Math.floor(t/60),ss=Math.floor(t%60);return [mm,ss].map(v=>String(v).padStart(2,"0")).join(":").replace(/[0-9]/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d])};audio.onloadedmetadata=()=>dur.textContent=fmt(audio.duration);audio.ontimeupdate=()=>{cur.textContent=fmt(audio.currentTime);const pct=audio.duration?audio.currentTime/audio.duration:0;wave.querySelectorAll("i").forEach((bar,i)=>bar.style.opacity=i/40<=pct?"1":".45")};audio.onplay=()=>play.textContent="Ⅱ";audio.onpause=()=>play.textContent="▶";play.onclick=()=>audio.paused?audio.play():audio.pause();const seek=e=>{const rect=wave.getBoundingClientRect(),x=Math.max(0,Math.min(rect.width,rect.right-e.clientX));if(audio.duration)audio.currentTime=(x/rect.width)*audio.duration};wave.onclick=seek;wave.onkeydown=e=>{if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();audio.currentTime=Math.max(0,Math.min(audio.duration||0,audio.currentTime+(e.key==="ArrowRight"?5:-5)))}}}
 node.querySelector(".reply-action").onclick=()=>setReply(m);
