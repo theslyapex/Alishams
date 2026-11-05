@@ -1934,7 +1934,7 @@ document.getElementById('makeSummary').addEventListener('click',async()=>{
  btn.disabled=true;btn.textContent='در حال ثبت سفارش…';feedback.textContent='';
  try{
   const sessionToken=await customerSessionToken();
-  const response=await fetch('https://srfldjfrzmtnlabusssq.supabase.co/functions/v1/order-submit',{method:'POST',headers:{'Content-Type':'application/json','apikey':'sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB',...(sessionToken?{'Authorization':'Bearer '+sessionToken}:{})},body:JSON.stringify({client_name:clientName,client_email:clientEmail,contact_info:contactInfo,service:selectedService,services:selectedServices,title:projectName,details:finalDetails,budget:val('budget'),terms_accepted:termsAccepted,terms_version:'2026-11-05-v1'})});
+  const response=await fetch('https://srfldjfrzmtnlabusssq.supabase.co/functions/v1/order-submit',{method:'POST',headers:{'Content-Type':'application/json','apikey':'sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB',...(sessionToken?{'Authorization':'Bearer '+sessionToken}:{})},body:JSON.stringify({client_name:clientName,client_email:clientEmail,contact_info:contactInfo,service:selectedService,services:selectedServices,title:projectName,details:finalDetails,budget:val('budget'),terms_accepted:termsAccepted,terms_version:'2026-11-05-v2'})});
   const data=await response.json();if(!response.ok||!data.ok)throw new Error(data.error||'ثبت سفارش انجام نشد.');
   const plusApplied=String(data.discount_code||'').startsWith('PLUS')&&Number(data.discount_percent)>0;
   const discountLine=Number(data.discount_percent)>0?'\nتخفیف اعمال‌شده: '+data.discount_percent+'٪'+(plusApplied?' (عضویت پلاس+)':''):'\nتخفیف اعمال‌شده: ندارد';
