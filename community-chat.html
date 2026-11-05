@@ -136,6 +136,35 @@ html,body{height:100%;height:100dvh}.wrap{height:100dvh;padding:0;max-width:none
 }
 @media(max-width:420px){.top{height:66px;min-height:66px;padding:0 12px}.brand{font-size:15px;gap:8px}.brand-mark{width:36px;height:36px}.top-actions .soft{font-size:10px;padding:8px 10px}.chat-head{height:68px;min-height:68px;padding:0 12px}.chat-title h1{font-size:14px}.chat-title p{font-size:9px}.tool-chip{width:39px;height:39px;min-height:39px}.messages{padding:16px 10px 20px}.msg{max-width:96%}.composer{padding-left:9px;padding-right:9px}.compose-row{gap:6px}.icon-btn{width:39px;height:43px}.send{width:39px;height:39px}.compose-tools{gap:4px}}
 @media(prefers-reduced-motion:reduce){.msg{animation:none!important}}
+
+/* Keep the message composer anchored to the bottom edge on phones */
+@media(max-width:800px){
+ .chat{position:relative;min-height:0}
+ .chat>.composer{
+  position:fixed!important;
+  left:0;right:0;bottom:0;
+  z-index:50;
+  width:100%;
+  margin:0;
+  border-top:1px solid #d9ff7240;
+  border-radius:0;
+  padding:10px 12px max(12px,env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(20,29,18,.97),rgba(10,16,9,.99));
+  -webkit-backdrop-filter:blur(22px);
+  backdrop-filter:blur(22px);
+  box-shadow:0 -14px 38px rgba(0,0,0,.38);
+ }
+ .chat>.messages{
+  padding-bottom:calc(116px + env(safe-area-inset-bottom));
+  scroll-padding-bottom:calc(116px + env(safe-area-inset-bottom));
+ }
+ .chat>.typing{padding-bottom:calc(4px + env(safe-area-inset-bottom))}
+}
+@media(max-width:420px){
+ .chat>.composer{padding-left:9px;padding-right:9px}
+ .chat>.messages{padding-bottom:calc(112px + env(safe-area-inset-bottom));scroll-padding-bottom:calc(112px + env(safe-area-inset-bottom))}
+}
+
 </style>
 </head>
 <body>
