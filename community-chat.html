@@ -208,6 +208,41 @@ html,body{height:100%;height:100dvh}.wrap{height:100dvh;padding:0;max-width:none
  .icon-btn.file-trigger .attachment-pin{width:21px;height:21px}
 }
 
+
+/* Restore reliable touch scrolling in the conversation viewport */
+.chat{min-height:0}
+.messages{
+ min-height:0;
+ flex:1 1 0%;
+ overflow-x:hidden;
+ overflow-y:auto;
+ -webkit-overflow-scrolling:touch;
+ touch-action:pan-y;
+ overscroll-behavior-y:contain;
+}
+@media(max-width:800px){
+ html,body{overflow:hidden}
+ .wrap{min-height:0;min-height:100dvh}
+ .layout{min-height:0;overflow:hidden}
+ .chat{display:flex;flex-direction:column;height:100%;min-height:0;overflow:hidden}
+ .chat-head{flex:0 0 auto}
+ .pinned-banner{flex:0 0 auto}
+ .chat>.messages{
+  display:block;
+  height:0;
+  min-height:0;
+  flex:1 1 0%;
+  overflow-x:hidden;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+  overscroll-behavior-y:contain;
+  padding-bottom:calc(124px + env(safe-area-inset-bottom));
+ }
+ .chat>.typing{flex:0 0 auto}
+ .chat>.composer{position:fixed!important}
+}
+
 </style>
 </head>
 <body>
