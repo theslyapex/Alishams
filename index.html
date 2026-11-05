@@ -1709,7 +1709,11 @@ navDropdowns.forEach(drop=>{
  toggle.addEventListener('click',e=>{
   e.stopPropagation();
   const open=!drop.classList.contains('open');
-  navDropdowns.forEach(other=>{other.classList.remove('open');other.querySelector('.nav-dropdown-toggle').setAttribute('aria-expanded','false')});
+  // On mobile, allow multiple dropdown sections to remain expanded.
+  // On desktop, keep the existing single-open-dropdown behavior.
+  if(window.matchMedia('(min-width:761px)').matches){
+   navDropdowns.forEach(other=>{if(other!==drop){other.classList.remove('open');other.querySelector('.nav-dropdown-toggle').setAttribute('aria-expanded','false')}});
+  }
   drop.classList.toggle('open',open);
   toggle.setAttribute('aria-expanded',String(open));
  });
