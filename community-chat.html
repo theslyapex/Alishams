@@ -39,6 +39,7 @@ input,textarea,.messages,.messages *{user-select:text;-webkit-user-select:text}
 /* Alishams brand refresh — charcoal + signature lime */
 :root{--bg:#0c100b;--panel:#121810;--panel2:#192117;--line:#2b3827;--text:#f4f7ef;--muted:#a3ad9a;--purple:#d9ff72;--purple2:#a8d84b;--lime:#d9ff72;--danger:#ff7185;--shadow:0 24px 80px #0009}
 body{background:radial-gradient(ellipse at 12% -5%,#d9ff7214,transparent 35%),radial-gradient(ellipse at 95% 100%,#d9ff720c,transparent 33%),#0c100b;font-family:Estedad,Vazirmatn,Tahoma,sans-serif}
+.gate .symbol{width:76px;height:76px;margin:0 auto 14px;padding:8px;border-radius:22px;border:1px solid #d9ff7255;background:#d9ff7210;box-shadow:0 10px 35px #d9ff7217}.gate .symbol img{width:100%;height:100%;object-fit:contain}
 .wrap{max-width:1540px;padding:24px clamp(12px,2.4vw,34px)}
 .top{padding:3px 4px 17px;border-bottom:1px solid #d9ff721b;margin-bottom:20px}
 .brand{gap:13px;font-size:18px;letter-spacing:-.2px}
@@ -114,7 +115,7 @@ const time=s=>new Date(s).toLocaleTimeString("fa-IR",{hour:"2-digit",minute:"2-d
 const size=n=>n<1048576?(n/1024).toFixed(0)+" KB":(n/1048576).toFixed(1)+" MB";
 const toast=t=>{const el=$("toast");if(!el)return;el.textContent=t;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2800)};
 let user,profile,channel,replyTarget=null,recording=null,recorder=null,mediaStream=null,typingTimer,profiles={},signed={},lastDate="",loadingOlder=false,oldest=null,reactionRefreshQueue=new Set(),reactionRefreshTimer=null,notificationEnabled=localStorage.getItem("alishamsCommunityNotifications")==="on",notificationAudio=null;
-const gate=(title,desc,link=true)=>{$("app").innerHTML='<section class="gate"><div class="symbol">💬</div><h1>'+title+'</h1><p>'+desc+'</p>'+(link?'<a href="/account.html">ورود به حساب کاربری</a>':'')+'</section>'};
+const gate=(title,desc,link=true)=>{$("app").innerHTML='<section class="gate"><div class="symbol"><img src="/assets/images/alishams-studio-logo.png" alt="Alishams"></div><h1>'+title+'</h1><p>'+desc+'</p>'+(link?'<a href="/account.html">ورود به حساب کاربری</a>':'')+'</section>'};
 const {data:{session}}=await sb.auth.getSession();
 if(!session){gate("برای ورود به انجمن، وارد حساب کاربری شوید","گفت‌وگوی عمومی Alishams فقط برای اعضای واردشده در دسترس است.");return}
 user=session.user;
@@ -229,7 +230,17 @@ async function react(id,emoji="❤️"){
 async function report(id){const reason=prompt("دلیل گزارش این پیام را بنویسید:");if(!reason||reason.trim().length<2)return;const {error}=await sb.from("community_message_reports").insert({message_id:id,reporter_id:user.id,reason:reason.trim().slice(0,500)});toast(error?(error.code==="23505"?"این پیام را قبلاً گزارش کرده‌اید":"ثبت گزارش ناموفق بود"):"گزارش شما ثبت شد؛ سپاس از همراهی‌تان")}
 async function edit(m){const value=prompt("متن ویرایش‌شده پیام:",m.body);if(value===null||!value.trim()||value.trim().length>5000)return;const {error}=await sb.from("community_messages").update({body:value.trim(),edited_at:new Date().toISOString()}).eq("id",m.id).eq("user_id",user.id);toast(error?"ویرایش پیام ناموفق بود":"پیام ویرایش شد")}
 function askDelete(){return new Promise(resolve=>{const modal=$("confirmBackdrop");modal.classList.add("open");const finish=value=>{modal.classList.remove("open");$("confirmAccept").onclick=null;$("confirmCancel").onclick=null;modal.onclick=null;resolve(value)};$("confirmAccept").onclick=()=>finish(true);$("confirmCancel").onclick=()=>finish(false);modal.onclick=e=>{if(e.target===modal)finish(false)}})}
-async function remove(m){if(!await askDelete())return;const {error}=await sb.from("community_messages").update({deleted_at:new Date().toISOString(),body:"پیام حذف شد"}).eq("id",m.id).eq("user_id",user.id);toast(error?"حذف پیام ناموفق بود":"پیام حذف شد")}
+async function remove(m){
+ if(!await askDelete())return;
+ if(isAdmin){
+  if(m.attachment_path){const {error:storageError}=await sb.storage.from("community-chat").remove([m.attachment_path]);if(storageError){toast("حذف فایل پیوست انجام نشد");return}}
+  const {error}=await sb.from("community_messages").delete().eq("id",m.id);
+  toast(error?"حذف پیام ناموفق بود":"پیام و پیوست آن به‌طور کامل حذف شد");
+ }else{
+  const {error}=await sb.from("community_messages").update({deleted_at:new Date().toISOString(),body:"پیام حذف شد"}).eq("id",m.id).eq("user_id",user.id);
+  toast(error?"حذف پیام ناموفق بود":"پیام حذف شد");
+ }
+}
 $("voiceBtn").onclick=async()=>{if(recording){recorder.stop();return}if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){toast("ضبط صدا در این مرورگر پشتیبانی نمی‌شود");return}try{mediaStream=await navigator.mediaDevices.getUserMedia({audio:true});const chunks=[];recorder=new MediaRecorder(mediaStream);recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=async()=>{const blob=new Blob(chunks,{type:recorder.mimeType||"audio/webm"});mediaStream.getTracks().forEach(t=>t.stop());recording=false;$("voiceBtn").classList.remove("recording");$("voiceBtn").textContent="🎙";if(blob.size>10*1048576){toast("حجم پیام صوتی بیشتر از ۱۰ مگابایت است");return}const ext=blob.type.includes("mp4")?"m4a":"webm";await uploadFile(new File([blob],"voice-"+Date.now()+"."+ext,{type:blob.type}),"voice")};recorder.start();recording=true;$("voiceBtn").classList.add("recording");$("voiceBtn").textContent="■";toast("در حال ضبط؛ برای پایان دوباره دکمه را بزنید")}catch(e){toast("دسترسی به میکروفون داده نشد")}};
 $("searchMessages").addEventListener("keydown",async e=>{if(e.key!=="Enter")return;const term=e.target.value.trim();if(term.length<2)return;const {data,error}=await sb.from("community_messages").select("*").ilike("body","%"+term+"%").is("deleted_at",null).order("created_at",{ascending:false}).limit(40);if(error){toast("جست‌وجو انجام نشد");return}$("messages").innerHTML="";for(const m of (data||[]).reverse())await renderMessage(m);if(!data?.length)$("messages").innerHTML='<div class="empty">نتیجه‌ای پیدا نشد.</div>'});
 document.addEventListener("contextmenu",e=>{if(!e.target.closest("#messages"))e.preventDefault()});document.addEventListener("selectstart",e=>{if(!e.target.closest("#messages")&&!e.target.closest("input,textarea"))e.preventDefault()});document.addEventListener("dragstart",e=>{if(!e.target.closest("#messages"))e.preventDefault()});
