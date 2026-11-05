@@ -607,6 +607,15 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .faq-more-count:before{content:"";width:6px;height:6px;border-radius:50%;background:#d9ff72;box-shadow:0 0 9px #d9ff72}
 @media(max-width:420px){.faq-more-wrap{padding-top:24px}.faq-more-button{min-width:min(100%,300px);min-height:54px;padding-inline:10px;gap:9px;font-size:11px}.faq-more-icon{width:31px;height:31px;flex-basis:31px}.faq-more-arrow{width:29px;height:29px}}
 @media(prefers-reduced-motion:reduce){.faq-more-button,.faq-more-button:before,.faq-more-arrow{transition:none}}
+
+/* FAQ CTA alignment and stable icon */
+#faqMoreButton{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;direction:rtl!important;gap:12px!important;overflow:hidden}
+#faqMoreButton .faq-more-icon{display:grid!important;place-items:center!important;flex:0 0 34px!important;width:34px!important;height:34px!important;line-height:0!important}
+#faqMoreButton .faq-more-icon svg{display:block!important;width:19px!important;height:19px!important;flex:none!important}
+#faqMoreButton .faq-more-label{display:block!important;flex:1 1 auto!important;min-width:0!important;text-align:center!important;white-space:nowrap!important;line-height:1.5!important}
+#faqMoreButton .faq-more-arrow{display:grid!important;place-items:center!important;flex:0 0 32px!important;width:32px!important;height:32px!important;margin:0!important;padding:0!important;line-height:1!important;text-align:center!important;font-size:18px!important}
+#faqMoreButton[aria-expanded="true"] .faq-more-arrow{transform:rotate(-90deg)}
+@media(max-width:420px){#faqMoreButton{gap:8px!important}#faqMoreButton .faq-more-icon{flex-basis:30px!important;width:30px!important;height:30px!important}#faqMoreButton .faq-more-arrow{flex-basis:29px!important;width:29px!important;height:29px!important}#faqMoreButton .faq-more-label{font-size:10px!important}}
 </style>
 <style id="multi-service-picker-styles">
 .multi-service-picker{margin:10px 0 18px;padding:15px;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018))}
@@ -1603,7 +1612,7 @@ if(principlesSlider){
 }
 document.querySelectorAll('.faq button').forEach(b=>b.addEventListener('click',()=>{const box=b.parentElement,open=box.classList.toggle('open');b.setAttribute('aria-expanded',String(open));b.lastElementChild.textContent=open?'−':'＋'}));
 const faqMoreButton=document.getElementById('faqMoreButton');
-if(faqMoreButton){faqMoreButton.addEventListener('click',()=>{const expanded=faqMoreButton.getAttribute('aria-expanded')==='true';faqMoreButton.setAttribute('aria-expanded',String(!expanded));document.querySelectorAll('#faq .faq-extra').forEach(item=>item.classList.toggle('is-visible',!expanded));faqMoreButton.querySelector('span').textContent=expanded?'دیدن همه سوالات متداول':'نمایش سوالات کمتر';if(expanded)document.getElementById('faq').scrollIntoView({behavior:'smooth',block:'start'});});}
+if(faqMoreButton){faqMoreButton.addEventListener('click',()=>{const expanded=faqMoreButton.getAttribute('aria-expanded')==='true';faqMoreButton.setAttribute('aria-expanded',String(!expanded));document.querySelectorAll('#faq .faq-extra').forEach(item=>item.classList.toggle('is-visible',!expanded));const faqMoreLabel=faqMoreButton.querySelector('.faq-more-label');if(faqMoreLabel)faqMoreLabel.textContent=expanded?'دیدن همه سوالات متداول':'نمایش سوالات کمتر';if(expanded)document.getElementById('faq').scrollIntoView({behavior:'smooth',block:'start'});});}
 
 const serviceParam=new URLSearchParams(location.search).get('service');if(serviceParam){const sel=document.getElementById('serviceSelect');const match=[...sel.options].find(o=>o.textContent.trim()===serviceParam.trim());if(match){sel.value=match.value}else{const fallback=[...sel.options].find(o=>o.textContent.trim()==='هنوز مطمئن نیستم');if(fallback)sel.value=fallback.value;const details=document.getElementById('projectDetails');if(details&&!details.value)details.value='خدمت موردنظر: '+serviceParam+'\n';}}const socialServiceOptions={
  'خدمات اینستاگرام':[
