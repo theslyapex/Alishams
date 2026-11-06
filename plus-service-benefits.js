@@ -12,11 +12,12 @@
   }
 
   function addQuotePreview() {
-    if (document.querySelector(".plus-tier-preview")) return;
+    if (document.querySelector(".plus-quote-preview[data-quote=\"true\"]")) return;
     const pricing = document.querySelector(".pricing-highlight");
     if (!pricing) return;
     const card = document.createElement("aside");
     card.className = "plus-tier-preview plus-quote-preview";
+    card.dataset.quote = "true";
     card.setAttribute("role", "note");
     card.innerHTML = '<span class="plus-tier-label">مزیت اعضای فعال پلاس+</span>' +
       '<div class="plus-tier-row" data-discount="10"><span>دو خرید نخست</span><strong>۱۰٪ تخفیف</strong></div>' +
