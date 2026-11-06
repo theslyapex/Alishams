@@ -2226,7 +2226,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
 <script>
 (()=>{const endpoint="https://srfldjfrzmtnlabusssq.supabase.co/functions/v1/club-api",podium=document.getElementById("clubLeaguePodium"),rows=document.getElementById("clubLeagueRows");if(!podium||!rows)return;
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const num=n=>Number(n||0).toLocaleString("fa-IR"),tier={diamond:"الماس",gold:"طلایی",silver:"نقره‌ای",bronze:"برنزی"},medals=["👑","🥈","🥉"],classes=["first","second","third"];
+const num=n=>Number(n||0).toLocaleString("fa-IR"),tier={diamond:"الماس",gold:"طلایی",silver:"نقره‌ای",none:"بدون لیگ"},medals=["👑","🥈","🥉"],classes=["first","second","third"];
 fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"leaderboard"})}).then(r=>r.json().then(d=>{if(!r.ok||!d.ok)throw Error(d.error||"leaderboard");return d})).then(d=>{
 const list=d.leaderboard||[];if(!list.length){podium.innerHTML='<div class="club-league-empty" style="grid-column:1/-1">هنوز امتیازی برای رتبه‌بندی ثبت نشده است. اولین عضو برتر باشگاه باش!</div>';rows.innerHTML="";return}
 const top=list.slice(0,3);const order=[top[1],top[0],top[2]].filter(Boolean);podium.innerHTML=order.map(x=>{const i=x.rank-1,cl=classes[i]||"",medal=medals[i]||"✦";return '<article class="club-podium-card '+cl+'"><div class="club-medal">'+medal+'</div><span class="club-rank">RANK #'+num(x.rank)+'</span><strong class="club-name">'+esc(x.display_name)+'</strong><span class="club-tier">'+esc(tier[x.tier]||"عضو")+'</span><b class="club-score">'+num(x.lifetime_points)+' XP</b></article>'}).join("");
