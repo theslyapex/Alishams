@@ -100,7 +100,7 @@ Deno.serve(async(req:Request)=>{
     end=b.ends_at?new Date(b.ends_at):(currentStillActive?new Date(new Date(old.ends_at).getTime()+30*86400000):new Date(start.getTime()+30*86400000));
     if(!Number.isFinite(start.getTime())||!Number.isFinite(end.getTime())||end<=start)return out({error:"تاریخ شروع و پایان معتبر نیست."},400,origin);
    }
-   const patch:any={email:target.user.email,status:enabled?"active":"inactive",starts_at:enabled?start!.toISOString():null,ends_at:enabled?end!.toISOString():null,discount_percent:Number(b.discount_percent)===18?18:10,admin_note:str(b.admin_note,1000),updated_at:now.toISOString()};
+   const patch:any={email:target.user.email,status:enabled?"active":"inactive",starts_at:enabled?start!.toISOString():null,ends_at:enabled?end!.toISOString():null,discount_percent:(Number(old?.purchase_count)||0)>=3?18:10,admin_note:str(b.admin_note,1000),updated_at:now.toISOString()};
    if(enabled)patch.last_purchase_at=now.toISOString();
    let row:any=null;
    if(old){
