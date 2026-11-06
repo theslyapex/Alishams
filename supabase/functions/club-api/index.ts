@@ -19,12 +19,8 @@ Deno.serve(async(req:Request)=>{
   let user:any=null,isAdmin=false;
   if(jwt){const auth=createClient(url,anon,{auth:{persistSession:false,autoRefreshToken:false}});const {data,error}=await auth.auth.getUser(jwt);if(!error&&data.user){user=data.user;isAdmin=user.id===ADMIN_ID&&user.email?.toLowerCase()===OWNER}}
   if(action==="leaderboard"){
-   const {data:rows,error}=await db.from("club_point_ledger").select("user_id,points").gt("points",0).limit(20000);if(error)throw error;
-   const totals=new Map<string,number>();for(const row of rows||[])totals.set(row.user_id,(totals.get(row.user_id)||0)+Number(row.points||0));
-   const ranked=[...totals.entries()].map(([id,lifetime])=>({id,lifetime})).sort((a,b)=>b.lifetime-a.lifetime).slice(0,10);
-   const profiles=ranked.length?await db.from("club_profiles").select("user_id,display_name").in("user_id",ranked.map(x=>x.id)):{data:[],error:null};if(profiles.error)throw profiles.error;
-   const names=new Map((profiles.data||[]).map((p:any)=>[p.user_id,p.display_name]));
-   const list=ranked.map((x,i)=>({rank:i+1,display_name:names.get(x.id)||"عضو باشگاه",lifetime_points:x.lifetime,tier:tier(x.lifetime),is_me:user?.id===x.id}));
+   const {data:ranked,error}=await db.rpc("club_leaderboard");if(error)throw error;
+   const list=(ranked||[]).map((x:any,i:number)=>({rank:i+1,display_name:x.display_name||"عضو باشگاه",lifetime_points:Number(x.lifetime_points||0),tier:x.tier,is_me:user?.id===x.user_id}));
    return out({ok:true,leaderboard:list,week_key:weekKey()},200,origin);
   }
   if(!user)return out({error:"برای ادامه وارد حساب کاربری شو."},401,origin);
@@ -34,8 +30,8 @@ Deno.serve(async(req:Request)=>{
     db.from("club_profiles").select("display_name").eq("user_id",user.id).maybeSingle(),
     db.from("club_teaser_requests").select("id,week_key,brief,status,admin_note,delivery_url,created_at").eq("user_id",user.id).order("created_at",{ascending:false}).limit(12)
    ]);if(le||pe||te)throw le||pe||te;
-   const {data:sum,error:se}=await db.from("club_point_ledger").select("points").eq("user_id",user.id);if(se)throw se;
-   const balance=(sum||[]).reduce((a:any,x:any)=>a+Number(x.points),0),lifetime=(sum||[]).reduce((a:any,x:any)=>a+Math.max(0,Number(x.points)),0);
+   const {data:summary,error:se}=await db.rpc("club_account_summary",{p_user_id:user.id});if(se)throw se;
+   const balance=Number(summary?.[0]?.balance||0),lifetime=Number(summary?.[0]?.lifetime||0);
    const current=tier(lifetime),threshold={bronze:0,silver:500,gold:1500,diamond:3500}[current],next={bronze:500,silver:1500,gold:3500,diamond:3500}[current];
    return out({ok:true,display_name:profile?.display_name||"",balance,lifetime,tier:current,next_threshold:next,progress:current==="diamond"?100:Math.max(0,Math.min(100,(lifetime-threshold)/(next-threshold)*100)),ledger:ledger||[],teaser_requests:teasers||[],diamond_eligible:current==="diamond",week_key:weekKey()},200,origin);
   }
