@@ -458,7 +458,8 @@ const size=n=>n<1048576?(n/1024).toFixed(0)+" KB":(n/1048576).toFixed(1)+" MB";
 const toast=t=>{const el=$("toast");if(!el)return;el.textContent=t;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2800)};
 let user,profile,channel,replyTarget=null,recording=null,recorder=null,mediaStream=null,typingTimer,profiles={},signed={},lastDate="",loadingOlder=false,oldest=null,isSearching=false,searchTimer=null,searchRequestId=0,reactionRefreshQueue=new Set(),reactionRefreshTimer=null,notificationEnabled=localStorage.getItem("alishamsCommunityNotifications")==="on",notificationAudio=null;
 const gate=(title,desc,link=true)=>{$("app").innerHTML='<section class="gate"><div class="symbol"><img src="/assets/images/alishams-studio-logo.png" alt="Alishams"></div><h1>'+title+'</h1><p>'+desc+'</p>'+(link?'<a href="/account.html">ورود به حساب کاربری</a>':'')+'</section>'};
-const {data:{session}}=await sb.auth.getSession();
+const sessionResult=await Promise.race([sb.auth.getSession(),new Promise((_,reject)=>setTimeout(()=>reject(new Error("ارتباط با سرویس احراز هویت بیش از ۱۲ ثانیه طول کشید")),12000))]);
+const {data:{session}}=sessionResult;
 if(!session){gate("برای ورود به انجمن، وارد حساب کاربری شوید","گفت‌وگوی عمومی Alishams فقط برای اعضای واردشده در دسترس است.");return}
 user=session.user;
 const ADMIN_USER_ID="20e3df23-9f5a-4d88-8adc-093f75feb5df";
@@ -638,6 +639,10 @@ $("searchMessages").addEventListener("input",e=>{clearTimeout(searchTimer);const
 $("searchMessages").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(searchTimer);runMessageSearch(e.target.value)}if(e.key==="Escape"){e.target.value="";clearTimeout(searchTimer);searchRequestId++;isSearching=false;runMessageSearch("")}});
 document.addEventListener("contextmenu",e=>{if(!e.target.closest("#messages"))e.preventDefault()});document.addEventListener("selectstart",e=>{if(!e.target.closest("#messages")&&!e.target.closest("input,textarea"))e.preventDefault()});document.addEventListener("dragstart",e=>{if(!e.target.closest("#messages"))e.preventDefault()});
 window.addEventListener("beforeunload",()=>{if(channel)sb.removeChannel(channel);if(mediaStream)mediaStream.getTracks().forEach(t=>t.stop())});
-})();
+})().catch(error=>{
+ console.error("Community page initialization failed:",error);
+ const app=document.getElementById("app");
+ if(app)app.innerHTML='<section class="gate"><div class="symbol">!</div><h1>بارگذاری انجمن انجام نشد</h1><p>'+String(error?.message||"خطای ناشناخته").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))+'</p><button type="button" onclick="location.reload()" style="margin-top:12px;background:#d9ff72;color:#15200d;border:0;border-radius:12px;padding:11px 20px;font:inherit;font-weight:800">تلاش دوباره</button></section>';
+});
 </script>
 </body></html>
