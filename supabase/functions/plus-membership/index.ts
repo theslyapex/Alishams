@@ -27,8 +27,9 @@ Deno.serve(async(req:Request)=>{
     db.from("plus_domain_requests").select("id,brand_name,desired_domain,related_order,status,admin_note,created_at").eq("user_id",user.id).order("created_at",{ascending:false}).limit(20)
    ]);if(re||de)throw re||de;
    const {data:latestPayment,error:paymentError}=await db.from("plus_payment_intents").select("id,status,amount_toman,created_at,paid_at").eq("user_id",user.id).order("created_at",{ascending:false}).limit(1).maybeSingle();if(paymentError)throw paymentError;
-   const {data:latestManual,error:manualError}=await db.from("plus_purchase_records").select("id,payment_status,amount_toman,created_at,paid_at,admin_note").eq("user_id",user.id).eq("payment_provider","card_transfer").order("created_at",{ascending:false}).limit(1).maybeSingle();if(manualError)throw manualError;
-   return out({ok:true,membership:membership?{...membership,is_active:active(membership)}:null,reels:reels||[],domains:domains||[],latest_payment:latestPayment||null,latest_manual_payment:latestManual||null},200,origin);
+   const {data:purchaseHistory,error:historyError}=await db.from("plus_purchase_records").select("id,payment_status,amount_toman,discount_percent,created_at,paid_at,admin_note,starts_at,ends_at,payment_provider").eq("user_id",user.id).order("created_at",{ascending:false}).limit(20);if(historyError)throw historyError;
+   const latestManual=(purchaseHistory||[]).find((p:any)=>p.payment_provider==="card_transfer")||null;
+   return out({ok:true,membership:membership?{...membership,is_active:active(membership)}:null,reels:reels||[],domains:domains||[],latest_payment:latestPayment||null,latest_manual_payment:latestManual,purchase_history:purchaseHistory||[]},200,origin);
   }
   if(action==="reel_submit"){
    const {data:m,error:me}=await db.from("plus_memberships").select("*").eq("user_id",user.id).maybeSingle();if(me)throw me;
