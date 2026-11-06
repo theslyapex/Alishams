@@ -294,6 +294,7 @@ document.getElementById('calcPickerDone').addEventListener('click',()=>{pickerPo
 document.addEventListener('click',e=>{if(!e.target.closest('.calc-service-field')){pickerPopup.hidden=true;pickerTrigger.setAttribute('aria-expanded','false')}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){pickerPopup.hidden=true;pickerTrigger.setAttribute('aria-expanded','false')}});
 renderCalcPicker();renderCalcRows();
+window.addEventListener('alishams:plus-discount',()=>updateCalculator());
 const customOfferDeadline=Date.UTC(2027,4,1,0,0,0);
 function refreshCustomOfferPrice(){
  if(Date.now()<customOfferDeadline)return;
