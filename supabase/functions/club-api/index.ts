@@ -40,11 +40,11 @@ Deno.serve(async(req:Request)=>{
    const {data,error}=await db.from("club_profiles").upsert({user_id:user.id,display_name:name,updated_at:new Date().toISOString()},{onConflict:"user_id"}).select("display_name").single();if(error)throw error;return out({ok:true,profile:data},200,origin);
   }
   if(action==="redeem"){
-   const points=Number(body.points),reward=Number(body.reward_toman);const {data,error}=await db.rpc("club_redeem_points",{p_user_id:user.id,p_points:points,p_reward_toman:reward});if(error)return out({error:error.message==="insufficient_points"?"امتیاز کافی برای دریافت این پاداش نداری.":"درخواست دریافت پاداش معتبر نیست."},400,origin);return out({ok:true,result:data},200,origin);
+   return out({error:"تبدیل امتیاز به کد تخفیف تا تکمیل اتصال امن کدهای باشگاه به سامانه سفارش، موقتاً غیرفعال است. امتیازهایت محفوظ می‌مانند."},409,origin);
   }
   if(action==="teaser_submit"){
-   const {data:ledger,error:le}=await db.from("club_point_ledger").select("points").eq("user_id",user.id).gt("points",0);if(le)throw le;
-   const lifetime=(ledger||[]).reduce((a:any,x:any)=>a+Number(x.points),0);if(tier(lifetime)!=="diamond")return out({error:"درخواست تیزر رایگان مخصوص اعضای سطح الماس است."},403,origin);
+   const {data:summary,error:le}=await db.rpc("club_account_summary",{p_user_id:user.id});if(le)throw le;
+   const lifetime=Number(summary?.[0]?.lifetime||0);if(tier(lifetime)!=="diamond")return out({error:"درخواست تیزر رایگان مخصوص اعضای سطح الماس است."},403,origin);
    const brief=str(body.brief,1200);if(brief.length<20)return out({error:"توضیحات تیزر باید حداقل ۲۰ نویسه باشد."},400,origin);
    const {data,error}=await db.from("club_teaser_requests").insert({user_id:user.id,week_key:weekKey(),brief}).select("id,status,week_key,created_at").single();if(error?.code==="23505")return out({error:"سهمیه تیزر رایگان این هفته را قبلاً ثبت کرده‌ای."},409,origin);if(error)throw error;return out({ok:true,request:data},201,origin);
   }
