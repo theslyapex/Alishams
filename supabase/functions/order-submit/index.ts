@@ -26,7 +26,7 @@ if(bearer){
   if(anon){const auth=createClient(url,anon,{auth:{persistSession:false,autoRefreshToken:false}});const {data:authData}=await auth.auth.getUser(bearer);const account=authData?.user;
    if(account?.id&&String(account.email||"").trim().toLowerCase()===client_email){clubAccountId=account.id;
     const {data:membership}=await db.from("plus_memberships").select("status,starts_at,ends_at,discount_percent").eq("user_id",account.id).maybeSingle();
-    if(membership&&membership.status==="active"&&membership.starts_at&&membership.ends_at&&new Date(membership.starts_at).getTime()<=Date.now()&&new Date(membership.ends_at).getTime()>Date.now())plusDiscount=Number(membership.discount_percent)===50?50:35;
+    if(membership&&membership.status==="active"&&membership.starts_at&&membership.ends_at&&new Date(membership.starts_at).getTime()<=Date.now()&&new Date(membership.ends_at).getTime()>Date.now())plusDiscount=Number(membership.discount_percent)===18?18:10;
    }
   }
  }catch(e){console.error("Plus membership validation skipped",e)}
@@ -68,7 +68,7 @@ if(discount_code&&!clubVoucherId){
  if(discountSaveError){await db.rpc("release_discount_code",{p_code:appliedCode});await db.from("client_orders").delete().eq("id",order.id);throw discountSaveError}
 }
 if(plusDiscount>appliedDiscount){
- appliedDiscount=plusDiscount;appliedCode=plusDiscount===50?"PLUS50":"PLUS35";
+ appliedDiscount=plusDiscount;appliedCode=plusDiscount===18?"PLUS18":"PLUS10";
  const {error:plusSaveError}=await db.from("client_orders").update({discount_code:appliedCode,discount_percent:appliedDiscount}).eq("id",order.id);
  if(plusSaveError)throw plusSaveError;
 }
