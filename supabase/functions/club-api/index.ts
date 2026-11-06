@@ -42,8 +42,17 @@ Deno.serve(async(req:Request)=>{
   }
   if(action==="redeem"){
    const points=Number(body.points),reward=Number(body.reward_toman);
+   const allowedRewards:Record<number,number>={500:50000,1000:120000,2000:300000,3500:600000};
+   if(!Number.isInteger(points)||!Number.isInteger(reward)||allowedRewards[points]!==reward)
+    return out({error:"مقدار امتیاز یا مبلغ پاداش معتبر نیست. صفحه را تازه‌سازی و دوباره تلاش کن."},400,origin);
    const {data:result,error}=await db.rpc("club_redeem_points",{p_user_id:user.id,p_points:points,p_reward_toman:reward});
-   if(error)return out({error:error.message==="insufficient_points"?"امتیاز کافی برای دریافت این پاداش نداری.":"درخواست دریافت پاداش معتبر نیست."},400,origin);
+   if(error){
+    console.error("club redemption RPC failed",{code:error.code,message:error.message,details:error.details,hint:error.hint,user_id:user.id,points,reward});
+    const reason=String(error.message||"").toLowerCase();
+    if(reason.includes("insufficient_points"))return out({error:"امتیاز قابل استفاده‌ات برای این پاداش کافی نیست. موجودی امتیاز را بررسی کن."},400,origin);
+    if(reason.includes("invalid_reward"))return out({error:"اطلاعات این پاداش با قوانین باشگاه مطابقت ندارد. صفحه را تازه‌سازی کن."},400,origin);
+    return out({error:"صدور کد پاداش با خطای پایگاه داده روبه‌رو شد. لطفاً چند دقیقه بعد دوباره تلاش کن."},500,origin);
+   }
    return out({ok:true,voucher:result},200,origin);
   }
   if(action==="teaser_submit"){
