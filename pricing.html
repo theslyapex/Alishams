@@ -275,7 +275,7 @@ function updateCalculator(){
   if(plusEstimate){
    const discount=Number(window.__alishamsPlusDiscount);
    let eligibleMin=0,eligibleMax=0;
-   const excluded=new Set(['customBrandWebsite','ads','social','igfollowers','iglikes','goldStore']);
+   const excluded=new Set(['customBrandWebsite','bronzeStore','silverStore','ads','social','goldStore']);
    pickerRows.querySelectorAll('.calc-selected-row').forEach(row=>{
     const key=row.dataset.key,d=calcData[key],qty=Math.max(1,Math.min(100,Number.parseInt(row.querySelector('input').value||'1',10)||1));
     if(!d||d.quote||excluded.has(key))return;
