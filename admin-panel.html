@@ -78,7 +78,7 @@ iframe{min-width:0}
 const nav=document.getElementById('mainNav'),frame=document.getElementById('moduleFrame'),title=document.getElementById('moduleTitle'),reload=document.getElementById('reloadModule');
 const names={dashboard:'داشبورد اصلی',orders:'مدیریت سفارش‌ها',projects:'مدیریت پروژه‌ها',messages:'مکاتبات و پیام‌ها',videos:'مدیریت ویدئوها',comments:'مدیریت دیدگاه‌ها',portfolio:'مدیریت نمونه‌کارها',services:'مدیریت وضعیت خدمات',plus:'مدیریت عضویت پلاس+',club:'مدیریت باشگاه مشتریان',community:'مدیریت انجمن کاربران'};
 let current='dashboard';
-function activate(key,src,updateHash=true){const btn=nav.querySelector('[data-key="'+key+'"]');if(!btn)return;current=key;nav.querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===btn));title.textContent=names[key];if(frame.getAttribute('src')!==src)frame.src=src;if(updateHash)history.replaceState(null,'','#'+key)}
+function activate(key,src,updateHash=true){const btn=nav.querySelector('[data-key="'+key+'"]');if(!btn)return;current=key;nav.querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===btn));title.textContent=names[key];const target=key==='plus'?'plus-admin.html?v=71a9eda':src;if(frame.getAttribute('src')!==target)frame.src=target;if(updateHash)history.replaceState(null,'','#'+key)}
 nav.addEventListener('click',e=>{const b=e.target.closest('button[data-key]');if(b)activate(b.dataset.key,b.dataset.src)});
 reload.addEventListener('click',()=>{try{frame.contentWindow.location.reload()}catch{frame.src=frame.src}});
 window.addEventListener('message',e=>{if(e.origin!==location.origin||e.data?.type!=='alishams-admin-nav')return;const b=nav.querySelector('[data-src="'+e.data.path.replace(/^\//,'')+'"]');if(b)activate(b.dataset.key,b.dataset.src)});
