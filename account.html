@@ -282,6 +282,17 @@
 }
 
 </style>
+<style>
+.account-notification{padding:15px 16px;margin:10px 0;border-radius:16px;background:linear-gradient(120deg,#ffffff08,#ffffff03);border:1px solid #ffffff13}
+.account-notification.is-unread{border-color:#d9ff7250;background:linear-gradient(110deg,#d9ff720d,#a58bff08)}
+.account-notification .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.account-notification strong{font-size:13px}
+.account-notification p{font-size:12px;line-height:2;color:#c1c5d0;margin:8px 0}
+.account-notification time,.notification-read,.notification-new{font-size:10px;color:#9298a8}
+.notification-source{white-space:nowrap;border:1px solid #a58bff35;border-radius:999px;padding:4px 8px;background:#a58bff0d;color:#d5c8ff;font-size:10px}
+.notification-new{color:#dcff82;font-weight:700}
+@media(max-width:520px){.account-notification{padding:12px}.account-notification strong{font-size:12px}.notification-source{font-size:9px;padding:3px 7px}.account-notification p{font-size:11px}}
+</style>
 <section class="club-hero">
 <span class="club-kicker">ALISHAMS CLUB · MEMBER AREA</span>
 <h2>باشگاه مشتریان</h2>
@@ -495,7 +506,7 @@ function renderOrders(orders,events=[]){const list=$("ordersList");if(!orders.le
 list.innerHTML=orders.map(o=>'<article class="item"><div class="row"><h3>'+esc(o.title)+'</h3><span class="badge">'+esc(statusLabel(o.status))+'</span></div><p>'+esc((Array.isArray(o.services)&&o.services.length?o.services:[o.service]).filter(Boolean).join('، '))+' · ثبت '+esc(date(o.created_at))+'</p><p>کد سفارش: '+esc(o.tracking_code||"—")+'</p><p>بودجه اولیه: '+esc(o.budget||"تعیین نشده")+'</p>'+(Number(o.quoted_price)>0?'<p>قیمت پیشنهادی: '+faNum(o.quoted_price)+' تومان</p>':"")+(Number(o.discount_percent)>0?'<p>تخفیف اعمال‌شده: '+faNum(o.discount_percent)+'٪</p>':"")+(Number(o.payable_amount)>0?'<p>مبلغ نهایی پس از تخفیف: '+faNum(o.payable_amount)+' تومان</p>':"")+(o.eta_date?'<p>تاریخ تحویل پیشنهادی: '+esc(date(o.eta_date))+'</p>':"")+(o.public_message?'<p>'+esc(o.public_message)+'</p>':"")+'</article>').join("");
 const byOrder={};for(const ev of events)(byOrder[ev.order_id]??=[]).push(ev);
 $("orderEventsList").innerHTML=events.length?orders.map(o=>{const es=byOrder[o.id]||[];return es.length?'<article class="item"><h3>'+esc(o.title)+'</h3>'+es.map(ev=>'<div class="message"><strong>'+esc(statusLabel(ev.status))+'</strong><p>'+esc(ev.public_message||"به‌روزرسانی وضعیت سفارش")+'</p><time>'+esc(date(ev.created_at))+'</time></div>').join("")+'</article>':""}).filter(Boolean).join(""):'<div class="empty">هنوز رویدادی در تاریخچه سفارش‌ها ثبت نشده است.</div>'}
-function renderProjectNotifications(items=[]){const root=$("projectNotificationsList");if(!root)return;const unread=items.filter(n=>!n.read_at);$("notificationCount").textContent=faNum(unread.length);root.innerHTML=items.length?items.map(n=>'<article class="item"><strong>'+esc(n.title||"اعلان")+(n.read_at?"":" · جدید")+"</strong><p>"+esc(n.body||"")+"</p><time>"+esc(dateTime(n.created_at))+"</time></article>").join(""):'<div class="empty">اعلان جدیدی ندارید.</div>'}
+function renderProjectNotifications(items=[]){const root=$("projectNotificationsList");if(!root)return;const unread=items.filter(n=>!n.read_at);$("notificationCount").textContent=faNum(unread.length);const labels={project:"پروژه‌ها",club_point_ledger:"باشگاه مشتریان",club_reward_vouchers:"باشگاه مشتریان",club_teaser_requests:"باشگاه مشتریان",plus_payment_intents:"پلاس+",plus_purchase_records:"پلاس+",plus_memberships:"پلاس+",plus_reel_requests:"پلاس+",plus_domain_requests:"پلاس+",referral_attributions:"دعوت دوستان",referral_rewards:"دعوت دوستان"};const icons={project:"▣",club_point_ledger:"♛",club_reward_vouchers:"♛",club_teaser_requests:"♛",plus_payment_intents:"✦",plus_purchase_records:"✦",plus_memberships:"✦",plus_reel_requests:"✦",plus_domain_requests:"✦",referral_attributions:"↗",referral_rewards:"↗"};root.innerHTML=items.length?items.map(n=>{const src=n.source||"project";return '<article class="item account-notification '+(n.read_at?"is-read":"is-unread")+'"><div class="row"><strong>'+esc(n.title||"اعلان")+'</strong><span class="notification-source">'+(icons[src]||"•")+' '+esc(labels[src]||"حساب کاربری")+'</span></div><p>'+esc(n.body||"")+'</p><div class="row"><time>'+esc(dateTime(n.created_at))+'</time>'+(n.read_at?'<small class="notification-read">خوانده‌شده</small>':'<small class="notification-new">جدید</small>')+'</div></article>'}).join(""):'<div class="empty">هنوز اعلانی برای حساب شما ثبت نشده است.</div>'}
 function renderProjects(projects,payments=[],history=[],files=[],intents=[]){
  const list=$("projectsList");
  if(!projects.length){list.innerHTML='<div class="empty">هنوز پروژه‌ای با ایمیل این حساب پیدا نشد.</div>'; $("projectDetailsList").innerHTML='<div class="empty">جزئیاتی برای نمایش نیست.</div>';return}
