@@ -626,14 +626,13 @@ async function runMessageSearch(rawTerm){
  const term=rawTerm.trim(),requestId=++searchRequestId;
  if(term.length<2){isSearching=false;clearTimeout(searchTimer);await loadMessages();$("subline").textContent="گفتگوی زنده اعضا · اتصال برقرار است";return}
  isSearching=true;$("messages").innerHTML='<div class="loading">در حال جست‌وجو در پیام‌ها…</div>';$("subline").textContent="نتایج جست‌وجو برای «"+esc(term)+"»";
- const {data,error}=await sb.from("community_messages").select("*").ilike("body","%"+term.replace(/[\\%_]/g,"\\$("searchMessages").addEventListener("keydown",async e=>{if(e.key!=="Enter")return;const term=e.target.value.trim();if(term.length<2)return;const {data,error}=await sb.from("community_messages").select("*").ilike("body","%"+term+"%").is("deleted_at",null).order("created_at",{ascending:false}).limit(40);if(error){toast("جست‌وجو انجام نشد");return}$("messages").innerHTML="";for(const m of (data||[]).reverse())await renderMessage(m);if(!data?.length)$("messages").innerHTML='<div class="empty">نتیجه‌ای پیدا نشد.</div>'});")+"%").is("deleted_at",null).order("created_at",{ascending:false}).limit(100);
+ const {data,error}=await sb.from("community_messages").select("*").ilike("body","%"+term+"%").is("deleted_at",null).order("created_at",{ascending:false}).limit(100);
  if(requestId!==searchRequestId)return;
- if(error){$("messages").innerHTML='<div class="empty"><div><strong>جست‌وجو انجام نشد</strong>لطفاً دوباره تلاش کنید.</div></div>';toast("جست‌وجو انجام نشد: "+error.message);return}
+ if(error){$("messages").innerHTML='<div class="empty"><div><strong>جست‌وجو انجام نشد</strong>لطفاً دوباره تلاش کنید.</div></div>';toast("جست‌وجو انجام نشد");return}
  const rows=(data||[]).reverse();$("messages").innerHTML="";
  for(const m of rows){if(requestId!==searchRequestId)return;await renderMessage(m)}
  if(!rows.length)$("messages").innerHTML='<div class="empty"><div><strong>نتیجه‌ای پیدا نشد</strong>عبارت دیگری را امتحان کنید.</div></div>';
- $("messages").scrollTop=0;
- $("subline").textContent=rows.length+" نتیجه برای «"+term+"»";
+ $("messages").scrollTop=0;$("subline").textContent=rows.length+" نتیجه برای «"+term+"»";
 }
 $("searchMessages").addEventListener("input",e=>{clearTimeout(searchTimer);const term=e.target.value.trim();if(!term){searchRequestId++;isSearching=false;runMessageSearch("");return}if(term.length<2){isSearching=false;return}$("subline").textContent="در حال آماده‌سازی جست‌وجو…";searchTimer=setTimeout(()=>runMessageSearch(term),350)});
 $("searchMessages").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(searchTimer);runMessageSearch(e.target.value)}if(e.key==="Escape"){e.target.value="";clearTimeout(searchTimer);searchRequestId++;isSearching=false;runMessageSearch("")}});
