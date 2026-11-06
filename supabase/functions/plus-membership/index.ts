@@ -76,6 +76,57 @@ Deno.serve(async(req:Request)=>{
    const q=str(b.query,180).toLowerCase();if(q.length<2)return out({ok:true,users:[]},200,origin);
    const users:any[]=[];for(let page=1;page<=20;page++){const {data,error}=await db.auth.admin.listUsers({page,perPage:100});if(error)throw error;for(const u of data.users||[]){const email=String(u.email||"").toLowerCase(),name=String(u.user_metadata?.full_name||"").toLowerCase();if(email.includes(q)||name.includes(q)||u.id===q)users.push({id:u.id,email:u.email,name:u.user_metadata?.full_name||"",created_at:u.created_at});}if(!data.users||data.users.length<100||users.length>=30)break;}return out({ok:true,users:users.slice(0,30)},200,origin);
   }
+  if(action==="admin_analytics"){
+   const now=new Date(),nowIso=now.toISOString(),monthStart=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth()-11,1)).toISOString();
+   const countQuery=async(table:string,configure:(q:any)=>any)=>{
+    let q=db.from(table).select("id",{count:"exact",head:true});
+    q=configure(q);
+    const {count,error}=await q;
+    if(error)throw error;
+    return count||0;
+   };
+   const [memberTotal,activeMembers,expiredMembers,inactiveMembers,suspendedMembers,pendingManual,pendingReels,pendingDomains]=await Promise.all([
+    countQuery("plus_memberships",q=>q),
+    countQuery("plus_memberships",q=>q.eq("status","active").or("starts_at.is.null,starts_at.lte."+nowIso).gt("ends_at",nowIso)),
+    countQuery("plus_memberships",q=>q.eq("status","active").lte("ends_at",nowIso)),
+    countQuery("plus_memberships",q=>q.eq("status","inactive")),
+    countQuery("plus_memberships",q=>q.eq("status","suspended")),
+    countQuery("plus_purchase_records",q=>q.eq("payment_provider","card_transfer").eq("payment_status","pending")),
+    countQuery("plus_reel_requests",q=>q.eq("status","pending")),
+    countQuery("plus_domain_requests",q=>q.eq("status","pending"))
+   ]);
+   const transactions:any[]=[];
+   for(let offset=0;offset<10000;offset+=500){
+    const {data,error}=await db.from("plus_purchase_records").select("id,user_id,amount_toman,payment_status,created_at,paid_at,payment_provider").eq("payment_status","paid").order("paid_at",{ascending:true,nullsFirst:true}).range(offset,offset+499);
+    if(error)throw error;
+    transactions.push(...(data||[]).map((x:any)=>({...x,source:"manual",paid_at:x.paid_at||x.created_at})));
+    if(!data||data.length<500)break;
+   }
+   for(let offset=0;offset<10000;offset+=500){
+    const {data,error}=await db.from("plus_payment_intents").select("id,user_id,amount_toman,status,created_at,paid_at").eq("status","paid").order("paid_at",{ascending:true,nullsFirst:true}).range(offset,offset+499);
+    if(error)throw error;
+    transactions.push(...(data||[]).map((x:any)=>({...x,payment_status:x.status,source:"online",paid_at:x.paid_at||x.created_at})));
+    if(!data||data.length<500)break;
+   }
+   transactions.sort((a:any,b:any)=>new Date(a.paid_at).getTime()-new Date(b.paid_at).getTime());
+   const seenUsers=new Set<string>(),monthly:any[]=[];
+   for(let i=0;i<12;i++){
+    const d=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth()-11+i,1));
+    monthly.push({month:d.toISOString().slice(0,7),revenue:0,sales:0,renewals:0});
+   }
+   let lifetimeRevenue=0,renewalCount=0;
+   for(const tx of transactions){
+    const amount=Math.max(0,Number(tx.amount_toman)||0);
+    lifetimeRevenue+=amount;
+    const uid=String(tx.user_id||"");
+    const renewal=!!uid&&seenUsers.has(uid);
+    if(uid)seenUsers.add(uid);
+    if(renewal)renewalCount++;
+    const month=String(tx.paid_at||"").slice(0,7),bucket=monthly.find((x:any)=>x.month===month);
+    if(bucket){bucket.revenue+=amount;bucket.sales++;if(renewal)bucket.renewals++;}
+   }
+   return out({ok:true,stats:{members_total:memberTotal,members_active:activeMembers,members_expired:expiredMembers,members_inactive:inactiveMembers,members_suspended:suspendedMembers,pending_manual_payments:pendingManual,pending_reel_requests:pendingReels,pending_domain_requests:pendingDomains,paid_purchases:transactions.length,lifetime_revenue:lifetimeRevenue,renewals:renewalCount},monthly_revenue:monthly,renewal_report:monthly.map((x:any)=>({month:x.month,renewals:x.renewals,sales:x.sales,revenue:x.revenue})),generated_at:nowIso},200,origin);
+  }
   if(action==="admin_list"){
    const [{data:members,error:me},{data:reels,error:re},{data:domains,error:de},{data:payments,error:pe},{data:manualRows,error:manualError}]=await Promise.all([
     db.from("plus_memberships").select("*").order("updated_at",{ascending:false}).limit(500),
