@@ -3,6 +3,14 @@
   const SUPABASE_KEY = "sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB";
   const money = value => new Intl.NumberFormat("fa-IR").format(Math.round(value)) + " تومان";
 
+  function addStyles() {
+    if (document.getElementById("plus-service-benefits-style")) return;
+    const style = document.createElement("style");
+    style.id = "plus-service-benefits-style";
+    style.textContent = ".plus-quote-preview{position:relative;z-index:1;max-width:1180px;margin:18px auto 26px;padding:clamp(16px,2.5vw,22px);border:1px solid rgba(182,160,255,.42);border-radius:18px;background:radial-gradient(circle at 95% 0%,rgba(217,255,114,.09),transparent 42%),linear-gradient(135deg,rgba(17,24,35,.96),rgba(8,12,20,.98));display:grid;gap:10px;color:#e8e4f2;box-shadow:0 14px 35px rgba(0,0,0,.16)}.plus-quote-preview .plus-tier-label{color:#d9ff72;font-size:12px;font-weight:900}.plus-quote-preview .plus-tier-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px;border:1px solid rgba(255,255,255,.08);border-radius:10px;color:#c9c7d2;font-size:12px}.plus-quote-preview .plus-tier-row strong{color:#f5f3ee;white-space:nowrap}.plus-quote-preview .plus-tier-row.is-current-tier{border-color:#d9ff7260;background:#d9ff7212}.plus-quote-preview small{color:#aeb6c5;font-size:11px;line-height:1.9}.plus-quote-preview>a{width:max-content;max-width:100%;color:#d9ff72;font-size:11px;font-weight:800}.plus-quote-preview .plus-member-result{display:grid;gap:6px;padding:12px;border-radius:12px;background:#d9ff7210;border:1px solid #d9ff7240;font-size:11px;line-height:1.9}.plus-quote-preview .plus-member-result>strong{color:#d9ff72;font-size:12px}.plus-quote-preview .plus-member-result small{font-size:10px}@media(max-width:560px){.plus-quote-preview{margin:14px 14px 22px;padding:15px}.plus-quote-preview .plus-tier-row{align-items:flex-start;flex-direction:column;gap:3px}}";
+    document.head.appendChild(style);
+  }
+
   function addQuotePreview() {
     if (document.querySelector(".plus-tier-preview")) return;
     const pricing = document.querySelector(".pricing-highlight");
@@ -57,6 +65,7 @@
   }
 
   async function init() {
+    addStyles();
     addQuotePreview();
     if (!document.querySelector(".plus-tier-preview")) return;
     try {
