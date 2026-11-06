@@ -1576,6 +1576,52 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 </section>
 <section class="section" id="contact"><div class="wrap"><div class="contact-panel reveal"><span class="eyebrow">HAVE A GOOD IDEA?</span><h2>بیا چیزی بسازیم که<br><span style="color:var(--lime)">ارزش دیده‌شدن</span> داشته باشه.</h2><p>کافیه بگی چه چیزی توی ذهنته. با یک گفت‌وگوی کوتاه می‌تونیم مسیر مناسب پروژه رو پیدا کنیم.</p><div class="hero-actions"><button class="btn btn-primary" id="openOrder">شروع سفارش <span class="arrow">↗︎</span></button><a class="btn btn-quiet" href="#services">مرور خدمات <span class="arrow">↑︎</span></a></div></div></div></section>
 </main>
+
+<section class="section club-league" id="alishamsLeague" aria-labelledby="clubLeagueTitle">
+<style>
+.club-league{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#b6a0ff13,transparent 55%),#0b0c10;border-top:1px solid #ffffff10;border-bottom:1px solid #ffffff10}
+.club-league .club-league-head{text-align:center;max-width:760px;margin:0 auto 42px}
+.club-league .club-league-head h2{font-size:clamp(30px,4vw,48px);line-height:1.35;margin:13px 0;color:#f5f3ee}
+.club-league .club-league-head h2 span{color:#d9ff72}
+.club-league .club-league-head p{color:#a5a5ad;margin:0;font-size:14px}
+.club-league .club-kicker{color:#d9ff72;font:800 11px Manrope,Estedad,sans-serif;letter-spacing:2px}
+.club-league .club-podium{display:grid;grid-template-columns:1fr 1.12fr 1fr;align-items:end;gap:14px;max-width:880px;margin:0 auto 25px}
+.club-league .club-podium-card{position:relative;min-width:0;text-align:center;padding:22px 14px 19px;border:1px solid #ffffff18;border-radius:22px;background:linear-gradient(155deg,#ffffff0c,#ffffff03);box-shadow:0 18px 45px #0004}
+.club-league .club-podium-card.first{padding-top:30px;padding-bottom:26px;border-color:#d9ff7277;background:radial-gradient(circle at 50% 0%,#d9ff7224,transparent 65%),linear-gradient(155deg,#272516,#13140f);box-shadow:0 18px 55px #d9ff7210}
+.club-league .club-podium-card.second{border-color:#cbd5e155;background:radial-gradient(circle at 50% 0%,#cbd5e51b,transparent 70%),#15171d}
+.club-league .club-podium-card.third{border-color:#cd8b5c55;background:radial-gradient(circle at 50% 0%,#cd8b5c1b,transparent 70%),#191411}
+.club-league .club-medal{width:54px;height:54px;margin:0 auto 12px;display:grid;place-items:center;border-radius:18px;font-size:25px;background:#ffffff0b}
+.club-league .first .club-medal{width:64px;height:64px;font-size:30px;background:#d9ff7218;box-shadow:0 0 35px #d9ff7220}
+.club-league .club-rank{font:800 10px Manrope,sans-serif;letter-spacing:1.5px;color:#a5a5ad}
+.club-league .club-name{display:block;margin:8px 0 3px;font-size:15px;font-weight:800;overflow-wrap:anywhere}
+.club-league .club-tier{font-size:10px;color:#b6a0ff}
+.club-league .club-score{display:block;margin-top:10px;color:#d9ff72;font:800 18px Manrope,sans-serif}
+.club-league .second .club-score{color:#e2e8f0}.club-league .third .club-score{color:#e8a875}
+.club-league .club-rest{max-width:880px;margin:auto;border:1px solid #ffffff12;border-radius:20px;background:#ffffff04;overflow:hidden}
+.club-league .club-rest-head,.club-league .club-row{display:grid;grid-template-columns:65px minmax(0,1fr) 110px 120px;align-items:center;gap:12px;padding:13px 19px}
+.club-league .club-rest-head{color:#898c97;font-size:10px;background:#ffffff05;border-bottom:1px solid #ffffff10}
+.club-league .club-row{border-bottom:1px solid #ffffff0b;font-size:12px}
+.club-league .club-row:last-child{border-bottom:0}
+.club-league .club-row .club-row-rank{color:#a5a5ad;font:700 12px Manrope}
+.club-league .club-row .club-row-name{font-weight:700;overflow-wrap:anywhere}
+.club-league .club-row .club-row-tier{color:#b6a0ff;font-size:10px}
+.club-league .club-row .club-row-score{font:700 12px Manrope;color:#d9ff72;text-align:left}
+.club-league .club-row.me{background:#d9ff720a}
+.club-league .club-league-foot{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin-top:25px}
+.club-league .club-league-foot p{margin:0;color:#9da0aa;font-size:11px}
+.club-league .club-join{display:inline-flex;align-items:center;justify-content:center;padding:11px 19px;border-radius:999px;background:#d9ff72;color:#10110d;font-size:12px;font-weight:800}
+.club-league .club-league-empty{padding:25px;text-align:center;color:#a5a5ad;font-size:12px}
+@media(max-width:620px){.club-league{padding:70px 0}.club-league .club-podium{gap:7px}.club-league .club-podium-card{padding:15px 7px;border-radius:16px}.club-league .club-podium-card.first{padding:19px 7px}.club-league .club-medal{width:42px;height:42px;font-size:20px}.club-league .first .club-medal{width:48px;height:48px;font-size:24px}.club-league .club-name{font-size:11px}.club-league .club-score{font-size:13px}.club-league .club-tier{font-size:9px}.club-league .club-rest-head,.club-league .club-row{grid-template-columns:36px minmax(0,1fr) 70px 78px;padding:11px 10px;gap:7px;font-size:10px}.club-league .club-row .club-row-score{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.club-league *{scroll-behavior:auto!important;transition:none!important}}
+</style>
+<div class="wrap">
+ <header class="club-league-head"><span class="club-kicker">ALISHAMS CLUB · HALL OF FAME</span><h2 id="clubLeagueTitle">رقابت برای <span>رتبه برتر</span></h2><p>۱۰ عضو برتر باشگاه؛ امتیازهای کسب‌شده، نه موجودی خرج‌نشده، رتبه را مشخص می‌کند.</p></header>
+ <div id="clubLeaguePodium" class="club-podium" aria-live="polite"><div class="club-league-empty" style="grid-column:1/-1">در حال دریافت جدول لیگ…</div></div>
+ <div class="club-rest"><div class="club-rest-head"><span>رتبه</span><span>عضو باشگاه</span><span>سطح</span><span style="text-align:left">امتیاز کل</span></div><div id="clubLeagueRows"><div class="club-league-empty">در حال بارگذاری رتبه‌بندی…</div></div></div>
+ <div class="club-league-foot"><a class="club-join" href="/account.html">ورود به باشگاه مشتریان ↗</a><p>با خرید خدمات و پلاس+ امتیاز کسب کن و در لیگ پیشرفت کن.</p></div>
+</div>
+</section>
+
 <section class="section instagram-studio-section" id="instagramStudio" aria-labelledby="instagramStudioTitle">
 <div class="wrap">
  <div class="instagram-studio-card">
@@ -2176,6 +2222,18 @@ document.getElementById('year').textContent=new Date().getFullYear();
 #orderDialog label.single-service-label[for="serviceSelect"],#orderDialog #serviceSelect{display:none!important;visibility:hidden!important;position:absolute!important;width:1px!important;height:1px!important;max-height:1px!important;margin:0!important;padding:0!important;opacity:0!important;pointer-events:none!important;clip-path:inset(50%)!important}
 #orderDialog #multiServicePicker{display:block!important;visibility:visible!important}
 </style>
+
+<script>
+(()=>{const endpoint="https://srfldjfrzmtnlabusssq.supabase.co/functions/v1/club-api",podium=document.getElementById("clubLeaguePodium"),rows=document.getElementById("clubLeagueRows");if(!podium||!rows)return;
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num=n=>Number(n||0).toLocaleString("fa-IR"),tier={diamond:"الماس",gold:"طلایی",silver:"نقره‌ای",bronze:"برنزی"},medals=["👑","🥈","🥉"],classes=["first","second","third"];
+fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"leaderboard"})}).then(r=>r.json().then(d=>{if(!r.ok||!d.ok)throw Error(d.error||"leaderboard");return d})).then(d=>{
+const list=d.leaderboard||[];if(!list.length){podium.innerHTML='<div class="club-league-empty" style="grid-column:1/-1">هنوز امتیازی برای رتبه‌بندی ثبت نشده است. اولین عضو برتر باشگاه باش!</div>';rows.innerHTML="";return}
+const top=list.slice(0,3);const order=[top[1],top[0],top[2]].filter(Boolean);podium.innerHTML=order.map(x=>{const i=x.rank-1,cl=classes[i]||"",medal=medals[i]||"✦";return '<article class="club-podium-card '+cl+'"><div class="club-medal">'+medal+'</div><span class="club-rank">RANK #'+num(x.rank)+'</span><strong class="club-name">'+esc(x.display_name)+'</strong><span class="club-tier">'+esc(tier[x.tier]||"عضو")+'</span><b class="club-score">'+num(x.lifetime_points)+' XP</b></article>'}).join("");
+rows.innerHTML=list.slice(3,10).map(x=>'<div class="club-row '+(x.is_me?"me":"")+'"><span class="club-row-rank">#'+num(x.rank)+'</span><strong class="club-row-name">'+esc(x.display_name)+(x.is_me?" · شما":"")+'</strong><span class="club-row-tier">'+esc(tier[x.tier]||"عضو")+'</span><b class="club-row-score">'+num(x.lifetime_points)+' XP</b></div>').join("");
+}).catch(()=>{podium.innerHTML='<div class="club-league-empty" style="grid-column:1/-1">جدول لیگ موقتاً در دسترس نیست؛ کمی بعد دوباره تلاش کن.</div>';rows.innerHTML=""});
+})();
+</script>
 </body>
 <style id="remove-visible-legacy-order-service">
 /* Keep the native select only as the form's hidden data source; the custom picker below is the sole visible control. */
