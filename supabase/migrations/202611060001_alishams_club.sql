@@ -187,3 +187,44 @@ end $$;
 drop trigger if exists club_qualified_referral_award on public.referral_attributions;
 create trigger club_qualified_referral_award after insert or update of status on public.referral_attributions
 for each row execute function public.club_award_qualified_referral();
+
+
+-- Fixed-value Club vouchers are tied to one account and can be redeemed on one order only.
+alter table public.client_orders
+ add column if not exists club_reward_toman bigint not null default 0,
+ add column if not exists club_reward_code text;
+create table if not exists public.club_reward_vouchers (
+ id uuid primary key default gen_random_uuid(),
+ user_id uuid not null references auth.users(id) on delete cascade,
+ code text not null unique,
+ points_spent integer not null check(points_spent in (500,1000,2000,3500)),
+ reward_toman bigint not null check(reward_toman in (50000,120000,300000,600000)),
+ status text not null default 'available' check(status in ('available','redeemed','expired')),
+ redeemed_order_id uuid references public.client_orders(id) on delete set null,
+ created_at timestamptz not null default now(),
+ redeemed_at timestamptz
+);
+create index if not exists club_vouchers_user_idx on public.club_reward_vouchers(user_id,created_at desc);
+alter table public.club_reward_vouchers enable row level security;
+drop policy if exists club_vouchers_read_own on public.club_reward_vouchers;
+create policy club_vouchers_read_own on public.club_reward_vouchers for select to authenticated using(auth.uid()=user_id);
+
+create or replace function public.club_redeem_points(p_user_id uuid,p_points integer,p_reward_toman integer)
+returns jsonb language plpgsql security definer set search_path=public,pg_temp as $$
+declare v_balance bigint; v_cost integer; v_code text;
+begin
+ if p_points not in (500,1000,2000,3500) then raise exception 'invalid_reward'; end if;
+ v_cost:=case p_points when 500 then 50000 when 1000 then 120000 when 2000 then 300000 when 3500 then 600000 end;
+ if p_reward_toman<>v_cost then raise exception 'invalid_reward_value'; end if;
+ perform pg_advisory_xact_lock(hashtext(p_user_id::text));
+ select coalesce(sum(points),0) into v_balance from public.club_point_ledger where user_id=p_user_id;
+ if v_balance<p_points then raise exception 'insufficient_points'; end if;
+ v_code:='CLUB-'||upper(substr(replace(gen_random_uuid()::text,'-',''),1,10));
+ insert into public.club_point_ledger(user_id,points,event_type,source_id,description)
+ values(p_user_id,-p_points,'reward_redemption',v_code,'تبدیل امتیاز به اعتبار تخفیف '+v_cost::text+' تومانی');
+ insert into public.club_reward_vouchers(user_id,code,points_spent,reward_toman)
+ values(p_user_id,v_code,p_points,v_cost);
+ return jsonb_build_object('ok',true,'code',v_code,'points_spent',p_points,'reward_toman',v_cost);
+end $$;
+revoke all on function public.club_redeem_points(uuid,integer,integer) from public,anon,authenticated;
+grant execute on function public.club_redeem_points(uuid,integer,integer) to service_role;
