@@ -19,7 +19,7 @@ if(availabilityError)throw availabilityError;
 const unavailable=services.filter((name:string)=>availability?.order_services?.[name]===false);
 if(unavailable.length)return res({error:"یکی از خدمات انتخاب‌شده در حال حاضر غیرفعال است: "+unavailable.join("، ")},400,o);
 const hasDomainService=services.some((name:string)=>/دامنه|domain|ثبت دامنه|خرید دامنه/i.test(name));
-const hasWebsiteDesign=services.some((name:string)=>/طراحی\\s*وب.?سایت|طراحی\\s*وب|website\\s*design|web\\s*design|پک اقتصادی طراحی سایت/i.test(name));
+const hasWebsiteDesign=services.some((name:string)=>/طراحی\s*وب.?سایت|طراحی\s*وب|website\s*design|web\s*design|پک اقتصادی طراحی سایت/i.test(name));
 const domainOnly=hasDomainService&&!hasWebsiteDesign;
 let plusDiscount=0,clubAccountId="",clubRewardAmount=0,clubVoucherId="",clubVoucherCode="";
 const bearer=(req.headers.get("Authorization")||"").replace(/^Bearer\s+/i,"");
