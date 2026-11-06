@@ -53,6 +53,18 @@ Deno.serve(async(req:Request)=>{
    const {data,error}=await db.from("club_teaser_requests").insert({user_id:user.id,week_key:weekKey(),brief}).select("id,status,week_key,created_at").single();if(error?.code==="23505")return out({error:"سهمیه تیزر رایگان این هفته را قبلاً ثبت کرده‌ای."},409,origin);if(error)throw error;return out({ok:true,request:data},201,origin);
   }
   if(!isAdmin)return out({error:"دسترسی مدیریت مجاز نیست."},403,origin);
+  if(action==="admin_users"){
+   const page=Math.max(1,Math.min(100,Number(body.page)||1));
+   const authRes=await fetch(url+"/auth/v1/admin/users?page="+page+"&per_page=1000",{headers:{"apikey":service,"Authorization":"Bearer "+service}});
+   if(!authRes.ok)throw new Error("فهرست کاربران از سرویس احراز هویت دریافت نشد.");
+   const authData=await authRes.json(),authUsers=Array.isArray(authData.users)?authData.users:[];
+   const ids=authUsers.map((x:any)=>x.id).filter(Boolean);
+   const profiles=ids.length?await db.from("club_profiles").select("user_id,display_name").in("user_id",ids):{data:[],error:null};
+   if(profiles.error)throw profiles.error;
+   const names=new Map((profiles.data||[]).map((x:any)=>[x.user_id,x.display_name]));
+   const users=authUsers.map((x:any)=>({id:x.id,email:x.email||"",phone:x.phone||"",created_at:x.created_at||null,last_sign_in_at:x.last_sign_in_at||null,email_confirmed_at:x.email_confirmed_at||null,display_name:names.get(x.id)||x.user_metadata?.full_name||x.user_metadata?.name||x.user_metadata?.display_name||""}));
+   return out({ok:true,users,page,has_more:authUsers.length===1000},200,origin);
+  }
   if(action==="admin_list"){
    const [{data:ledger,error:le},{data:teasers,error:te}]=await Promise.all([db.from("club_point_ledger").select("*").order("created_at",{ascending:false}).limit(300),db.from("club_teaser_requests").select("*").order("created_at",{ascending:false}).limit(200)]);if(le||te)throw le||te;
    const ids=[...new Set([...(ledger||[]).map((x:any)=>x.user_id),...(teasers||[]).map((x:any)=>x.user_id)])];const profiles=ids.length?await db.from("club_profiles").select("user_id,display_name").in("user_id",ids):{data:[],error:null};if(profiles.error)throw profiles.error;const names=new Map((profiles.data||[]).map((x:any)=>[x.user_id,x.display_name]));
