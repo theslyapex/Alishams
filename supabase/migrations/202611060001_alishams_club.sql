@@ -123,3 +123,30 @@ revoke all on function public.club_redeem_points(uuid,integer,integer) from publ
 grant execute on function public.club_award_points(uuid,integer,text,text,text) to service_role;
 grant execute on function public.club_award_service_purchase(uuid,uuid,bigint) to service_role;
 grant execute on function public.club_redeem_points(uuid,integer,integer) to service_role;
+
+
+create or replace function public.club_account_summary(p_user_id uuid)
+returns table(balance bigint,lifetime bigint)
+language sql stable security definer set search_path=public,pg_temp as $$
+ select coalesce(sum(points),0)::bigint,
+        coalesce(sum(greatest(points,0)),0)::bigint
+ from public.club_point_ledger where user_id=p_user_id;
+$$;
+
+create or replace function public.club_leaderboard()
+returns table(user_id uuid,display_name text,lifetime_points bigint,tier text)
+language sql stable security definer set search_path=public,pg_temp as $$
+ select l.user_id,coalesce(p.display_name,'عضو باشگاه'),
+        sum(greatest(l.points,0))::bigint,
+        public.club_tier(sum(greatest(l.points,0))::integer)
+ from public.club_point_ledger l
+ left join public.club_profiles p on p.user_id=l.user_id
+ group by l.user_id,p.display_name
+ having sum(greatest(l.points,0))>0
+ order by sum(greatest(l.points,0)) desc,l.user_id
+ limit 10;
+$$;
+revoke all on function public.club_account_summary(uuid) from public,anon,authenticated;
+revoke all on function public.club_leaderboard() from public,anon,authenticated;
+grant execute on function public.club_account_summary(uuid) to service_role;
+grant execute on function public.club_leaderboard() to service_role;
