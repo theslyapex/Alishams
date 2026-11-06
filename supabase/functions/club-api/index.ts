@@ -4,7 +4,7 @@ const ORIGINS=new Set(["https://alishams.ir","https://www.alishams.ir"]),OWNER="
 const headers=(o:string)=>({"Access-Control-Allow-Origin":ORIGINS.has(o)?o:"https://alishams.ir","Access-Control-Allow-Headers":"authorization, apikey, content-type","Access-Control-Allow-Methods":"POST, OPTIONS","Vary":"Origin","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});
 const out=(d:unknown,s:number,o:string)=>new Response(JSON.stringify(d),{status:s,headers:headers(o)});
 const str=(v:unknown,n:number)=>String(v??"").trim().slice(0,n);
-const tier=(n:number)=>n>=3500?"diamond":n>=1500?"gold":n>=500?"silver":"bronze";
+const tier=(n:number)=>n>=9500?"diamond":n>=5000?"gold":n>=2500?"silver":"none";
 const weekKey=()=>{const now=new Date(),d=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()));const day=(d.getUTCDay()+6)%7;d.setUTCDate(d.getUTCDate()-day);return d.toISOString().slice(0,10)};
 Deno.serve(async(req:Request)=>{
  const origin=req.headers.get("origin")||"";
@@ -33,7 +33,7 @@ Deno.serve(async(req:Request)=>{
    ]);if(le||pe||te||ve)throw le||pe||te||ve;
    const {data:summary,error:se}=await db.rpc("club_account_summary",{p_user_id:user.id});if(se)throw se;
    const balance=Number(summary?.[0]?.balance||0),lifetime=Number(summary?.[0]?.lifetime||0);
-   const current=tier(lifetime),threshold={bronze:0,silver:500,gold:1500,diamond:3500}[current],next={bronze:500,silver:1500,gold:3500,diamond:3500}[current];
+   const current=tier(lifetime),threshold={none:0,silver:2500,gold:5000,diamond:9500}[current],next={none:2500,silver:5000,gold:9500,diamond:9500}[current];
    return out({ok:true,display_name:profile?.display_name||"",balance,lifetime,tier:current,next_threshold:next,progress:current==="diamond"?100:Math.max(0,Math.min(100,(lifetime-threshold)/(next-threshold)*100)),ledger:ledger||[],teaser_requests:teasers||[],vouchers:vouchers||[],diamond_eligible:current==="diamond",week_key:weekKey()},200,origin);
   }
   if(action==="profile_update"){
@@ -42,7 +42,7 @@ Deno.serve(async(req:Request)=>{
   }
   if(action==="redeem"){
    const points=Number(body.points),reward=Number(body.reward_toman);
-   const allowedRewards:Record<number,number>={500:50000,1000:120000,2000:300000,3500:600000};
+   const allowedRewards:Record<number,number>={2500:150000,5000:300000,7500:600000,9500:1200000};
    if(!Number.isInteger(points)||!Number.isInteger(reward)||allowedRewards[points]!==reward)
     return out({error:"مقدار امتیاز یا مبلغ پاداش معتبر نیست. صفحه را تازه‌سازی و دوباره تلاش کن."},400,origin);
    const {data:result,error}=await db.rpc("club_redeem_points",{p_user_id:user.id,p_points:points,p_reward_toman:reward});
