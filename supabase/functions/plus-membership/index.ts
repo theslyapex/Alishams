@@ -79,7 +79,7 @@ Deno.serve(async(req:Request)=>{
   if(action==="admin_analytics"){
    const now=new Date(),nowIso=now.toISOString(),monthStart=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth()-11,1)).toISOString();
    const countQuery=async(table:string,configure:(q:any)=>any)=>{
-    let q=db.from(table).select("id",{count:"exact",head:true});
+    let q=db.from(table).select("*",{count:"exact",head:true});
     q=configure(q);
     const {count,error}=await q;
     if(error)throw error;
