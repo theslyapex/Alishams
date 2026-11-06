@@ -37,7 +37,7 @@
     document.querySelectorAll(".plus-tier-preview").forEach(card => {
       card.classList.add("is-member-active");
       const label = card.querySelector(".plus-tier-label");
-      if (label) label.textContent = "مزیت فعال پلاس+ · تخفیف حساب شما";
+      if (label) label.textContent = card.dataset.priceLabel ? "تخفیف حساب شما · " + card.dataset.priceLabel : "مزیت فعال پلاس+ · تخفیف حساب شما";
       card.querySelectorAll(".plus-tier-row").forEach(row => {
         const active = Number(row.dataset.discount) === discount;
         row.classList.toggle("is-current-tier", active);
