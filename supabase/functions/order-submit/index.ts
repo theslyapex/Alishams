@@ -18,13 +18,13 @@ const {data:availability,error:availabilityError}=await db.from("site_service_se
 if(availabilityError)throw availabilityError;
 const unavailable=services.filter((name:string)=>availability?.order_services?.[name]===false);
 if(unavailable.length)return res({error:"یکی از خدمات انتخاب‌شده در حال حاضر غیرفعال است: "+unavailable.join("، ")},400,o);
-let plusDiscount=0;
+let plusDiscount=0,clubAccountId="",clubRewardAmount=0,clubVoucherId="",clubVoucherCode="";
 const bearer=(req.headers.get("Authorization")||"").replace(/^Bearer\s+/i,"");
 if(bearer){
  try{
   const anon=Deno.env.get("SUPABASE_ANON_KEY")||"";
   if(anon){const auth=createClient(url,anon,{auth:{persistSession:false,autoRefreshToken:false}});const {data:authData}=await auth.auth.getUser(bearer);const account=authData?.user;
-   if(account?.id&&String(account.email||"").trim().toLowerCase()===client_email){
+   if(account?.id&&String(account.email||"").trim().toLowerCase()===client_email){clubAccountId=account.id;
     const {data:membership}=await db.from("plus_memberships").select("status,starts_at,ends_at,discount_percent").eq("user_id",account.id).maybeSingle();
     if(membership&&membership.status==="active"&&membership.starts_at&&membership.ends_at&&new Date(membership.starts_at).getTime()<=Date.now()&&new Date(membership.ends_at).getTime()>Date.now())plusDiscount=Number(membership.discount_percent)===50?50:35;
    }
@@ -32,7 +32,13 @@ if(bearer){
  }catch(e){console.error("Plus membership validation skipped",e)}
 }
 const access=rand();
-if(discount_code){
+if(discount_code.startsWith("CLUB-")){
+ if(!clubAccountId)return res({error:"برای استفاده از اعتبار باشگاه باید با همان حساب کاربری وارد شده باشی."},401,o);
+ const {data:voucher,error:voucherError}=await db.from("club_reward_vouchers").select("id,user_id,code,reward_toman,status").eq("code",discount_code).eq("user_id",clubAccountId).maybeSingle();
+ if(voucherError)throw voucherError;
+ if(!voucher||voucher.status!=="available")return res({error:"کد اعتبار باشگاه معتبر نیست یا قبلاً استفاده شده است."},400,o);
+ clubVoucherId=voucher.id;clubVoucherCode=voucher.code;clubRewardAmount=Number(voucher.reward_toman)||0;
+}else if(discount_code){
  const {data:referralReward,error:referralError}=await db.from("referral_rewards").select("user_id,status").eq("discount_code",discount_code).maybeSingle();
  if(referralError)throw referralError;
  if(referralReward){
@@ -46,8 +52,14 @@ let tracking=code();
 for(let i=0;i<4;i++){const {data}=await db.from("client_orders").select("id").eq("tracking_code",tracking).maybeSingle();if(!data)break;tracking=code()}
 const {data:order,error}=await db.from("client_orders").insert({tracking_code:tracking,access_token_hash:await hash(access),client_name,client_email,contact_info,service,services,title,details,budget}).select("id,tracking_code,created_at").single();
 if(error)throw error;
-let appliedDiscount=0,appliedCode="";
-if(discount_code){
+if(clubVoucherId){
+ const {error:orderVoucherError}=await db.from("client_orders").update({club_reward_toman:clubRewardAmount,club_reward_code:clubVoucherCode}).eq("id",order.id);
+ if(orderVoucherError){await db.from("client_orders").delete().eq("id",order.id);throw orderVoucherError}
+ const {data:usedVoucher,error:useVoucherError}=await db.from("club_reward_vouchers").update({status:"redeemed",redeemed_order_id:order.id,redeemed_at:new Date().toISOString()}).eq("id",clubVoucherId).eq("status","available").select("id").maybeSingle();
+ if(useVoucherError||!usedVoucher){await db.from("client_orders").delete().eq("id",order.id);return res({error:"این کد اعتبار هم‌زمان استفاده شده است؛ لطفاً دوباره تلاش کن."},409,o)}
+}
+let appliedDiscount=0,appliedCode=clubVoucherCode;
+if(discount_code&&!clubVoucherId){
  const {data:redeemed,error:redeemError}=await db.rpc("redeem_discount_code",{p_code:discount_code,p_service:service});
  const row=Array.isArray(redeemed)?redeemed[0]:redeemed;
  if(redeemError||!row){await db.from("client_orders").delete().eq("id",order.id);return res({error:"کد تخفیف دیگر معتبر نیست یا ظرفیت استفاده از آن تکمیل شده است. لطفاً کد دیگری وارد کن."},400,o)}
@@ -68,7 +80,7 @@ let telegramSent=false;
 const bot=Deno.env.get("TELEGRAM_BOT_TOKEN"),chat=Deno.env.get("TELEGRAM_CHAT_ID");
 if(bot&&chat){
  try{
-  const message="🆕 سفارش جدید | استودیو دیجیتال Alishams\n\n👤 نام: "+safe(client_name,120)+"\n📧 ایمیل: "+safe(client_email,254)+"\n📱 تماس: "+safe(contact_info,254)+"\n🛠 خدمات: "+safe(service,1500)+"\n📝 عنوان: "+safe(title,180)+"\n📄 توضیحات: "+safe(details,3500)+"\n💰 بودجه: "+safe(budget,100)+"\n🎟 کد تخفیف: "+(appliedCode?appliedCode+" ("+appliedDiscount+"%)":"ندارد")+"\n🔎 کد پیگیری: "+tracking+"\n🔐 کلید خصوصی پیگیری: "+access+"\n🕒 زمان ثبت: "+new Date(order.created_at).toLocaleString("fa-IR",{timeZone:"Asia/Tehran"})+"\n\n🔗 پنل مدیریت: https://alishams.ir/orders-admin.html\n⚠️ کلید خصوصی را فقط برای پیگیری همین سفارش نگه دار.";
+  const message="🆕 سفارش جدید | استودیو دیجیتال Alishams\n\n👤 نام: "+safe(client_name,120)+"\n📧 ایمیل: "+safe(client_email,254)+"\n📱 تماس: "+safe(contact_info,254)+"\n🛠 خدمات: "+safe(service,1500)+"\n📝 عنوان: "+safe(title,180)+"\n📄 توضیحات: "+safe(details,3500)+"\n💰 بودجه: "+safe(budget,100)+"\n🎟 کد تخفیف: "+(appliedCode?appliedCode+" ("+appliedDiscount+"%)":"ندارد")+"\n🎁 اعتبار باشگاه: "+(clubRewardAmount?clubRewardAmount.toLocaleString("fa-IR")+" تومان":"ندارد")+"\n🔎 کد پیگیری: "+tracking+"\n🔐 کلید خصوصی پیگیری: "+access+"\n🕒 زمان ثبت: "+new Date(order.created_at).toLocaleString("fa-IR",{timeZone:"Asia/Tehran"})+"\n\n🔗 پنل مدیریت: https://alishams.ir/orders-admin.html\n⚠️ کلید خصوصی را فقط برای پیگیری همین سفارش نگه دار.";
   const tr=await fetch("https://api.telegram.org/bot"+bot+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:chat,text:message,disable_web_page_preview:true})});
   const tj=await tr.json();telegramSent=tr.ok&&tj.ok===true;
   if(!telegramSent)console.error("Telegram order notification failed",tj?.description||tr.status);
