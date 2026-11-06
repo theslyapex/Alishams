@@ -150,3 +150,40 @@ revoke all on function public.club_account_summary(uuid) from public,anon,authen
 revoke all on function public.club_leaderboard() from public,anon,authenticated;
 grant execute on function public.club_account_summary(uuid) to service_role;
 grant execute on function public.club_leaderboard() to service_role;
+
+
+-- Award service-purchase points only when an existing project payment is explicitly confirmed by an administrator.
+create or replace function public.club_award_confirmed_project_payment()
+returns trigger language plpgsql security definer set search_path=public,auth,pg_temp as $$
+declare v_email text; v_user uuid; v_points integer; v_first boolean;
+begin
+ if new.confirmed is true and (tg_op='INSERT' or old.confirmed is distinct from true) then
+   select lower(client_email) into v_email from public.client_projects where id=new.project_id;
+   select id into v_user from auth.users where lower(email)=v_email limit 1;
+   if v_user is not null then
+     v_points:=floor(greatest(coalesce(new.amount,0),0)/100000.0)::integer*10;
+     if v_points>0 then
+       perform public.club_award_points(v_user,v_points,'service_purchase',new.id::text,'امتیاز پرداخت تأییدشده پروژه');
+       select not exists(select 1 from public.club_point_ledger where user_id=v_user and event_type='first_purchase_bonus') into v_first;
+       if v_first then perform public.club_award_points(v_user,100,'first_purchase_bonus','first','هدیه اولین خرید'); end if;
+     end if;
+   end if;
+ end if;
+ return new;
+end $$;
+drop trigger if exists club_confirmed_project_payment_award on public.project_payments;
+create trigger club_confirmed_project_payment_award after insert or update of confirmed on public.project_payments
+for each row execute function public.club_award_confirmed_project_payment();
+
+-- Qualified referrals receive points exactly once per attribution.
+create or replace function public.club_award_qualified_referral()
+returns trigger language plpgsql security definer set search_path=public,pg_temp as $$
+begin
+ if new.status='qualified' and (tg_op='INSERT' or old.status is distinct from 'qualified') then
+   perform public.club_award_points(new.referrer_user_id,150,'referral_bonus',new.id::text,'پاداش دعوت مشتری جدید');
+ end if;
+ return new;
+end $$;
+drop trigger if exists club_qualified_referral_award on public.referral_attributions;
+create trigger club_qualified_referral_award after insert or update of status on public.referral_attributions
+for each row execute function public.club_award_qualified_referral();
