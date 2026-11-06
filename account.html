@@ -214,7 +214,8 @@
 .plus-card .plus-row small{color:#b1a8c3}
 #plusPanel>section:nth-child(2){border-color:#a78bfa35;background:linear-gradient(145deg,#171323,#101117)}
 #plusPanel>section:nth-child(2) .item{border-color:#a78bfa25;background:#a78bfa08}
-@media(max-width:560px){.plus-dashboard-hero{align-items:flex-start}.plus-emblem{width:60px;height:60px;flex-basis:60px;border-radius:19px}.plus-emblem span{font-size:35px}.plus-metrics{gap:6px}.plus-card .plus-stat{padding:10px 8px}.plus-card .plus-stat span{font-size:9px}.plus-card .plus-stat strong{font-size:18px}.plus-card .plus-stat small{font-size:8px}}
+.plus-date-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:11px 0}.plus-date-box,.plus-payment-box,.plus-history-box{min-width:0;border:1px solid #a78bfa2c;border-radius:15px;padding:13px;background:linear-gradient(145deg,#a78bfa0c,#ffffff03)}.plus-date-box span{display:block;color:#aaa1ba;font-size:10px;margin-bottom:6px}.plus-date-box strong{display:block;color:#eee6ff;font-size:12px;overflow-wrap:anywhere}.plus-payment-box,.plus-history-box{margin-top:12px}.plus-payment-box h3,.plus-history-box h3{font-size:13px;margin:0}.plus-payment-box .empty{padding:12px}.plus-history-box .plus-row{display:grid;gap:5px}.plus-history-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.plus-history-status{display:inline-flex;border-radius:8px;padding:3px 8px;font-size:10px;border:1px solid #a78bfa40;color:#d8c8ff;background:#a78bfa12}.plus-history-status.paid{color:#d9ff72;border-color:#d9ff7255;background:#d9ff720d}.plus-history-status.failed{color:#ff9aa7;border-color:#ff839255;background:#ff83920d}.plus-history-status.pending{color:#ffd58a;border-color:#ffd58a55;background:#ffd58a0d}
+@media(max-width:560px){.plus-dashboard-hero{align-items:flex-start}.plus-emblem{width:60px;height:60px;flex-basis:60px;border-radius:19px}.plus-emblem span{font-size:35px}.plus-metrics{gap:6px}.plus-card .plus-stat{padding:10px 8px}.plus-card .plus-stat span{font-size:9px}.plus-card .plus-stat strong{font-size:18px}.plus-card .plus-stat small{font-size:8px}.plus-date-grid{gap:7px}.plus-date-box{padding:10px}.plus-date-box strong{font-size:11px}}
 </style>
 <div class="plus-dashboard-hero"><div class="plus-dashboard-copy"><span class="plus-kicker">ALISHAMS · EXCLUSIVE MEMBERSHIP</span><h2>پلاس+؛ سطح بالاتری از مزایا</h2><p>تخفیف‌های ویژه، هدیه‌های اختصاصی و مدیریت ساده‌تر امتیازهای عضویت؛ همه در یک پنل.</p><span class="plus-badge"><b>+</b> عضویت ویژه پلاس+</span></div><div class="plus-emblem" aria-hidden="true"><span>+</span><small>PLUS</small></div></div>
 <div id="plusMembershipSummary" class="notice">در حال بررسی وضعیت عضویت…</div>
@@ -223,9 +224,21 @@
 <div class="plus-stat"><span>اعتبار باقی‌مانده</span><strong id="plusDaysValue">—</strong><small>روز تا پایان دوره</small></div>
 <div class="plus-stat"><span>دفعات خرید عضویت</span><strong id="plusPurchaseCount">۰</strong><small>سوابق خرید پلاس+</small></div>
 </div>
+<div class="plus-date-grid">
+<div class="plus-date-box"><span>تاریخ شروع دوره فعلی</span><strong id="plusStartDate">—</strong></div>
+<div class="plus-date-box"><span>تاریخ پایان دوره فعلی</span><strong id="plusEndDate">—</strong></div>
+</div>
 <div class="plus-progress-wrap"><div class="plus-progress-top"><strong>وضعیت دوره عضویت</strong><span id="plusProgressLabel">در انتظار فعال‌سازی</span></div><div class="plus-progress-track"><span id="plusProgressFill"></span></div></div>
 <p id="plusViewsSummary" class="muted">هدیه بازدید: ۰ از ۱۵٬۰۰۰ ویو تحویل شده است.</p>
 <div id="plusBuyArea" style="margin:16px 0"><a class="btn plus-action" href="/plus.html">مشاهده و خرید عضویت پلاس+ · ۲٬۸۹۰٬۰۰۰ تومان</a></div>
+<div class="plus-payment-box">
+<div class="section-head"><h3>آخرین وضعیت پرداخت</h3><small id="plusPaymentDate">—</small></div>
+<div id="plusPaymentStatus" class="empty">هنوز پرداختی ثبت نشده است.</div>
+</div>
+<div class="plus-history-box">
+<div class="section-head"><h3>سوابق خرید و تمدید</h3><small>۲۰ تراکنش اخیر</small></div>
+<div id="plusPurchaseHistory" class="plus-list"><div class="empty">در حال دریافت سوابق…</div></div>
+</div>
 <hr style="border:0;border-top:1px solid #a78bfa30;margin:18px 0">
 <h3>هدیه روزانه ۵۰۰ بازدید ریلز</h3>
 <p class="muted">هر روز یک لینک ریلز ثبت کن تا درخواست ۵۰۰ بازدید رایگان برایت ثبت شود. مجموع سهمیه در ۳۰ روز ۱۵٬۰۰۰ بازدید است. حساب اینستاگرام و ریلز باید عمومی (Public) باشد؛ لینک خصوصی یا نامعتبر پذیرفته نمی‌شود.</p>
@@ -280,15 +293,33 @@ async function baleApi(action="list",extra={}){const {data,error}=await sb.auth.
 async function plusApi(action="status",extra={}){const {data,error}=await sb.auth.getSession();if(error||!data.session)throw new Error("برای استفاده از پلاس+ وارد حساب کاربری شو.");const r=await fetch(URL+"/functions/v1/plus-membership",{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+data.session.access_token},body:JSON.stringify({action,...extra})});const d=await r.json().catch(()=>({}));if(!r.ok||!d.ok)throw new Error(d.error||"درخواست پلاس+ انجام نشد.");return d}
 function renderPlus(data){
  const m=data?.membership,summary=$("plusMembershipSummary");if(!summary)return;
- const active=!!m?.is_active,days=active?Math.max(0,Math.ceil((new Date(m.ends_at)-Date.now())/86400000)):0;$("accountPlusLabel").hidden=!active;$("plusBuyArea").innerHTML=active?'<a class="btn plus-action" href="/plus.html">تمدید عضویت پلاس+ و افزودن ۳۰ روز</a>':'<a class="btn plus-action" href="/plus.html">خرید عضویت پلاس+ · ۲٬۸۹۰٬۰۰۰ تومان</a>';
- const manual=data?.latest_manual_payment;summary.textContent=active?"عضویت پلاس+ شما فعال است؛ اعتبار تا "+dateTime(m.ends_at):manual?.payment_status==="pending"?"رسید کارت‌به‌کارت شما ثبت شده و در انتظار اعتبارسنجی مدیر است؛ تا اعلام نتیجه، عضویت فعال نیست.":manual?.payment_status==="failed"?"رسید قبلی تأیید نشد. برای بررسی علت با پشتیبانی تماس بگیر یا رسید معتبر جدید ارسال کن.":"هنوز عضویت فعالی نداری؛ با خرید پلاس+ مزایای اختصاصی را فعال کن.";
+ const active=!!m?.is_active,days=active?Math.max(0,Math.ceil((new Date(m.ends_at)-Date.now())/86400000)):0;
+ $("accountPlusLabel").hidden=!active;
+ $("plusBuyArea").innerHTML=active?'<a class="btn plus-action" href="/plus.html">تمدید عضویت پلاس+ و افزودن ۳۰ روز</a>':'<a class="btn plus-action" href="/plus.html">خرید عضویت پلاس+ · ۲٬۸۹۰٬۰۰۰ تومان</a>';
+ const manual=data?.latest_manual_payment,latestPayment=data?.latest_payment;
+ summary.textContent=active?"عضویت پلاس+ شما فعال است؛ اعتبار تا "+dateTime(m.ends_at):manual?.payment_status==="pending"?"رسید کارت‌به‌کارت شما ثبت شده و در انتظار اعتبارسنجی مدیر است؛ تا اعلام نتیجه، عضویت فعال نیست.":manual?.payment_status==="failed"?"رسید قبلی تأیید نشد. برای بررسی علت با پشتیبانی تماس بگیر یا رسید معتبر جدید ارسال کن.":m?.status==="suspended"?"عضویت پلاس+ شما موقتاً غیرفعال شده است؛ برای بررسی با پشتیبانی تماس بگیر.":"هنوز عضویت فعالی نداری؛ با خرید پلاس+ مزایای اختصاصی را فعال کن.";
  summary.className="notice"+(active?" success":"");
- $("plusDiscountValue").textContent=active?faNum(m.discount_percent)+"٪":"—";$("plusDaysValue").textContent=active?faNum(days):"—";$("plusPurchaseCount").textContent=faNum(m?.purchase_count||0);
+ $("plusDiscountValue").textContent=active?faNum(m.discount_percent)+"٪":"—";
+ $("plusDaysValue").textContent=active?faNum(days):"—";
+ $("plusPurchaseCount").textContent=faNum(m?.purchase_count||0);
+ $("plusStartDate").textContent=active&&m.starts_at?dateTime(m.starts_at):"—";
+ $("plusEndDate").textContent=active&&m.ends_at?dateTime(m.ends_at):"—";
  const total=active&&m.starts_at?Math.max(1,new Date(m.ends_at)-new Date(m.starts_at)):0,remaining=active?Math.max(0,new Date(m.ends_at)-Date.now()):0,elapsed=total?Math.max(0,Math.min(100,100-(remaining/total*100))):0;
- $("plusProgressFill").style.width=(active?elapsed:0)+"%";$("plusProgressLabel").textContent=active?"اعتبار تا "+date(m.ends_at):"در انتظار فعال‌سازی";const delivered=(data?.reels||[]).reduce((sum,x)=>sum+Number(x.delivered_views||0),0);$("plusViewsSummary").textContent="بازدید تحویل‌شده: "+faNum(delivered)+" از ۱۵٬۰۰۰ · باقی‌مانده: "+faNum(Math.max(0,15000-delivered))+" ویو";
+ $("plusProgressFill").style.width=(active?elapsed:0)+"%";
+ $("plusProgressLabel").textContent=active?"گذشته "+faNum(Math.round(elapsed))+"٪ از دوره":"در انتظار فعال‌سازی";
+ const reels=data?.reels||[],delivered=reels.reduce((sum,x)=>sum+Number(x.delivered_views||0),0);
+ $("plusViewsSummary").textContent="بازدید تحویل‌شده: "+faNum(delivered)+" از ۱۵٬۰۰۰ · باقی‌مانده: "+faNum(Math.max(0,15000-delivered))+" ویو";
  $("plusReelForm").hidden=!active;$("plusDomainForm").hidden=!active;
- $("plusReelList").innerHTML=(data?.reels||[]).length?data.reels.map(x=>'<div class="plus-row"><strong>'+esc(x.request_day)+'</strong> · '+esc(statusLabel(x.status))+'<br><small>۵۰۰ بازدید · تحویل: '+faNum(x.delivered_views||0)+'</small><br><a href="'+esc(x.reel_url)+'" target="_blank" rel="noopener">مشاهده ریلز</a>'+(x.admin_note?'<p>'+esc(x.admin_note)+'</p>':"")+'</div>').join(""):'<div class="empty">هنوز درخواستی ثبت نشده است.</div>';
- $("plusDomainList").innerHTML=(data?.domains||[]).length?data.domains.map(x=>'<div class="plus-row"><strong>'+esc(x.desired_domain)+'</strong> · '+esc(x.status)+'<br><small>'+esc(x.brand_name)+' — '+esc(x.related_order)+'</small>'+(x.admin_note?'<p>'+esc(x.admin_note)+'</p>':"")+'</div>').join(""):'<div class="empty">درخواست دامنه‌ای ثبت نشده است.</div>';
+ const paymentStatus=(value)=>({pending:"در انتظار بررسی",paid:"پرداخت تأیید شد",failed:"رد شده",cancelled:"لغو شده",expired:"منقضی شده",precheckout:"در حال پرداخت"})[value]||value||"نامشخص";
+ const paymentTone=(value)=>value==="paid"?"paid":value==="failed"||value==="cancelled"||value==="expired"?"failed":"pending";
+ const latest=manual||latestPayment;
+ $("plusPaymentDate").textContent=latest?.created_at?dateTime(latest.created_at):"—";
+ $("plusPaymentStatus").innerHTML=latest?'<div class="plus-history-meta"><strong>'+esc(paymentStatus(latest.payment_status||latest.status))+'</strong><span class="plus-history-status '+paymentTone(latest.payment_status||latest.status)+'">'+esc(paymentStatus(latest.payment_status||latest.status))+'</span></div><p class="muted">مبلغ: '+faNum(latest.amount_toman||0)+' تومان · '+(latest.paid_at?"تاریخ تأیید: "+esc(dateTime(latest.paid_at)):"ثبت: "+esc(dateTime(latest.created_at)))+'</p>'+(latest.admin_note?'<p class="muted">توضیح مدیریت: '+esc(latest.admin_note)+'</p>':""):'<div class="empty">هنوز پرداختی ثبت نشده است.</div>';
+ const history=data?.purchase_history||[];
+ $("plusPurchaseHistory").innerHTML=history.length?history.map(x=>'<article class="plus-row"><div class="plus-history-meta"><strong>'+esc(dateTime(x.created_at))+'</strong><span class="plus-history-status '+paymentTone(x.payment_status)+'">'+esc(paymentStatus(x.payment_status))+'</span></div><small>'+faNum(x.amount_toman||0)+' تومان · تخفیف ثبت‌شده '+faNum(x.discount_percent||0)+'٪</small>'+(x.paid_at?'<small>تأیید پرداخت: '+esc(dateTime(x.paid_at))+'</small>':"")+(x.admin_note?'<small>یادداشت: '+esc(x.admin_note)+'</small>':"")+'</article>').join(""):'<div class="empty">هنوز سابقه خرید یا تمدیدی ثبت نشده است.</div>';
+ $("plusReelList").innerHTML=reels.length?reels.map(x=>'<div class="plus-row"><strong>'+esc(x.request_day)+'</strong> · '+esc(statusLabel(x.status))+'<br><small>۵۰۰ بازدید · تحویل: '+faNum(x.delivered_views||0)+'</small><br><a href="'+esc(x.reel_url)+'" target="_blank" rel="noopener">مشاهده ریلز</a>'+(x.admin_note?'<p>'+esc(x.admin_note)+'</p>':"")+'</div>').join(""):'<div class="empty">هنوز درخواستی ثبت نشده است.</div>';
+ const domains=data?.domains||[];
+ $("plusDomainList").innerHTML=domains.length?domains.map(x=>'<div class="plus-row"><strong>'+esc(x.desired_domain)+'</strong> · '+esc(({pending:"در انتظار بررسی",checking:"در حال بررسی",registered:"ثبت شده",rejected:"رد شده"})[x.status]||x.status)+'<br><small>'+esc(x.brand_name)+' — '+esc(x.related_order)+'</small>'+(x.admin_note?'<p>'+esc(x.admin_note)+'</p>':"")+'</div>').join(""):'<div class="empty">درخواست دامنه‌ای ثبت نشده است.</div>';
 }
 function renderOrders(orders,events=[]){const list=$("ordersList");if(!orders.length){list.innerHTML='<div class="empty">هنوز سفارشی با ایمیل این حساب پیدا نشد.<br>برای سفارش جدید، بخش خدمات را ببین.</div>';$("orderEventsList").innerHTML='<div class="empty">تاریخچه‌ای برای نمایش نیست.</div>';return}
 list.innerHTML=orders.map(o=>'<article class="item"><div class="row"><h3>'+esc(o.title)+'</h3><span class="badge">'+esc(statusLabel(o.status))+'</span></div><p>'+esc((Array.isArray(o.services)&&o.services.length?o.services:[o.service]).filter(Boolean).join('، '))+' · ثبت '+esc(date(o.created_at))+'</p><p>کد سفارش: '+esc(o.tracking_code||"—")+'</p><p>بودجه اولیه: '+esc(o.budget||"تعیین نشده")+'</p>'+(Number(o.quoted_price)>0?'<p>قیمت پیشنهادی: '+faNum(o.quoted_price)+' تومان</p>':"")+(Number(o.discount_percent)>0?'<p>تخفیف اعمال‌شده: '+faNum(o.discount_percent)+'٪</p>':"")+(Number(o.payable_amount)>0?'<p>مبلغ نهایی پس از تخفیف: '+faNum(o.payable_amount)+' تومان</p>':"")+(o.eta_date?'<p>تاریخ تحویل پیشنهادی: '+esc(date(o.eta_date))+'</p>':"")+(o.public_message?'<p>'+esc(o.public_message)+'</p>':"")+'</article>').join("");
