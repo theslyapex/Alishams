@@ -18,6 +18,9 @@ const {data:availability,error:availabilityError}=await db.from("site_service_se
 if(availabilityError)throw availabilityError;
 const unavailable=services.filter((name:string)=>availability?.order_services?.[name]===false);
 if(unavailable.length)return res({error:"یکی از خدمات انتخاب‌شده در حال حاضر غیرفعال است: "+unavailable.join("، ")},400,o);
+const hasDomainService=services.some((name:string)=>/دامنه|domain|ثبت دامنه|خرید دامنه/i.test(name));
+const hasWebsiteDesign=services.some((name:string)=>/طراحی\\s*وب.?سایت|طراحی\\s*وب|website\\s*design|web\\s*design|پک اقتصادی طراحی سایت/i.test(name));
+const domainOnly=hasDomainService&&!hasWebsiteDesign;
 let plusDiscount=0,clubAccountId="",clubRewardAmount=0,clubVoucherId="",clubVoucherCode="";
 const bearer=(req.headers.get("Authorization")||"").replace(/^Bearer\s+/i,"");
 if(bearer){
@@ -35,13 +38,13 @@ if(bearer){
  }catch(e){console.error("Plus membership validation skipped",e)}
 }
 const access=rand();
-if(discount_code.startsWith("CLUB-")){
+if(!domainOnly&&discount_code.startsWith("CLUB-")){
  if(!clubAccountId)return res({error:"برای استفاده از اعتبار باشگاه باید با همان حساب کاربری وارد شده باشی."},401,o);
  const {data:voucher,error:voucherError}=await db.from("club_reward_vouchers").select("id,user_id,code,reward_toman,status").eq("code",discount_code).eq("user_id",clubAccountId).maybeSingle();
  if(voucherError)throw voucherError;
  if(!voucher||voucher.status!=="available")return res({error:"کد اعتبار باشگاه معتبر نیست یا قبلاً استفاده شده است."},400,o);
  clubVoucherId=voucher.id;clubVoucherCode=voucher.code;clubRewardAmount=Number(voucher.reward_toman)||0;
-}else if(discount_code){
+}else if(!domainOnly&&discount_code){
  const {data:referralReward,error:referralError}=await db.from("referral_rewards").select("user_id,status").eq("discount_code",discount_code).maybeSingle();
  if(referralError)throw referralError;
  if(referralReward){
@@ -62,7 +65,7 @@ if(clubVoucherId){
  if(useVoucherError||!usedVoucher){await db.from("client_orders").delete().eq("id",order.id);return res({error:"این کد اعتبار هم‌زمان استفاده شده است؛ لطفاً دوباره تلاش کن."},409,o)}
 }
 let appliedDiscount=0,appliedCode=clubVoucherCode;
-if(discount_code&&!clubVoucherId){
+if(!domainOnly&&discount_code&&!clubVoucherId){
  const {data:redeemed,error:redeemError}=await db.rpc("redeem_discount_code",{p_code:discount_code,p_service:service});
  const row=Array.isArray(redeemed)?redeemed[0]:redeemed;
  if(redeemError||!row){await db.from("client_orders").delete().eq("id",order.id);return res({error:"کد تخفیف دیگر معتبر نیست یا ظرفیت استفاده از آن تکمیل شده است. لطفاً کد دیگری وارد کن."},400,o)}
@@ -70,7 +73,7 @@ if(discount_code&&!clubVoucherId){
  const {error:discountSaveError}=await db.from("client_orders").update({discount_code:appliedCode,discount_percent:appliedDiscount}).eq("id",order.id);
  if(discountSaveError){await db.rpc("release_discount_code",{p_code:appliedCode});await db.from("client_orders").delete().eq("id",order.id);throw discountSaveError}
 }
-if(plusDiscount>appliedDiscount){
+if(!domainOnly&&plusDiscount>appliedDiscount){
  appliedDiscount=plusDiscount;appliedCode=plusDiscount===18?"PLUS18":"PLUS10";
  const {error:plusSaveError}=await db.from("client_orders").update({discount_code:appliedCode,discount_percent:appliedDiscount}).eq("id",order.id);
  if(plusSaveError)throw plusSaveError;
