@@ -25,22 +25,26 @@ Deno.serve(async(req:Request)=>{
   }
   if(!user)return out({error:"برای ادامه وارد حساب کاربری شو."},401,origin);
   if(action==="status"){
-   const [{data:ledger,error:le},{data:profile,error:pe},{data:teasers,error:te}]=await Promise.all([
+   const [{data:ledger,error:le},{data:profile,error:pe},{data:teasers,error:te},{data:vouchers,error:ve}]=await Promise.all([
     db.from("club_point_ledger").select("id,points,event_type,description,created_at").eq("user_id",user.id).order("created_at",{ascending:false}).limit(40),
     db.from("club_profiles").select("display_name").eq("user_id",user.id).maybeSingle(),
-    db.from("club_teaser_requests").select("id,week_key,brief,status,admin_note,delivery_url,created_at").eq("user_id",user.id).order("created_at",{ascending:false}).limit(12)
-   ]);if(le||pe||te)throw le||pe||te;
+    db.from("club_teaser_requests").select("id,week_key,brief,status,admin_note,delivery_url,created_at").eq("user_id",user.id).order("created_at",{ascending:false}).limit(12),
+    db.from("club_reward_vouchers").select("id,code,points_spent,reward_toman,status,created_at,redeemed_at").eq("user_id",user.id).order("created_at",{ascending:false}).limit(20)
+   ]);if(le||pe||te||ve)throw le||pe||te||ve;
    const {data:summary,error:se}=await db.rpc("club_account_summary",{p_user_id:user.id});if(se)throw se;
    const balance=Number(summary?.[0]?.balance||0),lifetime=Number(summary?.[0]?.lifetime||0);
    const current=tier(lifetime),threshold={bronze:0,silver:500,gold:1500,diamond:3500}[current],next={bronze:500,silver:1500,gold:3500,diamond:3500}[current];
-   return out({ok:true,display_name:profile?.display_name||"",balance,lifetime,tier:current,next_threshold:next,progress:current==="diamond"?100:Math.max(0,Math.min(100,(lifetime-threshold)/(next-threshold)*100)),ledger:ledger||[],teaser_requests:teasers||[],diamond_eligible:current==="diamond",week_key:weekKey()},200,origin);
+   return out({ok:true,display_name:profile?.display_name||"",balance,lifetime,tier:current,next_threshold:next,progress:current==="diamond"?100:Math.max(0,Math.min(100,(lifetime-threshold)/(next-threshold)*100)),ledger:ledger||[],teaser_requests:teasers||[],vouchers:vouchers||[],diamond_eligible:current==="diamond",week_key:weekKey()},200,origin);
   }
   if(action==="profile_update"){
    const name=str(body.display_name,32);if(name.length<2||/[<>]/.test(name))return out({error:"نام نمایشی باید بین ۲ تا ۳۲ نویسه باشد."},400,origin);
    const {data,error}=await db.from("club_profiles").upsert({user_id:user.id,display_name:name,updated_at:new Date().toISOString()},{onConflict:"user_id"}).select("display_name").single();if(error)throw error;return out({ok:true,profile:data},200,origin);
   }
   if(action==="redeem"){
-   return out({error:"تبدیل امتیاز به کد تخفیف تا تکمیل اتصال امن کدهای باشگاه به سامانه سفارش، موقتاً غیرفعال است. امتیازهایت محفوظ می‌مانند."},409,origin);
+   const points=Number(body.points),reward=Number(body.reward_toman);
+   const {data:result,error}=await db.rpc("club_redeem_points",{p_user_id:user.id,p_points:points,p_reward_toman:reward});
+   if(error)return out({error:error.message==="insufficient_points"?"امتیاز کافی برای دریافت این پاداش نداری.":"درخواست دریافت پاداش معتبر نیست."},400,origin);
+   return out({ok:true,voucher:result},200,origin);
   }
   if(action==="teaser_submit"){
    const {data:summary,error:le}=await db.rpc("club_account_summary",{p_user_id:user.id});if(le)throw le;
