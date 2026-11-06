@@ -8,6 +8,18 @@
 <style>
 :root{color-scheme:dark;--bg:#090a0d;--panel:#14161d;--line:#ffffff18;--text:#f5f6fa;--muted:#a0a4b2;--lime:#d9ff72;--purple:#a58bff}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% 0%,#a58bff19,transparent 35%),var(--bg);color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif}.wrap{width:min(1160px,calc(100% - 28px));margin:30px auto}.head,.card{border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#191b24,#101117);padding:clamp(16px,3vw,24px);margin-bottom:15px}.head{border-color:#a58bff55}.head h1{margin:0 0 7px;font-size:clamp(22px,4vw,32px)}.muted{color:var(--muted);font-size:12px;line-height:2}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{margin:10px 0}.field label{display:block;font-size:12px;margin-bottom:6px;color:#c4b5fd}.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid #a58bff45;border-radius:11px;background:#0b0c12;color:#fff;font:inherit}.field textarea{min-height:85px}.btn{border:1px solid transparent;border-radius:11px;padding:10px 15px;background:var(--lime);color:#111;font:700 12px Vazirmatn;cursor:pointer}.btn.alt{background:#ffffff0b;color:#eee;border-color:#ffffff20}.btn:disabled{opacity:.5;cursor:wait}.list{display:grid;gap:10px}.row{border:1px solid var(--line);border-radius:13px;padding:13px;background:#ffffff05;overflow-wrap:anywhere}.row strong{color:#e9e1ff}.row small{display:block;color:var(--muted);font-size:11px;line-height:2}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.notice{font-size:12px;color:var(--purple);line-height:2}.notice.error{color:#ff9b9b}.notice.success{color:var(--lime)}.statline{display:flex;gap:10px;flex-wrap:wrap}.statline span{padding:8px 11px;border:1px solid #ffffff16;border-radius:10px;color:#c4b5fd;font-size:11px}
+
+.users-head,.users-search,.users-pager{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.users-head h2{margin:0 0 4px}.users-search{margin:16px 0}
+.users-search input{flex:1 1 280px;min-width:0;padding:12px;border:1px solid #a58bff45;border-radius:11px;background:#0b0c12;color:#fff;font:inherit}
+.user-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center}
+.user-main{min-width:0}.user-main strong{display:block;overflow-wrap:anywhere}
+.user-uuid{direction:ltr;text-align:left;display:block;color:#d9ff72;font:11px ui-monospace,monospace;overflow-wrap:anywhere;margin-top:5px;user-select:text}
+.user-meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:11px;margin-top:7px}
+.copy-uuid{border:1px solid #ffffff20;border-radius:9px;padding:8px 10px;background:#ffffff0b;color:#eee;font:11px Vazirmatn;white-space:nowrap}
+.users-pager{justify-content:center;margin-top:14px}
+@media(max-width:520px){.user-row{grid-template-columns:1fr}.copy-uuid{width:100%}.users-head{align-items:flex-start}.users-head .btn{width:100%}}
+
 @media(max-width:700px){.grid{grid-template-columns:1fr}}
 </style></head>
 <body>
@@ -21,6 +33,13 @@
 <button id="adjust" class="btn">ثبت تغییر امتیاز</button><p id="adjustNotice" class="notice" aria-live="polite"></p></section>
 <section class="card"><h2>قوانین امتیازدهی</h2><div class="row"><strong>خرید و تمدید پلاس+</strong><small>۲۰۰ امتیاز پس از تأیید پرداخت؛ ۱۰۰ امتیاز هدیه اولین خرید.</small></div><div class="row"><strong>خرید خدمات</strong><small>۱۰ امتیاز به‌ازای هر ۱۰۰٬۰۰۰ تومان مبلغ پرداختی؛ پس از تأیید پرداخت در پنل پروژه‌ها به‌صورت خودکار ثبت می‌شود.</small></div><div class="row"><strong>سطوح</strong><small>برنزی: ۰ · نقره‌ای: ۵۰۰ · طلایی: ۱۵۰۰ · الماس: ۳۵۰۰ امتیاز کسب‌شده.</small></div><div class="row"><strong>رتبه لیگ</strong><small>بر اساس مجموع امتیازهای مثبت کسب‌شده؛ مصرف امتیاز جایزه، رتبه را کاهش نمی‌دهد.</small></div></section>
 </div>
+
+<section class="card users-card">
+ <div class="users-head"><div><h2>مدیریت اعضای سایت</h2><p class="muted">فهرست حساب‌های واقعی ثبت‌شده در Supabase Auth؛ جست‌وجو در UUID، ایمیل و نام نمایشی.</p></div><button id="refreshUsers" class="btn alt">بروزرسانی فهرست ↻</button></div>
+ <div class="users-search"><input id="userSearch" type="search" placeholder="جست‌وجو با UUID، ایمیل یا نام کاربر…"><span id="usersSummary" class="muted">در انتظار دریافت فهرست کاربران…</span></div>
+ <div id="usersList" class="list"><p class="muted">برای دریافت کاربران، در حال اتصال…</p></div>
+ <div class="users-pager"><button id="usersPrev" class="btn alt" disabled>صفحه قبل</button><span id="usersPageLabel" class="muted">صفحه ۱</span><button id="usersNext" class="btn alt" disabled>صفحه بعد</button></div>
+</section>
 <section class="card"><h2>درخواست‌های تیزر سطح الماس</h2><div id="teasers" class="list"><p class="muted">در حال بارگذاری…</p></div></section>
 <section class="card"><h2>آخرین سوابق امتیاز</h2><div id="ledger" class="list"><p class="muted">در حال بارگذاری…</p></div></section>
 </main>
@@ -30,11 +49,36 @@ const URL="https://srfldjfrzmtnlabusssq.supabase.co",KEY="sb_publishable_UW2Wzzp
 const $=id=>document.getElementById(id),status=(m,t="")=>{$("status").textContent=m;$("status").className="notice "+t};
 async function api(action,extra={}){const{data,error}=await sb.auth.getSession();if(error||!data.session)throw Error("ابتدا با حساب مدیر وارد شو.");const r=await fetch(URL+"/functions/v1/club-api",{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+data.session.access_token},body:JSON.stringify({action,...extra})});const raw=await r.text();let d={};try{d=raw?JSON.parse(raw):{}}catch{throw Error("پاسخ سرور قابل خواندن نیست.")}if(!r.ok||!d.ok)throw Error(d.error||"درخواست انجام نشد.");return d}
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])),dt=s=>s?new Date(s).toLocaleString("fa-IR"):"—";
+
+let usersPage=1,usersAll=[];
+const fmtDate=s=>s?new Date(s).toLocaleDateString("fa-IR"):"—";
+function renderUsers(){
+ const q=$("userSearch").value.trim().toLowerCase();
+ const filtered=usersAll.filter(u=>[u.id,u.email,u.display_name,u.phone].some(v=>String(v||"").toLowerCase().includes(q)));
+ const start=0,shown=filtered.slice(start,start+100);
+ $("usersSummary").textContent="نمایش "+shown.length+" از "+filtered.length+" کاربر در این صفحه";
+ $("usersPageLabel").textContent="صفحه "+usersPage;
+ $("usersPrev").disabled=usersPage<=1;
+ $("usersNext").disabled=usersAll.length<1000;
+ $("usersList").innerHTML=shown.length?shown.map(u=>'<div class="row user-row"><div class="user-main"><strong>'+esc(u.display_name||"کاربر سایت")+'</strong><small>'+(u.email?'ایمیل: '+esc(u.email):'بدون ایمیل ثبت‌شده')+(u.phone?' · تلفن: '+esc(u.phone):'')+'</small><code class="user-uuid">'+esc(u.id)+'</code><div class="user-meta"><span>عضویت: '+fmtDate(u.created_at)+'</span><span>آخرین ورود: '+fmtDate(u.last_sign_in_at)+'</span><span>'+(u.email_confirmed_at?'ایمیل تأییدشده':'ایمیل تأییدنشده')+'</span></div></div><button class="copy-uuid" data-copy="'+esc(u.id)+'">کپی UUID</button></div>').join(""):'<p class="muted">کاربری با این عبارت در صفحه فعلی پیدا نشد.</p>';
+}
+async function loadUsers(){
+ const btn=$("refreshUsers");btn.disabled=true;$("usersList").innerHTML='<p class="muted">در حال دریافت کاربران از Supabase Auth…</p>';
+ try{const d=await api("admin_users",{page:usersPage});usersAll=d.users||[];renderUsers();$("usersNext").disabled=!d.has_more}
+ catch(e){$("usersList").innerHTML='<p class="notice error">'+esc(e.message)+'</p>';$("usersSummary").textContent="دریافت فهرست ناموفق بود."}
+ finally{btn.disabled=false}
+}
+$("refreshUsers").addEventListener("click",loadUsers);
+$("userSearch").addEventListener("input",renderUsers);
+$("usersPrev").addEventListener("click",()=>{if(usersPage>1){usersPage--;loadUsers()}});
+$("usersNext").addEventListener("click",()=>{if(usersAll.length===1000){usersPage++;loadUsers()}});
+document.addEventListener("click",async e=>{const b=e.target.closest("[data-copy]");if(!b)return;try{await navigator.clipboard.writeText(b.dataset.copy);b.textContent="کپی شد ✓";setTimeout(()=>b.textContent="کپی UUID",1300)}catch{b.textContent="کپی نشد"}});
+
 async function load(){const d=await api("admin_list");$("ledgerCount").textContent="سوابق امتیاز: "+(d.ledger||[]).length;$("teaserCount").textContent="درخواست تیزر: "+(d.teasers||[]).length;
 $("ledger").innerHTML=(d.ledger||[]).length?d.ledger.map(x=>'<div class="row"><strong>'+esc(x.description||x.event_type)+'</strong><small>کاربر: '+esc(x.user_id)+' · '+esc(x.points)+' امتیاز · '+dt(x.created_at)+'</small></div>').join(""):'<p class="muted">هنوز سابقه‌ای ثبت نشده است.</p>';
 $("teasers").innerHTML=(d.teasers||[]).length?d.teasers.map(x=>'<div class="row"><strong>'+esc(x.display_name)+' · '+esc(x.week_key)+'</strong><small>شناسه کاربر: '+esc(x.user_id)+' · '+dt(x.created_at)+'</small><p class="muted">'+esc(x.brief)+'</p><div class="field"><label>وضعیت</label><select class="teaser-status" data-id="'+esc(x.id)+'"><option value="pending">در انتظار بررسی</option><option value="in_progress">در حال ساخت</option><option value="delivered">تحویل‌شده</option><option value="rejected">ردشده</option></select></div><div class="field"><label>لینک فایل نهایی</label><input class="teaser-link" data-id="'+esc(x.id)+'" value="'+esc(x.delivery_url||"")+'" placeholder="https://..."></div><div class="field"><label>یادداشت مدیر</label><input class="teaser-note" data-id="'+esc(x.id)+'" value="'+esc(x.admin_note||"")+'"></div><button class="btn save-teaser" data-id="'+esc(x.id)+'">ذخیره وضعیت درخواست</button></div>').join(""):'<p class="muted">درخواستی ثبت نشده است.</p>';
 document.querySelectorAll(".teaser-status").forEach(el=>{const x=d.teasers.find(x=>x.id===el.dataset.id);el.value=x.status})}
 $("adjust").onclick=async()=>{const btn=$("adjust"),notice=$("adjustNotice");btn.disabled=true;try{await api("admin_adjust",{user_id:$("userId").value,points:Number($("points").value),description:$("description").value});notice.textContent="تغییر امتیاز ثبت شد.";notice.className="notice success";$("points").value="";$("description").value="";await load()}catch(e){notice.textContent=e.message;notice.className="notice error"}finally{btn.disabled=false}};
 document.addEventListener("click",async e=>{const btn=e.target.closest(".save-teaser");if(!btn)return;btn.disabled=true;try{await api("admin_teaser_update",{id:btn.dataset.id,status:document.querySelector('.teaser-status[data-id="'+btn.dataset.id+'"]').value,delivery_url:document.querySelector('.teaser-link[data-id="'+btn.dataset.id+'"]').value,admin_note:document.querySelector('.teaser-note[data-id="'+btn.dataset.id+'"]').value});status("وضعیت درخواست تیزر ذخیره شد.","success");await load()}catch(err){status(err.message,"error")}finally{btn.disabled=false}});
-try{await load();status("دسترسی مدیر تأیید شد.","success")}catch(e){status(e.message,"error")}
+try{await load();await loadUsers();status("دسترسی مدیر تأیید شد.","success")}catch(e){status(e.message,"error")}
 </script></body></html>
