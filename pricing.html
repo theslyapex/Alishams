@@ -91,8 +91,8 @@ body,body *{-webkit-user-select:none!important;user-select:none!important;-webki
 
 <div class="calc-field" id="calcModeWrap" hidden><label for="calcMode">نوع سفارش</label><select id="calcMode"><option value="session">جلسه مشاوره</option><option value="project">پروژه مشاوره</option></select></div>
 </div>
-<div class="calc-result" aria-live="polite"><span class="result-label">برآورد اولیه هزینه</span><output id="calcAmount">۴۸۰ هزار تا ۸۹۹ هزار تومان</output><p id="calcExplanation">مبلغ نهایی پس از بررسی جزئیات و توافق مشخص می‌شود.</p><a class="btn primary" id="calcOrder" href="index.html?service=%D9%85%D9%88%D8%B4%D9%86%E2%80%8C%DA%AF%D8%B1%D8%A7%D9%81%DB%8C%DA%A9&openOrder=1">ثبت سفارش این خدمت ↗</a></div></div>
-<p class="calc-disclaimer">این ابزار فقط برآورد راهنماست و پیش‌فاکتور یا تعهد قیمت محسوب نمی‌شود. خدمات دارای قیمت متغیر یا استعلامی، پس از دریافت جزئیات بررسی می‌شوند. هزینه سرویس‌های جانبی، تبلیغات و مالیات احتمالی (در صورت تعلق) جداگانه اعلام خواهد شد.</p><div class="plus-calc-benefit"><strong>قیمت‌گذاری ویژه اعضای پلاس+</strong><p>در سفارش‌های واجد شرایط، تخفیف عضویت پس از بررسی حساب و تعیین مبلغ نهایی اعمال می‌شود:</p><div><span>دو خرید نخست</span><b>۱۰٪ تخفیف</b></div><div><span>از خرید سوم به بعد</span><b>۱۸٪ تخفیف</b></div><small>مبلغ این برآورد، قیمت نهایی نیست. تخفیف پلاس+ با کد تخفیف یا پیشنهادهای دیگر تجمیع نمی‌شود و درصد معتبر عضویت هنگام ثبت سفارش بررسی خواهد شد.</small><a href="/plus.html">مشاهده شرایط پلاس+ ↗</a></div>
+<div class="calc-result" aria-live="polite"><span class="result-label">برآورد اولیه هزینه</span><output id="calcAmount">۴۸۰ هزار تا ۸۹۹ هزار تومان</output><p id="calcExplanation">مبلغ نهایی پس از بررسی جزئیات و توافق مشخص می‌شود.</p><p id="plusCalcPersonalized" class="plus-calc-personalized" aria-live="polite" hidden></p><a class="btn primary" id="calcOrder" href="index.html?service=%D9%85%D9%88%D8%B4%D9%86%E2%80%8C%DA%AF%D8%B1%D8%A7%D9%81%DB%8C%DA%A9&openOrder=1">ثبت سفارش این خدمت ↗</a></div></div>
+<p class="calc-disclaimer">این ابزار فقط برآورد راهنماست و پیش‌فاکتور یا تعهد قیمت محسوب نمی‌شود. خدمات دارای قیمت متغیر یا استعلامی، پس از دریافت جزئیات بررسی می‌شوند. هزینه سرویس‌های جانبی، تبلیغات و مالیات احتمالی (در صورت تعلق) جداگانه اعلام خواهد شد.</p><div class="plus-calc-benefit plus-tier-preview"><span class="plus-tier-label">قیمت‌گذاری ویژه اعضای پلاس+</span><p>در سفارش‌های واجد شرایط، تخفیف عضویت پس از بررسی حساب و تعیین مبلغ نهایی اعمال می‌شود:</p><div class="plus-tier-row" data-discount="10"><span>دو خرید نخست</span><b>۱۰٪ تخفیف</b></div><div class="plus-tier-row" data-discount="18"><span>از خرید سوم به بعد</span><b>۱۸٪ تخفیف</b></div><small>مبلغ این برآورد، قیمت نهایی نیست. تخفیف پلاس+ با کد تخفیف یا پیشنهادهای دیگر تجمیع نمی‌شود و درصد معتبر عضویت هنگام ثبت سفارش بررسی خواهد شد.</small><a href="/plus.html">مشاهده شرایط پلاس+ ↗</a></div>
 </div></div></section>
 <section class="section package-pricing" id="websitePackages"><div class="wrap">
 <div class="section-head"><div><span class="eyebrow">WEBSITE STORE PACKAGES</span><h2>پکیج‌های طراحی فروشگاه اینترنتی</h2></div><p>سه انتخاب شفاف برای راه‌اندازی فروشگاه آنلاین؛ جزئیات کامل امکانات هر پکیج را هم می‌توانی در صفحه اختصاصی ببینی.</p></div>
@@ -271,6 +271,23 @@ function updateCalculator(){
   calcExplanation.textContent=notes.join(' · ')+(hasQuote?' — بخشی از خدمات نیازمند استعلام است.':' — برآورد اولیه؛ مبلغ نهایی پس از بررسی جزئیات تأیید می‌شود.');
   calcOrder.href='index.html?services='+encodeURIComponent(chosenCalcServices.map(k=>calcData[k].name).join('|'))+'&openOrder=1';
  }
+  const plusEstimate=document.getElementById('plusCalcPersonalized');
+  if(plusEstimate){
+   const discount=Number(window.__alishamsPlusDiscount);
+   let eligibleMin=0,eligibleMax=0;
+   const excluded=new Set(['customBrandWebsite','ads','social','igfollowers','iglikes','goldStore']);
+   pickerRows.querySelectorAll('.calc-selected-row').forEach(row=>{
+    const key=row.dataset.key,d=calcData[key],qty=Math.max(1,Math.min(100,Number.parseInt(row.querySelector('input').value||'1',10)||1));
+    if(!d||d.quote||excluded.has(key))return;
+    eligibleMin+=(d.min||0)*qty;eligibleMax+=(d.max||0)*qty;
+   });
+   if([10,18].includes(discount)&&eligibleMin>0){
+    const savingMin=Math.round(eligibleMin*discount/100),savingMax=Math.round(eligibleMax*discount/100);
+    const afterMin=eligibleMin-savingMin,afterMax=eligibleMax-savingMax;
+    plusEstimate.hidden=false;
+    plusEstimate.textContent='تخفیف فعال حساب شما: '+discount+'٪ · برآورد خدمات واجد شرایط پس از تخفیف: '+(afterMin===afterMax?toman(afterMin):toman(afterMin)+' تا '+toman(afterMax))+' · صرفه‌جویی احتمالی: '+(savingMin===savingMax?toman(savingMin):toman(savingMin)+' تا '+toman(savingMax))+'. این فقط پیش‌نمایش است؛ قیمت نهایی و شمول تخفیف پس از بررسی سفارش تعیین می‌شود.';
+   }else{plusEstimate.hidden=true;plusEstimate.textContent='';}
+  }
 }
 pickerTrigger.addEventListener('click',()=>{const open=pickerTrigger.getAttribute('aria-expanded')!=='true';pickerTrigger.setAttribute('aria-expanded',String(open));pickerPopup.hidden=!open;});
 document.getElementById('calcPickerDone').addEventListener('click',()=>{pickerPopup.hidden=true;pickerTrigger.setAttribute('aria-expanded','false');});
@@ -302,4 +319,4 @@ refreshCustomOfferPrice();setInterval(refreshCustomOfferPrice,60000);
  updateOfferCountdown();window.setInterval(updateOfferCountdown,1000);
 })();
 </script>
-</body></html>
+<script src="/plus-service-benefits.js?v=20261106-2" defer></script></body></html>
