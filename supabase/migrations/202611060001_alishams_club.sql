@@ -228,3 +228,20 @@ begin
 end $$;
 revoke all on function public.club_redeem_points(uuid,integer,integer) from public,anon,authenticated;
 grant execute on function public.club_redeem_points(uuid,integer,integer) to service_role;
+
+
+-- Keep fixed Club credit in sync with quotes even when the existing order-admin endpoint updates the quote.
+create or replace function public.apply_club_credit_to_order_quote()
+returns trigger language plpgsql set search_path=public,pg_temp as $$
+begin
+ if new.quoted_price is not null then
+   new.discount_amount:=round(greatest(0,new.quoted_price)*greatest(0,least(100,coalesce(new.discount_percent,0)))/100)
+     +greatest(0,coalesce(new.club_reward_toman,0));
+   new.payable_amount:=greatest(0,new.quoted_price-new.discount_amount);
+ end if;
+ return new;
+end $$;
+drop trigger if exists client_orders_apply_club_credit on public.client_orders;
+create trigger client_orders_apply_club_credit
+before insert or update of quoted_price,discount_percent,club_reward_toman on public.client_orders
+for each row execute function public.apply_club_credit_to_order_quote();
