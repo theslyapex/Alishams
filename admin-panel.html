@@ -68,6 +68,7 @@ iframe{min-width:0}
 <button data-key="portfolio" data-src="portfolio-admin.html"><span class="ico">▧</span><span class="nav-copy"><b>نمونه‌کارها</b><small>گالری و محتوای نمونه‌کار</small></span></button>
 <button data-key="services" data-src="service-settings-admin.html"><span class="ico">◉</span><span class="nav-copy"><b>وضعیت خدمات</b><small>فعال‌سازی و غیرفعال‌سازی خدمات</small></span></button>
 <button data-key="community" data-src="community-admin.html"><span class="ico">✦</span><span class="nav-copy"><b>مدیریت انجمن</b><small>پیام‌ها، گزارش‌ها و اعضا</small></span></button>
+<button data-key="club" data-src="club-admin.html"><span class="ico" style="color:#d6ff59">♛</span><span class="nav-copy"><b>باشگاه مشتریان</b><small>امتیازها، سطح اعضا، جوایز و تیزرها</small></span></button>
 <button data-key="plus" data-src="plus-admin.html"><span class="ico" style="color:#c7a8ff">＋</span><span class="nav-copy"><b>عضویت پلاس+</b><small>اعضا، تمدید و درخواست‌های هدیه</small></span></button>
 </nav><div class="side-foot">تمام ابزارهای مدیریتی در یک فضای یکپارچه گردآوری شده‌اند. دسترسی هر بخش مطابق مجوز و ورود امن همان بخش کنترل می‌شود.</div></aside>
 <main class="workspace"><div class="workspace-head"><div class="crumb"><strong id="moduleTitle">داشبورد اصلی</strong><span> / مرکز فرماندهی</span></div><button class="reload" id="reloadModule">بارگذاری مجدد ↻</button></div><div class="frame-wrap"><iframe id="moduleFrame" title="بخش مدیریت انتخاب‌شده" src="admin.html"></iframe></div></main>
@@ -75,7 +76,7 @@ iframe{min-width:0}
 <script>
 (function(){
 const nav=document.getElementById('mainNav'),frame=document.getElementById('moduleFrame'),title=document.getElementById('moduleTitle'),reload=document.getElementById('reloadModule');
-const names={dashboard:'داشبورد اصلی',orders:'مدیریت سفارش‌ها',projects:'مدیریت پروژه‌ها',messages:'مکاتبات و پیام‌ها',videos:'مدیریت ویدئوها',comments:'مدیریت دیدگاه‌ها',portfolio:'مدیریت نمونه‌کارها',services:'مدیریت وضعیت خدمات',plus:'مدیریت عضویت پلاس+',community:'مدیریت انجمن کاربران'};
+const names={dashboard:'داشبورد اصلی',orders:'مدیریت سفارش‌ها',projects:'مدیریت پروژه‌ها',messages:'مکاتبات و پیام‌ها',videos:'مدیریت ویدئوها',comments:'مدیریت دیدگاه‌ها',portfolio:'مدیریت نمونه‌کارها',services:'مدیریت وضعیت خدمات',plus:'مدیریت عضویت پلاس+',club:'مدیریت باشگاه مشتریان',community:'مدیریت انجمن کاربران'};
 let current='dashboard';
 function activate(key,src,updateHash=true){const btn=nav.querySelector('[data-key="'+key+'"]');if(!btn)return;current=key;nav.querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===btn));title.textContent=names[key];if(frame.getAttribute('src')!==src)frame.src=src;if(updateHash)history.replaceState(null,'','#'+key)}
 nav.addEventListener('click',e=>{const b=e.target.closest('button[data-key]');if(b)activate(b.dataset.key,b.dataset.src)});
