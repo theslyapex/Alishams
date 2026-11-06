@@ -179,6 +179,109 @@
 #clubPanel .club-teaser-row small{display:block;color:#a0a4b2;margin-top:5px;font-size:10px}
 @media(max-width:600px){#clubPanel .club-stats{grid-template-columns:repeat(2,minmax(0,1fr))}#clubPanel .club-reward-grid{grid-template-columns:1fr}#clubPanel .club-hero{grid-column:1/-1}}
 </style>
+<style>
+
+/* Club refresh: premium member dashboard, compact controls and mobile-first cards. */
+#clubPanel{gap:16px;align-items:stretch}
+#clubPanel .club-hero{
+  isolation:isolate;
+  border:1px solid #d9ff7248;
+  border-radius:26px;
+  padding:clamp(20px,4vw,34px);
+  background:
+    radial-gradient(ellipse at 92% 5%,#d9ff7220,transparent 35%),
+    radial-gradient(ellipse at 5% 100%,#a58bff1b,transparent 42%),
+    linear-gradient(145deg,#1b1e27 0%,#12151c 58%,#11140f 100%);
+  box-shadow:0 22px 65px #0006,inset 0 1px 0 #ffffff0c;
+}
+#clubPanel .club-hero:after{z-index:-1;left:5%;top:8%;font-size:clamp(90px,15vw,150px);color:#d9ff720d}
+#clubPanel .club-kicker{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 11px;border:1px solid #d9ff7240;border-radius:999px;
+  background:#d9ff720c;color:#e2ff91;font-size:9px;letter-spacing:1.35px
+}
+#clubPanel .club-hero h2{font-size:clamp(24px,4vw,33px);font-weight:800;letter-spacing:-.4px;margin:13px 0 7px}
+#clubPanel .club-hero>p{max-width:650px;color:#c0c3cd;font-size:12px;line-height:2.15}
+#clubPanel .club-stats{gap:10px;margin:22px 0 18px}
+#clubPanel .club-stat{
+  position:relative;overflow:hidden;padding:15px 14px;
+  border:1px solid #ffffff19;border-radius:17px;
+  background:linear-gradient(145deg,#ffffff0b,#ffffff03),#0c0e14a8;
+  box-shadow:inset 0 1px 0 #ffffff08
+}
+#clubPanel .club-stat:after{content:"";position:absolute;inset:auto 0 0;height:2px;background:linear-gradient(90deg,transparent,#d9ff7280,transparent);opacity:.65}
+#clubPanel .club-stat span{font-size:10px;color:#b9bdc9}
+#clubPanel .club-stat strong{font-size:clamp(20px,3vw,27px);line-height:1.5}
+#clubPanel #clubProgressLabel{font-size:12px;color:#e8e9ef}
+#clubPanel #clubNextLabel{font-size:11px}
+#clubPanel .club-tier-progress{height:9px;margin:12px 0 18px;background:#ffffff12;box-shadow:inset 0 1px 3px #0008}
+#clubPanel .club-tier-progress span{box-shadow:0 0 15px #d9ff7266}
+#clubPanel .club-form label{display:block;margin:0 0 8px;color:#e7e8ef;font-size:12px;font-weight:700}
+#clubPanel .club-form input,
+#clubPanel .club-form textarea{
+  width:100%;min-width:0;padding:12px 14px;
+  border:1px solid #ffffff20;border-radius:14px;
+  background:linear-gradient(145deg,#0b0d13,#10121a);
+  color:#f5f6fa;font:400 13px/1.9 "Vazirmatn",Tahoma,sans-serif;
+  box-shadow:inset 0 1px 0 #ffffff05;
+  transition:border-color .2s,box-shadow .2s,background .2s
+}
+#clubPanel .club-form input::placeholder,
+#clubPanel .club-form textarea::placeholder{font:400 12px/1.9 "Vazirmatn",Tahoma,sans-serif;color:#858a99;opacity:1}
+#clubPanel .club-form input:focus,
+#clubPanel .club-form textarea:focus{outline:none;border-color:#d9ff7280;background:#10131a;box-shadow:0 0 0 3px #d9ff7210,0 0 22px #d9ff720a}
+#clubPanel .club-form textarea{min-height:112px;resize:vertical}
+#clubPanel #clubSaveName{min-height:44px;padding-inline:16px;background:linear-gradient(135deg,#dfff88,#c8f45b);border-color:#d9ff72;color:#171b0d}
+#clubPanel .club-subcard{
+  position:relative;overflow:hidden;padding:clamp(17px,3vw,23px);
+  border:1px solid #ffffff17;border-radius:22px;
+  background:radial-gradient(ellipse at 100% 0%,#a58bff0b,transparent 42%),linear-gradient(145deg,#171923f2,#101117f5);
+  box-shadow:0 17px 45px #0003,inset 0 1px 0 #ffffff07
+}
+#clubPanel .club-subcard h3{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;margin:0 0 15px}
+#clubPanel .club-reward-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#clubPanel .club-reward{
+  position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;
+  min-width:0;padding:14px;border:1px solid #d9ff7220;border-radius:16px;
+  background:linear-gradient(145deg,#d9ff7209,#ffffff03 55%),#0d1015;
+  transition:transform .2s,border-color .2s,box-shadow .2s
+}
+#clubPanel .club-reward:hover{transform:translateY(-2px);border-color:#d9ff7260;box-shadow:0 10px 26px #0004}
+#clubPanel .club-reward strong{font-size:14px;color:#e0ff8a}
+#clubPanel .club-reward span{font-size:11px;line-height:1.9;color:#aeb3c0;min-height:22px}
+#clubPanel .club-reward .club-redeem{width:100%;min-height:40px;margin-top:11px!important;padding:8px 10px;font-size:11px;background:#ffffff08;border-color:#d9ff7240;color:#e8f7c3}
+#clubPanel .club-reward .club-redeem:hover{background:#d9ff7218;border-color:#d9ff72;color:#eaffb0}
+#clubPanel #clubTeaserForm{margin-top:14px;padding:15px;border:1px solid #a58bff26;border-radius:17px;background:linear-gradient(145deg,#a58bff0b,#ffffff03),#0b0d13}
+#clubPanel #clubTeaserBrief{min-height:112px;font-size:13px!important}
+#clubPanel #clubTeaserSubmit{min-height:48px;margin-top:12px;font-size:13px;font-weight:800;background:linear-gradient(100deg,#dfff88,#c9f65f);border:0;color:#171b0d;box-shadow:0 9px 25px #d9ff7215}
+#clubPanel .club-ledger-row{padding:13px 14px;border-color:#ffffff15;border-radius:14px;background:linear-gradient(110deg,#ffffff06,#ffffff02)}
+#clubPanel .club-ledger-row b{font-size:13px}
+#clubPanel .club-teaser-row{padding:14px;border-color:#a58bff38;border-radius:14px;background:linear-gradient(120deg,#a58bff12,#ffffff03)}
+#clubPanel .club-form .notice{font-size:11px}
+@media(max-width:600px){
+  #clubPanel{gap:12px}
+  #clubPanel .club-hero{padding:19px 16px;border-radius:21px}
+  #clubPanel .club-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:17px 0}
+  #clubPanel .club-stat{padding:12px 11px;border-radius:14px}
+  #clubPanel .club-stat:last-child{grid-column:1/-1}
+  #clubPanel .club-stat strong{font-size:22px}
+  #clubPanel .club-reward-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  #clubPanel .club-reward{padding:11px;border-radius:14px}
+  #clubPanel .club-reward strong{font-size:12px}
+  #clubPanel .club-reward span{font-size:10px;min-height:38px}
+  #clubPanel .club-reward .club-redeem{font-size:10px;padding:8px 5px}
+  #clubPanel .club-subcard{padding:16px 13px;border-radius:19px}
+  #clubPanel .club-form input,
+  #clubPanel .club-form textarea{font-size:13px!important;padding:11px 12px}
+  #clubPanel .club-form input::placeholder,
+  #clubPanel .club-form textarea::placeholder{font-size:11px}
+}
+@media(max-width:360px){
+  #clubPanel .club-reward-grid{grid-template-columns:1fr}
+  #clubPanel .club-reward span{min-height:0}
+}
+
+</style>
 <section class="club-hero">
 <span class="club-kicker">ALISHAMS CLUB · MEMBER AREA</span>
 <h2>باشگاه مشتریان</h2>
