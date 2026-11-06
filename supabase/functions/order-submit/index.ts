@@ -25,7 +25,7 @@ if(bearer){
   const anon=Deno.env.get("SUPABASE_ANON_KEY")||"";
   if(anon){const auth=createClient(url,anon,{auth:{persistSession:false,autoRefreshToken:false}});const {data:authData}=await auth.auth.getUser(bearer);const account=authData?.user;
    if(account?.id&&String(account.email||"").trim().toLowerCase()===client_email){clubAccountId=account.id;
-    const hasCampaignOffer=services.some((name:string)=>name.includes("طراحی اختصاصی برند و وب"));
+    const hasCampaignOffer=services.some((name:string)=>name.includes("طراحی اختصاصی برند و وب")||name.includes("پکیج برنزی طراحی وبسایت")||name.includes("پکیج نقره‌ای طراحی وبسایت"));
     if(!hasCampaignOffer){
     const {data:membership}=await db.from("plus_memberships").select("status,starts_at,ends_at,discount_percent").eq("user_id",account.id).maybeSingle();
     if(membership&&membership.status==="active"&&membership.starts_at&&membership.ends_at&&new Date(membership.starts_at).getTime()<=Date.now()&&new Date(membership.ends_at).getTime()>Date.now())plusDiscount=Number(membership.discount_percent)===18?18:10;
