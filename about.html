@@ -111,6 +111,24 @@ button,a{-webkit-tap-highlight-color:transparent}
 @media(max-width:900px){.skills{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.skills{grid-template-columns:1fr}.skill{min-height:0}}
 
+
+.vision-panel{position:relative;overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;gap:35px;padding:clamp(24px,5vw,52px);border:1px solid #a88cff38;border-radius:28px;background:radial-gradient(ellipse at 5% 5%,#a88cff20,transparent 42%),radial-gradient(ellipse at 100% 100%,#6de4e113,transparent 38%),linear-gradient(145deg,#ffffff0b,#ffffff02);box-shadow:0 24px 80px #0003}
+.vision-panel:before{content:"";position:absolute;width:260px;height:260px;border:1px solid #ffffff0c;border-radius:50%;right:42%;top:-190px;box-shadow:0 0 0 25px #ffffff05,0 0 0 50px #ffffff03;pointer-events:none}
+.vision-main{position:relative;z-index:1;align-self:center}
+.vision-kicker{font:700 10px var(--latin);letter-spacing:2px;color:var(--cyan)}
+.vision-main h3{font-size:clamp(27px,4vw,43px);line-height:2.05;margin:14px 0;color:#f3efff}
+.vision-main h3 em{font-family:var(--nast);font-style:normal;color:var(--gold);font-weight:500}
+.vision-main p{max-width:520px;color:#bbb8c7;font-size:13px;line-height:2.7;margin:0}
+.vision-points{display:grid;gap:10px;align-content:center}
+.vision-points article{display:flex;gap:16px;align-items:flex-start;padding:16px 17px;border:1px solid #ffffff12;border-radius:18px;background:#08091066;transition:transform .25s,border-color .25s}
+.vision-points article:hover{transform:translateX(-4px);border-color:#6de4e155}
+.vision-points article>span{font:700 17px var(--latin);color:var(--cyan);padding-top:2px}
+.vision-points h4{font-size:14px;font-weight:600;margin:0 0 3px}
+.vision-points p{font-size:11px;color:var(--muted);line-height:2.2;margin:0}
+.vision-foot{grid-column:1/-1;display:flex;align-items:center;gap:12px;margin-top:5px;color:#aaa4bd;font:600 9px var(--latin);letter-spacing:1.7px}
+.vision-line{width:36px;height:1px;background:linear-gradient(90deg,var(--violet),var(--cyan))}
+@media(max-width:760px){.vision-panel{grid-template-columns:1fr;gap:20px}.vision-main h3{font-size:31px}.vision-foot{margin-top:0}}
+
 </style>
 <script src="/site-protection.js" defer></script>
 <link rel="stylesheet" href="/share-page.css?v=3">
@@ -194,6 +212,25 @@ button,a{-webkit-tap-highlight-color:transparent}
 <a class="project reveal" href="videos.html"><span><strong>نمونه‌کارهای ویدئویی</strong><small>موشن‌گرافیک، ریلز و تیزرهای تبلیغاتی</small></span><b>▶</b></a>
 </div>
 <div class="actions project-actions reveal"><a class="btn primary" href="portfolio.html">دیدن همه نمونه‌کارها ↗</a><a class="btn" href="videos.html">تماشای ویدئوها ▶</a></div>
+</div>
+</section>
+
+<section class="section vision-section" style="padding-top:10px">
+<div class="wrap">
+<div class="section-head reveal"><span class="eyebrow">LOOKING AHEAD</span><h2>چشم‌انداز من</h2><p class="lead">مسیر حرفه‌ای برای من به ساختن چیزهای بیشتر خلاصه نمی‌شود؛ مهم‌تر این است که هر تجربه، نسبت به قبل سنجیده‌تر، مفیدتر و اثرگذارتر باشد.</p></div>
+<div class="vision-panel reveal">
+<div class="vision-main">
+<span class="vision-kicker">THE BIGGER PICTURE</span>
+<h3>ساختن تجربه‌هایی که<br><em>ارزش ماندن داشته باشند.</em></h3>
+<p>می‌خواهم در نقطه اتصال خلاقیت و فناوری، ایده‌هایی را به محصولات و تجربه‌های دیجیتال تبدیل کنم که مسئله‌ای واقعی را حل می‌کنند؛ از پروژه‌های محتوایی و فرهنگی تا ابزارهای آنلاین و راهکارهای کاربردی.</p>
+</div>
+<div class="vision-points">
+<article><span>۰۱</span><div><h4>خلق محصولات مستقل</h4><p>توسعه ایده‌هایی که هویت روشن و کاربرد مشخص دارند.</p></div></article>
+<article><span>۰۲</span><div><h4>کیفیت در جزئیات</h4><p>توجه هم‌زمان به طراحی، عملکرد و تجربه استفاده.</p></div></article>
+<article><span>۰۳</span><div><h4>یادگیری و توسعه مداوم</h4><p>به‌روز ماندن، آزمودن راه‌های تازه و بهتر کردن خروجی‌ها.</p></div></article>
+</div>
+<div class="vision-foot"><span class="vision-line"></span><span>CREATE WITH PURPOSE · BUILD WITH CARE</span></div>
+</div>
 </div>
 </section>
 <section class="section" style="padding-top:8px">
