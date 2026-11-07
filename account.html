@@ -563,13 +563,15 @@ async function saveDocumentHistory(entry){
  if(!session?.user)return;
  const metadata={...(session.user.user_metadata||{}),alishams_document_download_history:items};
  const {data,error}=await sb.auth.updateUser({data:metadata});
- if(error)throw error;
- session={...session,user:data.user};
+ if(error){console.warn("Document history sync unavailable:",error.message);notice("dashNotice","دانلود انجام شد، اما همگام‌سازی تاریخچه با حساب موقتاً انجام نشد.","error");return false}
+ session={...session,user:data.user};return true;
 }
 async function migrateLocalDocumentHistory(){
  const local=getDocumentHistory();
  const cloud=session?.user?.user_metadata?.alishams_document_download_history||[];
- if(!session?.user||!local.length||cloud.length>=local.length)return;
+ if(!session?.user||!local.length)return;
+ const cloudKeys=new Set(cloud.map(x=>x?.id+"_"+(x?.downloaded_at||"")));
+ if(local.every(x=>cloudKeys.has(x?.id+"_"+(x?.downloaded_at||""))))return;
  const metadata={...(session.user.user_metadata||{}),alishams_document_download_history:local};
  const {data,error}=await sb.auth.updateUser({data:metadata});
  if(error)console.warn("Document history sync unavailable:",error.message);
