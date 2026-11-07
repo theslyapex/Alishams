@@ -2400,7 +2400,7 @@ panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setOpen(fa
 
 <!-- Alishams customer feedback -->
 <style>
-#asFeedbackLaunch{position:fixed;z-index:990;right:22px;bottom:22px;display:flex;align-items:center;gap:9px;padding:12px 17px;border:1px solid #d9ff7280;border-radius:999px;background:linear-gradient(135deg,#d9ff72,#c4ed59);color:#15180e;font:800 12px Estedad,Tahoma,sans-serif;box-shadow:0 12px 35px #0008;cursor:pointer;transition:.22s}
+#asFeedbackLaunch{position:fixed!important;z-index:990;right:22px!important;left:auto!important;bottom:22px;width:auto!important;min-width:0!important;max-width:max-content!important;display:inline-flex!important;flex:0 0 auto!important;align-items:center;justify-content:center;gap:9px;padding:12px 17px;border:1px solid #d9ff7280;border-radius:999px;background:linear-gradient(135deg,#d9ff72,#c4ed59);color:#15180e;font:800 12px Estedad,Tahoma,sans-serif;box-shadow:0 12px 35px #0008;cursor:pointer;transition:.22s}
 #asFeedbackLaunch:hover{transform:translateY(-3px);box-shadow:0 16px 40px #0009}
 #asFeedbackLaunch svg{width:18px;height:18px}
 #asFeedbackLayer{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:18px;background:#050608b8;backdrop-filter:blur(9px)}
@@ -2423,7 +2423,7 @@ panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setOpen(fa
 #asfbStatus{min-height:22px;margin:9px 0 0;color:#a5a8b2;font-size:12px;line-height:1.8}
 #asfbStatus.error{color:#ff9292}#asfbStatus.success{color:#d9ff72}
 .asfb-hp{position:absolute!important;right:-9999px!important;width:1px!important;height:1px!important;opacity:0!important}
-@media(max-width:520px){#asFeedbackLaunch{left:14px;bottom:14px;padding:11px 14px;font-size:11px}#asFeedbackBox{padding:17px;border-radius:19px}.asfb-grid{grid-template-columns:1fr}}
+@media(max-width:520px){#asFeedbackLaunch{right:14px!important;left:auto!important;bottom:14px;width:auto!important;max-width:max-content!important;padding:11px 14px;font-size:11px}#asFeedbackBox{padding:17px;border-radius:19px}.asfb-grid{grid-template-columns:1fr}}
 </style>
 <button id="asFeedbackLaunch" type="button" aria-haspopup="dialog" aria-controls="asFeedbackLayer">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-6.5A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 11h8M8 14h5"/></svg>
