@@ -1006,7 +1006,75 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .home-package-card.is-inactive{opacity:.74;filter:saturate(.55);cursor:not-allowed;pointer-events:none;transform:none!important;border-color:#ff555566;background:linear-gradient(145deg,#251719,#111318 78%)}
 .home-package-card.is-inactive:after{content:"";position:absolute;z-index:3;left:-8%;top:51%;width:116%;height:5px;border-radius:99px;background:linear-gradient(90deg,#ff4545,#ff7777,#d92336);box-shadow:0 0 12px #ff303077;transform:rotate(-13deg);pointer-events:none}
 .inactive-stamp{position:absolute;z-index:4;top:15px;right:16px;padding:6px 13px;border:1px solid #ff6262aa;border-radius:8px;background:linear-gradient(135deg,#a91f2d,#64151e);color:#fff;font-size:11px;font-weight:900;box-shadow:0 5px 18px #ff263333}
-</style></head>
+</style><style id="homepage-interstitial-navigation">
+/* Homepage interstitial navigation — varied, lightweight routes between content groups */
+.route-strip{position:relative;z-index:1;padding:21px 0;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(90deg,rgba(217,255,114,.035),rgba(182,160,255,.045),transparent)}
+.route-strip-inner{display:flex;align-items:center;justify-content:space-between;gap:22px}
+.route-strip-label,.route-wordmark-kicker{flex:0 0 auto;color:var(--lime);font:700 10px Manrope,Estedad,sans-serif;letter-spacing:1.5px;text-transform:uppercase}
+.route-inline-nav{display:flex;align-items:center;justify-content:flex-end;gap:clamp(14px,2.8vw,38px);flex-wrap:wrap}
+.route-inline-nav a{display:inline-flex;align-items:center;gap:8px;color:#d9d9df;font-size:12px;transition:color .2s,transform .2s}
+.route-inline-nav a:hover{color:var(--lime);transform:translateY(-2px)}
+.route-inline-nav a span{color:#777b84;font:10px Manrope}
+.route-inline-nav a b{color:var(--lime);font:14px Manrope;font-weight:500}
+.discovery-band{position:relative;padding:76px 0;overflow:hidden;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);background:radial-gradient(ellipse at 8% 50%,rgba(182,160,255,.13),transparent 38%),linear-gradient(112deg,#15151d 0%,#101116 58%,#151a12 100%)}
+.discovery-band:after{content:"";position:absolute;left:-90px;bottom:-190px;width:390px;height:390px;border:1px solid rgba(217,255,114,.14);border-radius:50%;box-shadow:0 0 0 35px rgba(217,255,114,.025),0 0 0 75px rgba(182,160,255,.025);pointer-events:none}
+.discovery-band-inner{position:relative;z-index:1;display:grid;grid-template-columns:.85fr 1.15fr;align-items:center;gap:clamp(35px,7vw,100px)}
+.discovery-band-copy h2{max-width:460px;margin:17px 0 12px;font-size:clamp(27px,3.5vw,43px);line-height:1.5;letter-spacing:-1px}
+.discovery-band-copy p{max-width:430px;margin:0;color:var(--muted);font-size:13px;line-height:2.1}
+.discovery-index{display:grid;grid-template-columns:1fr 1fr;column-gap:28px}
+.discovery-index a{display:grid;grid-template-columns:30px 1fr 20px;align-items:center;gap:10px;min-height:76px;border-bottom:1px solid rgba(255,255,255,.13);transition:border-color .25s,transform .25s}
+.discovery-index a:hover{border-color:var(--lime);transform:translateX(-4px)}
+.discovery-index a span{color:var(--lime);font:11px Manrope}
+.discovery-index a strong{font-size:14px;font-weight:600}
+.discovery-index a i{color:var(--lime);font:normal 17px Manrope;text-align:left}
+.route-wordmark{padding:30px 0;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.012)}
+.route-wordmark-inner{display:grid;grid-template-columns:1.15fr repeat(3,1fr);align-items:center;gap:20px}
+.route-wordmark-inner>a{position:relative;display:flex;flex-direction:column;gap:5px;padding:8px 18px 8px 0;border-right:1px solid rgba(255,255,255,.14);transition:transform .25s}
+.route-wordmark-inner>a:hover{transform:translateY(-3px)}
+.route-wordmark-inner>a small{color:#858894;font:9px Manrope;letter-spacing:1px}
+.route-wordmark-inner>a strong{font-size:16px;font-weight:600}
+.route-wordmark-inner>a i{position:absolute;left:0;top:50%;transform:translateY(-50%);color:var(--lime);font:normal 17px Manrope}
+.utility-dock{padding:76px 0;background:linear-gradient(115deg,rgba(217,255,114,.045),transparent 43%),#0e1014;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07)}
+.utility-dock-inner{display:grid;grid-template-columns:.9fr 1.1fr;align-items:center;gap:clamp(35px,7vw,90px)}
+.utility-dock-copy h2{max-width:430px;margin:15px 0 10px;font-size:clamp(27px,3.4vw,40px);line-height:1.5}
+.utility-dock-copy p{max-width:410px;margin:0;color:var(--muted);font-size:13px;line-height:2.1}
+.utility-dock-links{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.utility-dock-links a{display:flex;align-items:center;gap:12px;min-width:0;padding:16px 14px;border:1px solid rgba(255,255,255,.1);border-radius:15px;background:rgba(255,255,255,.025);transition:border-color .25s,background .25s,transform .25s}
+.utility-dock-links a:hover{transform:translateY(-3px);border-color:rgba(217,255,114,.45);background:rgba(217,255,114,.045)}
+.utility-icon{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border:1px solid rgba(217,255,114,.25);border-radius:12px;color:var(--lime);font:18px Manrope}
+.utility-dock-links a>span:nth-child(2){display:flex;flex-direction:column;min-width:0;gap:2px}
+.utility-dock-links b{font-size:12px;font-weight:700}
+.utility-dock-links small{color:var(--muted);font-size:10px;line-height:1.7}
+.utility-dock-links a>i{margin-right:auto;color:var(--lime);font:normal 16px Manrope}
+@media(max-width:850px){
+ .route-strip-inner{align-items:flex-start;flex-direction:column;gap:13px}
+ .route-inline-nav{justify-content:flex-start;gap:12px 22px}
+ .discovery-band-inner,.utility-dock-inner{grid-template-columns:1fr;gap:27px}
+ .discovery-band{padding:58px 0}
+ .route-wordmark-inner{grid-template-columns:1fr 1fr;gap:13px}
+ .route-wordmark-kicker{grid-column:1/-1}
+}
+@media(max-width:520px){
+ .route-strip{padding:17px 0}
+ .route-inline-nav{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:12px 10px}
+ .route-inline-nav a{font-size:11px;gap:6px}
+ .discovery-band{padding:45px 0}
+ .discovery-index{grid-template-columns:1fr;column-gap:0}
+ .discovery-index a{min-height:62px}
+ .route-wordmark{padding:23px 0}
+ .route-wordmark-inner{grid-template-columns:1fr 1fr;gap:10px}
+ .route-wordmark-inner>a{padding:8px 12px 8px 0}
+ .route-wordmark-inner>a strong{font-size:13px}
+ .route-wordmark-inner>a small{font-size:8px}
+ .utility-dock{padding:48px 0}
+ .utility-dock-links{grid-template-columns:1fr}
+ .utility-dock-links a{padding:13px}
+}
+@media(prefers-reduced-motion:reduce){
+ .route-inline-nav a,.discovery-index a,.route-wordmark-inner>a,.utility-dock-links a{transition:none!important}
+}
+</style>
+</head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="علی شمس"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی">
 <a href="#services">خدمات</a>
@@ -1116,6 +1184,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <article class="service reveal delay-3"><span class="num">خدمت یازدهم</span><span class="service-status service-status--active" role="status"><i aria-hidden="true"></i>فعال</span><div class="service-icon"><svg class="service-motion-icon service-motion-icon--seo" viewBox="0 0 100 100" aria-hidden="true"><circle class="motion-aura" cx="50" cy="50" r="43"/><g fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="41" cy="40" r="22"/><path d="m57 57 22 22M28 48l9-10 8 5 11-14M48 29h8v8"/></g><circle class="motion-spark" cx="78" cy="23" r="2.5"/></svg></div><h3>خدمات SEO</h3><p>بهینه‌سازی فنی و محتوایی وب‌سایت برای درک بهتر موتورهای جست‌وجو و جذب بازدیدکننده مرتبط.</p><a class="service-detail-link" href="services/seo.html">جزئیات خدمت <span aria-hidden="true">↗︎</span></a><button data-service="خدمات SEO">ثبت سفارش <span class="service-cta-arrow order-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 7V5.8A5 5 0 0 1 17 5.8V7"/><rect x="4" y="7" width="16" height="14" rx="2.5"/><path d="m9 13 2 2 4-4"/></svg></span></button></article>
 </div></div></section>
 
+<section class="route-strip route-strip--services" aria-label="دسترسی سریع به مسیرهای خدمات"><div class="wrap route-strip-inner"><span class="route-strip-label">مسیرهای کاربردی</span><nav class="route-inline-nav"><a href="#smart-pricing"><span>01</span> برآورد هزینه <b>↗</b></a><a href="/domain-lab.html"><span>02</span> آزمایشگاه دامنه <b>↗</b></a><a href="/packages.html"><span>03</span> پکیج‌های طراحی <b>↗</b></a><a href="#work"><span>04</span> پروژه‌های اجراشده <b>↗</b></a></nav></div></section>
 <section class="section smart-pricing-promo" id="smart-pricing">
   <div class="wrap">
     <div class="smart-pricing-card reveal">
@@ -1389,6 +1458,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 @media(max-width:560px){.magazine-shell{padding:21px;border-radius:23px}.magazine-grid{grid-template-columns:1fr}.magazine-feature,.magazine-article{min-height:unset;padding:21px}.magazine-feature{grid-column:auto}.magazine-article h3{margin-top:17px}.magazine-bottom{align-items:flex-start;flex-direction:column}.magazine-all{width:100%;justify-content:center}}
 @media(prefers-reduced-motion:reduce){.magazine-feature,.magazine-article,.magazine-link span,.magazine-all{transition:none}}
 </style>
+<section class="discovery-band" aria-labelledby="discoveryBandTitle"><div class="wrap discovery-band-inner"><div class="discovery-band-copy"><span class="eyebrow">EXPLORE THE WORK</span><h2 id="discoveryBandTitle">هر مسیر، یک گوشه از دنیای خلاقیت.</h2><p>برای دیدن خروجی‌ها، لازم نیست میان صفحه‌ها سردرگم شوی؛ مستقیم وارد مجموعه‌ای شو که دنبالش هستی.</p></div><nav class="discovery-index" aria-label="دسترسی به مجموعه نمونه‌کارها"><a href="/portfolio.html"><span>01</span><strong>همه نمونه‌کارها</strong><i>↗</i></a><a href="/logo-portfolio.html"><span>02</span><strong>طراحی لوگو</strong><i>↗</i></a><a href="/ad-image-portfolio.html"><span>03</span><strong>تصاویر تبلیغاتی</strong><i>↗</i></a><a href="/videos.html"><span>04</span><strong>استودیو ویدئو</strong><i>↗</i></a></nav></div></section>
 <section class="section learning-magazine" id="learning-magazine" aria-labelledby="learningMagazineTitle">
  <div class="wrap">
   <div class="magazine-shell reveal">
@@ -1412,6 +1482,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
   </div>
  </div>
 </section>
+<section class="route-wordmark" aria-label="دسترسی به معرفی و روند همکاری"><div class="wrap route-wordmark-inner"><span class="route-wordmark-kicker">GET TO KNOW THE PROCESS</span><a href="/about.html"><small>01 / ABOUT</small><strong>درباره من</strong><i>↗</i></a><a href="#process"><small>02 / PROCESS</small><strong>روند همکاری</strong><i>↗</i></a><a href="#reviews"><small>03 / FEEDBACK</small><strong>دیدگاه مشتریان</strong><i>↗</i></a></div></section>
 <section class="section" id="about"><div class="wrap about-grid"><div class="portrait reveal"><img class="portrait-photo" src="https://raw.githubusercontent.com/theslyapex/Alishams/main/assets/images/ali-shams-portrait.jpg" alt="تصویر صاحب استودیو" loading="lazy" decoding="async"><div class="portrait-label"><span>علی شمس · طراح و سازنده دیجیتال</span><span>ABOUT THE CREATOR</span></div></div><div class="about-copy reveal delay-1"><span class="eyebrow">A LITTLE ABOUT ME</span><h2>پشت هر پروژه،<br>یک فکر دقیق قرار دارد.</h2><p>من روی پیوند ایده، طراحی و اجرا تمرکز می‌کنم؛ از محتوایی که باید در چند ثانیه توجه مخاطب را جلب کند تا صفحه‌ای که باید حس اعتماد بسازد. برای من، نتیجه خوب از شنیدن درست نیاز پروژه و توجه به جزئیات شروع می‌شود.</p><div class="stats"><div class="stat"><strong>با چند قدم ساده</strong><span>ایده تا اجرا</span></div><div class="stat"><strong>100%</strong><span>توجه به جزئیات</span></div><div class="stat"><strong>∞</strong><span>کنجکاوی خلاق</span></div></div><p style="margin-top:22px"><a class="btn btn-quiet" href="about.html">آشنایی بیشتر با من ↗︎</a></p></div></div></section>
 <section class="section reviews-section" id="reviews"><div class="wrap principles-wrap">
 <div class="section-head reveal"><div><span class="eyebrow">THE WAY I WORK <i class="principles-live-dot"></i></span><h2>همکاری خوب، از <span class="principles-title-accent">جزئیات</span> شروع می‌شود.</h2><p class="principles-intro">سه اصل ساده که مسیر یک همکاری حرفه‌ای را روشن‌تر می‌کنند.</p></div><span class="principles-side-note">MY<br>PRINCIPLES <b>↙︎</b></span></div>
@@ -1427,6 +1498,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 </div></div></section>
 <section class="section" id="process"><div class="wrap"><div class="section-head reveal"><div><span class="eyebrow">HOW WE WORK</span><h2>ساده، روشن و مرحله‌به‌مرحله.</h2></div><p>از اولین گفت‌وگو تا تحویل نهایی، مسیر همکاری باید برای هر دو طرف مشخص باشد.</p></div><div class="process-grid"><article class="process reveal"><h3>گفت‌وگو</h3><p>هدف، مخاطب، نیازها و محدودیت‌های پروژه را می‌شناسیم.</p></article><article class="process reveal delay-1"><h3>پیشنهاد مسیر</h3><p>خروجی، زمان‌بندی و هزینه پیش از شروع روشن می‌شود.</p></article><article class="process reveal delay-2"><h3>طراحی و اجرا</h3><p>کار در مسیر توافق‌شده پیش می‌رود و نقاط بازبینی مشخص‌اند.</p></article><article class="process reveal delay-3"><h3>تحویل</h3><p>فایل‌ها و خروجی‌های توافق‌شده تحویل داده می‌شوند.</p></article></div></div></section>
 <section class="section trust-section" id="trust"><div class="wrap"><div class="section-head reveal"><div><span class="eyebrow">TRUST THROUGH CLARITY</span><h2>اعتماد، با <span style="color:var(--lime)">شفافیت</span> ساخته می‌شود.</h2></div><p>به‌جای وعده‌های بزرگ یا نظرهای ساختگی، معیار را روی نمونه‌های قابل مشاهده و توافق روشن پیش از شروع می‌گذاریم.</p></div><div class="trust-grid"><article class="trust-card reveal"><div class="trust-card-head"><span class="trust-icon"><svg class="trust-animated-icon icon-work" viewBox="0 0 64 64" role="img" aria-label="نمونه‌کارها"><defs><linearGradient id="workGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b7ff5b"/><stop offset="1" stop-color="#44d9ff"/></linearGradient></defs><rect class="work-window" x="10" y="13" width="44" height="36" rx="8" fill="none" stroke="url(#workGrad)" stroke-width="2.6"/><path d="M10 23h44" stroke="url(#workGrad)" stroke-width="2.6"/><circle cx="17" cy="18" r="1.4" fill="#b7ff5b"/><circle cx="22" cy="18" r="1.4" fill="#44d9ff"/><path class="work-chart" d="M19 40l8-8 7 5 11-12" fill="none" stroke="url(#workGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle class="work-point" cx="45" cy="25" r="3" fill="#b7ff5b"/></svg></span><span class="trust-number">01 / WORK</span></div><h3>نمونه‌های واقعی، نه حرف‌های بزرگ</h3><p>پروژه‌های منتشرشده را باز کن و خودت کیفیت طراحی، ساختار و کاربردشان را بررسی کن؛ از ایران‌ما تا ابزارهای آنلاین.</p><div class="trust-links"><a href="portfolio.html">کاوش نمونه‌کارها</a></div></article><article class="trust-card reveal delay-1"><div class="trust-card-head"><span class="trust-icon"><svg class="trust-animated-icon icon-agreement" viewBox="0 0 64 64" role="img" aria-label="شفافیت در توافق"><defs><linearGradient id="agreeGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c9a7ff"/><stop offset="1" stop-color="#44d9ff"/></linearGradient></defs><rect class="agree-document" x="13" y="9" width="30" height="43" rx="6" fill="#c9a7ff0b" stroke="url(#agreeGrad)" stroke-width="2.5"/><path class="agree-line" d="M20 20h15M20 27h12M20 34h9" fill="none" stroke="#a8dfff" stroke-width="2.4" stroke-linecap="round"/><circle class="agree-badge" cx="43" cy="42" r="11" fill="#14171b" stroke="#c9a7ff" stroke-width="2.4"/><path class="agree-check" d="M37.5 42l3.7 3.7 7-8" fill="none" stroke="#b7ff5b" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path class="agree-spark" d="M49 13v5m-2.5-2.5h5" stroke="#44d9ff" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="trust-number">02 / AGREEMENT</span></div><h3>همه‌چیز روشن، قبل از شروع</h3><p>هدف، محدوده کار، خروجی‌ها، زمان‌بندی و هزینه پیش از اجرا بررسی می‌شوند تا هر دو طرف بدانند روی چه چیزی توافق کرده‌اند.</p><div class="trust-links"><a href="#process">روند همکاری</a><a href="#faq">پرسش‌های رایج</a></div></article><article class="trust-card reveal delay-2"><div class="trust-card-head"><span class="trust-icon"><svg class="trust-animated-icon icon-control" viewBox="0 0 64 64" role="img" aria-label="امنیت اطلاعات"><defs><linearGradient id="secureGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b7ff5b"/><stop offset="1" stop-color="#c9a7ff"/></linearGradient></defs><path class="secure-shield" d="M32 8l19 7v14c0 12-8 21-19 27-11-6-19-15-19-27V15z" fill="none" stroke="url(#secureGrad)" stroke-width="2.8" stroke-linejoin="round"/><path class="secure-check" d="M23 31l6 6 13-14" fill="none" stroke="#b7ff5b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle class="secure-pulse" cx="32" cy="31" r="23" fill="none" stroke="#c9a7ff" stroke-width="1.3" opacity=".45"/></svg></span><span class="trust-number">03 / CONTROL</span></div><h3>اطلاعات و ارسال، تحت کنترل تو</h3><p>از پنل حساب کاربری می‌توانی جزئیات سفارش، وضعیت و روند انجام، پرداخت‌ها و تغییرات را ببینی و امور مربوط به سفارشت را مدیریت و پیگیری کنی. کد پیگیری و دسترسی خصوصی نیز کمک می‌کند اطلاعات سفارشت فقط در اختیار خودت باشد.</p><div class="trust-links"><a href="/contact-center.html">شروع گفت‌وگو</a></div></article></div></div></section>
+<section class="utility-dock" aria-labelledby="utilityDockTitle"><div class="wrap utility-dock-inner"><div class="utility-dock-copy"><span class="eyebrow">YOUR NEXT STEP</span><h2 id="utilityDockTitle">برای ادامه مسیر، از اینجا وارد شو.</h2><p>پیگیری پروژه، گفت‌وگو با پشتیبانی یا دسترسی به فضای اعضا؛ همه در چند قدم کوتاه.</p></div><nav class="utility-dock-links" aria-label="دسترسی به امکانات سایت"><a href="/project-tracking.html"><span class="utility-icon">↗</span><span><b>پیگیری پروژه</b><small>وضعیت و جزئیات سفارش</small></span><i>←</i></a><a href="/contact-center.html"><span class="utility-icon">✳</span><span><b>مرکز ارتباط</b><small>گفت‌وگو و پشتیبانی</small></span><i>←</i></a><a href="/account.html"><span class="utility-icon">◎</span><span><b>حساب کاربری</b><small>باشگاه و امکانات اعضا</small></span><i>←</i></a></nav></div></section>
 <section class="section tracking-promo" id="project-tracking">
  <div class="wrap">
   <div class="tracking-promo-card reveal">
