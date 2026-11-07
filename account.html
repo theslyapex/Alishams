@@ -489,7 +489,19 @@
   <div id="levelOtpBox" class="level-phone-controls hidden"><input id="levelPhoneOtp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="کد ۶ رقمی" aria-label="کد تأیید پیامکی"><button class="btn primary" id="verifyLevelPhoneOtp" type="button">تأیید شماره</button></div>
   <p id="accountLevelNotice" class="notice" aria-live="polite"></p>
  </div>
- <div class="level-three-note"><strong>ارتقای سطح ۳</strong><p id="levelThreeDescription" class="muted">پس از آماده‌سازی فرم امن دریافت اطلاعات و بررسی مدیر، امکان ارسال درخواست فعال می‌شود. تصویر کارت ملی برای احراز سطح ۳ لازم نیست.</p></div>
+ <div class="level-three-note"><strong>ارتقای سطح ۳</strong><p id="levelThreeDescription" class="muted">برای درخواست ارتقا، اطلاعات لازم را وارد کن. تصویر کارت ملی لازم نیست.</p></div>
+<form id="level3RequestForm" class="card hidden" style="margin-top:14px">
+ <div class="section-head"><h3>فرم درخواست ارتقای سطح ۳</h3><span class="muted">اطلاعات محرمانه</span></div>
+ <p class="muted">اطلاعات نشانی، کد پستی و کد ملی پیش از ذخیره‌سازی در پایگاه داده رمزگذاری می‌شوند و فقط در اختیار مدیر تأییدشده قرار می‌گیرند. تصویر کارت ملی دریافت نمی‌شود.</p>
+ <div class="field"><label for="level3Address">نشانی کامل</label><textarea id="level3Address" rows="3" minlength="12" maxlength="700" autocomplete="street-address" required placeholder="استان، شهر، خیابان، کوچه و پلاک"></textarea></div>
+ <div class="profile-grid">
+  <div class="field"><label for="level3Postal">کد پستی ۱۰ رقمی</label><input id="level3Postal" type="text" inputmode="numeric" maxlength="10" autocomplete="postal-code" required></div>
+  <div class="field"><label for="level3NationalId">کد ملی ۱۰ رقمی</label><input id="level3NationalId" type="password" inputmode="numeric" maxlength="10" autocomplete="off" required></div>
+ </div>
+ <label class="muted" style="display:flex;gap:9px;align-items:flex-start;margin:12px 0"><input id="level3Consent" type="checkbox" required style="width:auto;margin-top:4px"> تأیید می‌کنم اطلاعات واردشده متعلق به صاحب حساب است و برای بررسی درخواست ارتقای سطح ۳ استفاده می‌شود.</label>
+ <button class="btn primary" id="submitLevel3Request" type="submit">ارسال امن درخواست</button>
+ <p id="level3RequestNotice" class="notice" aria-live="polite"></p>
+</form>
 </div>
 <section class="card"><div class="section-head"><h2>اطلاعات حساب</h2></div><form id="profileForm"><div class="profile-grid"><div class="field"><label for="profileName">نام و نام خانوادگی</label><input id="profileName" maxlength="120" required></div><div class="field"><label for="profilePhone">شماره تماس</label><input id="profilePhone" type="tel" maxlength="40"></div></div><div class="field"><label>ایمیل حساب</label><input id="profileEmail" type="email" disabled></div><button class="btn primary" type="submit">ذخیره پروفایل</button></form><p id="profileNotice" class="notice" aria-live="polite"></p></section><section class="card"><div class="section-head"><h2>امنیت حساب</h2></div><p class="muted">برای تغییر رمز عبور از گزینه بازیابی رمز استفاده کن. لینک بازیابی به ایمیل حساب ارسال می‌شود.</p><button id="profileResetBtn" class="btn" type="button">ارسال لینک تغییر رمز</button><p id="securityNotice" class="notice" aria-live="polite"></p><p class="muted">هر حساب فقط اطلاعات سفارش‌ها، پروژه‌ها و مکاتباتی را می‌بیند که ایمیل ثبت‌شده آن‌ها با ایمیل حساب مطابقت داشته باشد.</p></section><section class="card"><div class="section-head"><h2>عضویت در خبرنامه</h2><small>Alishams Studio</small></div><p class="muted">با عضویت، خبرها، مطالب تازه و به‌روزرسانی‌های استودیو را از طریق ایمیل دریافت می‌کنی. برای فعال شدن عضویت، ایمیلت را تأیید کن.</p><button id="accountNewsletterBtn" class="btn primary" type="button">عضویت در خبرنامه</button><p id="accountNewsletterNotice" class="notice" aria-live="polite"></p><p class="muted">هر زمان هم بخواهی، از لینک لغو عضویت داخل ایمیل‌ها خارج می‌شوی.</p></section></div>
 <p id="dashNotice" class="notice" aria-live="polite"></p>
@@ -747,7 +759,7 @@ function renderAccountLevel(levelData){
  $("levelPhoneInput").disabled=phoneVerified;
  $("sendLevelPhoneOtp").disabled=phoneVerified;
  $("sendLevelPhoneOtp").textContent=phoneVerified?"شماره تأیید شده":"ارسال کد تأیید";
- $("levelThreeDescription").textContent=status==="pending"?"درخواست شما در انتظار بررسی مدیریت است.":status==="rejected"?"درخواست قبلی نیازمند اصلاح است: "+(d.level3_admin_note||"برای راهنمایی با پشتیبانی تماس بگیر."):"پس از آماده‌سازی فرم امن دریافت اطلاعات و بررسی مدیر، امکان ارسال درخواست فعال می‌شود. تصویر کارت ملی برای احراز سطح ۳ لازم نیست.";
+ $("levelThreeDescription").textContent=status==="pending"?"درخواست شما در انتظار بررسی مدیریت است. تا پایان بررسی امکان ثبت درخواست جدید وجود ندارد.":status==="approved"?"سطح ۳ حساب شما تأیید شده است.":status==="rejected"?"درخواست قبلی رد شده است: "+(d.level3_admin_note||"اطلاعات را اصلاح و دوباره ارسال کن."):"پس از تأیید ایمیل و شماره موبایل، می‌توانی فرم ارتقای سطح ۳ را تکمیل کنی. تصویر کارت ملی لازم نیست.";$("level3RequestForm").classList.toggle("hidden",!phoneVerified||status==="pending"||status==="approved");
 }
 function render(data){dashboardData=data;renderAccountLevel(data.accountLevel||{});const p=data.profile||{};$("welcome").textContent="سلام "+(p.full_name||"خوش اومدی")+" 👋";$("accountEmail").textContent=p.email||"";$("profileName").value=p.full_name||"";$("profilePhone").value=p.phone||"";$("profileEmail").value=p.email||"";$("ordersCount").textContent=faNum(data.orders.length);$("projectsCount").textContent=faNum(data.projects.length);$("requestsCount").textContent=faNum(data.requests.length);renderOrders(data.orders,data.orderEvents||[]);renderProjects(data.projects,data.payments||[],data.projectHistory||[],data.projectFiles||[],data.paymentIntents||[]);renderDocuments(data.projects||[],data.projectFiles||[],data.payments||[]);renderProjectNotifications(data.notifications||[]);renderRequests(data.requests,data.messages);renderCredentials(data.credentials||[]);renderReferral(data.referral||{});renderPlus(data.plus||{});
 const recent=[...data.orders.map(o=>({title:o.title,status:o.status,date:o.updated_at||o.created_at,kind:"سفارش"})),...data.projects.map(p=>({title:p.title,status:p.status,date:p.updated_at||p.created_at,kind:"پروژه"}))].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,6);
@@ -864,6 +876,26 @@ function normalizeLevelPhone(value){
  if(/^09\d{9}$/.test(v))v="+98"+v.slice(1);
  return v;
 }
+function level3Digits(value){return String(value||"").replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))).replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d))).replace(/[^0-9]/g,"")}
+$("level3RequestForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(!session?.user||!dashboardData?.accountLevel?.phone_verified){notice("level3RequestNotice","ابتدا شماره موبایل را تأیید کن.","error");return}
+ const address=$("level3Address").value.trim(),postal=level3Digits($("level3Postal").value),national=level3Digits($("level3NationalId").value);
+ if(address.length<12||address.length>700){notice("level3RequestNotice","نشانی باید بین ۱۲ تا ۷۰۰ نویسه باشد.","error");return}
+ if(!/^\d{10}$/.test(postal)||!/^\d{10}$/.test(national)){notice("level3RequestNotice","کد پستی و کد ملی باید هرکدام ۱۰ رقم باشند.","error");return}
+ if(!$("level3Consent").checked){notice("level3RequestNotice","برای ارسال درخواست، تأیید استفاده از اطلاعات لازم است.","error");return}
+ if(!confirm("درخواست ارتقای سطح ۳ ارسال شود؟ اطلاعات واردشده به‌صورت رمزگذاری‌شده ذخیره می‌شوند."))return;
+ const btn=$("submitLevel3Request");btn.disabled=true;btn.textContent="در حال ارسال امن…";
+ try{
+  const {data,error}=await sb.rpc("submit_account_level3_request",{p_address:address,p_postal_code:postal,p_national_id:national,p_consent:true});
+  if(error)throw error;
+  if(!data?.ok)throw new Error("ثبت درخواست تأیید نشد.");
+  $("level3Address").value="";$("level3Postal").value="";$("level3NationalId").value="";$("level3Consent").checked=false;
+  notice("level3RequestNotice","درخواست با موفقیت ثبت شد و برای بررسی مدیر ارسال شد.","success");
+  await loadDashboard();
+ }catch(err){notice("level3RequestNotice",err.message||"ثبت درخواست انجام نشد.","error")}
+ finally{btn.disabled=false;btn.textContent="ارسال امن درخواست"}
+});
 $("sendLevelPhoneOtp").addEventListener("click",async()=>{
  if(!session?.user)return;
  const phone=normalizeLevelPhone($("levelPhoneInput").value);
