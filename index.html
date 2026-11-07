@@ -972,6 +972,35 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
   pointer-events:none!important;
 }
 </style>
+<style id="site-chat-launcher-styles">
+#site-chat-launcher{position:fixed;left:max(22px,env(safe-area-inset-left));bottom:max(22px,env(safe-area-inset-bottom));z-index:9997;font-family:inherit;direction:rtl}
+#site-chat-launcher .scl-trigger{width:62px;height:62px;border:1px solid rgba(217,255,114,.65);border-radius:21px;display:grid;place-items:center;position:relative;cursor:pointer;color:#14190b;background:linear-gradient(145deg,#e5ff9b,#c8f34e);box-shadow:0 12px 38px #0008,0 0 0 7px #d9ff7212,0 0 30px #d9ff7230;transition:transform .25s,box-shadow .25s}
+#site-chat-launcher .scl-trigger:hover{transform:translateY(-4px) rotate(-3deg);box-shadow:0 16px 42px #0009,0 0 0 9px #d9ff7219,0 0 36px #d9ff7244}
+#site-chat-launcher .scl-trigger svg{width:29px;height:29px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#site-chat-launcher .scl-trigger:after{content:"";position:absolute;inset:-6px;border:1px solid #d9ff7238;border-radius:25px;animation:sclPulse 2.8s ease-out infinite;pointer-events:none}
+#site-chat-launcher .scl-panel{position:absolute;left:0;bottom:80px;width:min(365px,calc(100vw - 32px));padding:18px;border:1px solid #ffffff20;border-radius:23px;background:linear-gradient(145deg,rgba(26,29,37,.97),rgba(12,14,19,.98));box-shadow:0 25px 80px #000b,0 0 45px #d9ff720d;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);opacity:0;visibility:hidden;transform:translateY(12px) scale(.97);transform-origin:bottom left;transition:opacity .22s,transform .22s,visibility .22s}
+#site-chat-launcher.is-open .scl-panel{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+#site-chat-launcher .scl-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px}
+#site-chat-launcher .scl-kicker{display:block;color:#d9ff72;font-size:9px;font-weight:900;letter-spacing:1.5px;margin-bottom:5px}
+#site-chat-launcher .scl-title{margin:0;color:#f7f8f2;font-size:17px;font-weight:900}
+#site-chat-launcher .scl-subtitle{margin:5px 0 0;color:#a7aab4;font-size:11px;line-height:1.9}
+#site-chat-launcher .scl-close{flex:0 0 31px;width:31px;height:31px;border:1px solid #ffffff18;border-radius:10px;background:#ffffff08;color:#c9cbd2;display:grid;place-items:center;cursor:pointer;font-size:19px}
+#site-chat-launcher .scl-options{display:grid;gap:10px}
+#site-chat-launcher .scl-option{display:flex;align-items:center;gap:12px;min-width:0;padding:13px;border:1px solid #ffffff13;border-radius:16px;background:linear-gradient(110deg,#ffffff08,#ffffff03);text-decoration:none;transition:border-color .2s,background .2s,transform .2s}
+#site-chat-launcher .scl-option:hover{border-color:#d9ff7266;background:#d9ff720b;transform:translateX(-3px)}
+#site-chat-launcher .scl-icon{width:45px;height:45px;flex:0 0 45px;display:grid;place-items:center;border-radius:14px;color:#d9ff72;background:linear-gradient(145deg,#d9ff721c,#d9ff7208);border:1px solid #d9ff722b}
+#site-chat-launcher .scl-option.community .scl-icon{color:#c5b2ff;background:linear-gradient(145deg,#a58bff24,#a58bff08);border-color:#a58bff38}
+#site-chat-launcher .scl-icon svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#site-chat-launcher .scl-copy{flex:1;min-width:0}
+#site-chat-launcher .scl-copy strong{display:block;color:#f3f4f6;font-size:12px;font-weight:850}
+#site-chat-launcher .scl-copy small{display:block;margin-top:4px;color:#9da1ac;font-size:10px;line-height:1.7}
+#site-chat-launcher .scl-arrow{color:#777d89;font-size:17px;transition:transform .2s}
+#site-chat-launcher .scl-option:hover .scl-arrow{transform:translateX(-3px);color:#d9ff72}
+#site-chat-launcher .scl-foot{margin:13px 2px 0;color:#747986;font-size:9px;text-align:center}
+@keyframes sclPulse{0%{transform:scale(.94);opacity:.8}75%,100%{transform:scale(1.22);opacity:0}}
+@media(max-width:480px){#site-chat-launcher{left:max(15px,env(safe-area-inset-left));bottom:max(16px,env(safe-area-inset-bottom))}#site-chat-launcher .scl-trigger{width:56px;height:56px;border-radius:19px}#site-chat-launcher .scl-panel{bottom:72px;width:min(350px,calc(100vw - 30px));padding:15px;border-radius:20px}}
+@media(prefers-reduced-motion:reduce){#site-chat-launcher *,#site-chat-launcher *:before{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="علی شمس"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی">
@@ -2270,6 +2299,34 @@ const list=d.leaderboard||[];if(!list.length){podium.innerHTML='<div class="club
 const top=list.slice(0,3);const order=[top[1],top[0],top[2]].filter(Boolean);podium.innerHTML=order.map(x=>{const i=x.rank-1,cl=classes[i]||"",medal=medals[i]||"✦";return '<article class="club-podium-card '+cl+'"><div class="club-medal">'+medal+'</div><span class="club-rank">RANK '+num(x.rank)+'</span><strong class="club-name">'+esc(x.display_name)+'</strong><span class="club-tier">'+esc(tier[x.tier]||"عضو")+'</span><b class="club-score">'+num(x.lifetime_points)+' XP</b></article>'}).join("");
 rows.innerHTML=list.slice(3,10).map(x=>'<div class="club-row '+(x.is_me?"me":"")+'"><span class="club-row-rank">'+num(x.rank)+'</span><strong class="club-row-name">'+esc(x.display_name)+(x.is_me?" · شما":"")+'</strong><span class="club-row-tier">'+esc(tier[x.tier]||"عضو")+'</span><b class="club-row-score">'+num(x.lifetime_points)+' XP</b></div>').join("");
 }).catch(()=>{podium.innerHTML='<div class="club-league-empty" style="grid-column:1/-1">جدول لیگ موقتاً در دسترس نیست؛ کمی بعد دوباره تلاش کن.</div>';rows.innerHTML=""});
+})();
+</script>
+<div id="site-chat-launcher">
+ <button class="scl-trigger" type="button" aria-label="باز کردن گزینه‌های گفت‌وگو" aria-expanded="false" aria-controls="site-chat-panel">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.5a8.2 8.2 0 0 1-8.5 8 9.5 9.5 0 0 1-4.1-.9L3 20l1.5-4.2A7.6 7.6 0 0 1 3.5 11.5a8.1 8.1 0 0 1 8.5-8 8.1 8.1 0 0 1 8.5 8Z"/><path d="M8 10h8M8 13.5h5"/></svg>
+ </button>
+ <section class="scl-panel" id="site-chat-panel" aria-label="انتخاب نوع گفت‌وگو" aria-hidden="true">
+  <div class="scl-head"><div><span class="scl-kicker">ALISHAMS · COMMUNITY</span><h2 class="scl-title">از کجا شروع کنیم؟</h2><p class="scl-subtitle">فضای مناسب گفت‌وگوی خودت را انتخاب کن.</p></div><button class="scl-close" type="button" aria-label="بستن پنجره">×</button></div>
+  <nav class="scl-options" aria-label="مسیرهای گفت‌وگو">
+   <a class="scl-option" href="https://alishams.ir/contact-center.html">
+    <span class="scl-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.5 11.5a8.2 8.2 0 0 1-8.5 8 9.5 9.5 0 0 1-4.1-.9L3 20l1.5-4.2A7.6 7.6 0 0 1 3.5 11.5a8.1 8.1 0 0 1 8.5-8 8.1 8.1 0 0 1 8.5 8Z"/><path d="M8 10h8M8 13.5h5"/></svg></span>
+    <span class="scl-copy"><strong>گفت‌وگوی خصوصی با پشتیبانی</strong><small>ارتباط مستقیم و پیگیری درخواست‌ها با تیم پشتیبانی</small></span><span class="scl-arrow" aria-hidden="true">←</span>
+   </a>
+   <a class="scl-option community" href="https://alishams.ir/community-chat.html">
+    <span class="scl-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 5.5a3 3 0 0 1 0 5.8M17 14a5 5 0 0 1 3.5 4.5"/></svg></span>
+    <span class="scl-copy"><strong>گفت‌وگوی عمومی با کاربران سایت</strong><small>گپ‌وگفت، تبادل تجربه و تعامل با اعضای جامعه</small></span><span class="scl-arrow" aria-hidden="true">←</span>
+   </a>
+  </nav>
+  <p class="scl-foot">گفت‌وگوی خصوصی و عمومی؛ در یک دسترسی سریع</p>
+ </section>
+</div>
+<script id="site-chat-launcher-script">
+(()=>{const root=document.getElementById('site-chat-launcher');if(!root||root.dataset.ready)return;root.dataset.ready='1';const trigger=root.querySelector('.scl-trigger'),panel=root.querySelector('.scl-panel'),close=root.querySelector('.scl-close');
+const setOpen=open=>{root.classList.toggle('is-open',open);trigger.setAttribute('aria-expanded',String(open));panel.setAttribute('aria-hidden',String(!open));if(open)close.focus();else trigger.focus()};
+trigger.addEventListener('click',()=>setOpen(!root.classList.contains('is-open')));close.addEventListener('click',()=>setOpen(false));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&root.classList.contains('is-open'))setOpen(false)});
+document.addEventListener('click',e=>{if(root.classList.contains('is-open')&&!root.contains(e.target))setOpen(false)});
+panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setOpen(false)));
 })();
 </script>
 </body>
