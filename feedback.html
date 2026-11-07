@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b10"><title>ثبت بازخورد | علی شمس</title>
+<meta name="description" content="نظر، پیشنهاد یا گزارش مشکل درباره تجربه استفاده از وب‌سایت و خدمات علی شمس را ثبت کنید.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#090b10;--panel:#14171e;--line:#ffffff18;--muted:#a5aab5;--lime:#d9ff72;--text:#f5f6fa}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#29331c 0,transparent 45%),var(--bg);color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}.top{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center}.topin{width:min(1120px,calc(100% - 36px));margin:auto;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:900;font-size:18px}.brand small{display:block;font-size:9px;letter-spacing:1.4px;color:var(--muted);direction:ltr;text-align:right}.back{border:1px solid var(--line);border-radius:12px;padding:9px 15px;color:#e6e8ee;font-size:12px}
+main{width:min(760px,calc(100% - 30px));margin:58px auto 80px}.intro{text-align:center;margin-bottom:30px}.eyebrow{font-size:11px;letter-spacing:1px;color:var(--lime);font-weight:800}.intro h1{font-size:clamp(27px,5vw,40px);margin:12px 0 8px}.intro p{color:var(--muted);font-size:14px;line-height:2;margin:0}
+.card{border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,#191c24ed,#101218f5);box-shadow:0 24px 80px #0007;padding:clamp(20px,4vw,36px)}
+.field-title{display:block;margin:0 0 12px;font-weight:800;font-size:14px}.stars{display:flex;gap:10px;direction:rtl;margin-bottom:28px}.stars button{width:52px;height:52px;border:1px solid var(--line);border-radius:15px;background:#ffffff08;color:#686d78;font-size:28px;cursor:pointer;transition:.18s}.stars button.active{color:var(--lime);border-color:#d9ff7280;background:#d9ff7215;transform:translateY(-2px)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{margin-bottom:18px}.field label{display:block;margin-bottom:8px;color:#d9dce4;font-weight:700;font-size:13px}
+input,select,textarea{width:100%;min-width:0;border:1px solid var(--line);border-radius:14px;background:#090b10;color:var(--text);padding:14px;font:400 14px/1.9 Vazirmatn,Tahoma,sans-serif;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#d9ff72a0;box-shadow:0 0 0 3px #d9ff7212}textarea{min-height:170px;resize:vertical}input::placeholder,textarea::placeholder{color:#777d89}
+.submit{width:100%;margin-top:5px;padding:15px;border:0;border-radius:14px;background:linear-gradient(120deg,#d9ff72,#c4ed59);color:#15180e;font:900 15px Vazirmatn,Tahoma,sans-serif;cursor:pointer}.submit:disabled{opacity:.6;cursor:wait}
+#status{min-height:24px;margin:12px 0 0;text-align:center;font-size:13px;color:var(--muted)}#status.error{color:#ff9292}#status.success{color:var(--lime)}
+.hp{position:absolute!important;right:-9999px!important;width:1px!important;height:1px!important;opacity:0!important}
+.privacy{font-size:11px;color:#858b97;text-align:center;line-height:2;margin:16px 0 0}
+@media(max-width:560px){main{margin:35px auto 50px}.grid{grid-template-columns:1fr;gap:0}.stars{gap:7px}.stars button{width:47px;height:47px}.card{border-radius:21px}.intro p{font-size:13px}}
+</style></head>
+<body>
+<header class="top"><div class="topin"><a class="brand" href="/"><span>علی شمس</span><small>ALISHAMS DIGITAL STUDIO</small></a><a class="back" href="/">بازگشت به صفحه اصلی ↗</a></div></header>
+<main>
+<div class="intro"><span class="eyebrow">CUSTOMER FEEDBACK</span><h1>صدای شما، مسیر بهتر ما</h1><p>نظر، پیشنهاد یا مشکلی که در تجربه استفاده از سایت یا خدمات داشتی را با ما در میان بگذار.</p></div>
+<section class="card" aria-labelledby="formTitle"><h2 id="formTitle" class="field-title">تجربه‌ات را چطور ارزیابی می‌کنی؟</h2>
+<form id="asfbForm">
+<div class="stars" role="group" aria-label="امتیاز از یک تا پنج">
+<button type="button" data-rating="5" aria-label="۵ از ۵">★</button><button type="button" data-rating="4" aria-label="۴ از ۵">★</button><button type="button" data-rating="3" aria-label="۳ از ۵">★</button><button type="button" data-rating="2" aria-label="۲ از ۵">★</button><button type="button" data-rating="1" aria-label="۱ از ۵">★</button>
+</div>
+<div class="grid">
+<div class="field"><label for="asfbCategory">موضوع بازخورد</label><select id="asfbCategory" required><option value="general">نظر کلی</option><option value="service">خدمات</option><option value="website">طراحی و عملکرد سایت</option><option value="idea">پیشنهاد جدید</option><option value="problem">گزارش مشکل</option></select></div>
+<div class="field"><label for="asfbName">نام (اختیاری)</label><input id="asfbName" maxlength="80" autocomplete="name" placeholder="نام شما"></div>
+</div>
+<div class="field"><label for="asfbEmail">ایمیل (اختیاری)</label><input id="asfbEmail" type="email" maxlength="254" autocomplete="email" placeholder="برای پیگیری احتمالی"></div>
+<div class="field"><label for="asfbMessage">پیام شما</label><textarea id="asfbMessage" minlength="8" maxlength="2000" required placeholder="چه چیزی خوب بود؟ چه چیزی را بهتر کنیم؟"></textarea></div>
+<input class="hp" id="asfbWebsite" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button class="submit" id="asfbSend" type="submit">ارسال بازخورد</button><p id="status" aria-live="polite"></p>
+</form><p class="privacy">ثبت بازخورد برای بهبود تجربه کاربران است. درج نام و ایمیل اختیاری است.</p></section>
+</main>
+<script>
+(()=>{const $=id=>document.getElementById(id),form=$("asfbForm"),status=$("status"),send=$("asfbSend");let rating=0;
+document.querySelectorAll("[data-rating]").forEach(b=>b.addEventListener("click",()=>{rating=Number(b.dataset.rating);document.querySelectorAll("[data-rating]").forEach(x=>{x.classList.toggle("active",Number(x.dataset.rating)<=rating);x.setAttribute("aria-pressed",String(Number(x.dataset.rating)===rating))})}));
+form.addEventListener("submit",async e=>{e.preventDefault();if(!rating){status.textContent="لطفاً ابتدا امتیازت را انتخاب کن.";status.className="error";return}
+send.disabled=true;send.textContent="در حال ارسال…";status.textContent="";status.className="";
+try{let token="";try{const {data}=await window.__alishamsSupabase?.auth.getSession()||{};token=data?.session?.access_token||""}catch{}
+const res=await fetch("https://srfldjfrzmtnlabusssq.supabase.co/functions/v1/site-feedback-submit",{method:"POST",headers:{"Content-Type":"application/json","apikey":"sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB",...(token?{Authorization:"Bearer "+token}:{})},body:JSON.stringify({rating,category:$("asfbCategory").value,name:$("asfbName").value,email:$("asfbEmail").value,message:$("asfbMessage").value,page_url:location.href.slice(0,500),website:$("asfbWebsite").value})});
+const data=await res.json();if(!res.ok||!data.ok)throw Error(data.error||"ارسال بازخورد ناموفق بود.");
+status.textContent="بازخوردت با موفقیت ثبت شد. ممنون از همراهی‌ات.";status.className="success";form.reset();rating=0;document.querySelectorAll("[data-rating]").forEach(x=>{x.classList.remove("active");x.setAttribute("aria-pressed","false")});
+}catch(err){status.textContent=err.message||"ارتباط با سرور برقرار نشد.";status.className="error"}finally{send.disabled=false;send.textContent="ارسال بازخورد"}
+});
+})();
+</script></body></html>
