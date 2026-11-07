@@ -96,6 +96,21 @@ button,a{-webkit-tap-highlight-color:transparent}
 @media(max-width:760px){.wrap{width:min(var(--max),calc(100% - 30px))}.top{flex-wrap:wrap}.links{width:100%;justify-content:space-between;gap:10px;font-size:11px}.hero{padding:34px 0 48px}.hero-grid{grid-template-columns:1fr;gap:27px}.portrait-wrap{grid-row:1;width:min(64%,245px)}.hero h1{font-size:clamp(38px,10vw,58px);margin-top:12px}.hero-copy{font-size:14px}.section{padding:52px 0}.story-grid{grid-template-columns:1fr}.quote-card{min-height:210px}.steps,.principles{grid-template-columns:1fr}.step{min-height:0}.projects{grid-template-columns:1fr}.closing{align-items:flex-start;flex-direction:column}.foot{flex-direction:column}}
 @media(max-width:380px){.links{font-size:10px}.hero h1{font-size:36px}.btn{width:100%}.portrait-wrap{width:70%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}*,*:before,*:after{transition:none!important}}
+
+.skills{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.skill{position:relative;overflow:hidden;min-height:190px;padding:22px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#ffffff0b,#ffffff02);transition:transform .3s,border-color .3s,background .3s}
+.skill:after{content:"";position:absolute;width:130px;height:130px;left:-75px;bottom:-85px;border-radius:50%;background:var(--skill-glow,#a88cff);filter:blur(45px);opacity:.16;transition:opacity .3s}
+.skill:hover{transform:translateY(-6px);border-color:#a88cff70;background:linear-gradient(145deg,#a88cff12,#ffffff03)}
+.skill:hover:after{opacity:.34}
+.skill-icon{width:48px;height:48px;display:grid;place-items:center;border:1px solid #a88cff38;border-radius:15px;background:linear-gradient(145deg,#a88cff20,#6de4e10c);color:var(--cyan);margin-bottom:14px}
+.skill-icon svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.skill h3{font-size:16px;font-weight:600;margin:0 0 7px}
+.skill p{font-size:12px;color:var(--muted);line-height:2.35;margin:0}
+.focus-note{display:flex;align-items:center;gap:13px;margin-top:17px;padding:15px 18px;border:1px solid #6de4e125;border-radius:17px;background:#6de4e108;color:#c8c5d0;font-size:12px;line-height:2.2}
+.focus-note i{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px #6de4e1a0}
+@media(max-width:900px){.skills{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.skills{grid-template-columns:1fr}.skill{min-height:0}}
+
 </style>
 <script src="/site-protection.js" defer></script>
 <link rel="stylesheet" href="/share-page.css?v=3">
@@ -151,6 +166,19 @@ button,a{-webkit-tap-highlight-color:transparent}
 <article class="principle reveal"><span class="principle-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11.5"/><circle cx="16" cy="16" r="6.5"/><circle cx="16" cy="16" r="1.7"/><path d="M16 2v4M16 26v4M2 16h4M26 16h4"/></svg></span><h3>دقت در اجرا</h3><p>جزئیات فنی و بصری بخشی از کیفیت محصول‌اند؛ نه مرحله‌ای که بتوان از آن چشم‌پوشی کرد.</p></article>
 <article class="principle reveal"><span class="principle-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="5" y="4" width="22" height="24" rx="4"/><path d="M10 10h12M10 15h5M10 21l3.5 3.5L22 16"/><path d="M19 16h3v3"/></svg></span><h3>کاربردپذیری</h3><p>تجربه خوب باید روشن، قابل فهم و در دستگاه‌های مختلف قابل استفاده باشد.</p></article>
 </div>
+</div>
+</section>
+
+<section class="section" style="padding-top:12px">
+<div class="wrap">
+<div class="section-head reveal"><span class="eyebrow">AREAS OF FOCUS</span><h2>حوزه‌هایی که روی آن‌ها کار می‌کنم</h2><p class="lead">تمرکز من روی پیوند دادن طراحی، فناوری و محتواست؛ مهارت‌هایی که در کنار هم به شکل‌گیری و توسعه یک تجربه دیجیتال کمک می‌کنند.</p></div>
+<div class="skills">
+<article class="skill reveal" style="--skill-glow:#a88cff"><span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="3.5" y="5" width="25" height="18" rx="3"/><path d="M11 27h10M16 23v4M9 11h14M9 16h8"/></svg></span><h3>طراحی و توسعه وب</h3><p>ساخت وب‌سایت‌های واکنش‌گرا با تمرکز بر ساختار، تجربه کاربری و عملکرد.</p></article>
+<article class="skill reveal" style="--skill-glow:#6de4e1"><span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 7.5h22v17H5z"/><path d="m12 13-4 3 4 3M20 13l4 3-4 3M18 11l-4 10"/></svg></span><h3>ابزارها و محصولات آنلاین</h3><p>تبدیل نیازهای مشخص به ابزارهای دیجیتال ساده، کاربردی و قابل استفاده.</p></article>
+<article class="skill reveal" style="--skill-glow:#e7c98b"><span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="4" y="5" width="24" height="22" rx="3"/><path d="m7 22 6-7 4 4 3-3 5 6M11 11h.01"/></svg></span><h3>محتوای بصری و ویدئویی</h3><p>طراحی محتوای تصویری، موشن‌گرافیک و ویدئوهای معرفی و تبلیغاتی.</p></article>
+<article class="skill reveal" style="--skill-glow:#a88cff"><span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11.5"/><path d="M16 8v8l5 3M5 5l4 1-1 4"/></svg></span><h3>مدیریت و پیشبرد پروژه</h3><p>سامان‌دهی مسیر اجرا، اولویت‌بندی نیازها و پیگیری جزئیات تا رسیدن به خروجی.</p></article>
+</div>
+<div class="focus-note reveal"><i aria-hidden="true"></i><span>این حوزه‌ها در پروژه‌های مختلف به شکل ترکیبی به کار گرفته می‌شوند؛ انتخاب مسیر و ابزار همیشه به هدف و نیاز همان پروژه بستگی دارد.</span></div>
 </div>
 </section>
 <section class="section" style="padding-top:12px">
