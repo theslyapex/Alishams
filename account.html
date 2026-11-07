@@ -521,7 +521,7 @@
 <dialog id="level3SignatureDialog" aria-labelledby="level3SignatureTitle">
  <div class="level3-signature-shell">
   <div class="level3-signature-top"><h2 id="level3SignatureTitle">ثبت امضای پذیرش شرایط و قوانین</h2><button class="btn" id="closeLevel3Signature" type="button" aria-label="بستن">بستن</button></div>
-  <p class="level3-signature-copy">با رسم امضا در کادر زیر، اعلام می‌کنی که <a href="/terms.html" target="_blank" rel="noopener noreferrer">شرایط و قوانین وب‌سایت و سفارش</a> را مطالعه کرده‌ای و با مفاد آن موافقی. نسخه ثبت‌شده: 2026-11-07-v1. اگر هنوز قوانین را نخوانده‌ای، پیش از امضا صفحه قوانین را باز کن.</p>
+  <p class="level3-signature-copy">با رسم امضا در کادر زیر، اعلام می‌کنی که <a href="/terms.html" target="_blank" rel="noopener noreferrer">شرایط و قوانین وب‌سایت و سفارش</a> را مطالعه کرده‌ای و با مفاد آن موافقی. نسخه ثبت‌شده: 2026-11-07-v1. اگر هنوز قوانین را نخوانده‌ای، پیش از امضا صفحه قوانین را باز کن. اگر به سن قانونی نرسیده‌ای، این امضا جایگزین موافقت ولی یا سرپرست قانونی نیست و باید پیش از ادامه با او هماهنگ کنی.</p>
   <div class="level3-canvas-wrap"><canvas id="level3SignatureCanvas" aria-label="محل رسم امضا"></canvas></div>
   <div id="level3SignatureNotice" role="status" aria-live="polite"></div>
   <div class="level3-signature-actions">
@@ -937,7 +937,7 @@ $("saveLevel3Signature").addEventListener("click",()=>{
  level3SignatureData=level3Canvas.toDataURL("image/png");
  if(level3SignatureData.length>500000){$("level3SignatureNotice").textContent="امضا بیش از حد بزرگ است؛ کادر را پاک کن و امضای ساده‌تری رسم کن.";return}
  level3Dialog.close();
- $("level3HiddenSubmit").click();
+ $("level3RequestForm").requestSubmit();
 });
 $("level3RequestForm").addEventListener("submit",async e=>{
  e.preventDefault();
