@@ -902,6 +902,26 @@ $("sendLevelPhoneOtp").addEventListener("click",async()=>{
  if(!/^\+[1-9]\d{7,14}$/.test(phone)){notice("accountLevelNotice","شماره را با پیش‌شماره کشور وارد کن؛ مانند ‎+989121234567.","error");return}
  const btn=$("sendLevelPhoneOtp");btn.disabled=true;btn.textContent="در حال ارسال…";
  try{
+  // مدیرانی که MFA فعال دارند، پیش از تغییر شماره باید نشست را به AAL2 ارتقا دهند.
+  const {data:aalData,error:aalError}=await sb.auth.mfa.getAuthenticatorAssuranceLevel();
+  if(aalError)throw aalError;
+  if(aalData?.nextLevel==="aal2"&&aalData?.currentLevel!=="aal2"){
+   const {data:factorData,error:factorError}=await sb.auth.mfa.listFactors();
+   if(factorError)throw factorError;
+   const factors=[...(factorData?.totp||[]),...(factorData?.phone||[])].filter(f=>f.status==="verified");
+   if(!factors.length)throw new Error("برای حساب شما عامل تأیید دومرحله‌ای فعالی پیدا نشد. ابتدا وضعیت MFA را بررسی کنید.");
+   const factor=factors.find(f=>f.factor_type==="totp")||factors[0];
+   const code=prompt(factor.factor_type==="totp"?"برای ادامه، کد ۶ رقمی برنامه تأیید هویت را وارد کن:":"برای ادامه، کد تأیید دومرحله‌ای را وارد کن:");
+   if(!code)throw new Error("تأیید دومرحله‌ای لغو شد.");
+   if(!/^\\d{6}$/.test(code.trim()))throw new Error("کد تأیید دومرحله‌ای باید ۶ رقم باشد.");
+   const {error:verifyMfaError}=await sb.auth.mfa.challengeAndVerify({factorId:factor.id,code:code.trim()});
+   if(verifyMfaError)throw verifyMfaError;
+   const {data:confirmedAal,error:confirmedAalError}=await sb.auth.mfa.getAuthenticatorAssuranceLevel();
+   if(confirmedAalError)throw confirmedAalError;
+   if(confirmedAal?.currentLevel!=="aal2")throw new Error("تأیید دومرحله‌ای کامل نشد؛ دوباره تلاش کن.");
+   const {data:refreshedSession}=await sb.auth.getSession();
+   if(refreshedSession?.session)session=refreshedSession.session;
+  }
   const {error}=await sb.auth.updateUser({phone});
   if(error)throw error;
   pendingLevelPhone=phone;$("levelOtpBox").classList.remove("hidden");
