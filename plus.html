@@ -87,7 +87,7 @@ async function refreshLevelGate(){
    if(level3Approved){gate.hidden=true}
    else{
     gate.hidden=false;
-    gate.textContent=Number(data?.level)===0?"برای خرید پلاس+ ابتدا ایمیل حساب کاربری را تأیید کن.":Number(data?.level)===1?"برای خرید پلاس+ ابتدا شماره همراهت را تأیید کن و سپس احراز سطح ۳ را تکمیل کن.":data?.level3_status==="pending"?"درخواست احراز سطح ۳ در انتظار بررسی مدیریت است. پس از تأیید می‌توانی پلاس+ را تهیه کنی.":"خرید پلاس+ فقط پس از تکمیل و تأیید احراز سطح ۳ توسط مدیریت امکان‌پذیر است.";
+    gate.textContent=Number(data?.level)===0?"برای خرید پلاس+ ابتدا ایمیل حساب کاربری را تأیید کن.":Number(data?.level)===1?"برای خرید پلاس+ ابتدا حساب GitHub را متصل کن و سپس درخواست سطح ۳ را برای بررسی مدیریت بفرست.":data?.level3_status==="pending"?"درخواست احراز سطح ۳ در انتظار بررسی مدیریت است. پس از تأیید می‌توانی پلاس+ را تهیه کنی.":"خرید پلاس+ فقط پس از تکمیل و تأیید احراز سطح ۳ توسط مدیریت امکان‌پذیر است.";
    }
   }
  }catch(e){console.warn("Plus account level check failed",e);level3Approved=false;if(gate){gate.hidden=false;gate.textContent="بررسی سطح حساب انجام نشد. برای جلوگیری از ثبت درخواست ناقص، فعلاً امکان ارسال رسید فعال نیست."}}
