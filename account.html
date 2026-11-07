@@ -171,7 +171,23 @@
 .notification-category-option.selected .ncat-check{opacity:1}
 @media(max-width:520px){.notification-category-picker{width:100%}.notification-category-trigger{font-size:13px}.notification-category-option{font-size:13px}}
 
-.account-level-card{border:1px solid #d9ff7226;background:linear-gradient(145deg,#11150f,#0b0d12 68%);padding:20px}.account-level-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}.account-level-heading h2{margin:5px 0;font-size:19px}.account-level-badge{border:1px solid #d9ff7240;background:#d9ff7210;color:var(--lime);padding:7px 12px;border-radius:999px;font-size:12px;font-weight:800}.account-level-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0}.account-level-step{display:flex;align-items:flex-start;gap:10px;padding:13px;border:1px solid var(--line);border-radius:14px;background:#080a0d;min-width:0}.account-level-step.active{border-color:#d9ff7270;background:#d9ff720b}.account-level-step.done .step-number{background:var(--lime);color:#15180e}.step-number{display:grid;place-items:center;flex:0 0 28px;height:28px;border-radius:9px;background:#ffffff12;color:var(--text);font-weight:900}.account-level-step strong{font-size:12px}.account-level-step p{font-size:11px;line-height:1.8;color:var(--muted);margin:5px 0}.step-state{display:block;margin-inline-start:auto;white-space:nowrap;color:var(--muted);font-size:10px}.level-phone-box,.level-three-note{border:1px solid var(--line);border-radius:14px;padding:15px;margin-top:12px}.level-phone-box p,.level-three-note p{font-size:11px;line-height:1.9;margin:5px 0}.level-phone-controls{display:flex;gap:9px;align-items:center;margin-top:10px}.level-phone-controls input{flex:1;min-width:0;background:#090b10;border:1px solid var(--line);border-radius:11px;padding:12px;color:var(--text);direction:ltr;text-align:left}.level-three-note{background:#ffffff04}@media(max-width:760px){.account-level-steps{grid-template-columns:1fr}.level-phone-controls{flex-direction:column;align-items:stretch}.level-phone-controls .btn{width:100%}}</style>
+.account-level-card{border:1px solid #d9ff7226;background:linear-gradient(145deg,#11150f,#0b0d12 68%);padding:20px}.account-level-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}.account-level-heading h2{margin:5px 0;font-size:19px}.account-level-badge{border:1px solid #d9ff7240;background:#d9ff7210;color:var(--lime);padding:7px 12px;border-radius:999px;font-size:12px;font-weight:800}.account-level-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0}.account-level-step{display:flex;align-items:flex-start;gap:10px;padding:13px;border:1px solid var(--line);border-radius:14px;background:#080a0d;min-width:0}.account-level-step.active{border-color:#d9ff7270;background:#d9ff720b}.account-level-step.done .step-number{background:var(--lime);color:#15180e}.step-number{display:grid;place-items:center;flex:0 0 28px;height:28px;border-radius:9px;background:#ffffff12;color:var(--text);font-weight:900}.account-level-step strong{font-size:12px}.account-level-step p{font-size:11px;line-height:1.8;color:var(--muted);margin:5px 0}.step-state{display:block;margin-inline-start:auto;white-space:nowrap;color:var(--muted);font-size:10px}.level-phone-box,.level-three-note{border:1px solid var(--line);border-radius:14px;padding:15px;margin-top:12px}.level-phone-box p,.level-three-note p{font-size:11px;line-height:1.9;margin:5px 0}.level-phone-controls{display:flex;gap:9px;align-items:center;margin-top:10px}.level-phone-controls input{flex:1;min-width:0;background:#090b10;border:1px solid var(--line);border-radius:11px;padding:12px;color:var(--text);direction:ltr;text-align:left}.level-three-note{background:#ffffff04}@media(max-width:760px){.account-level-steps{grid-template-columns:1fr}.level-phone-controls{flex-direction:column;align-items:stretch}.level-phone-controls .btn{width:100%}}
+/* Level 3 electronic acceptance signature */
+#level3SignatureDialog{border:0;padding:0;width:min(100vw,980px);max-width:100vw;height:100dvh;max-height:100dvh;margin:auto;background:#fff;color:#171717;border-radius:0;overflow:auto;}
+#level3SignatureDialog::backdrop{background:#050609ed}
+.level3-signature-shell{min-height:100%;display:flex;flex-direction:column;padding:clamp(14px,3vw,28px);font-family:Vazirmatn,Tahoma,sans-serif}
+.level3-signature-top{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid #e5e7eb;padding-bottom:14px}
+.level3-signature-top h2{font-size:clamp(18px,3vw,24px);margin:0;color:#171717}
+.level3-signature-copy{font-size:13px;line-height:2;color:#424242;margin:14px 0}
+.level3-signature-copy a{color:#5b36c9;text-decoration:underline;font-weight:800}
+.level3-canvas-wrap{flex:1;min-height:260px;border:2px dashed #c7cbd3;border-radius:16px;background:#fff;overflow:hidden;touch-action:none}
+#level3SignatureCanvas{display:block;width:100%;height:100%;min-height:260px;background:#fff;touch-action:none;cursor:crosshair}
+.level3-signature-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.level3-signature-actions .btn{border-color:#d5d7dc;background:#f4f5f7;color:#202124}
+.level3-signature-actions .btn.primary{background:#d9ff72;border-color:#c5ed5d;color:#171717}
+#level3SignatureNotice{font-size:12px;color:#b42318;min-height:20px;margin-top:8px}
+@media(max-width:600px){.level3-signature-shell{padding:12px}.level3-canvas-wrap{min-height:45vh}#level3SignatureCanvas{min-height:45vh}}
+</style>
 <link rel="stylesheet" href="/comments.css?v=4">
 <link rel="stylesheet" href="/share-page.css?v=2"><script src="/share-page.js?v=2" defer></script>
 </head>
@@ -490,9 +506,11 @@
  </div>
  <div class="level-three-note"><strong>ارتقای سطح ۳</strong><p id="levelThreeDescription" class="muted">پس از اتصال GitHub می‌توانی درخواست بررسی سطح ۳ را برای مدیریت ارسال کنی.</p></div>
 <form id="level3RequestForm" class="card hidden" style="margin-top:14px">
- <div class="section-head"><h3>درخواست ارتقای سطح ۳</h3><span class="muted">بررسی مدیریت</span></div>
- <p class="muted">برای حفظ حریم خصوصی، در این مرحله نشانی، کد پستی یا کد ملی دریافت نمی‌شود. درخواست بر اساس وضعیت حساب و بررسی مدیریت ارزیابی خواهد شد.</p>
- <button class="btn primary" id="submitLevel3Request" type="submit">ارسال درخواست بررسی</button>
+ <div class="section-head"><h3>درخواست ارتقای سطح ۳</h3><span class="muted">ثبت پذیرش شرایط</span></div>
+ <p class="muted">برای ارسال درخواست، ابتدا شرایط و قوانین سفارش و همکاری را مطالعه کن. سپس در صفحه سفید، پذیرش خود را با رسم امضا ثبت کن. امضا و نسخه قوانین پذیرفته‌شده به‌صورت خصوصی در پایگاه داده ذخیره می‌شود.</p>
+ <p class="muted"><a href="/terms.html" target="_blank" rel="noopener noreferrer" style="color:var(--lime);text-decoration:underline;font-weight:800">مطالعه شرایط و قوانین وب‌سایت و سفارش ↗</a></p>
+ <button class="btn primary" id="submitLevel3Request" type="button">مطالعه کردم؛ ورود به صفحه امضا</button>
+ <button type="submit" id="level3HiddenSubmit" class="hidden" aria-hidden="true" tabindex="-1"></button>
  <p id="level3RequestNotice" class="notice" aria-live="polite"></p>
 </form>
 </div>
@@ -500,6 +518,18 @@
 <p id="dashNotice" class="notice" aria-live="polite"></p>
 </section>
 <section id="recoveryBox" class="card hidden" style="max-width:520px;margin:10px auto 50px"><h2>تنظیم رمز عبور جدید</h2><p class="muted">یک رمز جدید برای حساب خود انتخاب کن.</p><form id="passwordForm"><div class="field"><label for="newPassword">رمز عبور جدید (حداقل ۸ کاراکتر)</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required></div><div class="field"><label for="confirmPassword">تکرار رمز عبور</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></div><button class="btn primary wide" type="submit">ذخیره رمز جدید</button></form><p id="recoveryNotice" class="notice" aria-live="polite"></p></section>
+<dialog id="level3SignatureDialog" aria-labelledby="level3SignatureTitle">
+ <div class="level3-signature-shell">
+  <div class="level3-signature-top"><h2 id="level3SignatureTitle">ثبت امضای پذیرش شرایط و قوانین</h2><button class="btn" id="closeLevel3Signature" type="button" aria-label="بستن">بستن</button></div>
+  <p class="level3-signature-copy">با رسم امضا در کادر زیر، اعلام می‌کنی که <a href="/terms.html" target="_blank" rel="noopener noreferrer">شرایط و قوانین وب‌سایت و سفارش</a> را مطالعه کرده‌ای و با مفاد آن موافقی. نسخه ثبت‌شده: 2026-11-07-v1. اگر هنوز قوانین را نخوانده‌ای، پیش از امضا صفحه قوانین را باز کن.</p>
+  <div class="level3-canvas-wrap"><canvas id="level3SignatureCanvas" aria-label="محل رسم امضا"></canvas></div>
+  <div id="level3SignatureNotice" role="status" aria-live="polite"></div>
+  <div class="level3-signature-actions">
+   <button class="btn" id="clearLevel3Signature" type="button">پاک کردن و امضای مجدد</button>
+   <button class="btn primary" id="saveLevel3Signature" type="button">ثبت امضا و ارسال درخواست</button>
+  </div>
+ </div>
+</dialog>
 <dialog id="credentialConfirmDialog" class="account-dialog" aria-labelledby="credentialConfirmTitle"><span class="eyebrow">SECURITY CONFIRMATION</span><h2 id="credentialConfirmTitle">تأیید عملیات</h2><p id="credentialConfirmText"></p><div class="dialog-actions"><button id="credentialConfirmYes" class="btn primary" type="button">بله، کلید جدید صادر شود</button><button id="credentialConfirmNo" class="btn" type="button">انصراف</button></div></dialog><footer class="footer">ALISHAMS STUDIO · فضای خصوصی مشتریان</footer>
 </div>
 <script>
@@ -873,19 +903,56 @@ $("linkGithubAccount").addEventListener("click",async()=>{
   else throw new Error("لینک اتصال GitHub دریافت نشد.");
  }catch(err){notice("accountLevelNotice",err.message||"اتصال GitHub انجام نشد.","error");btn.disabled=false;btn.textContent="اتصال و تأیید GitHub"}
 });
+let level3SignatureData="";
+const level3TermsVersion="2026-11-07-v1";
+const level3Dialog=$("level3SignatureDialog"),level3Canvas=$("level3SignatureCanvas"),level3Ctx=level3Canvas.getContext("2d");
+let level3Drawing=false,level3HasInk=false,level3LastPoint=null;
+function resizeLevel3Canvas(){
+ const rect=level3Canvas.getBoundingClientRect(),ratio=Math.max(1,window.devicePixelRatio||1);
+ const snapshot=level3HasInk?level3Canvas.toDataURL("image/png"):null;
+ level3Canvas.width=Math.round(rect.width*ratio);level3Canvas.height=Math.round(rect.height*ratio);
+ level3Ctx.setTransform(ratio,0,0,ratio,0,0);level3Ctx.fillStyle="#fff";level3Ctx.fillRect(0,0,rect.width,rect.height);
+ level3Ctx.strokeStyle="#111";level3Ctx.lineWidth=2.4;level3Ctx.lineCap="round";level3Ctx.lineJoin="round";
+ if(snapshot){const img=new Image();img.onload=()=>level3Ctx.drawImage(img,0,0,rect.width,rect.height);img.src=snapshot}
+}
+function openLevel3Signature(){
+ $("level3SignatureNotice").textContent="";
+ level3HasInk=false;level3SignatureData="";
+ level3Dialog.showModal();
+ requestAnimationFrame(resizeLevel3Canvas);
+}
+function level3Point(e){const r=level3Canvas.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
+level3Canvas.addEventListener("pointerdown",e=>{e.preventDefault();level3Drawing=true;level3LastPoint=level3Point(e);level3Canvas.setPointerCapture(e.pointerId);level3Ctx.beginPath();level3Ctx.moveTo(level3LastPoint.x,level3LastPoint.y);level3Ctx.lineTo(level3LastPoint.x+.1,level3LastPoint.y+.1);level3Ctx.stroke();level3HasInk=true});
+level3Canvas.addEventListener("pointermove",e=>{if(!level3Drawing)return;e.preventDefault();const p=level3Point(e);level3Ctx.beginPath();level3Ctx.moveTo(level3LastPoint.x,level3LastPoint.y);level3Ctx.lineTo(p.x,p.y);level3Ctx.stroke();level3LastPoint=p;level3HasInk=true});
+["pointerup","pointercancel","lostpointercapture"].forEach(ev=>level3Canvas.addEventListener(ev,()=>{level3Drawing=false;level3LastPoint=null}));
+$("clearLevel3Signature").addEventListener("click",()=>{const r=level3Canvas.getBoundingClientRect();level3Ctx.clearRect(0,0,level3Canvas.width,level3Canvas.height);level3Ctx.fillStyle="#fff";level3Ctx.fillRect(0,0,r.width,r.height);level3HasInk=false;level3SignatureData="";$("level3SignatureNotice").textContent=""});
+$("closeLevel3Signature").addEventListener("click",()=>level3Dialog.close());
+$("submitLevel3Request").addEventListener("click",()=>{
+ if(!session?.user||!dashboardData?.accountLevel?.github_verified){notice("level3RequestNotice","ابتدا حساب GitHub را متصل کن.","error");return}
+ window.open("/terms.html","_blank","noopener");
+ openLevel3Signature();
+});
+$("saveLevel3Signature").addEventListener("click",()=>{
+ if(!level3HasInk){$("level3SignatureNotice").textContent="ابتدا امضای خود را در کادر سفید رسم کن.";return}
+ level3SignatureData=level3Canvas.toDataURL("image/png");
+ if(level3SignatureData.length>500000){$("level3SignatureNotice").textContent="امضا بیش از حد بزرگ است؛ کادر را پاک کن و امضای ساده‌تری رسم کن.";return}
+ level3Dialog.close();
+ $("level3HiddenSubmit").click();
+});
 $("level3RequestForm").addEventListener("submit",async e=>{
  e.preventDefault();
  if(!session?.user||!dashboardData?.accountLevel?.github_verified){notice("level3RequestNotice","ابتدا حساب GitHub را متصل کن.","error");return}
- if(!confirm("درخواست بررسی سطح ۳ برای مدیریت ارسال شود؟"))return;
- const btn=$("submitLevel3Request");btn.disabled=true;btn.textContent="در حال ارسال…";
+ if(!level3SignatureData){notice("level3RequestNotice","برای ارسال درخواست، ابتدا امضای پذیرش شرایط و قوانین را ثبت کن.","error");return}
+ const btn=$("saveLevel3Signature");btn.disabled=true;
  try{
-  const {data,error}=await sb.rpc("submit_account_level3_request");
+  const {data,error}=await sb.rpc("submit_account_level3_request",{p_signature_data:level3SignatureData,p_terms_version:level3TermsVersion});
   if(error)throw error;
   if(!data?.ok)throw new Error("ثبت درخواست تأیید نشد.");
-  notice("level3RequestNotice","درخواست ثبت شد و برای بررسی مدیریت ارسال شد.","success");
+  level3SignatureData="";
+  notice("level3RequestNotice","امضا و پذیرش شرایط ثبت شد و درخواست برای بررسی مدیریت ارسال شد.","success");
   await loadDashboard();
  }catch(err){notice("level3RequestNotice",err.message||"ثبت درخواست انجام نشد.","error")}
- finally{btn.disabled=false;btn.textContent="ارسال درخواست بررسی"}
+ finally{btn.disabled=false}
 });
 $("profileForm").addEventListener("submit",async e=>{e.preventDefault();if(!session)return;const full_name=$("profileName").value.trim(),phone=$("profilePhone").value.trim();if(isReservedAdminName(full_name,session.user.email)){notice("profileNotice",reservedNameMessage,"error");$("profileName").focus();return}const {data,error}=await sb.auth.updateUser({data:{...session.user.user_metadata,full_name,phone}});if(error){notice("profileNotice",error.message==="RESERVED_DISPLAY_NAME"?reservedNameMessage:error.message,"error");return}session={...session,user:data.user};notice("profileNotice","اطلاعات پروفایل ذخیره شد.","success");await loadDashboard()});
 $("logoutBtn").addEventListener("click",async()=>{await sb.auth.signOut();session=null;showAuth();notice("loginNotice","از حساب خارج شدی.","success")});
