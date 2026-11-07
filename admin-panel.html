@@ -55,35 +55,88 @@ iframe{min-width:0}
  .site{font-size:9px;padding:6px 7px}
  .nav button{min-width:108px}
 }
+
+/* Management center refresh */
+.logo{display:grid;place-items:center;padding:4px;overflow:hidden;background:#111!important}
+.logo img{display:block;width:100%;height:100%;object-fit:contain;border-radius:9px}
+.sidebar{padding:18px 13px}
+.side-search{height:43px;display:flex;align-items:center;gap:9px;margin:0 2px 18px;padding:0 11px;border:1px solid #ffffff17;border-radius:12px;background:#ffffff06;color:#9da6b2}
+.side-search>span{font-size:20px;line-height:1}
+.side-search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:#f5f7f8;font:500 11px Vazirmatn,Tahoma,sans-serif}
+.side-search input::placeholder{color:#788391}
+.side-search kbd{padding:2px 6px;border:1px solid #ffffff20;border-radius:5px;color:#8e99a6;font:10px Vazirmatn,sans-serif}
+.nav-section-label{display:block;padding:0 11px 8px;color:#697583;font-size:9px;font-weight:800;letter-spacing:.4px}
+.nav-section-label.nav-divider{padding-top:18px}
+.nav{gap:5px}
+.nav button{min-height:54px;padding:9px 10px;gap:10px;border-radius:12px}
+.nav button.active{background:linear-gradient(105deg,#d6ff5918,#b7a0ff0c);border-color:#d6ff5930;box-shadow:inset -3px 0 var(--lime),0 7px 22px #0002}
+.nav button:hover:not(.active){background:#ffffff0a;border-color:#ffffff0c;transform:translateX(-2px)}
+.nav-copy b{font-size:11px}
+.nav-copy small{font-size:9px;line-height:1.6}
+.ico{border:1px solid #ffffff0b}
+.nav-empty{padding:16px 10px;color:#8994a0;text-align:center;font-size:11px}
+.topbar{padding-inline:clamp(14px,2.2vw,30px)}
+.brand{gap:11px}
+.brand strong{font-size:14px;font-weight:900}
+.brand small{font-size:9px;letter-spacing:1.1px}
+.site,.reload{transition:.2s}
+.site:hover,.reload:hover{border-color:#d6ff5955;background:#d6ff590c;color:#fff}
+.workspace{padding:clamp(10px,1.5vw,20px);gap:12px}
+.workspace-head{min-height:46px}
+.crumb strong{font-size:15px}
+.frame-wrap{border-radius:19px;border-color:#ffffff1c;box-shadow:0 22px 70px #0006}
+.frame-loading{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:#090b0df5;color:#e9edf0;transition:opacity .25s,visibility .25s}
+.frame-loading[hidden]{display:none}
+.frame-loading b{font-size:12px}
+.frame-loading small{font-size:10px;color:#8994a0}
+.loader-ring{width:30px;height:30px;border:2px solid #ffffff18;border-top-color:var(--lime);border-radius:50%;animation:adminSpin .8s linear infinite}
+@keyframes adminSpin{to{transform:rotate(360deg)}}
+@media(min-width:851px){
+ .app{grid-template-columns:286px minmax(0,1fr);grid-template-rows:78px minmax(0,1fr)}
+ .sidebar{padding:21px 15px}
+ .workspace{padding:18px 20px 20px}
+}
+@media(max-width:850px){
+ .side-search,.nav-section-label,.nav-empty{display:none!important}
+ .nav{gap:8px}
+ .nav button{min-height:49px;min-width:118px;padding:6px 10px;border-color:#ffffff0c;background:#ffffff04}
+ .nav button.active{box-shadow:inset 0 -2px var(--lime);border-color:#d6ff5940}
+ .nav button:hover:not(.active){transform:none}
+ .workspace-head{flex-basis:38px;min-height:38px}
+ .frame-wrap{border-radius:14px}
+}
+@media(prefers-reduced-motion:reduce){.loader-ring{animation:none}}
 </style></head>
 <body><div class="app">
-<header class="topbar"><div class="brand"><div class="logo" aria-hidden="true"></div><div><strong>ALISHAMS STUDIO</strong><small>UNIFIED MANAGEMENT CENTER</small></div></div><div class="topright"><span class="secure"><i class="dot"></i> محیط مدیریتی امن</span><a class="site" href="/" target="_blank" rel="noopener">مشاهده سایت ↗</a></div></header>
-<aside class="sidebar"><div class="side-label">مرکز مدیریت استودیو</div><nav class="nav" id="mainNav">
+<header class="topbar"><div class="brand"><div class="logo"><img src="/assets/images/alishams-studio-logo.png" alt="Alishams Studio"></div><div><strong>ALISHAMS STUDIO</strong><small>UNIFIED MANAGEMENT CENTER</small></div></div><div class="topright"><span class="secure"><i class="dot"></i> محیط مدیریتی امن</span><a class="site" href="/" target="_blank" rel="noopener">مشاهده سایت ↗</a></div></header>
+<aside class="sidebar"><div class="side-label">مرکز مدیریت استودیو</div><label class="side-search" for="moduleSearch"><span aria-hidden="true">⌕</span><input id="moduleSearch" type="search" placeholder="جست‌وجوی بخش‌ها…" autocomplete="off"><kbd>/</kbd></label><div class="nav-section-label">مدیریت و عملیات</div><nav class="nav" id="mainNav">
 <button class="active" data-key="dashboard" data-src="admin.html"><span class="ico">▦</span><span class="nav-copy"><b>داشبورد اصلی</b><small>آمار و کنترل کلی</small></span></button>
 <button data-key="orders" data-src="orders-admin.html"><span class="ico">▤</span><span class="nav-copy"><b>سفارش‌ها</b><small>ثبت، بررسی و تبدیل سفارش</small></span></button>
 <button data-key="projects" data-src="admin-projects.html"><span class="ico">◫</span><span class="nav-copy"><b>پروژه‌ها</b><small>وضعیت، پرداخت و تحویل</small></span></button>
-<button data-key="messages" data-src="admin-messages.html"><span class="ico">✉</span><span class="nav-copy"><b>مکاتبات و پیام‌ها</b><small>صندوق درخواست و پاسخ‌ها</small></span></button>
+<span class="nav-section-label nav-divider">محتوا و ارتباط با مشتری</span><button data-key="messages" data-src="admin-messages.html"><span class="ico">✉</span><span class="nav-copy"><b>مکاتبات و پیام‌ها</b><small>صندوق درخواست و پاسخ‌ها</small></span></button>
 <button data-key="videos" data-src="videos-admin.html"><span class="ico">▷</span><span class="nav-copy"><b>مدیریت ویدئوها</b><small>انتشار و آمار بازدید</small></span></button>
 <button data-key="comments" data-src="comments-admin.html"><span class="ico">☷</span><span class="nav-copy"><b>دیدگاه‌ها</b><small>تأیید، پنهان و مدیریت</small></span></button>
 <button data-key="portfolio" data-src="portfolio-admin.html"><span class="ico">▧</span><span class="nav-copy"><b>نمونه‌کارها</b><small>گالری و محتوای نمونه‌کار</small></span></button>
 <button data-key="services" data-src="service-settings-admin.html"><span class="ico">◉</span><span class="nav-copy"><b>وضعیت خدمات</b><small>فعال‌سازی و غیرفعال‌سازی خدمات</small></span></button>
 <button data-key="feedback" data-src="feedback-admin.html"><span class="ico">✧</span><span class="nav-copy"><b>بازخورد مشتریان</b><small>امتیازها، پیشنهادها و گزارش مشکلات</small></span></button>
 <button data-key="community" data-src="community-admin.html"><span class="ico">✦</span><span class="nav-copy"><b>مدیریت انجمن</b><small>پیام‌ها، گزارش‌ها و اعضا</small></span></button>
-<button data-key="club" data-src="club-admin.html"><span class="ico" style="color:#d6ff59">♛</span><span class="nav-copy"><b>باشگاه مشتریان</b><small>امتیازها، سطح اعضا، جوایز و تیزرها</small></span></button>
+<span class="nav-section-label nav-divider">وفاداری و جامعه مشتریان</span><button data-key="club" data-src="club-admin.html"><span class="ico" style="color:#d6ff59">♛</span><span class="nav-copy"><b>باشگاه مشتریان</b><small>امتیازها، سطح اعضا، جوایز و تیزرها</small></span></button>
 <button data-key="plus" data-src="plus-admin.html"><span class="ico" style="color:#c7a8ff">＋</span><span class="nav-copy"><b>عضویت پلاس+</b><small>اعضا، تمدید و درخواست‌های هدیه</small></span></button>
-</nav><div class="side-foot">تمام ابزارهای مدیریتی در یک فضای یکپارچه گردآوری شده‌اند. دسترسی هر بخش مطابق مجوز و ورود امن همان بخش کنترل می‌شود.</div></aside>
-<main class="workspace"><div class="workspace-head"><div class="crumb"><strong id="moduleTitle">داشبورد اصلی</strong><span> / مرکز فرماندهی</span></div><button class="reload" id="reloadModule">بارگذاری مجدد ↻</button></div><div class="frame-wrap"><iframe id="moduleFrame" title="بخش مدیریت انتخاب‌شده" src="admin.html"></iframe></div></main>
+</nav><div class="nav-empty" id="navEmpty" hidden>بخشی با این عنوان پیدا نشد.</div><div class="side-foot">تمام ابزارهای مدیریتی در یک فضای یکپارچه گردآوری شده‌اند. دسترسی هر بخش مطابق مجوز و ورود امن همان بخش کنترل می‌شود.</div></aside>
+<main class="workspace"><div class="workspace-head"><div class="crumb"><strong id="moduleTitle">داشبورد اصلی</strong><span> / مرکز فرماندهی</span></div><button class="reload" id="reloadModule">بارگذاری مجدد ↻</button></div><div class="frame-wrap"><div class="frame-loading" id="frameLoading"><span class="loader-ring"></span><b>در حال آماده‌سازی بخش مدیریت</b><small>لطفاً چند لحظه صبر کنید…</small></div><iframe id="moduleFrame" title="بخش مدیریت انتخاب‌شده" src="admin.html"></iframe></div></main>
 </div>
 <script>
 (function(){
 const nav=document.getElementById('mainNav'),frame=document.getElementById('moduleFrame'),title=document.getElementById('moduleTitle'),reload=document.getElementById('reloadModule');
+const moduleSearch=document.getElementById('moduleSearch'),navEmpty=document.getElementById('navEmpty'),frameLoading=document.getElementById('frameLoading');
 const names={dashboard:'داشبورد اصلی',orders:'مدیریت سفارش‌ها',projects:'مدیریت پروژه‌ها',messages:'مکاتبات و پیام‌ها',videos:'مدیریت ویدئوها',comments:'مدیریت دیدگاه‌ها',portfolio:'مدیریت نمونه‌کارها',services:'مدیریت وضعیت خدمات',plus:'مدیریت عضویت پلاس+',club:'مدیریت باشگاه مشتریان',community:'مدیریت انجمن کاربران',feedback:'مرکز بازخورد مشتریان'};
 let current='dashboard';
-function activate(key,src,updateHash=true){const btn=nav.querySelector('[data-key="'+key+'"]');if(!btn)return;current=key;nav.querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===btn));title.textContent=names[key];const target=key==='plus'?'plus-admin.html?v=71a9eda':src;if(frame.getAttribute('src')!==target)frame.src=target;if(updateHash)history.replaceState(null,'','#'+key)}
+function activate(key,src,updateHash=true){const btn=nav.querySelector('[data-key="'+key+'"]');if(!btn)return;current=key;nav.querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===btn));title.textContent=names[key];const target=key==='plus'?'plus-admin.html?v=71a9eda':src;if(frame.getAttribute('src')!==target){if(frameLoading)frameLoading.hidden=false;frame.src=target}else if(frameLoading)frameLoading.hidden=true;if(updateHash)history.replaceState(null,'','#'+key);if(window.matchMedia('(max-width:850px)').matches)btn.scrollIntoView({block:'nearest',inline:'nearest',behavior:'smooth'})}
 nav.addEventListener('click',e=>{const b=e.target.closest('button[data-key]');if(b)activate(b.dataset.key,b.dataset.src)});
+if(moduleSearch){moduleSearch.addEventListener('input',()=>{const q=moduleSearch.value.trim().toLocaleLowerCase('fa');let visible=0;nav.querySelectorAll('button[data-key]').forEach(b=>{const show=(b.innerText||'').toLocaleLowerCase('fa').includes(q);b.hidden=!show;if(show)visible++});nav.querySelectorAll('.nav-section-label').forEach(x=>x.hidden=!!q);if(navEmpty)navEmpty.hidden=visible>0});document.addEventListener('keydown',e=>{if(e.key==='/'&&!/input|textarea|select/i.test(document.activeElement.tagName)){e.preventDefault();moduleSearch.focus()}if(e.key==='Escape'&&document.activeElement===moduleSearch){moduleSearch.value='';moduleSearch.dispatchEvent(new Event('input'));moduleSearch.blur()}})}
 reload.addEventListener('click',()=>{try{frame.contentWindow.location.reload()}catch{frame.src=frame.src}});
 window.addEventListener('message',e=>{if(e.origin!==location.origin||e.data?.type!=='alishams-admin-nav')return;const b=nav.querySelector('[data-src="'+e.data.path.replace(/^\//,'')+'"]');if(b)activate(b.dataset.key,b.dataset.src)});
-frame.addEventListener('load',()=>{try{
+frame.addEventListener('load',()=>{if(frameLoading)frameLoading.hidden=true;try{
  const doc=frame.contentDocument;
  if(!doc.querySelector('meta[name="viewport"]')){const meta=doc.createElement('meta');meta.name='viewport';meta.content='width=device-width,initial-scale=1,viewport-fit=cover';doc.head.appendChild(meta)}
  if(!doc.getElementById('unified-admin-mobile-fix')){const style=doc.createElement('style');style.id='unified-admin-mobile-fix';style.textContent=`
