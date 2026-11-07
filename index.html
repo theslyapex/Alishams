@@ -1965,16 +1965,33 @@ async function openOrderDialog(serviceNames){
  if(!dlg.open)dlg.showModal();
  const submit=document.getElementById('makeSummary');
  if(submit)submit.disabled=true;
- if(orderAuthNotice){orderAuthNotice.hidden=false;orderAuthNotice.textContent='در حال بررسی ورود به حساب کاربری…';}
+ if(orderAuthNotice){orderAuthNotice.hidden=false;orderAuthNotice.textContent='در حال بررسی سطح حساب کاربری…';}
  const signedIn=await customerHasSession();
- if(orderAuthNotice){orderAuthNotice.hidden=signedIn;orderAuthNotice.textContent='';if(!signedIn){orderAuthNotice.textContent='برای ثبت سفارش ابتدا وارد حساب کاربری شو. ';const link=document.createElement('a');link.href='/login.html?next='+encodeURIComponent(location.pathname+location.search+location.hash);link.textContent='ورود به حساب کاربری';link.style.color='#d9ff72';orderAuthNotice.append(link);}}
- if(submit)submit.disabled=!signedIn;
+ let restriction='';
+ if(!signedIn){
+  restriction='برای ثبت سفارش ابتدا وارد حساب کاربری شو.';
+ }else{
+  const level=await customerAccountLevel();
+  const selectedText=(Array.isArray(selectedServices)?selectedServices:[]).join(' ').replace(/[يى]/g,'ی').replace(/ك/g,'ک').replace(/[\\u200c\\u200f\\u200e]/g,' ');
+  const packageOrder=/(پک|پکیج|package)/i.test(selectedText);
+  const websiteOrder=/(طراحی\\s*وب|طراحی\\s*سایت|قالب\\s*وبلاگ|website\\s*design|web\\s*design)/i.test(selectedText);
+  if(level===null||level<1)restriction='برای ثبت سفارش ابتدا ایمیل حساب کاربری را تأیید کن.';
+  else if(packageOrder&&level<3)restriction='ثبت سفارش پکیج‌ها فقط برای حساب سطح ۳ فعال است. از بخش احراز هویت حساب کاربری، درخواست سطح ۳ را تکمیل کن.';
+  else if(websiteOrder&&level<2)restriction='برای سفارش طراحی وب‌سایت، حساب باید حداقل سطح ۲ داشته باشد؛ شماره همراهت را در حساب کاربری تأیید کن.';
+ }
+ if(orderAuthNotice){
+  orderAuthNotice.hidden=!restriction;
+  orderAuthNotice.textContent=restriction;
+  if(restriction){const link=document.createElement('a');link.href=signedIn?'/account.html':'/login.html?next='+encodeURIComponent(location.pathname+location.search+location.hash);link.textContent=signedIn?'رفتن به حساب کاربری':'ورود به حساب کاربری';link.style.color='#d9ff72';link.style.marginInlineStart='6px';orderAuthNotice.append(link);}
+ }
+ if(submit)submit.disabled=!signedIn||!!restriction;
 }
 document.getElementById('openOrder').addEventListener('click',e=>{e.preventDefault();openOrderDialog();});
 document.getElementById('closeDialog').addEventListener('click',()=>dlg.close());dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
 async function customerHasSession(){try{const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");const sb=createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB");const {data}=await sb.auth.getSession();return !!data.session}catch(err){console.error("Customer session check failed",err);return false}}
 async function customerSessionToken(){try{const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");const sb=createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB");const {data}=await sb.auth.getSession();return data.session?.access_token||""}catch(err){console.error("Customer session token unavailable",err);return ""}}
 async function customerSessionEmail(){try{const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");const sb=createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB");const {data}=await sb.auth.getUser();return data.user?.email||""}catch(err){console.error("Customer session email unavailable",err);return ""}}
+async function customerAccountLevel(){try{const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");const sb=createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB");const {data:sessionData}=await sb.auth.getSession();if(!sessionData.session)return 0;const {data,error}=await sb.rpc("get_my_account_level_status");if(error)throw error;return Number(data?.level)||0}catch(err){console.error("Account level lookup failed",err);return null}}
 (async()=>{const accountLink=document.querySelector(".account-cta");const status=accountLink?.querySelector(".account-cta-status");const plusMark=accountLink?.querySelector(".account-plus-mark");if(!accountLink||!status)return;const signedIn=await customerHasSession();if(signedIn){accountLink.classList.add("is-authenticated");accountLink.href="/account.html";accountLink.setAttribute("aria-label","حساب کاربری؛ واردشده‌اید");accountLink.title="حساب کاربری — واردشده‌اید";status.hidden=false;try{const token=await customerSessionToken();const r=await fetch("https://srfldjfrzmtnlabusssq.supabase.co/functions/v1/plus-membership",{method:"POST",headers:{"Content-Type":"application/json","apikey":"sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB","Authorization":"Bearer "+token},body:JSON.stringify({action:"status"})});const d=await r.json();if(plusMark)plusMark.hidden=!(d?.membership?.is_active===true);}catch(e){console.warn("Plus header status unavailable",e)}}else{status.hidden=true;if(plusMark)plusMark.hidden=true;}})();
 function sendToLogin(next){location.href="/login.html?next="+encodeURIComponent(next)}
 function showDisabledServiceNotice(){let notice=document.getElementById('disabledServiceNotice');if(!notice){notice=document.createElement('div');notice.id='disabledServiceNotice';notice.className='disabled-notice-backdrop';notice.innerHTML='<section class="disabled-notice-card" role="alertdialog" aria-modal="true" aria-labelledby="disabledNoticeTitle" aria-describedby="disabledNoticeText" tabindex="-1"><div class="disabled-notice-icon" aria-hidden="true"><span class="disabled-notice-pulse"></span><svg viewBox="0 0 48 48"><path d="M24 5 44 41H4L24 5Z"/><path d="M24 17v11m0 6v.5"/></svg></div><span class="disabled-notice-kicker">ALISHAMS STUDIO · SERVICE STATUS</span><h3 id="disabledNoticeTitle">این خدمت فعلاً در دسترس نیست</h3><p id="disabledNoticeText">این خدمت درحال حاضر غیرفعال می‌باشد</p><div class="disabled-notice-line"><i></i></div><span class="disabled-notice-foot">از شکیبایی شما سپاسگزاریم</span></section>';document.body.appendChild(notice);const close=()=>{notice.classList.remove('is-visible');document.removeEventListener('keydown',onKey)};const onKey=e=>{if(e.key==='Escape')close()};notice.addEventListener('click',e=>{if(e.target===notice)close()});notice._close=close}notice.classList.remove('is-visible');void notice.offsetWidth;notice.classList.add('is-visible');document.addEventListener('keydown',e=>{if(e.key==='Escape')notice._close()},{once:true});clearTimeout(notice._timer);notice._timer=setTimeout(()=>notice._close(),4300);notice.querySelector('.disabled-notice-card').focus({preventScroll:true})}
