@@ -2397,6 +2397,80 @@ document.addEventListener('click',e=>{if(root.classList.contains('is-open')&&!ro
 panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setOpen(false)));
 })();
 </script>
+
+<!-- Alishams customer feedback -->
+<style>
+#asFeedbackLaunch{position:fixed;z-index:990;left:22px;bottom:22px;display:flex;align-items:center;gap:9px;padding:12px 17px;border:1px solid #d9ff7280;border-radius:999px;background:linear-gradient(135deg,#d9ff72,#c4ed59);color:#15180e;font:800 12px Estedad,Tahoma,sans-serif;box-shadow:0 12px 35px #0008;cursor:pointer;transition:.22s}
+#asFeedbackLaunch:hover{transform:translateY(-3px);box-shadow:0 16px 40px #0009}
+#asFeedbackLaunch svg{width:18px;height:18px}
+#asFeedbackLayer{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:18px;background:#050608b8;backdrop-filter:blur(9px)}
+#asFeedbackLayer.open{display:flex}
+#asFeedbackBox{width:min(100%,510px);max-height:min(90vh,760px);overflow:auto;border:1px solid #ffffff20;border-radius:24px;background:linear-gradient(145deg,#1a1c23,#0d0f14);color:#f5f6fa;box-shadow:0 30px 100px #000b;padding:22px;font-family:Estedad,Tahoma,sans-serif}
+#asFeedbackBox *{box-sizing:border-box}
+.asfb-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.asfb-head h3{margin:0;font-size:21px}.asfb-head p{margin:5px 0 0;color:#a5a8b2;font-size:12px;line-height:1.9}
+#asfbClose{width:36px;height:36px;border:1px solid #ffffff20;border-radius:11px;background:#ffffff08;color:#fff;font-size:20px;cursor:pointer;flex:none}
+.asfb-stars{display:flex;gap:8px;margin:18px 0 12px;direction:rtl}
+.asfb-stars button{width:43px;height:43px;border:1px solid #ffffff20;border-radius:12px;background:#ffffff08;color:#777;font-size:23px;cursor:pointer;transition:.18s}
+.asfb-stars button.active{color:#d9ff72;border-color:#d9ff7280;background:#d9ff7215}
+.asfb-label{display:block;margin:12px 0 6px;color:#d8d9df;font-size:12px;font-weight:700}
+#asFeedbackBox input,#asFeedbackBox select,#asFeedbackBox textarea{width:100%;min-width:0;padding:11px 12px;border:1px solid #ffffff20;border-radius:12px;background:#090b10;color:#f5f6fa;font:400 13px/1.9 Estedad,Tahoma,sans-serif;outline:none}
+#asFeedbackBox input:focus,#asFeedbackBox select:focus,#asFeedbackBox textarea:focus{border-color:#d9ff72a0;box-shadow:0 0 0 3px #d9ff7212}
+#asFeedbackBox textarea{min-height:112px;resize:vertical}
+.asfb-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.asfb-submit{width:100%;margin-top:16px;padding:13px;border:0;border-radius:12px;background:#d9ff72;color:#11150a;font:800 13px Estedad,Tahoma,sans-serif;cursor:pointer}
+.asfb-submit:disabled{opacity:.55;cursor:wait}
+#asfbStatus{min-height:22px;margin:9px 0 0;color:#a5a8b2;font-size:12px;line-height:1.8}
+#asfbStatus.error{color:#ff9292}#asfbStatus.success{color:#d9ff72}
+.asfb-hp{position:absolute!important;right:-9999px!important;width:1px!important;height:1px!important;opacity:0!important}
+@media(max-width:520px){#asFeedbackLaunch{left:14px;bottom:14px;padding:11px 14px;font-size:11px}#asFeedbackBox{padding:17px;border-radius:19px}.asfb-grid{grid-template-columns:1fr}}
+</style>
+<button id="asFeedbackLaunch" type="button" aria-haspopup="dialog" aria-controls="asFeedbackLayer">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-6.5A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 11h8M8 14h5"/></svg>
+ثبت بازخورد
+</button>
+<div id="asFeedbackLayer" role="dialog" aria-modal="true" aria-labelledby="asfbTitle">
+<section id="asFeedbackBox">
+<div class="asfb-head"><div><h3 id="asfbTitle">صدای شما، مسیر بهتر ما</h3><p>نظر، پیشنهاد یا مشکلی که تجربه کردی را با ما در میان بگذار.</p></div><button id="asfbClose" type="button" aria-label="بستن">×</button></div>
+<form id="asfbForm">
+<span class="asfb-label">تجربه‌ات را چطور ارزیابی می‌کنی؟</span>
+<div class="asfb-stars" role="group" aria-label="امتیاز از یک تا پنج">
+<button type="button" data-rating="5" aria-label="5 از ۵">★</button><button type="button" data-rating="4" aria-label="4 از ۵">★</button><button type="button" data-rating="3" aria-label="3 از ۵">★</button><button type="button" data-rating="2" aria-label="2 از ۵">★</button><button type="button" data-rating="1" aria-label="1 از ۵">★</button>
+</div>
+<div class="asfb-grid">
+<div><label class="asfb-label" for="asfbCategory">موضوع بازخورد</label><select id="asfbCategory" required><option value="general">نظر کلی</option><option value="service">خدمات</option><option value="website">طراحی و عملکرد سایت</option><option value="idea">پیشنهاد جدید</option><option value="problem">گزارش مشکل</option></select></div>
+<div><label class="asfb-label" for="asfbName">نام (اختیاری)</label><input id="asfbName" maxlength="80" autocomplete="name" placeholder="نام شما"></div>
+</div>
+<label class="asfb-label" for="asfbEmail">ایمیل (اختیاری)</label><input id="asfbEmail" type="email" maxlength="254" autocomplete="email" placeholder="برای پیگیری احتمالی">
+<label class="asfb-label" for="asfbMessage">پیام شما</label><textarea id="asfbMessage" minlength="8" maxlength="2000" required placeholder="چه چیزی خوب بود؟ چه چیزی را بهتر کنیم؟"></textarea>
+<input class="asfb-hp" id="asfbWebsite" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button class="asfb-submit" id="asfbSend" type="submit">ارسال بازخورد</button><p id="asfbStatus" aria-live="polite"></p>
+</form>
+</section>
+</div>
+<script>
+(()=>{const $=id=>document.getElementById(id),layer=$("asFeedbackLayer"),form=$("asfbForm"),status=$("asfbStatus"),send=$("asfbSend");let rating=0;
+const open=()=>{layer.classList.add("open");document.body.style.overflow="hidden";$("asfbMessage").focus()};
+const close=()=>{layer.classList.remove("open");document.body.style.overflow=""};
+$("asFeedbackLaunch").addEventListener("click",open);$("asfbClose").addEventListener("click",close);
+layer.addEventListener("click",e=>{if(e.target===layer)close()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&layer.classList.contains("open"))close()});
+document.querySelectorAll("#asfbForm [data-rating]").forEach(b=>b.addEventListener("click",()=>{rating=Number(b.dataset.rating);document.querySelectorAll("#asfbForm [data-rating]").forEach(x=>{x.classList.toggle("active",Number(x.dataset.rating)<=rating);x.setAttribute("aria-pressed",String(Number(x.dataset.rating)===rating))})}));
+form.addEventListener("submit",async e=>{e.preventDefault();if(!rating){status.textContent="لطفاً ابتدا امتیازت را انتخاب کن.";status.className="error";return}
+send.disabled=true;send.textContent="در حال ارسال…";status.textContent="";status.className="";
+try{
+ let token="";try{const {data}=await window.__alishamsSupabase?.auth.getSession()||{};token=data?.session?.access_token||""}catch{}
+ const res=await fetch("https://srfldjfrzmtnlabusssq.supabase.co/functions/v1/site-feedback-submit",{method:"POST",headers:{"Content-Type":"application/json","apikey":"sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB",...(token?{Authorization:"Bearer "+token}:{})},body:JSON.stringify({rating,category:$("asfbCategory").value,name:$("asfbName").value,email:$("asfbEmail").value,message:$("asfbMessage").value,page_url:location.href.slice(0,500),website:$("asfbWebsite").value})});
+ const data=await res.json();if(!res.ok||!data.ok)throw Error(data.error||"ارسال بازخورد ناموفق بود.");
+ status.textContent="بازخوردت با موفقیت ثبت شد. ممنون از همراهی‌ات.";status.className="success";form.reset();rating=0;document.querySelectorAll("#asfbForm [data-rating]").forEach(x=>{x.classList.remove("active");x.setAttribute("aria-pressed","false")});
+ setTimeout(close,1700);
+}catch(err){status.textContent=err.message||"ارتباط با سرور برقرار نشد.";status.className="error"}
+finally{send.disabled=false;send.textContent="ارسال بازخورد"}
+});
+})();
+</script>
+<!-- End Alishams customer feedback -->
+
 </body>
 <style id="remove-visible-legacy-order-service">
 /* Keep the native select only as the form's hidden data source; the custom picker below is the sole visible control. */
