@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="/site-header.css">
 <style>
 :root{color-scheme:dark;--bg:#090a0d;--panel:#111318;--ink:#f5f3ee;--muted:#a5a5ad;--line:rgba(255,255,255,.11);--lime:#d9ff72;--lav:#b6a0ff;--coral:#ff8e75;--max:1160px}
-*{box-sizing:border-box}
+*{box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none} html,body{ -webkit-user-select:none; user-select:none }
 html{min-height:100%;scroll-behavior:smooth}
 body{margin:0;min-height:100vh;overflow-x:hidden;background:var(--bg);color:var(--ink);font:400 15px/2 Estedad,Tahoma,sans-serif}
 body:before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse at 15% 18%,#b6a0ff18,transparent 34%),radial-gradient(ellipse at 86% 62%,#d9ff7210,transparent 32%),linear-gradient(145deg,#090a0d,#0d0f14 55%,#090a0d)}
@@ -87,5 +87,19 @@ h1 span{color:var(--lime)}
 <footer class="footer"><span>© <span id="year"></span> علی شمس · Alishams Digital Studio</span><span><a href="/">صفحه اصلی</a>　·　<a href="/pricing.html">خدمات و تعرفه‌ها</a>　·　<a href="/about.html">درباره من</a></span></footer>
 <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 <script src="/site-header.js" defer></script>
+<script>
+/* محدودسازی انتخاب و کپی محتوا در صفحه خطا */
+(function(){
+  const block = e => e.preventDefault();
+  ['contextmenu','copy','cut','selectstart','dragstart'].forEach(type => {
+    document.addEventListener(type, block, true);
+  });
+  document.addEventListener('keydown', function(e){
+    if ((e.ctrlKey || e.metaKey) && ['a','c','x'].includes(e.key.toLowerCase())) {
+      e.preventDefault();
+    }
+  }, true);
+})();
+</script>
 </body>
 </html>
