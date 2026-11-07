@@ -1976,8 +1976,8 @@ async function openOrderDialog(serviceNames){
   const packageOrder=/(پک|پکیج|package)/i.test(selectedText);
   const websiteOrder=/(طراحی\\s*وب|طراحی\\s*سایت|طراحی\\s*اختصاصی\\s*برند|قالب\\s*وبلاگ|website\\s*design|web\\s*design)/i.test(selectedText);
   if(level===null||level<1)restriction='برای ثبت سفارش ابتدا ایمیل حساب کاربری را تأیید کن.';
-  else if(packageOrder&&level<3)restriction='ثبت سفارش پکیج‌ها فقط برای حساب سطح ۳ فعال است. از بخش احراز هویت حساب کاربری، درخواست سطح ۳ را تکمیل کن.';
-  else if(websiteOrder&&level<2)restriction='برای سفارش طراحی وب‌سایت، حساب باید حداقل سطح ۲ داشته باشد؛ شماره همراهت را در حساب کاربری تأیید کن.';
+  else if(packageOrder&&level<1)restriction='ثبت سفارش پکیج‌ها برای حساب‌های تأییدشده ایمیل فعال است.';
+  
  }
  if(orderAuthNotice){
   orderAuthNotice.hidden=!restriction;
