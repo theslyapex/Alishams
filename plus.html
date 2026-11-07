@@ -57,6 +57,10 @@
 <details><summary>سهمیه بازدید هدیه ریلز چگونه است؟</summary><p>از داشبورد حساب کاربری، بخش پلاس+، لینک مستقیم یک ریلز عمومی را ثبت کن. هر روز یک درخواست ۵۰۰ بازدیدی و حداکثر ۳۰ درخواست در هر دوره قابل ثبت است. تحویل درخواست‌ها پس از بررسی مدیریت انجام می‌شود.</p></details>
 <details><summary>شرایط دریافت دامنه .ir چیست؟</summary><p>باید یک سفارش واجد شرایط طراحی وب‌سایت یا پک اقتصادی طراحی سایت با همان حساب کاربری ثبت کرده باشی. سپس می‌توانی درخواست دامنه ثبت کنی؛ امکان‌پذیری نام و ثبت نهایی توسط مدیریت بررسی می‌شود و سهمیه هر دوره یک درخواست است.</p></details>
 <details><summary>اگر رسیدم تأیید نشود چه می‌شود؟</summary><p>وضعیت و یادداشت مدیریت در داشبورد حساب قابل پیگیری است. پس از ردشدن رسید، می‌توانی با اصلاح مشکل و در صورت نیاز هماهنگی با پشتیبانی، درخواست جدید ثبت کنی.</p></details>
+<details><summary>برای خرید پلاس+ به چه سطحی از حساب کاربری نیاز دارم؟</summary><p>خرید و ارسال رسید پلاس+ فقط برای حساب سطح ۳ فعال است. ابتدا ایمیل حساب را تأیید کن (سطح ۱)، سپس حساب GitHub را از بخش «پروفایل» در حساب کاربری متصل کن تا به سطح ۲ برسی. در مرحله بعد، درخواست سطح ۳ را همراه با مطالعه و پذیرش شرایط برای بررسی مدیریت ارسال کن. پس از تأیید مدیریت، امکان خرید پلاس+ فعال می‌شود. <a href="/account.html?section=profile" style="color:#d9ccff;text-decoration:underline">رفتن به حساب کاربری ← پروفایل</a></p></details>
+<details><summary>چرا دکمه انتخاب و ارسال رسید برای من غیرفعال است؟</summary><p>این محدودیت برای همه کاربران یکسان نیست؛ ارسال رسید فقط پس از تأیید سطح ۳ فعال می‌شود. اگر سطح حساب کافی نیست، پیام همین بخش وضعیت و قدم بعدی را توضیح می‌دهد. برای تکمیل مراحل، از لینک «حساب کاربری ← پروفایل» استفاده کن. اگر درخواست سطح ۳ در انتظار بررسی است، باید منتظر نتیجه مدیریت بمانی.</p></details>
+<details><summary>سطح ۲ و سطح ۳ چه تفاوتی دارند؟</summary><p>سطح ۲ با تأیید ایمیل و اتصال حساب GitHub تکمیل می‌شود و مزیت آن اولویت در پاسخ‌گویی پشتیبانی است. سطح ۳ پس از ارسال درخواست و بررسی و تأیید مدیریت فعال می‌شود و شرط دسترسی به خرید و فعال‌سازی پلاس+ است.</p></details>
+<details><summary>آیا صرفاً با اتصال GitHub می‌توانم رسید پلاس+ بفرستم؟</summary><p>خیر. اتصال GitHub حساب را به سطح ۲ می‌رساند؛ اما خرید پلاس+ به سطح ۳ نیاز دارد. باید درخواست ارتقای سطح ۳ را از همان ماژول پروفایل ارسال کنی و منتظر تأیید مدیریت بمانی.</p></details>
 </div></section>
 <section class="bottom-cta"><h2>آماده‌ای از مزایای پلاس+ استفاده کنی؟</h2><p>پرداخت را انجام بده، رسید را ثبت کن و پس از تأیید مدیریت از امتیازهای عضویت بهره‌مند شو.</p><a class="btn primary" href="#payment">ثبت درخواست عضویت</a></section>
 </main>
@@ -79,7 +83,7 @@ async function refreshLevelGate(){
  const gate=$("plusLevelGateNotice");
  try{
   const {data:{session}}=await sb.auth.getSession();
-  if(!session){level3Approved=false;if(gate){gate.textContent="خرید پلاس+ فقط برای حساب‌های سطح ۳ فعال است. ابتدا وارد حساب کاربری شو.";gate.hidden=false}applyPlusLevelGate();return}
+  if(!session){level3Approved=false;if(gate){gate.innerHTML='برای ارسال رسید پلاس+ باید حساب سطح ۳ داشته باشی. ابتدا وارد حساب کاربری شو و از بخش <a href="/account.html?section=profile" style="color:#e4d8ff;text-decoration:underline;font-weight:800">پروفایل</a> مراحل ارتقا را انجام بده.';gate.hidden=false}applyPlusLevelGate();return}
   const {data,error}=await sb.rpc("get_my_account_level_status");
   if(error)throw error;
   level3Approved=Number(data?.level)===3&&data?.level3_status==="approved";
@@ -87,10 +91,10 @@ async function refreshLevelGate(){
    if(level3Approved){gate.hidden=true}
    else{
     gate.hidden=false;
-    gate.textContent=Number(data?.level)===0?"برای خرید پلاس+ ابتدا ایمیل حساب کاربری را تأیید کن.":Number(data?.level)===1?"برای خرید پلاس+ ابتدا حساب GitHub را متصل کن و سپس درخواست سطح ۳ را برای بررسی مدیریت بفرست.":data?.level3_status==="pending"?"درخواست احراز سطح ۳ در انتظار بررسی مدیریت است. پس از تأیید می‌توانی پلاس+ را تهیه کنی.":"خرید پلاس+ فقط پس از تکمیل و تأیید احراز سطح ۳ توسط مدیریت امکان‌پذیر است.";
+    const next=Number(data?.level)===0?"ابتدا ایمیل حساب را تأیید کن (سطح ۱).":Number(data?.level)===1?"ابتدا حساب GitHub را در پروفایل متصل کن تا سطح ۲ فعال شود؛ سپس درخواست سطح ۳ را ارسال کن.":data?.level3_status==="pending"?"درخواست سطح ۳ در انتظار بررسی مدیریت است؛ پس از تأیید، امکان خرید پلاس+ فعال می‌شود.":data?.level3_status==="rejected"?"درخواست سطح ۳ قبلی رد شده است. توضیح مدیریت را در پروفایل بخوان و در صورت امکان درخواست را اصلاح و دوباره ارسال کن.":"برای خرید پلاس+ باید درخواست سطح ۳ را از پروفایل ارسال و تأیید مدیریت را دریافت کنی.";gate.innerHTML=next+' <a href="/account.html?section=profile" style="color:#e4d8ff;text-decoration:underline;font-weight:800;white-space:nowrap">رفتن به حساب کاربری ← پروفایل</a>';
    }
   }
- }catch(e){console.warn("Plus account level check failed",e);level3Approved=false;if(gate){gate.hidden=false;gate.textContent="بررسی سطح حساب انجام نشد. برای جلوگیری از ثبت درخواست ناقص، فعلاً امکان ارسال رسید فعال نیست."}}
+ }catch(e){console.warn("Plus account level check failed",e);level3Approved=false;if(gate){gate.hidden=false;gate.innerHTML='بررسی سطح حساب انجام نشد. برای جلوگیری از ثبت درخواست ناقص، فعلاً امکان ارسال رسید فعال نیست. <a href="/account.html?section=profile" style="color:#e4d8ff;text-decoration:underline">بررسی حساب در پروفایل</a>'}}
  applyPlusLevelGate();
 }
 function say(message,type=""){notice.textContent=message;notice.className="notice "+type}
