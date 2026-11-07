@@ -129,6 +129,20 @@ button,a{-webkit-tap-highlight-color:transparent}
 .vision-line{width:36px;height:1px;background:linear-gradient(90deg,var(--violet),var(--cyan))}
 @media(max-width:760px){.vision-panel{grid-template-columns:1fr;gap:20px}.vision-main h3{font-size:31px}.vision-foot{margin-top:0}}
 
+
+.beyond-section{padding-top:24px}
+.beyond-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.beyond-card{position:relative;min-height:205px;overflow:hidden;padding:25px 23px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#ffffff0a,#ffffff02);transition:transform .3s,border-color .3s,background .3s}
+.beyond-card:before{content:"";position:absolute;width:145px;height:145px;left:-80px;bottom:-95px;border-radius:50%;background:var(--beyond-glow,#a88cff);filter:blur(48px);opacity:.18;transition:opacity .3s}
+.beyond-card:hover{transform:translateY(-5px);border-color:#6de4e15c;background:linear-gradient(145deg,#6de4e10b,#ffffff03)}
+.beyond-card:hover:before{opacity:.36}
+.beyond-index{display:block;margin-bottom:23px;color:var(--cyan);font:700 11px var(--latin);letter-spacing:2px}
+.beyond-card h3{position:relative;margin:0 0 9px;font-size:17px;font-weight:600}
+.beyond-card p{position:relative;margin:0;color:var(--muted);font-size:12px;line-height:2.5}
+.beyond-note{display:flex;align-items:center;gap:17px;margin-top:15px;padding:20px 23px;border:1px solid #a88cff30;border-radius:19px;background:linear-gradient(100deg,#a88cff0d,#6de4e108);color:#d9d4e5;font-size:13px;line-height:2.4}
+.beyond-note span{flex:0 0 3px;align-self:stretch;border-radius:5px;background:linear-gradient(var(--violet),var(--cyan))}
+@media(max-width:760px){.beyond-grid{grid-template-columns:1fr}.beyond-card{min-height:0;padding:21px}.beyond-index{margin-bottom:14px}.beyond-note{font-size:12px;padding:16px}}
+
 </style>
 <script src="/site-protection.js" defer></script>
 <link rel="stylesheet" href="/share-page.css?v=3">
@@ -212,6 +226,19 @@ button,a{-webkit-tap-highlight-color:transparent}
 <a class="project reveal" href="videos.html"><span><strong>نمونه‌کارهای ویدئویی</strong><small>موشن‌گرافیک، ریلز و تیزرهای تبلیغاتی</small></span><b>▶</b></a>
 </div>
 <div class="actions project-actions reveal"><a class="btn primary" href="portfolio.html">دیدن همه نمونه‌کارها ↗</a><a class="btn" href="videos.html">تماشای ویدئوها ▶</a></div>
+</div>
+</section>
+
+
+<section class="section beyond-section">
+<div class="wrap">
+<div class="section-head reveal"><span class="eyebrow">BEYOND THE PROJECTS</span><h2>فراتر از پروژه‌ها</h2><p class="lead">پشت هر خروجی، نوعی نگاه و شیوه فکر کردن قرار دارد؛ چیزهایی که مسیر ساختن را معنا می‌دهند و به آن جهت می‌بخشند.</p></div>
+<div class="beyond-grid">
+<article class="beyond-card reveal" style="--beyond-glow:#6de4e1"><span class="beyond-index">01 / CURIOSITY</span><h3>کنجکاوی و یادگیری</h3><p>دنبال‌کردن پرسش‌ها، شناخت ابزارهای تازه و امتحان‌کردن راه‌هایی که می‌توانند یک ایده را بهتر به نتیجه برسانند.</p></article>
+<article class="beyond-card reveal" style="--beyond-glow:#a88cff"><span class="beyond-index">02 / PERSPECTIVE</span><h3>نگاه فراتر از جزئیات</h3><p>دیدن ارتباط میان طراحی، فناوری و تجربه کاربر؛ چون کیفیت یک محصول از هماهنگی تمام اجزای آن شکل می‌گیرد.</p></article>
+<article class="beyond-card reveal" style="--beyond-glow:#d6b879"><span class="beyond-index">03 / PURPOSE</span><h3>ساختن با هدف</h3><p>توجه به مسئله‌ای که قرار است حل شود و ارزشی که در نهایت برای مخاطب ایجاد می‌شود؛ نه فقط ظاهر یا هیجان شروع کار.</p></article>
+</div>
+<div class="beyond-note reveal"><span aria-hidden="true"></span><div>برای من، بهترین نتیجه زمانی شکل می‌گیرد که <strong>ایده، اجرا و کاربرد</strong> در یک مسیر روشن کنار هم قرار بگیرند.</div></div>
 </div>
 </section>
 
