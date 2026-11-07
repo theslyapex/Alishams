@@ -2343,6 +2343,17 @@ rows.innerHTML=list.slice(3,10).map(x=>'<div class="club-row '+(x.is_me?"me":"")
  #site-chat-launcher .scl-copy strong{font-size:11px!important}
 }
 </style>
+<style id="site-chat-close-alignment-fix">
+#site-chat-launcher .scl-close{
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ padding:0!important;
+ line-height:1!important;
+ font-family:Arial,sans-serif!important;
+ font-size:21px!important;
+}
+</style>
 <div id="site-chat-launcher">
  <button class="scl-trigger" type="button" aria-label="باز کردن گزینه‌های گفت‌وگو" aria-expanded="false" aria-controls="site-chat-panel">
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.5a8.2 8.2 0 0 1-8.5 8 9.5 9.5 0 0 1-4.1-.9L3 20l1.5-4.2A7.6 7.6 0 0 1 3.5 11.5a8.1 8.1 0 0 1 8.5-8 8.1 8.1 0 0 1 8.5 8Z"/><path d="M8 10h8M8 13.5h5"/></svg>
