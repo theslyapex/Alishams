@@ -42,8 +42,7 @@ h1 span{color:var(--lime)}.lead{max-width:510px;margin:0;color:#b7b8c0;font-size
 .top{padding:0 2px 14px;border-bottom:1px solid #ffffff12}.dots{display:flex;gap:6px}.dots b{width:7px;height:7px;border-radius:50%;background:#555965}.dots b:first-child{background:var(--coral)}.dots b:nth-child(2){background:#e6c779}.dots b:nth-child(3){background:var(--lime)}
 .art{position:relative;min-height:245px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;overflow:hidden}
 .art:before{content:"";position:absolute;inset:0;background-image:linear-gradient(#ffffff0b 1px,transparent 1px),linear-gradient(90deg,#ffffff0b 1px,transparent 1px);background-size:25px 25px;mask-image:radial-gradient(ellipse,#000 20%,transparent 76%)}
-.digit-top{position:relative;z-index:1;color:var(--lime);font:900 clamp(80px,11vw,112px)/.9 Manrope,sans-serif;text-shadow:0 12px 45px #0009}
-.digit-bottom{position:relative;z-index:1;color:var(--lav);font:800 clamp(66px,9vw,92px)/.95 Manrope,sans-serif;letter-spacing:3px;text-shadow:0 12px 45px #0009}
+.digits{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;direction:ltr;color:var(--ink);font:800 clamp(76px,11vw,112px)/1 Manrope,sans-serif;letter-spacing:-8px;text-shadow:0 12px 45px #0009}.digits span:first-child{color:var(--lime)}.digits span:last-child{color:var(--lav)}
 .bottom{padding:12px 3px 0;border-top:1px solid #ffffff12;color:#8f929b;font-size:9px}.bottom strong{color:var(--lime);font-weight:700}
 .orbit{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.orbit i{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 18px #d9ff72}.orbit i:nth-child(1){top:15%;right:15%}.orbit i:nth-child(2){bottom:18%;left:8%;width:6px;height:6px;background:var(--lav);box-shadow:0 0 18px var(--lav)}.orbit i:nth-child(3){top:24%;left:13%;width:4px;height:4px;background:var(--coral);box-shadow:0 0 18px var(--coral)}
 footer{width:min(1160px,calc(100% - 48px));margin:0 auto;padding:18px 0 24px;border-top:1px solid #ffffff10;display:flex;justify-content:space-between;gap:18px;color:#777a84;font-size:11px}
@@ -57,7 +56,7 @@ footer a{color:#b7b8c0;text-decoration:none}footer a:hover{color:var(--lime)}
 <div class="actions"><a class="btn primary" href="${retry?'#retry':'/'}" ${retry?'onclick="location.reload();return false"':''}>${retry?'تلاش دوباره':'بازگشت به صفحه اصلی'}</a><a class="btn" href="/contact-center.html">مرکز ارتباط با ما</a></div></div>
 <div class="visual" aria-hidden="true"><div class="orbit"><i></i><i></i><i></i></div><div class="card">
 <div class="top"><span>ALISHAMS / PAGE ROUTE</span><span class="dots"><b></b><b></b><b></b></span></div>
-<div class="art"><span class="digit-top">${n[0]}</span><span class="digit-bottom">${n.slice(1)}</span></div>
+<div class="art"><div class="digits"><span>${n[0]}</span><span>${n.slice(1)}</span></div></div>
 <div class="bottom"><span>REQUEST STATUS</span><strong>HTTP ${n}</strong></div></div></div>
 </section></main><footer><span>© 2026 علی شمس · Alishams Digital Studio</span><span><a href="/">صفحه اصلی</a>　·　<a href="/portfolio.html">نمونه‌کارها</a>　·　<a href="/about.html">درباره من</a></span></footer>
 <script>(function(){const stop=e=>e.preventDefault();["contextmenu","copy","cut","selectstart","dragstart"].forEach(t=>document.addEventListener(t,stop,true));document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&["a","c","x"].includes(e.key.toLowerCase()))e.preventDefault()},true)})();</script></body></html>`;
