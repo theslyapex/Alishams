@@ -860,14 +860,14 @@ function isReservedAdminName(value,email){if(String(email||"").trim().toLowerCas
 const reservedNameMessage="لطفاً نام حساب کاربری دیگری انتخاب کنید؛ امکان استفاده از این نام وجود ندارد.";
 let pendingLevelPhone="";
 function normalizeLevelPhone(value){
- let v=String(value||"").trim().replace(/[\\s().-]/g,"").replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))).replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
- if(/^09\\d{9}$/.test(v))v="+98"+v.slice(1);
+ let v=String(value||"").trim().replace(/[\s().-]/g,"").replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))).replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
+ if(/^09\d{9}$/.test(v))v="+98"+v.slice(1);
  return v;
 }
 $("sendLevelPhoneOtp").addEventListener("click",async()=>{
  if(!session?.user)return;
  const phone=normalizeLevelPhone($("levelPhoneInput").value);
- if(!/^\\+[1-9]\\d{7,14}$/.test(phone)){notice("accountLevelNotice","شماره را با پیش‌شماره کشور وارد کن؛ مانند ‎+989121234567.","error");return}
+ if(!/^\+[1-9]\d{7,14}$/.test(phone)){notice("accountLevelNotice","شماره را با پیش‌شماره کشور وارد کن؛ مانند ‎+989121234567.","error");return}
  const btn=$("sendLevelPhoneOtp");btn.disabled=true;btn.textContent="در حال ارسال…";
  try{
   const {error}=await sb.auth.updateUser({phone});
@@ -879,7 +879,7 @@ $("sendLevelPhoneOtp").addEventListener("click",async()=>{
 });
 $("verifyLevelPhoneOtp").addEventListener("click",async()=>{
  const token=$("levelPhoneOtp").value.trim();
- if(!pendingLevelPhone||!/^\\d{6}$/.test(token)){notice("accountLevelNotice","کد ۶ رقمی معتبر را وارد کن.","error");return}
+ if(!pendingLevelPhone||!/^\d{6}$/.test(token)){notice("accountLevelNotice","کد ۶ رقمی معتبر را وارد کن.","error");return}
  const btn=$("verifyLevelPhoneOtp");btn.disabled=true;btn.textContent="در حال بررسی…";
  try{
   const {data,error}=await sb.auth.verifyOtp({phone:pendingLevelPhone,token,type:"phone_change"});
