@@ -143,6 +143,19 @@ button,a{-webkit-tap-highlight-color:transparent}
 .beyond-note span{flex:0 0 3px;align-self:stretch;border-radius:5px;background:linear-gradient(var(--violet),var(--cyan))}
 @media(max-width:760px){.beyond-grid{grid-template-columns:1fr}.beyond-card{min-height:0;padding:21px}.beyond-index{margin-bottom:14px}.beyond-note{font-size:12px;padding:16px}}
 
+
+.journey-timeline{position:relative;display:grid;gap:0;max-width:940px;margin:0 auto}
+.journey-timeline:before{content:"";position:absolute;right:25px;top:18px;bottom:28px;width:1px;background:linear-gradient(to bottom,var(--violet),#6de4e166,transparent)}
+.journey-item{position:relative;display:grid;grid-template-columns:52px 1fr;gap:20px;padding:0 0 25px}
+.journey-marker{position:relative;z-index:1;width:52px;height:52px;display:grid;place-items:center;border:1px solid #a88cff55;border-radius:17px;background:linear-gradient(145deg,#17142a,#0b101d);color:var(--cyan);font:700 11px var(--latin);box-shadow:0 0 25px #a88cff12}
+.journey-content{padding:19px 22px;border:1px solid var(--line);border-radius:19px;background:linear-gradient(135deg,#ffffff09,#ffffff02);transition:border-color .25s,transform .25s}
+.journey-item:hover .journey-content{transform:translateX(-4px);border-color:#6de4e155}
+.journey-content small{display:block;margin-bottom:5px;color:var(--cyan);font:600 9px var(--latin);letter-spacing:1.5px}
+.journey-content h3{margin:0 0 5px;font-size:16px;font-weight:600}
+.journey-content p{margin:0;color:var(--muted);font-size:12px;line-height:2.45}
+.journey-caption{max-width:940px;margin:0 auto;padding:13px 17px;border-right:2px solid var(--gold);color:#aaa6b7;font-size:11px;line-height:2.3;background:#ffffff04;border-radius:0 12px 12px 0}
+@media(max-width:560px){.journey-timeline:before{right:19px}.journey-item{grid-template-columns:40px 1fr;gap:13px;padding-bottom:17px}.journey-marker{width:40px;height:40px;border-radius:13px;font-size:10px}.journey-content{padding:16px}.journey-content h3{font-size:14px}.journey-content p{font-size:11px}}
+
 </style>
 <script src="/site-protection.js" defer></script>
 <link rel="stylesheet" href="/share-page.css?v=3">
@@ -180,6 +193,20 @@ button,a{-webkit-tap-highlight-color:transparent}
 </div>
 </div>
 </section>
+
+<section class="section" style="padding-top:10px">
+<div class="wrap">
+<div class="section-head reveal"><span class="eyebrow">THE JOURNEY</span><h2>روایت مسیر من</h2><p class="lead">این مسیر را می‌توان در چند ایستگاه دید؛ از شکل‌گیری علاقه تا ساختن پروژه‌هایی که امروز بخشی از تجربه و نگاه من هستند.</p></div>
+<div class="journey-timeline">
+<article class="journey-item reveal"><span class="journey-marker">01</span><div class="journey-content"><small>THE BEGINNING</small><h3>شروع با کنجکاوی</h3><p>علاقه به دنیای دیجیتال و تجربه‌کردن ابزارها، نقطه شروعی برای شناختن ظرفیت‌های طراحی و فناوری شد.</p></div></article>
+<article class="journey-item reveal"><span class="journey-marker">02</span><div class="journey-content"><small>FIRST CREATIONS</small><h3>تبدیل ایده به تجربه</h3><p>به‌جای متوقف‌شدن در مرحله ایده، ساختن وب‌سایت‌ها و تجربه‌های دیجیتال را دنبال کردم؛ جایی که آموخته‌ها در عمل شکل می‌گیرند.</p></div></article>
+<article class="journey-item reveal"><span class="journey-marker">03</span><div class="journey-content"><small>EXPANDING THE SCOPE</small><h3>گسترش حوزه فعالیت</h3><p>مسیر از طراحی وب فراتر رفت و پروژه‌های محتوایی، ابزارهای آنلاین و تولید محتوای بصری را هم دربر گرفت.</p></div></article>
+<article class="journey-item reveal"><span class="journey-marker">04</span><div class="journey-content"><small>WHERE I AM NOW</small><h3>ساختن با نگاه یکپارچه</h3><p>امروز تمرکز من بر پیوند دادن طراحی، فناوری و محتواست؛ با توجه هم‌زمان به کیفیت اجرا و ارزشی که هر پروژه ایجاد می‌کند.</p></div></article>
+</div>
+<p class="journey-caption reveal">این تایم‌لاین روایت مفهومی مسیر حرفه‌ای من است، نه فهرست تاریخ‌دار رویدادها؛ برای همین از تاریخ‌های تأییدنشده استفاده نشده است.</p>
+</div>
+</section>
+
 <section class="section" style="padding-top:12px">
 <div class="wrap">
 <div class="section-head reveal"><span class="eyebrow">MY APPROACH</span><h2>هر پروژه، یک مسیر روشن</h2><p class="lead">برای رسیدن به خروجی قابل اتکا، کار را به سه مرحله ساده و شفاف تقسیم می‌کنم.</p></div>
