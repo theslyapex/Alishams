@@ -79,7 +79,7 @@ button,a{-webkit-tap-highlight-color:transparent}
 .step p,.principle p{font-size:13px;color:var(--muted);line-height:2.5;margin:0}
 .principles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .principle{padding:23px;transition:transform .25s,border-color .25s}
-.principle-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:#a88cff18;color:var(--cyan);font:700 18px var(--latin)}
+.principle-icon{width:58px;height:58px;display:grid;place-items:center;position:relative;overflow:hidden;border:1px solid #a88cff38;border-radius:18px;background:linear-gradient(145deg,#a88cff20,#6de4e10d);color:var(--cyan);box-shadow:inset 0 1px 0 #ffffff12,0 10px 28px #0003;transition:transform .3s,border-color .3s,box-shadow .3s}.principle-icon:before{content:"";position:absolute;inset:1px;border-radius:17px;background:linear-gradient(135deg,#ffffff0b,transparent 55%);pointer-events:none}.principle-icon svg{width:29px;height:29px;position:relative;z-index:1;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 7px #6de4e144)}.principle:hover .principle-icon{transform:translateY(-3px) rotate(-3deg);border-color:#6de4e188;box-shadow:inset 0 1px 0 #ffffff18,0 12px 30px #6de4e116}
 .projects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .project{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;transition:transform .25s,border-color .25s}
 .project strong{display:block;font:700 14px/1.8 var(--latin);direction:ltr;text-align:right;color:#f3efff}
@@ -147,9 +147,9 @@ button,a{-webkit-tap-highlight-color:transparent}
 <div class="wrap">
 <div class="section-head reveal"><span class="eyebrow">WHAT MATTERS TO ME</span><h2>سه اصل در کار من</h2></div>
 <div class="principles">
-<article class="principle reveal"><span class="principle-icon">✳</span><h3>خلاقیت هدفمند</h3><p>ایده و طراحی باید هویت داشته باشند و در عین حال به هدف اصلی پروژه کمک کنند.</p></article>
-<article class="principle reveal"><span class="principle-icon">⌘</span><h3>دقت در اجرا</h3><p>جزئیات فنی و بصری بخشی از کیفیت محصول‌اند؛ نه مرحله‌ای که بتوان از آن چشم‌پوشی کرد.</p></article>
-<article class="principle reveal"><span class="principle-icon">↗</span><h3>کاربردپذیری</h3><p>تجربه خوب باید روشن، قابل فهم و در دستگاه‌های مختلف قابل استفاده باشد.</p></article>
+<article class="principle reveal"><span class="principle-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 3.5 18.7 12l8.8-2.1-5.1 7.4 6.1 6.2-9-.4L16 31l-3.5-7.9-9 .4 6.1-6.2-5.1-7.4 8.8 2.1L16 3.5Z"/><path d="m16 11 1.5 4.1 4.2.9-3.6 2.3.3 4.3-2.4-3.5-4.1 1.4 2.5-3.5-2.5-3.5 4.1 1.4L16 11Z" opacity=".55"/></svg></span><h3>خلاقیت هدفمند</h3><p>ایده و طراحی باید هویت داشته باشند و در عین حال به هدف اصلی پروژه کمک کنند.</p></article>
+<article class="principle reveal"><span class="principle-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11.5"/><circle cx="16" cy="16" r="6.5"/><circle cx="16" cy="16" r="1.7"/><path d="M16 2v4M16 26v4M2 16h4M26 16h4"/></svg></span><h3>دقت در اجرا</h3><p>جزئیات فنی و بصری بخشی از کیفیت محصول‌اند؛ نه مرحله‌ای که بتوان از آن چشم‌پوشی کرد.</p></article>
+<article class="principle reveal"><span class="principle-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="5" y="4" width="22" height="24" rx="4"/><path d="M10 10h12M10 15h5M10 21l3.5 3.5L22 16"/><path d="M19 16h3v3"/></svg></span><h3>کاربردپذیری</h3><p>تجربه خوب باید روشن، قابل فهم و در دستگاه‌های مختلف قابل استفاده باشد.</p></article>
 </div>
 </div>
 </section>
