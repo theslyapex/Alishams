@@ -1029,7 +1029,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 @media(max-width:480px){#site-chat-launcher{left:max(15px,env(safe-area-inset-left));bottom:max(16px,env(safe-area-inset-bottom))}#site-chat-launcher .scl-trigger{width:56px;height:56px;border-radius:19px}#site-chat-launcher .scl-panel{bottom:72px;width:min(350px,calc(100vw - 30px));padding:15px;border-radius:20px}}
 @media(prefers-reduced-motion:reduce){#site-chat-launcher *,#site-chat-launcher *:before{animation:none!important;transition:none!important}}
 </style>
-<style id="active-store-package-layout">.home-packages-grid{grid-template-columns:minmax(0,1fr)!important;max-width:560px}.plans-grid{grid-template-columns:minmax(0,1fr)!important;max-width:760px;margin-inline:auto}</style>
+<style id="active-store-package-layout">.home-packages-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;width:100%;max-width:none;margin-inline:0}.plans-grid{grid-template-columns:minmax(0,1fr)!important;max-width:760px;margin-inline:auto}@media(max-width:760px){.home-packages-grid{grid-template-columns:minmax(0,1fr)!important;max-width:560px;margin-inline:auto}}</style>
 <style id="inactive-home-package-cards">
 .home-package-card.is-inactive{opacity:.74;filter:saturate(.55);cursor:not-allowed;pointer-events:none;transform:none!important;border-color:#ff555566;background:linear-gradient(145deg,#251719,#111318 78%)}
 .home-package-card.is-inactive:after{content:"";position:absolute;z-index:3;left:-8%;top:51%;width:116%;height:5px;border-radius:99px;background:linear-gradient(90deg,#ff4545,#ff7777,#d92336);box-shadow:0 0 12px #ff303077;transform:rotate(-13deg);pointer-events:none}
