@@ -72,7 +72,7 @@ Deno.serve(async (req: Request) => {
       const websiteAddress = String(body?.website_address || "").trim().slice(0,500);
       const websiteName = String(body?.website_name || "").trim().slice(0,180);
       const domain = String(body?.domain || "").trim().slice(0,40);
-      const references = Array.isArray(body?.references) ? body.references.map((x:any)=>String(x||"").trim().slice(0,300)).filter(Boolean).slice(0,10) : [];
+      const references = Array.isArray(body?.references) ? body.references.map((x:any)=>String(x||"").trim().slice(0,180)).filter(Boolean).slice(0,30) : [];
       const options = body?.options && typeof body.options === "object" ? body.options : {};
       const accepted = body?.terms_accepted === true;
       if (fullName.length < 2 || phone.length < 7 || !category || !siteType || !pageCount || !timeline || !budget || description.length < 30 || description.length > 8000 || !websiteName || !accepted)
@@ -87,11 +87,8 @@ Deno.serve(async (req: Request) => {
       const optionKeys = ["admin_panel","blog","multilingual","seo","ssl","google_maps"];
       const safeOptions:any = {};
       for (const key of optionKeys) safeOptions[key] = options[key] === true;
-      const payload = {
-        category, site_type: siteType, page_count: pageCount, timeline, budget,
-        description, website_address: websiteAddress, website_name: websiteName,
-        domain, references, options: safeOptions
-      };
+      const metadata = "اطلاعات تکمیلی فرم سفارش وب‌سایت:\\n" + JSON.stringify({category,site_type:siteType,page_count:pageCount,timeline,budget,website_address:websiteAddress,website_name:websiteName,domain,references,options:safeOptions});
+      if (metadata.length > 8000) return out({ error: "مجموع اطلاعات تکمیلی بیش از حد مجاز است؛ تعداد لینک‌ها یا طول آدرس‌ها را کمتر کن." }, 400, origin);
       const privateKey = Array.from(crypto.getRandomValues(new Uint8Array(32))).map(x=>x.toString(16).padStart(2,"0")).join("");
       const keyHash = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(privateKey)))).map(x=>x.toString(16).padStart(2,"0")).join("");
       const makeCode = () => "ORD-" + Array.from(crypto.getRandomValues(new Uint8Array(6))).map(x=>"ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[x%32]).join("");
@@ -103,9 +100,9 @@ Deno.serve(async (req: Request) => {
           tracking_code: trackingCode, access_token_hash: keyHash,
           client_name: fullName, contact_info: phone, client_email: email,
           service: "طراحی وب‌سایت — " + category,
-          title: "درخواست طراحی وب‌سایت: " + websiteName,
+          title: ("درخواست طراحی وب‌سایت: " + websiteName).slice(0,180),
           details: description, budget,
-          internal_notes: "اطلاعات تکمیلی فرم سفارش وب‌سایت:\\n" + JSON.stringify({category,site_type:siteType,page_count:pageCount,timeline,budget,website_address:websiteAddress,website_name:websiteName,domain,references,options:safeOptions}),
+          internal_notes: metadata,
           status: "new", services: ["طراحی وب‌سایت", category],
           terms_accepted: true, terms_version: "web-design-order-v1",
           terms_accepted_at: new Date().toISOString()
