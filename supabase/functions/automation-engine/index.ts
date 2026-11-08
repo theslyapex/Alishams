@@ -57,7 +57,7 @@ async function sendEmail(to: string, subject: string, message: string, unsubscri
     headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
     body: JSON.stringify({
       from: "Alishams Studio <info@alishams.ir>",
-      to: [to], subject: safeSubject, html, text: message + "\n\nhttps://alishams.ir/account.html"
+      to: [to], subject: safeSubject, html: html.replace("</div>", unsubscribeHtml + "</div>"), text: message + "\n\nhttps://alishams.ir/account.html" + (unsubscribeUrl ? "\n\nلغو عضویت خبرنامه: " + unsubscribeUrl : "")
     }),
     signal: AbortSignal.timeout(15000)
   });
