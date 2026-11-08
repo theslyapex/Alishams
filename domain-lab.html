@@ -129,8 +129,8 @@ function slug(s){return s.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,18)}
    const trigger=document.createElement('button');trigger.type='button';trigger.className='custom-select-trigger';trigger.setAttribute('aria-haspopup','listbox');trigger.setAttribute('aria-expanded','false');trigger.id=select.id+'CustomTrigger';
    const menu=document.createElement('div');menu.className='custom-select-menu';menu.setAttribute('role','listbox');menu.setAttribute('aria-label',select.getAttribute('aria-label')||select.id);
    select.parentNode.insertBefore(shell,select);shell.append(select,trigger,menu);select.classList.add('custom-select-native');
-   const options=[...select.options];
    function draw(){
+     const options=[...select.options];
      const current=options[select.selectedIndex];trigger.textContent=current?current.textContent.trim():'انتخاب کن';
      menu.innerHTML='';
      options.forEach((option,i)=>{
