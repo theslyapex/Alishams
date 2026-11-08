@@ -21,7 +21,7 @@
 const SUPABASE_URL="https://srfldjfrzmtnlabusssq.supabase.co";
 const API_KEY="sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB";
 const $=id=>document.getElementById(id);$("year").textContent=new Date().getFullYear();
-const statuses={not_started:"هنوز شروع نشده",in_progress:"در حال اجرا",review:"در انتظار بررسی",on_hold:"متوقف موقت",completed:"تکمیل‌شده",cancelled:"لغوشده"};
+const statuses={awaiting_payment:"در انتظار پرداخت",not_started:"هنوز شروع نشده",in_progress:"در حال اجرا",review:"در انتظار بررسی",on_hold:"متوقف موقت",completed:"تکمیل‌شده",cancelled:"لغوشده"};
 const money=n=>new Intl.NumberFormat("fa-IR",{maximumFractionDigits:2}).format(Number(n)||0)+"";
 const date=s=>s?new Date(s).toLocaleDateString("fa-IR",{year:"numeric",month:"long",day:"numeric"}):"—";
 const safe=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
