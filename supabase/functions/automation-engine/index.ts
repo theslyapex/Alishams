@@ -410,14 +410,19 @@ Deno.serve(async (req: Request) => {
       return out({ ok: true, ...result }, 200, origin);
     }
     if (action === "dashboard") {
-      const [rules, queue, runs, domains] = await Promise.all([
+      const [rules, queue, runs, domains, pendingCount, failedCount] = await Promise.all([
         db.from("automation_rules").select("*").order("rule_key"),
         db.from("automation_queue").select("id,rule_key,event_key,target_type,target_id,title,status,attempts,max_attempts,last_error,created_at,sent_at").order("created_at", { ascending: false }).limit(60),
         db.from("automation_runs").select("*").order("started_at", { ascending: false }).limit(20),
-        db.from("customer_domains").select("*").order("expires_at", { ascending: true }).limit(200)
+        db.from("customer_domains").select("*").order("expires_at", { ascending: true }).limit(200),
+        db.from("automation_queue").select("id", { count: "exact", head: true }).in("status", ["pending", "processing"]),
+        db.from("automation_queue").select("id", { count: "exact", head: true }).eq("status", "failed")
       ]);
-      for (const r of [rules, queue, runs, domains]) if (r.error) throw r.error;
-      return out({ ok: true, rules: rules.data || [], queue: queue.data || [], runs: runs.data || [], domains: domains.data || [] }, 200, origin);
+      for (const r of [rules, queue, runs, domains, pendingCount, failedCount]) if (r.error) throw r.error;
+      return out({
+        ok: true, rules: rules.data || [], queue: queue.data || [], runs: runs.data || [], domains: domains.data || [],
+        counts: { pending: pendingCount.count || 0, failed: failedCount.count || 0 }
+      }, 200, origin);
     }
     if (action === "rule_update") {
       const key = text(body.rule_key, 100);
