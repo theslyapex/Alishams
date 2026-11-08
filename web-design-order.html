@@ -91,8 +91,8 @@ footer{width:100%;margin-top:0;padding:0;background:#08090c;border-top:1px solid
 
 
 .stepitem,.stepitem span,.side-head,.side-head h3{font-family:Estedad,Tahoma,sans-serif!important}
-.footer-bottom{justify-content:center!important;text-align:center!important;flex-wrap:wrap;gap:8px 24px}
-.footer-bottom span{display:block;text-align:center}
+.footer-bottom{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center!important;text-align:center!important;flex-wrap:nowrap;gap:8px;padding-top:20px}
+.footer-bottom span{display:block;width:100%;max-width:100%;text-align:center!important;line-height:2.1}
 .domain-select-wrap{position:relative;min-width:0;width:100%}
 .domain-select-native{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;inset:auto!important}
 .domain-select-trigger{width:100%;min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:9px;padding:10px 13px;border:1px solid #ffffff20;border-radius:13px;background:linear-gradient(145deg,#191b22,#0b0c10);color:#f4f4f6;font:600 12px Estedad,Tahoma,sans-serif;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s}
@@ -115,6 +115,11 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text!important;user-
 
 
 /* Domain selector: compact, single-line labels and one rendering per suffix */
+.domain-select-trigger{white-space:nowrap!important;flex-wrap:nowrap!important}
+.domain-select-trigger .domain-trigger-label{white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;flex:1 1 auto}
+.domain-select-option{white-space:nowrap!important;flex-wrap:nowrap!important}
+.domain-select-option .domain-option-label{white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;flex:1 1 auto}
+.domain-select-option .option-check{flex:0 0 auto}
 .domain-select-trigger{white-space:nowrap;flex-wrap:nowrap;min-width:0}
 .domain-select-trigger .domain-trigger-label{display:block;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.5}
 .domain-select-option{white-space:nowrap;flex-wrap:nowrap;min-width:0}
@@ -223,7 +228,7 @@ document.querySelectorAll('[data-icon]').forEach(el=>{el.innerHTML=svgFor(el.dat
 function icon8(name){return svgFor(iconNames[name]||name)}
 function choices(id,name,items){$(id).innerHTML=items.map((v,i)=>'<div class="choice"><input type="radio" name="'+name+'" id="'+name+i+'" value="'+v.replace(/"/g,'&quot;')+'"><label for="'+name+i+'"><span class="choice-icon">'+icon8(v)+'</span><span class="choice-copy">'+v+'<small>'+(name==="category"?"انتخاب دسته پروژه":"")+'</small></span></label></div>').join("")}
 choices("categories","category",groups.categories);choices("siteTypes","site_type",groups.siteTypes);choices("pages","page_count",groups.pages);choices("timelines","timeline",groups.timelines);choices("budgets","budget",groups.budgets);
-const domains=[".ir",".com",".co",".ae",".beauty",".blog",".digital",".homes",".info",".io",".kids",".lol",".mom",".net",".pics",".pro",".shop",".world",".xyz"];$("domain").innerHTML+domains.map(x=>'<option value="'+x+'">'+x+'</option>').join("");
+const domains=[".ir",".com",".co",".ae",".beauty",".blog",".digital",".homes",".info",".io",".kids",".lol",".mom",".net",".pics",".pro",".shop",".world",".xyz"];/* Suffixes are already declared in the HTML; do not append duplicates. */
 const optionItems=[["admin_panel","پنل مدیریت کامل داشته باشد؟","control-panel"],["blog","وبلاگ داشته باشد؟","blog"],["multilingual","امکان چندزبانه شدن سایت؟","translation"],["seo","بهینه‌سازی SEO؟","search"],["ssl","دریافت SSL؟","lock"],["google_maps","ثبت مکان در Google Maps؟","google-maps"]];
 $("options").innerHTML=optionItems.map(([k,v,ic])=>'<div class="toggle"><span class="toggle-label">'+svgFor(ic)+v+'</span><button type="button" class="switch" data-key="'+k+'" aria-pressed="false" aria-label="'+v+'"></button></div>').join("");
 $("options").addEventListener("click",e=>{const b=e.target.closest(".switch");if(!b)return;b.classList.toggle("on");b.setAttribute("aria-pressed",b.classList.contains("on")?"true":"false")});
