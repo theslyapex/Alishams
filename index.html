@@ -1854,6 +1854,21 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
   <span class="footer-vpn-note" aria-label="TURN OFF YOUR VPN">Turn off your VPN</span>
 </section><div class="foot-bottom"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><a href="#top">بازگشت به بالا ↑︎</a></div></div></footer>
 <style id="domain-purchase-order-styles">.domain-order-row{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:9px}.domain-order-row input,.domain-order-row select{width:100%;min-width:0;box-sizing:border-box;border:1px solid #ffffff1c;border-radius:11px;padding:12px 13px;background:#111318;color:#f5f5f5;font:inherit;outline:none}.domain-order-row input{direction:ltr;text-align:left}.domain-order-row input:focus,.domain-order-row select:focus{border-color:#c9a7ff;box-shadow:0 0 0 3px #c9a7ff16}.domain-order-row select{direction:ltr;font-family:Manrope,Arial,sans-serif}.domain-purchase-fields[hidden]{display:none!important}.domain-discount-notice{margin-top:13px;padding:13px 14px;border:1px solid #f0bd6b55;border-radius:13px;background:linear-gradient(135deg,#f0bd6b12,#c9a7ff09);color:#d8d5df}.domain-discount-notice strong{display:flex;align-items:center;gap:7px;margin:0 0 6px;color:#f4cb82;font-size:12px;font-weight:800}.domain-discount-notice strong span{font-size:16px}.domain-discount-notice p{margin:0;font-size:11px;line-height:2;color:#b9bbc5}.domain-discount-notice b{color:#eee1c9;font-weight:800}@media(max-width:420px){.domain-order-row{grid-template-columns:minmax(0,1fr) 94px}.domain-discount-notice{padding:12px}.domain-discount-notice p{font-size:10.5px}}</style>
+<style id="order-price-summary-styles">
+#orderDialog .order-price-summary{margin:16px 0;padding:16px;border:1px solid rgba(217,255,114,.3);border-radius:16px;background:linear-gradient(135deg,rgba(217,255,114,.075),rgba(182,160,255,.07))}
+#orderDialog .order-price-summary[hidden]{display:none!important}
+#orderDialog .order-price-summary-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+#orderDialog .order-price-summary-head strong{font-size:13px;color:#f4f5f7}
+#orderDialog .order-price-summary-head span{font-size:10px;color:#d9ff72}
+#orderDialog .order-price-lines{display:grid;gap:8px}
+#orderDialog .order-price-line{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:12px;line-height:1.8}
+#orderDialog .order-price-line:last-child{border-bottom:0;padding-bottom:0}
+#orderDialog .order-price-line span{color:#bfc2cc;min-width:0}
+#orderDialog .order-price-line b{color:#e7ffad;text-align:left;white-space:nowrap;font-size:12px}
+#orderDialog .order-price-note{margin:11px 0 0;color:#b7bac5;font-size:11px;line-height:2}
+#orderDialog .order-price-note strong{color:#d9ff72}
+@media(max-width:420px){#orderDialog .order-price-summary{padding:13px}#orderDialog .order-price-line{gap:8px;font-size:11px}#orderDialog .order-price-line b{font-size:11px}}
+</style>
 <style id="social-service-options">
 .social-service-fields{margin:0 0 16px;padding:16px;border:1px solid #c9a7ff30;border-radius:16px;background:linear-gradient(145deg,#c9a7ff0a,#44d9ff06)}
 .social-service-fields[hidden],#telegramGiftFields[hidden]{display:none!important}
@@ -1880,7 +1895,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
     <strong>بعد از تأیید سفارش، همه‌چیز در حساب کاربری‌ات دنبال می‌شود.</strong>
     <p>پس از بررسی و تأیید درخواست، سفارش به <b>پروژه</b> تبدیل می‌شود. وضعیت و مراحل پیشرفت پروژه را در بخش «پروژه‌ها»ی حساب کاربری‌ات می‌بینی؛ فایل‌های نهایی و فاکتورهای مربوط به پروژه هم از همان بخش برای مشاهده و دانلود در دسترس خواهند بود.</p>
   </div>
-</div><div id="serviceSelectData" hidden aria-hidden="true" style="display:none!important;visibility:hidden!important;width:0;height:0;overflow:hidden"><select id="serviceSelect" aria-label="انتخاب یک خدمت" tabindex="-1" hidden aria-hidden="true" style="display:none!important;visibility:hidden!important;position:absolute!important;left:-10000px!important;width:0!important;height:0!important;min-width:0!important;max-width:0!important;min-height:0!important;max-height:0!important;margin:0!important;padding:0!important;border:0!important;opacity:0!important;pointer-events:none!important"><option>موشن‌گرافیک</option><option>طراحی وبسایت و قالب وبلاگ</option><option>پکیج برنزی طراحی وبسایت</option><option>پکیج نقره‌ای طراحی وبسایت</option><option>پکیج طلایی طراحی وبسایت</option><option>پک اقتصادی طراحی سایت</option><option>طراحی اختصاصی برند و وب‌سایت</option><option>پک اقتصادی طراحی لوگو و موشن‌گرافیک</option><option>خدمات شبکه‌های اجتماعی</option><option>ساخت ریلز اینستاگرام</option><option>تیزر تبلیغاتی</option><option>خدمات اینستاگرام</option><option>خدمات تلگرام</option><option>خدمات واتساپ</option><option>خدمات ایکس(توییتر)</option><option>خدمات یوتیوب</option><option>خدمات تردز</option><option>خدمات توییچ</option><option>خدمات فیسبوک</option><option>خدمات تیک‌تاک</option><option>خدمات لینکدین</option><option>خدمات وی‌کی</option><option>خدمات دیسکورد</option><option>خدمات کورا</option><option>خدمات بیگو لایو</option><option>خدمات کلاب هاوس</option><option>خدمات کیک</option><option>خدمات ساندکلود</option><option>خدمات اسپاتیفای</option><option>خدمات میکس‌کلود</option><option>خدمات ردیت</option><option>خدمات imdb</option><option>خدمات لایکی</option><option>خدمات تامبل </option><option>خدمات ایتا</option><option>خدمات روبیکا</option><option>خدمات آیگپ</option><option>خدمات گپ</option><option>خدمات بله</option><option>خدمات سروش</option><option>خدمات آپارات</option><option>امنیت شبکه‌های اجتماعی</option><option>طراحی لوگو</option><option>نگارش مقاله وب‌سایت</option><option>تبلیغات و معرفی</option><option>مشاوره کسب‌وکار آنلاین</option><option>خدمات SEO</option><option>خرید دامنه</option><option>هنوز مطمئن نیستم</option></select></div><div class="multi-service-picker" id="multiServicePicker"><div class="multi-service-top"><strong>چه خدماتی نیاز داری؟</strong><span id="selectedServiceCount">۱ خدمت انتخاب شده</span></div><button type="button" class="service-select-trigger" id="serviceSelectTrigger" aria-expanded="false"><span id="serviceSelectSummary">موشن‌گرافیک</span><b aria-hidden="true">⌄</b></button><div class="service-select-panel" id="serviceSelectPanel" hidden><p>می‌توانی یک یا چند خدمت را انتخاب کنی.</p><div class="multi-service-options" id="multiServiceOptions"></div><div class="service-select-actions"><span>پس از انتخاب، روی تأیید بزن.</span><button type="button" id="serviceSelectDone">تأیید انتخاب‌ها</button></div></div><div class="selected-service-tags" id="selectedServiceTags" aria-live="polite"></div></div><div id="socialServiceFields" class="social-service-fields" hidden><label for="socialServiceType">نوع دقیق خدمت <span aria-hidden="true">*</span></label><select id="socialServiceType"></select><p class="social-service-hint" id="socialServiceHint">نوع خدمت موردنظرت را انتخاب کن تا درخواست دقیق ثبت شود.</p><div id="telegramGiftFields" hidden><label for="telegramGiftDetail">نام گیفت یا ارزش دلاری آن</label><input id="telegramGiftDetail" placeholder="مثلاً 5 دلار یا نام گیفت موردنظر"></div></div><div id="domainPurchaseFields" class="social-service-fields domain-purchase-fields" hidden><label for="requestedDomainName">نام دامنه موردنظر <span aria-hidden="true">*</span></label><div class="domain-order-row"><input id="requestedDomainName" type="text" inputmode="url" autocomplete="off" spellcheck="false" placeholder="مثلاً yourbrand" dir="ltr"><select id="requestedDomainTld" aria-label="پسوند دامنه"><option value=".ir">.ir</option><option value=".com">.com</option><option value=".net">.net</option><option value=".org">.org</option><option value=".co">.co</option><option value=".biz">.biz</option><option value=".info">.info</option><option value=".xyz">.xyz</option><option value=".online">.online</option><option value=".store">.store</option></select></div><p class="social-service-hint">پسوند موردنظرت را انتخاب کن. ثبت نهایی پس از بررسی آزاد بودن دامنه و تأیید هزینه انجام می‌شود.</p><div class="domain-discount-notice" role="note" aria-label="شرایط تخفیف خرید دامنه"><strong><span aria-hidden="true">ⓘ</span> شرایط تخفیف خرید دامنه</strong><p>خرید یا ثبت دامنه به‌تنهایی شامل هیچ‌گونه تخفیف عمومی، کد تخفیف یا تخفیف عضویت پلاس+ نمی‌شود. تخفیف پلاس+ فقط زمانی قابل اعمال است که <b>طراحی وب‌سایت نیز در همین سفارش</b> انتخاب شده باشد؛ در این حالت، تخفیف صرفاً مطابق شرایط خدمات مشمول و پس از بررسی سفارش محاسبه می‌شود.</p></div></div><label for="clientName">نام و نام خانوادگی</label><input id="clientName" placeholder="نامت را وارد کن" autocomplete="name"><label for="projectName">عنوان پروژه</label><input id="projectName" placeholder="مثلاً معرفی محصول جدید"><label for="projectDetails">کمی درباره ایده‌ات توضیح بده</label><textarea id="projectDetails" placeholder="هدفت چیه و چه خروجی‌ای لازم داری؟"></textarea><label for="budget">بودجه تقریبی (اختیاری)</label><select id="budget"><option>فعلاً مشخص نیست</option><option>اقتصادی</option><option>متوسط</option><option>حرفه‌ای / اختصاصی</option></select><label for="contactInfo">شماره تلفن همراه <span aria-hidden="true">*</span></label><input id="contactInfo" type="tel" placeholder="مثلاً 09123456789" dir="auto" autocomplete="tel" required><label for="clientEmail">ایمیل <span aria-hidden="true">*</span></label><input id="clientEmail" type="email" placeholder="name@example.com" dir="ltr" autocomplete="email" inputmode="email" required><style id="order-terms-consent-style">
+</div><div id="serviceSelectData" hidden aria-hidden="true" style="display:none!important;visibility:hidden!important;width:0;height:0;overflow:hidden"><select id="serviceSelect" aria-label="انتخاب یک خدمت" tabindex="-1" hidden aria-hidden="true" style="display:none!important;visibility:hidden!important;position:absolute!important;left:-10000px!important;width:0!important;height:0!important;min-width:0!important;max-width:0!important;min-height:0!important;max-height:0!important;margin:0!important;padding:0!important;border:0!important;opacity:0!important;pointer-events:none!important"><option>موشن‌گرافیک</option><option>طراحی وبسایت و قالب وبلاگ</option><option>پکیج برنزی طراحی وبسایت</option><option>پکیج نقره‌ای طراحی وبسایت</option><option>پکیج طلایی طراحی وبسایت</option><option>پک اقتصادی طراحی سایت</option><option>طراحی اختصاصی برند و وب‌سایت</option><option>پک اقتصادی طراحی لوگو و موشن‌گرافیک</option><option>خدمات شبکه‌های اجتماعی</option><option>ساخت ریلز اینستاگرام</option><option>تیزر تبلیغاتی</option><option>خدمات اینستاگرام</option><option>خدمات تلگرام</option><option>خدمات واتساپ</option><option>خدمات ایکس(توییتر)</option><option>خدمات یوتیوب</option><option>خدمات تردز</option><option>خدمات توییچ</option><option>خدمات فیسبوک</option><option>خدمات تیک‌تاک</option><option>خدمات لینکدین</option><option>خدمات وی‌کی</option><option>خدمات دیسکورد</option><option>خدمات کورا</option><option>خدمات بیگو لایو</option><option>خدمات کلاب هاوس</option><option>خدمات کیک</option><option>خدمات ساندکلود</option><option>خدمات اسپاتیفای</option><option>خدمات میکس‌کلود</option><option>خدمات ردیت</option><option>خدمات imdb</option><option>خدمات لایکی</option><option>خدمات تامبل </option><option>خدمات ایتا</option><option>خدمات روبیکا</option><option>خدمات آیگپ</option><option>خدمات گپ</option><option>خدمات بله</option><option>خدمات سروش</option><option>خدمات آپارات</option><option>امنیت شبکه‌های اجتماعی</option><option>طراحی لوگو</option><option>نگارش مقاله وب‌سایت</option><option>تبلیغات و معرفی</option><option>مشاوره کسب‌وکار آنلاین</option><option>خدمات SEO</option><option>خرید دامنه</option><option>هنوز مطمئن نیستم</option></select></div><div class="multi-service-picker" id="multiServicePicker"><div class="multi-service-top"><strong>چه خدماتی نیاز داری؟</strong><span id="selectedServiceCount">۱ خدمت انتخاب شده</span></div><button type="button" class="service-select-trigger" id="serviceSelectTrigger" aria-expanded="false"><span id="serviceSelectSummary">موشن‌گرافیک</span><b aria-hidden="true">⌄</b></button><div class="service-select-panel" id="serviceSelectPanel" hidden><p>می‌توانی یک یا چند خدمت را انتخاب کنی.</p><div class="multi-service-options" id="multiServiceOptions"></div><div class="service-select-actions"><span>پس از انتخاب، روی تأیید بزن.</span><button type="button" id="serviceSelectDone">تأیید انتخاب‌ها</button></div></div><div class="selected-service-tags" id="selectedServiceTags" aria-live="polite"></div></div><div id="socialServiceFields" class="social-service-fields" hidden><label for="socialServiceType">نوع دقیق خدمت <span aria-hidden="true">*</span></label><select id="socialServiceType"></select><p class="social-service-hint" id="socialServiceHint">نوع خدمت موردنظرت را انتخاب کن تا درخواست دقیق ثبت شود.</p><div id="telegramGiftFields" hidden><label for="telegramGiftDetail">نام گیفت یا ارزش دلاری آن</label><input id="telegramGiftDetail" placeholder="مثلاً 5 دلار یا نام گیفت موردنظر"></div></div><div id="domainPurchaseFields" class="social-service-fields domain-purchase-fields" hidden><label for="requestedDomainName">نام دامنه موردنظر <span aria-hidden="true">*</span></label><div class="domain-order-row"><input id="requestedDomainName" type="text" inputmode="url" autocomplete="off" spellcheck="false" placeholder="مثلاً yourbrand" dir="ltr"><select id="requestedDomainTld" aria-label="پسوند دامنه"><option value=".ir">.ir</option><option value=".com">.com</option><option value=".net">.net</option><option value=".org">.org</option><option value=".co">.co</option><option value=".biz">.biz</option><option value=".info">.info</option><option value=".xyz">.xyz</option><option value=".online">.online</option><option value=".store">.store</option></select></div><p class="social-service-hint">پسوند موردنظرت را انتخاب کن. ثبت نهایی پس از بررسی آزاد بودن دامنه و تأیید هزینه انجام می‌شود.</p><div class="domain-discount-notice" role="note" aria-label="شرایط تخفیف خرید دامنه"><strong><span aria-hidden="true">ⓘ</span> شرایط تخفیف خرید دامنه</strong><p>خرید یا ثبت دامنه به‌تنهایی شامل هیچ‌گونه تخفیف عمومی، کد تخفیف یا تخفیف عضویت پلاس+ نمی‌شود. تخفیف پلاس+ فقط زمانی قابل اعمال است که <b>طراحی وب‌سایت نیز در همین سفارش</b> انتخاب شده باشد؛ در این حالت، تخفیف صرفاً مطابق شرایط خدمات مشمول و پس از بررسی سفارش محاسبه می‌شود.</p></div></div><section id="orderPriceSummary" class="order-price-summary" aria-live="polite" hidden><div class="order-price-summary-head"><strong>مبلغ سفارش</strong><span>تعرفه‌های اعلام‌شده</span></div><div id="orderPriceLines" class="order-price-lines"></div><p id="orderPriceNote" class="order-price-note" hidden></p></section><label for="clientName">نام و نام خانوادگی</label><input id="clientName" placeholder="نامت را وارد کن" autocomplete="name"><label for="projectName">عنوان پروژه</label><input id="projectName" placeholder="مثلاً معرفی محصول جدید"><label for="projectDetails">کمی درباره ایده‌ات توضیح بده</label><textarea id="projectDetails" placeholder="هدفت چیه و چه خروجی‌ای لازم داری؟"></textarea><label for="budget">بودجه تقریبی (اختیاری)</label><select id="budget"><option>فعلاً مشخص نیست</option><option>اقتصادی</option><option>متوسط</option><option>حرفه‌ای / اختصاصی</option></select><label for="contactInfo">شماره تلفن همراه <span aria-hidden="true">*</span></label><input id="contactInfo" type="tel" placeholder="مثلاً 09123456789" dir="auto" autocomplete="tel" required><label for="clientEmail">ایمیل <span aria-hidden="true">*</span></label><input id="clientEmail" type="email" placeholder="name@example.com" dir="ltr" autocomplete="email" inputmode="email" required><style id="order-terms-consent-style">
 #orderDialog .order-terms-consent{margin:16px 0 13px;padding:13px 14px;border:1px solid #d9ff7250;border-radius:13px;background:linear-gradient(135deg,#d9ff720c,#b6a0ff09)}
 #orderDialog .order-terms-consent label{display:flex;align-items:flex-start;gap:10px;color:#e8e9ee;font-size:11px;line-height:1.9;cursor:pointer}
 #orderDialog .order-terms-consent input{width:17px;height:17px;flex:0 0 17px;margin:4px 0 0;accent-color:#d9ff72}
@@ -2034,6 +2049,7 @@ function syncSelectedServices(){
  renderServicePicker();
  updateSocialServiceFields();
  updateDomainPurchaseFields();
+ updateOrderPriceSummary();
 }
 async function loadServiceSettings(){
  try{
@@ -2058,15 +2074,17 @@ async function syncDomainOrderExtensions(){
  try{
   const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");
   const sb=createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB");
-  const {data,error}=await sb.from("domain_pricing").select("tld").order("tld");
+  const {data,error}=await sb.from("domain_pricing").select("tld,price_toman,display_label").order("tld");
   if(error)throw error;
   const select=document.getElementById("requestedDomainTld");
   if(!select)return;
+  domainPriceMap=new Map((data||[]).map(row=>[row.tld,{price_toman:Number(row.price_toman)||0,display_label:String(row.display_label||row.tld)}]));domainPricesLoaded=true;
   const current=select.value;
   const known=new Set([...select.options].map(option=>option.value));
   (data||[]).forEach(row=>{if(!known.has(row.tld)){select.add(new Option(row.tld,row.tld));known.add(row.tld)}});
   if([...select.options].some(option=>option.value===current))select.value=current;
- }catch(error){console.warn("Domain order extensions could not be refreshed.",error)}
+  updateOrderPriceSummary();
+ }catch(error){domainPricesLoaded=true;console.warn("Domain order extensions could not be refreshed.",error);updateOrderPriceSummary()}
 }
 syncDomainOrderExtensions();
 const serviceSelectTrigger=document.getElementById('serviceSelectTrigger'),serviceSelectPanel=document.getElementById('serviceSelectPanel');
@@ -2079,6 +2097,51 @@ function setSelectedServices(items){
 const domainPurchaseFields=document.getElementById('domainPurchaseFields');
 const requestedDomainName=document.getElementById('requestedDomainName');
 const requestedDomainTld=document.getElementById('requestedDomainTld');
+requestedDomainTld.addEventListener('change',updateOrderPriceSummary);
+let domainPriceMap=new Map(),domainPricesLoaded=false;
+function updateOrderPriceSummary(){
+ const box=document.getElementById('orderPriceSummary'),lines=document.getElementById('orderPriceLines'),note=document.getElementById('orderPriceNote');
+ if(!box||!lines||!note)return;
+ lines.replaceChildren();note.hidden=true;note.textContent='';
+ if(!selectedServices.length){box.hidden=true;return;}
+ const items=[];let needsQuote=false,waitingForPrice=false;
+ const money=value=>new Intl.NumberFormat('fa-IR').format(Math.round(Number(value)||0))+' تومان';
+ const customOfferActive=Date.now()<Date.UTC(2027,4,1);
+ selectedServices.forEach(name=>{
+  if(name==='خرید دامنه'){
+   const tld=requestedDomainTld?.value||'.ir',row=domainPriceMap.get(tld);
+   if(row)items.push({label:'ثبت دامنه '+tld,amount:money(row.price_toman),note:'قیمت پایه دامنه؛ بدون تخفیف'});
+   else if(!domainPricesLoaded)waitingForPrice=true;
+   else needsQuote=true;
+   return;
+  }
+  if(name==='پک اقتصادی طراحی لوگو و موشن‌گرافیک'){items.push({label:'پک اقتصادی طراحی لوگو و موشن‌گرافیک',amount:money(570000),note:'قیمت ثابت پک'});return;}
+  if(name==='پک اقتصادی طراحی سایت'||name==='پک اقتصادی طراحی سایت حرفه‌ای'){items.push({label:'پک اقتصادی طراحی سایت حرفه‌ای',amount:money(7599000),note:'قیمت ثابت پک'});return;}
+  if(name==='طراحی اختصاصی برند و وب‌سایت'||name==='طراحی اختصاصی برند و وبسایت'){items.push({label:'طراحی اختصاصی برند و وب‌سایت؛ با امضای خلاقانه علی شمس',amount:money(customOfferActive?11300000:19000000),note:customOfferActive?'قیمت ویژه فعلی':'قیمت عادی پس از پایان پیشنهاد ویژه'});return;}
+  if(name==='خدمات اینستاگرام'&&selectedServices.length===1){
+   const kind=socialType?.value||'';
+   if(!kind){waitingForPrice=true;return;}
+   if(kind==='فالوور ارزان'){items.push({label:'خرید فالوور ارزان',amount:'هر ۱۰۰۰ عدد · '+money(312000),note:'بر اساس تعرفه فعلی صفحه قیمت‌گذاری'});return;}
+   if(/^لایک\s/.test(kind)){items.push({label:'خرید لایک ارزان',amount:'هر ۱۰۰۰ عدد · '+money(89000),note:'بر اساس تعرفه فعلی صفحه قیمت‌گذاری'});return;}
+   needsQuote=true;return;
+  }
+  needsQuote=true;
+ });
+ if(!items.length&&!needsQuote&&!waitingForPrice){box.hidden=true;return;}
+ items.forEach(item=>{
+  const row=document.createElement('div');row.className='order-price-line';
+  const label=document.createElement('span');label.textContent=item.label+(item.note?' · '+item.note:'');
+  const amount=document.createElement('b');amount.textContent=item.amount;
+  row.append(label,amount);lines.append(row);
+ });
+ if(waitingForPrice){
+  const row=document.createElement('div');row.className='order-price-line';
+  const label=document.createElement('span');label.textContent='تعرفه در حال دریافت است یا باید نوع خدمت را انتخاب کنی.';
+  const amount=document.createElement('b');amount.textContent='…';row.append(label,amount);lines.append(row);
+ }
+ if(needsQuote){note.hidden=false;note.textContent='قیمت این بخش بستگی به پروژه دارد. پس از بررسی توضیحات سفارش، مبلغ نهایی برای تأیید به شما اعلام می‌شود.';}
+ box.hidden=false;
+}
 function updateDomainPurchaseFields(){const active=selectedServices.includes('خرید دامنه');domainPurchaseFields.hidden=!active;requestedDomainName.required=active;if(!active)requestedDomainName.value='';}
 const socialFields=document.getElementById('socialServiceFields');
 const socialType=document.getElementById('socialServiceType');
@@ -2103,6 +2166,7 @@ socialType.addEventListener('change',()=>{
  const isGift=selectedServices.length===1&&selectedServices[0]==='خدمات تلگرام'&&socialType.value==='گیفت تلگرام';
  giftFields.hidden=!isGift;giftDetail.required=isGift;
  if(isGift)socialHint.textContent='نام دقیق گیفت یا ارزش دلاری آن را وارد کن؛ لینک یا شناسه مقصد را هم در توضیحات سفارش بنویس.';
+ updateOrderPriceSummary();
 });
 const dlg=document.getElementById('orderDialog');
 const orderAuthNotice=document.getElementById('orderAuthNotice');
