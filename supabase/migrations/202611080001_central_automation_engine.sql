@@ -117,14 +117,14 @@ language sql
 stable
 security definer
 set search_path = ''
-as $
+as $$
   select u.id
     from auth.users u
    where lower(trim(u.email)) = lower(trim(p_email))
      and u.email_confirmed_at is not null
    order by u.created_at
    limit 1;
-$;
+$$;
 revoke all on function public.automation_user_id_by_email(text) from public,anon,authenticated;
 grant execute on function public.automation_user_id_by_email(text) to service_role;
 
