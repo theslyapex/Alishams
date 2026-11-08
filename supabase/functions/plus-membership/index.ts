@@ -72,6 +72,7 @@ Deno.serve(async(req:Request)=>{
    return out({ok:true,payment:row},201,origin);
   }
   if(!isAdmin)return out({error:"دسترسی مدیریت مجاز نیست."},403,origin);
+  const audit=async(actionKey:string,entityType:string,entityId:string,summary:string,before:any=null,after:any=null)=>{const {error}=await db.from("admin_audit_logs").insert({actor_user_id:user.id,actor_email:user.email||OWNER,action_key:actionKey,entity_type:entityType,entity_id:entityId||null,summary,before_data:before,after_data:after});if(error)console.error("plus audit insert failed",error.message)};
   if(action==="admin_search"){
    const q=str(b.query,180).toLowerCase();if(q.length<2)return out({ok:true,users:[]},200,origin);
    const users:any[]=[];for(let page=1;page<=20;page++){const {data,error}=await db.auth.admin.listUsers({page,perPage:100});if(error)throw error;for(const u of data.users||[]){const email=String(u.email||"").toLowerCase(),name=String(u.user_metadata?.full_name||"").toLowerCase();if(email.includes(q)||name.includes(q)||u.id===q)users.push({id:u.id,email:u.email,name:u.user_metadata?.full_name||"",created_at:u.created_at});}if(!data.users||data.users.length<100||users.length>=30)break;}return out({ok:true,users:users.slice(0,30)},200,origin);
@@ -161,6 +162,7 @@ Deno.serve(async(req:Request)=>{
     const {data,error}=await db.from("plus_memberships").insert({user_id:uid,...patch,purchase_count:0}).select("*").single();
     if(error)throw error;row=data;
    }
+   await audit("plus.membership_updated","plus_membership",uid,"تغییر وضعیت یا دوره عضویت پلاس+",old?{status:old.status,starts_at:old.starts_at,ends_at:old.ends_at,discount_percent:old.discount_percent}:{},{status:row.status,starts_at:row.starts_at,ends_at:row.ends_at,discount_percent:row.discount_percent,admin_note:patch.admin_note});
    return out({ok:true,membership:{...row,is_active:active(row)}},200,origin);
   }
   if(action==="admin_manual_update"){
@@ -169,19 +171,21 @@ Deno.serve(async(req:Request)=>{
    if(decision==="approve"){
     const {data,error}=await db.rpc("finalize_manual_plus_purchase",{p_purchase_id:id});if(error)return out({error:"خطای پایگاه داده هنگام فعال‌سازی: "+str(error.message,350)},500,origin);
     if(!data||data.ok!==true)return out({error:"پایگاه داده فعال‌سازی را تأیید نکرد؛ نتیجه نامعتبر دریافت شد."},500,origin);
+    await audit("plus.payment_approved","plus_payment",id,"تأیید رسید و فعال‌سازی عضویت پلاس+",{payment_status:"pending"},{payment_status:"paid",user_id:data.user_id||null});
     return out({ok:true,result:data},200,origin);
    }
    const {data:row,error}=await db.from("plus_purchase_records").update({payment_status:"failed",admin_note:note,reviewed_at:new Date().toISOString()}).eq("id",id).eq("payment_provider","card_transfer").eq("payment_status","pending").select("id,payment_status").single();
    if(error)throw error;
+   await audit("plus.payment_rejected","plus_payment",id,"رد رسید پرداخت دستی پلاس+",{payment_status:"pending"},{payment_status:"failed",admin_note:note});
    return out({ok:true,payment:row},200,origin);
   }
   if(action==="admin_reel_update"){
    const id=str(b.id,50),status=str(b.status,20);if(!["pending","approved","delivered","rejected"].includes(status))return out({error:"وضعیت درخواست معتبر نیست."},400,origin);
-   const {data:row,error}=await db.from("plus_reel_requests").update({status,delivered_views:Math.max(0,Math.min(500,Number(b.delivered_views)||0)),admin_note:str(b.admin_note,1000),updated_at:new Date().toISOString()}).eq("id",id).select("*").single();if(error)throw error;return out({ok:true,request:row},200,origin);
+   const {data:before}=await db.from("plus_reel_requests").select("status,delivered_views").eq("id",id).maybeSingle();const {data:row,error}=await db.from("plus_reel_requests").update({status,delivered_views:Math.max(0,Math.min(500,Number(b.delivered_views)||0)),admin_note:str(b.admin_note,1000),updated_at:new Date().toISOString()}).eq("id",id).select("*").single();if(error)throw error;await audit("plus.reel_request_updated","plus_reel_request",id,"به‌روزرسانی درخواست بازدید ریلز",{status:before?.status,delivered_views:before?.delivered_views},{status:row.status,delivered_views:row.delivered_views,user_id:row.user_id});return out({ok:true,request:row},200,origin);
   }
   if(action==="admin_domain_update"){
    const id=str(b.id,50),status=str(b.status,20);if(!["pending","checking","registered","rejected"].includes(status))return out({error:"وضعیت دامنه معتبر نیست."},400,origin);
-   const {data:row,error}=await db.from("plus_domain_requests").update({status,admin_note:str(b.admin_note,1000),updated_at:new Date().toISOString()}).eq("id",id).select("*").single();if(error)throw error;return out({ok:true,request:row},200,origin);
+   const {data:before}=await db.from("plus_domain_requests").select("status").eq("id",id).maybeSingle();const {data:row,error}=await db.from("plus_domain_requests").update({status,admin_note:str(b.admin_note,1000),updated_at:new Date().toISOString()}).eq("id",id).select("*").single();if(error)throw error;await audit("plus.domain_request_updated","plus_domain_request",id,"به‌روزرسانی درخواست دامنه هدیه",{status:before?.status},{status:row.status,user_id:row.user_id});return out({ok:true,request:row},200,origin);
   }
   return out({error:"عملیات ناشناخته است."},400,origin);
  }catch(e){console.error("plus-membership",e);return out({error:"پردازش درخواست پلاس+ انجام نشد."},500,origin)}
