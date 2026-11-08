@@ -31,13 +31,13 @@ Deno.serve(async(req:Request)=>{
   }
   if(action==="confirm"){
    const token=String(body.token||""); if(!token) return json({error:"لینک تأیید معتبر نیست."},400,origin);
-   const {data,error}=await db.from("newsletter_subscribers").update({status:"active",confirmed_at:new Date().toISOString()}).eq("confirm_token",token).eq("status","pending").select("id,email").maybeSingle();
+   const {data,error}=await db.from("newsletter_subscribers").update({status:"active",confirmed_at:new Date().toISOString()}).eq("confirm_token",token).eq("status","pending").select("id,email,unsubscribe_token").maybeSingle();
    if(error) throw error; if(!data) return json({error:"این لینک معتبر نیست یا قبلاً استفاده شده است."},400,origin);
    const {error:queueError}=await db.from("automation_queue").upsert({
     rule_key:"newsletter_welcome",event_key:"newsletter_welcome:"+data.id,target_type:"newsletter",target_id:data.id,
     recipient_email:data.email,title:"به خبرنامه Alishams Studio خوش آمدید",
     message:"عضویت شما در خبرنامه Alishams Studio تأیید شد. از این پس مطالب آموزشی، معرفی خدمات و خبرهای تازه استودیو را دریافت می‌کنید. برای آشنایی با خدمات و نمونه‌کارها به https://alishams.ir سر بزنید.",
-    channels:["email"],due_at:new Date().toISOString(),next_attempt_at:new Date().toISOString(),status:"pending"
+    channels:["email"],payload:{unsubscribe_token:data.unsubscribe_token},due_at:new Date().toISOString(),next_attempt_at:new Date().toISOString(),status:"pending"
    },{onConflict:"event_key",ignoreDuplicates:true});
    if(queueError) console.error("Newsletter welcome queue failed",queueError.code||"unknown");
    return json({ok:true,message:"عضویتت با موفقیت تأیید شد."},200,origin);
