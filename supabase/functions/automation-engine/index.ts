@@ -161,7 +161,7 @@ async function processEngine(db: any, source: string, serviceKey: string, supaba
         await enqueue("customer_offer_24h", "order", order.id, {
           email: order.client_email, title: "یادآوری پیشنهاد همکاری",
           message: "پیشنهاد مربوط به سفارش «" + label + "» هنوز منتظر پاسخ شماست. برای مشاهده جزئیات و اعلام نظر وارد حساب کاربری شوید.",
-          channels: ["email", "account"], eventSuffix: "customer"
+          channels: ["email", ...(order.client_email ? ["account"] : [])], eventSuffix: "customer"
         });
       }
     }
@@ -182,7 +182,7 @@ async function processEngine(db: any, source: string, serviceKey: string, supaba
         const item = paymentTotals.get(p.project_id) || { total: 0, last: 0 };
         if (p.confirmed) {
           item.total += Number(p.amount || 0);
-          item.last = Math.max(item.last, Date.parse(p.paid_at || 0));
+          item.last = Math.max(item.last, p.paid_at ? Date.parse(p.paid_at) : 0);
         }
         paymentTotals.set(p.project_id, item);
       }
@@ -200,7 +200,7 @@ async function processEngine(db: any, source: string, serviceKey: string, supaba
           await enqueue(rule, "project", project.id, {
             email: project.client_email, projectId: project.id, title: days < 0 ? "پروژه دارای تأخیر" : "یادآوری موعد پروژه",
             message: message + " کد پیگیری: " + project.tracking_code,
-            channels: ["telegram", "email", "account", "push"], eventSuffix: suffix
+            channels: ["telegram", ...(project.client_email ? ["email", "account"] : []), "push"], eventSuffix: suffix
           });
         }
       }
@@ -231,7 +231,7 @@ async function processEngine(db: any, source: string, serviceKey: string, supaba
         await enqueue("project_review_2d", "project", project.id, {
           email: project.client_email, projectId: project.id, title: "ثبت تجربه همکاری",
           message: "پروژه «" + (project.title || "شما") + "» تکمیل شده است. خوشحال می‌شویم تجربه همکاری‌تان را از طریق حساب کاربری ثبت کنید.",
-          channels: ["email", "account", "push"], eventSuffix: "review"
+          channels: project.client_email ? ["email", "account", "push"] : [], eventSuffix: "review"
         });
       }
     }
@@ -247,7 +247,7 @@ async function processEngine(db: any, source: string, serviceKey: string, supaba
         await enqueue("plus_expired", "membership", m.user_id, {
           email: m.email, userId: m.user_id, title: "اعتبار پلاس+ به پایان رسید",
           message: "اعتبار عضویت پلاس+ شما به پایان رسیده است. برای فعال‌سازی دوباره می‌توانید شرایط تمدید را در صفحه پلاس+ ببینید.",
-          channels: ["email", "account"], eventSuffix: new Date(m.ends_at).toISOString()
+          channels: ["email"], eventSuffix: new Date(m.ends_at).toISOString()
         });
         await db.from("plus_memberships").update({ status: "inactive", updated_at: new Date().toISOString() })
           .eq("user_id", m.user_id).eq("status", "active").lte("ends_at", new Date().toISOString());
