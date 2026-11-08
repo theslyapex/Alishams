@@ -53,6 +53,7 @@ Deno.serve(async (req: Request) => {
     const { data: authData, error: authError } = await auth.auth.getUser(token);
     const user = authData?.user;
     if (authError || !user?.id || !user.email) return out({ error: "برای ادامه وارد حساب کاربری شو." }, 401, origin);
+    if (!user.email_confirmed_at) return out({ error: "برای دسترسی به مکاتبات، ابتدا ایمیل حساب کاربری را تأیید کن." }, 403, origin);
 
     const db = createClient(url, service, { auth: { persistSession: false, autoRefreshToken: false } });
     const email = user.email.trim().toLowerCase();
@@ -139,6 +140,31 @@ Deno.serve(async (req: Request) => {
       return out({ ok: true, order: inserted, credential: { item_type: "order", tracking_code: trackingCode, private_key: privateKey } }, 201, origin);
     }
 
+
+
+
+    if (action === "rate_communication_request") {
+      const requestId = String(body?.request_id || "").trim();
+      const rating = Number(body?.rating);
+      if (!/^[0-9a-f-]{36}$/i.test(requestId) || !Number.isInteger(rating) || rating < 1 || rating > 4)
+        return out({ error: "درخواست یا امتیاز معتبر نیست." }, 400, origin);
+      const { data: request, error: requestError } = await db.from("communication_requests")
+        .select("id,tracking_code,subject,status,sender_email")
+        .eq("id", requestId).eq("account_user_id", user.id).maybeSingle();
+      if (requestError) throw requestError;
+      if (!request)
+        return out({ error: "این درخواست به حساب شما تعلق ندارد." }, 404, origin);
+      const { data: ownerReply, error: replyError } = await db.from("communication_messages")
+        .select("id").eq("request_id", request.id).eq("sender_type", "owner").limit(1);
+      if (replyError) throw replyError;
+      if (!ownerReply?.length) return out({ error: "پس از دریافت پاسخ پشتیبانی می‌توانی امتیاز ثبت کنی." }, 409, origin);
+      const ratedAt = new Date().toISOString();
+      const { error: saveError } = await db.from("communication_requests")
+        .update({ customer_rating: rating, customer_rating_at: ratedAt }).eq("id", request.id);
+      if (saveError) throw saveError;
+      await notifyTelegram("⭐ ارزیابی پاسخ پشتیبانی | Alishams Studio\\n\\n🔎 کد پیگیری: " + String(request.tracking_code || request.id) + "\\n📌 موضوع: " + String(request.subject || "درخواست پشتیبانی") + "\\n👤 ایمیل مشتری: " + email + "\\n⭐ امتیاز: " + rating + " از ۴");
+      return out({ ok: true, rating, rated_at: ratedAt }, 200, origin);
+    }
 
     if (["project_message","request_revision","submit_review"].includes(action)) {
       const projectId = String(body?.project_id || "").trim();
@@ -243,13 +269,17 @@ Deno.serve(async (req: Request) => {
     }
     if (action === "mark_notification_read") {
       const ids = Array.isArray(body?.notification_ids) ? body.notification_ids.filter((x: any) => /^[0-9a-f-]{36}$/i.test(String(x))) : [];
-      if (!ids.length || ids.length > 100) return out({ error: "اعلان معتبری انتخاب نشده است." }, 400, origin);
+      if (!ids.length || ids.length > 500) return out({ error: "اعلان معتبری انتخاب نشده است." }, 400, origin);
       const { data: ownedProjects, error: ownedError } = await db.from("client_projects").select("id").ilike("client_email", emailPattern);
       if (ownedError) throw ownedError;
       const ownedIds = (ownedProjects || []).map((p: any) => p.id);
-      if (!ownedIds.length) return out({ ok: true }, 200, origin);
-      const { error } = await db.from("project_notifications").update({ read_at: new Date().toISOString() }).in("id", ids).in("project_id", ownedIds).eq("recipient_type", "customer");
-      if (error) throw error;
+      const now = new Date().toISOString();
+      const { error: projectReadError } = ownedIds.length
+        ? await db.from("project_notifications").update({ read_at: now }).in("id", ids).in("project_id", ownedIds).eq("recipient_type", "customer")
+        : { error: null };
+      if (projectReadError) throw projectReadError;
+      const { error: accountReadError } = await db.from("account_notifications").update({ read_at: now }).in("id", ids).eq("user_id", user.id);
+      if (accountReadError) throw accountReadError;
       return out({ ok: true }, 200, origin);
     }
 
@@ -311,12 +341,12 @@ Deno.serve(async (req: Request) => {
         return out({ error: "متن پیام یا شناسه گفت‌وگو معتبر نیست." }, 400, origin);
 
       const { data: request, error: requestError } = await db.from("communication_requests")
-        .select("id,sender_email,status").eq("id", requestId).ilike("sender_email", emailPattern).maybeSingle();
+        .select("id,sender_email,status").eq("id", requestId).eq("account_user_id", user.id).maybeSingle();
       if (requestError) {
         console.error("customer-account reply lookup", requestError);
         return out({ error: "بررسی گفت‌وگو انجام نشد." }, 500, origin);
       }
-      if (!request || String(request.sender_email || "").trim().toLowerCase() !== email)
+      if (!request)
         return out({ error: "این گفت‌وگو به حساب شما تعلق ندارد." }, 404, origin);
 
       const { error: insertError } = await db.from("communication_messages")
@@ -343,8 +373,8 @@ Deno.serve(async (req: Request) => {
         .select("id,tracking_code,client_name,title,description,status,progress,total_price,created_at,updated_at,target_date")
         .ilike("client_email", emailPattern).order("updated_at", { ascending: false }).limit(100),
       db.from("communication_requests")
-        .select("id,tracking_code,sender_name,sender_email,subject,category,status,created_at,updated_at")
-        .ilike("sender_email", emailPattern).order("created_at", { ascending: false }).limit(100)
+        .select("id,tracking_code,sender_name,sender_email,subject,category,status,customer_rating,customer_rating_at,created_at,updated_at,account_user_id")
+        .eq("account_user_id", user.id).order("created_at", { ascending: false }).limit(100)
     ]);
     if (ordersR.error || projectsR.error || requestsR.error) {
       console.error("customer-account query", ordersR.error, projectsR.error, requestsR.error);
@@ -384,20 +414,30 @@ Deno.serve(async (req: Request) => {
     const requestIds = requests.map((r: any) => r.id);
     const orderIds = orders.map((r: any) => r.id);
     const projectIds = projects.map((r: any) => r.id);
-    const [messagesR, eventsR, paymentsR, historyR, projectFilesR, projectMessagesR, notificationsR, revisionsR, reviewsR] = await Promise.all([
-      requestIds.length ? db.from("communication_messages").select("id,request_id,sender_type,message_body,created_at").in("request_id", requestIds).order("created_at", { ascending: true }).limit(500) : Promise.resolve({ data: [], error: null }),
+    const [messagesR, eventsR, paymentsR, historyR, projectFilesR, projectMessagesR, notificationsR, accountNotificationsR, revisionsR, reviewsR] = await Promise.all([
+      requestIds.length ? db.from("communication_messages").select("id,request_id,sender_type,message_body,message_kind,caption,created_at").in("request_id", requestIds).order("created_at", { ascending: true }).limit(500) : Promise.resolve({ data: [], error: null }),
       orderIds.length ? db.from("client_order_events").select("id,order_id,status,public_message,created_at").in("order_id", orderIds).order("created_at", { ascending: false }).limit(500) : Promise.resolve({ data: [], error: null }),
       projectIds.length ? db.from("project_payments").select("id,project_id,amount,paid_at,method,note,confirmed").in("project_id", projectIds).order("paid_at", { ascending: false }).limit(500) : Promise.resolve({ data: [], error: null }),
       projectIds.length ? db.from("project_status_history").select("id,project_id,status,progress,note,created_at").in("project_id", projectIds).order("created_at", { ascending: false }).limit(500) : Promise.resolve({ data: [], error: null }),
       projectIds.length ? db.from("project_files").select("id,project_id,file_name,description,mime_type,file_size,is_invoice,created_at,file_type,content,external_url").in("project_id", projectIds).order("created_at", { ascending: false }).limit(500) : Promise.resolve({ data: [], error: null }),
       projectIds.length ? db.from("project_messages").select("id,project_id,sender_type,message_body,created_at").in("project_id", projectIds).order("created_at", { ascending: true }).limit(1000) : Promise.resolve({ data: [], error: null }),
       projectIds.length ? db.from("project_notifications").select("id,project_id,notification_type,title,body,read_at,created_at").in("project_id", projectIds).eq("recipient_type","customer").order("created_at", { ascending: false }).limit(300) : Promise.resolve({ data: [], error: null }),
+      db.from("account_notifications").select("id,source,title,body,read_at,created_at").eq("user_id", user.id).order("created_at", { ascending: false }).limit(300),
       projectIds.length ? db.from("project_revision_requests").select("id,project_id,request_body,status,admin_response,created_at,updated_at").in("project_id", projectIds).order("created_at", { ascending: false }).limit(300) : Promise.resolve({ data: [], error: null }),
       projectIds.length ? db.from("project_reviews").select("id,project_id,rating,review_text,is_approved,created_at,updated_at").in("project_id", projectIds).limit(300) : Promise.resolve({ data: [], error: null })
     ]);
-    if (messagesR.error || eventsR.error || paymentsR.error || historyR.error || projectFilesR.error || projectMessagesR.error || notificationsR.error || revisionsR.error || reviewsR.error) {
-      console.error("customer-account detail query", messagesR.error, eventsR.error, paymentsR.error, historyR.error, projectFilesR.error, projectMessagesR.error, notificationsR.error, revisionsR.error, reviewsR.error);
+    if (messagesR.error || eventsR.error || paymentsR.error || historyR.error || projectFilesR.error || projectMessagesR.error || notificationsR.error || accountNotificationsR.error || revisionsR.error || reviewsR.error) {
+      console.error("customer-account detail query", messagesR.error, eventsR.error, paymentsR.error, historyR.error, projectFilesR.error, projectMessagesR.error, notificationsR.error, accountNotificationsR.error, revisionsR.error, reviewsR.error);
       return out({ error: "دریافت تاریخچه جزئیات انجام نشد. کمی بعد دوباره تلاش کن." }, 500, origin);
+    }
+
+    const messageIds = (messagesR.data || []).map((m: any) => m.id);
+    const { data: messageAttachments, error: messageAttachmentsError } = messageIds.length
+      ? await db.from("communication_message_attachments").select("id,message_id,request_id,original_name,mime_type,size_bytes,caption,created_at").in("message_id", messageIds).order("created_at", { ascending: true })
+      : { data: [], error: null };
+    if (messageAttachmentsError) {
+      console.error("customer-account message attachments", messageAttachmentsError);
+      return out({ error: "دریافت پیوست‌های مکاتبه انجام نشد." }, 500, origin);
     }
 
     const [refCodeR, refInvitesR, refRewardR] = await Promise.all([
@@ -420,13 +460,13 @@ Deno.serve(async (req: Request) => {
       profile: { id: user.id, email: user.email, full_name: String(user.user_metadata?.full_name || ""), phone: String(user.user_metadata?.phone || "") },
       referral,
       orders, projects, requests, credentials,
-      messages: messagesR.data || [],
+      messages: (messagesR.data || []).map((m: any) => ({ ...m, attachments: (messageAttachments || []).filter((a: any) => a.message_id === m.id) })),
       orderEvents: eventsR.data || [],
       payments: paymentsR.data || [],
       projectHistory: historyR.data || [],
       projectFiles: projectFilesR.data || [],
       projectMessages: projectMessagesR.data || [],
-      notifications: notificationsR.data || [],
+      notifications: [...(notificationsR.data || []).map(n => ({ ...n, source: "project" })), ...(accountNotificationsR.data || [])].sort((a,b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).slice(0,500),
       revisionRequests: revisionsR.data || [],
       projectReviews: reviewsR.data || []
     }, 200, origin);
