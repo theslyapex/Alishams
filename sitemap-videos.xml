@@ -50,4 +50,14 @@
       <video:publication_date>2026-10-25T13:11:53Z</video:publication_date>
     </video:video>
   </url>
+  <url>
+    <loc>https://alishams.ir/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/homepage-media/homepage/poster-1794152712702-1g2p6k.png</video:thumbnail_loc>
+      <video:title>خلاقیت را از نزدیک تماشا کن | ویدئوی معرفی استودیو علی شمس</video:title>
+      <video:description>نگاهی کوتاه به دنیای خلاقیت، طراحی و اجرای دیجیتال در استودیو علی شمس.</video:description>
+      <video:content_loc>https://alishams.ir/assets/videos/homepage-hero-video.mp4</video:content_loc>
+      <video:publication_date>2026-11-08T15:45:35Z</video:publication_date>
+    </video:video>
+  </url>
 </urlset>
