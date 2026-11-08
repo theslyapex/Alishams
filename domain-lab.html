@@ -88,9 +88,9 @@ input,textarea,select,button{ -webkit-user-select:none;user-select:none}
 </div>
 <section class="section" id="domainPrices"><div class="section-heading"><div><span class="eyebrow">TRANSPARENT PRICING</span><h2>تعرفه دامنه‌ها</h2></div><span class="price-note">قیمت به تومان</span></div>
 <div class="price-grid">
-<article class="price-card"><div class="price-top"><b>.ir</b><span>دامنه ملی</span></div><div class="price-amount">۱۰۲٬۵۰۰ <small>تومان</small></div></article>
-<article class="price-card"><div class="price-top"><b>.com</b><span>دامنه بین‌المللی</span></div><div class="price-amount">۳٬۶۰۵٬۰۰۰ <small>تومان</small></div></article>
-<article class="price-card"><div class="price-top"><b>.net</b><span>دامنه بین‌المللی</span></div><div class="price-amount">۴٬۷۲۲٬۰۰۰ <small>تومان</small></div></article>
+<article class="price-card"><div class="price-top"><b>.ir</b><span>دامنه ملی</span></div><div class="price-amount" id="domain-price-ir">۱۰۲٬۵۰۰ <small>تومان</small></div></article>
+<article class="price-card"><div class="price-top"><b>.com</b><span>دامنه بین‌المللی</span></div><div class="price-amount" id="domain-price-com">۳٬۶۰۵٬۰۰۰ <small>تومان</small></div></article>
+<article class="price-card"><div class="price-top"><b>.net</b><span>دامنه بین‌المللی</span></div><div class="price-amount" id="domain-price-net">۴٬۷۲۲٬۰۰۰ <small>تومان</small></div></article>
 </div>
 <div class="notice">قیمت‌ها ممکن است با توجه به نرخ روز رجیسترار تغییر کنند؛ بااین‌حال، پیش از پرداخت استعلام نهایی گرفته می‌شود.</div><div class="notice" style="margin-top:10px;border-color:#b6a0ff55;background:linear-gradient(110deg,#b6a0ff12,#d9ff7208);color:#e3dcff"><strong style="color:#d5c5ff">قانون تخفیف خرید دامنه:</strong> سفارش مستقل خرید یا ثبت دامنه شامل هیچ‌گونه تخفیف عمومی، کد تخفیف یا تخفیف عضویت پلاس+ نمی‌شود. تخفیف پلاس+ فقط زمانی قابل استفاده است که طراحی وب‌سایت نیز در همان سفارش انتخاب شده باشد؛ در این حالت، سفارش ترکیبی طبق شرایط پلاس+ بررسی می‌شود.</div><div class="notice" style="margin-top:10px">ثبت و خرید تمامی پسوندها و دامنه‌ها از طریق استودیو دیجیتال علی شمس امکان‌پذیر است؛ حتی اگر تعرفه دامنه‌ای در این صفحه درج نشده باشد، برای استعلام قیمت و ثبت آن می‌توانی درخواستت را ارسال کنی.</div></section>
 <section class="section"><div class="section-heading"><div><span class="eyebrow">HOW IT WORKS</span><h2>چطور از این ابزار استفاده کنی؟</h2><p>دو قدم کوتاه برای بررسی و ثبت دامنه.</p></div></div><div class="how-grid"><article class="how-card"><i>01 / SEARCH</i><b>نام دلخواهت را جست‌وجو کن</b><p>نام و پسوند را وارد کن یا چند دامنه را به‌صورت گروهی بررسی کن.</p></article><article class="how-card"><i>02 / DECIDE</i><b>هزینه را شفاف مقایسه کن</b><p>وضعیت دامنه و تعرفه را ببین و برای ثبت نهایی درخواست بده.</p></article></div></section>
@@ -157,5 +157,23 @@ document.addEventListener('dragstart',e=>e.preventDefault());
 document.addEventListener('copy',e=>e.preventDefault());
 document.addEventListener('cut',e=>e.preventDefault());
 document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&['a','c','x'].includes(e.key.toLowerCase()))e.preventDefault()});
+</script>
+
+<script type="module">
+(async()=>{
+  const SUPABASE_URL="https://srfldjfrzmtnlabusssq.supabase.co";
+  const SUPABASE_KEY="sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB";
+  try{
+    const{createClient}=await import("https://esm.sh/@supabase/supabase-js@2");
+    const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
+    const{data,error}=await sb.from("domain_pricing").select("tld,price_toman");
+    if(error)throw error;
+    const money=new Intl.NumberFormat("fa-IR");
+    (data||[]).forEach(row=>{
+      const target=document.getElementById("domain-price-"+row.tld.slice(1));
+      if(target)target.innerHTML=money.format(Number(row.price_toman))+" <small>تومان</small>";
+    });
+  }catch(error){console.warn("Domain pricing could not be refreshed; showing fallback prices.",error)}
+})();
 </script>
 </body></html>
