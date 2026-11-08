@@ -20,6 +20,7 @@ Deno.serve(async(req:Request)=>{
   if(authError||!user?.id||!user.email)return out({error:"برای ادامه وارد حساب کاربری شو."},401,origin);
   const db=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}});
   const b=await req.json().catch(()=>({})),action=str(b.action,40),isAdmin=user.id===ADMIN_ID&&user.email.toLowerCase()===OWNER;
+  if(isAdmin){const {data:claims,error:claimError}=await auth.auth.getClaims(jwt);if(claimError||(claims?.claims as any)?.aal!=="aal2")return out({error:"برای عملیات مدیریتی، تأیید دومرحله‌ای لازم است."},403,origin)}
   if(action==="status"){
    const {data:membership,error}=await db.from("plus_memberships").select("*").eq("user_id",user.id).maybeSingle();if(error)throw error;
    const [{data:reels,error:re},{data:domains,error:de}]=await Promise.all([
