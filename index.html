@@ -653,8 +653,8 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .homepage-video-play{position:absolute;z-index:3;left:50%;top:50%;display:grid;place-items:center;width:70px;height:70px;transform:translate(-50%,-50%);border:1px solid rgba(217,255,114,.9);border-radius:50%;background:linear-gradient(145deg,#e5ff9c,#c8f34e);color:#11150b;box-shadow:0 10px 32px rgba(0,0,0,.38),0 0 0 9px rgba(217,255,114,.13),0 0 35px rgba(217,255,114,.24);cursor:pointer;transition:opacity .25s,transform .25s,box-shadow .25s}
 .homepage-video-play:hover{transform:translate(-50%,-50%) scale(1.07);box-shadow:0 12px 36px rgba(0,0,0,.42),0 0 0 12px rgba(217,255,114,.15),0 0 42px rgba(217,255,114,.3)}
 .homepage-video-play svg{width:24px;height:24px;fill:currentColor;margin-right:-3px}
-.homepage-video-shell.is-playing .homepage-video-play{opacity:0;pointer-events:none}
-.homepage-video-shell.is-playing:hover .homepage-video-play,.homepage-video-shell.is-paused .homepage-video-play{opacity:1;pointer-events:auto}
+.homepage-video-shell.is-playing .homepage-video-play{opacity:0;visibility:hidden;pointer-events:none}
+.homepage-video-shell.is-paused .homepage-video-play{opacity:1;visibility:visible;pointer-events:auto}
 .homepage-video-caption{max-width:570px;margin:18px auto 0;padding:0 18px}
 .homepage-video-caption strong{display:block;color:#f1f3eb;font-size:14px;font-weight:800;line-height:1.9}
 .homepage-video-caption p{margin:4px 0 0;color:#969ba5;font-size:11px;line-height:2}
