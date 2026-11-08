@@ -1200,6 +1200,32 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
     <p>نگاهی کوتاه به دنیای خلاقیت، طراحی و اجرای دیجیتال در استودیو علی شمس.</p>
   </div>
 </section>
+
+<script id="homepage-video-settings-loader">
+(function(){
+ var SUPABASE_URL='https://srfldjfrzmtnlabusssq.supabase.co';
+ var SUPABASE_KEY='sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB';
+ var section=document.querySelector('.homepage-feature-video');
+ var video=document.getElementById('homepageFeatureVideo');
+ if(!section||!video)return;
+ fetch(SUPABASE_URL+'/rest/v1/homepage_video_settings?singleton=eq.true&select=video_url,poster_url,heading,caption_title,caption_text,is_enabled',{
+  headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY},cache:'no-store'
+ }).then(function(r){if(!r.ok)throw new Error('settings unavailable');return r.json()}).then(function(rows){
+  var s=rows&&rows[0];if(!s)return;
+  if(s.is_enabled===false){section.hidden=true;return}
+  var source=video.querySelector('source');
+  if(source&&s.video_url&&source.getAttribute('src')!==s.video_url){source.setAttribute('src',s.video_url);video.load()}
+  if(s.poster_url){video.poster=s.poster_url}else{video.removeAttribute('poster')}
+  var h=document.getElementById('homepageVideoTitle');
+  var t=section.querySelector('.homepage-video-caption strong');
+  var p=section.querySelector('.homepage-video-caption p');
+  if(h&&s.heading)h.textContent=s.heading;
+  if(t&&s.caption_title)t.textContent=s.caption_title;
+  if(p&&s.caption_text)p.textContent=s.caption_text;
+ }).catch(function(){/* Keep the built-in homepage video as a resilient fallback. */});
+})();
+</script>
+
 <script>
 (function(){
   var shell=document.getElementById('homepageVideoShell');
