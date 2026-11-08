@@ -200,7 +200,10 @@ async function processEngine(db: any, source: string, serviceKey: string, supaba
           await enqueue(rule, "project", project.id, {
             email: project.client_email, projectId: project.id, title: days < 0 ? "پروژه دارای تأخیر" : "یادآوری موعد پروژه",
             message: message + " کد پیگیری: " + project.tracking_code,
-            channels: ["telegram", ...(project.client_email ? ["email", "account"] : []), "push"], eventSuffix: suffix
+            channels: days < 0
+              ? ["telegram"]
+              : ["telegram", ...(project.client_email ? ["email", "account", "push"] : [])],
+            eventSuffix: suffix
           });
         }
       }
