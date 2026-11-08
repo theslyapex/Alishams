@@ -157,7 +157,7 @@ async function processEngine(db: any, source: string, serviceKey: string, supaba
           channels: ["telegram"], eventSuffix: "second"
         });
       }
-      if (order.status === "awaiting_customer" && ageHours >= 24) {
+      if (order.status === "awaiting_customer" && ageHours >= 24 && order.client_email) {
         await enqueue("customer_offer_24h", "order", order.id, {
           email: order.client_email, title: "یادآوری پیشنهاد همکاری",
           message: "پیشنهاد مربوط به سفارش «" + label + "» هنوز منتظر پاسخ شماست. برای مشاهده جزئیات و اعلام نظر وارد حساب کاربری شوید.",
