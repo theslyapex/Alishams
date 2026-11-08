@@ -118,7 +118,7 @@ Deno.serve(async(req:Request)=>{
    const client_name=str(b.client_name,120),client_email=str(b.client_email,254),title=str(b.title,180),description=str(b.description,8000);
    const total=Number(b.total_price||0),progress=Math.max(0,Math.min(100,Math.round(Number(b.progress)||0)));
    const status=str(b.status,30)||"not_started",target_date=str(b.target_date,10)||null,internal_notes=str(b.internal_notes,8000);
-   if(!client_name||!title||!Number.isFinite(total)||total<0||!["not_started","in_progress","review","on_hold","completed","cancelled"].includes(status))return out({error:"اطلاعات پروژه معتبر نیست."},400,origin);
+   if(!client_name||!title||!Number.isFinite(total)||total<0||!["awaiting_payment","not_started","in_progress","review","on_hold","completed","cancelled"].includes(status))return out({error:"اطلاعات پروژه معتبر نیست."},400,origin);
    const key=randomKey(); let tracking=code();
    for(let i=0;i<3;i++){
     const {data:exists}=await db.from("client_projects").select("id").eq("tracking_code",tracking).maybeSingle();
@@ -179,13 +179,13 @@ Deno.serve(async(req:Request)=>{
    if(b.internal_notes!==undefined)patch.internal_notes=str(b.internal_notes,8000);
    if(b.total_price!==undefined){patch.total_price=Number(b.total_price);if(!Number.isFinite(patch.total_price)||patch.total_price<0)return out({error:"مبلغ کل معتبر نیست."},400,origin)}
    if(b.target_date!==undefined)patch.target_date=str(b.target_date,10)||null;
-   if(b.status!==undefined){patch.status=str(b.status,30);if(!["not_started","in_progress","review","on_hold","completed","cancelled"].includes(patch.status))return out({error:"وضعیت معتبر نیست."},400,origin)}
+   if(b.status!==undefined){patch.status=str(b.status,30);if(!["awaiting_payment","not_started","in_progress","review","on_hold","completed","cancelled"].includes(patch.status))return out({error:"وضعیت معتبر نیست."},400,origin)}
    if(b.progress!==undefined){patch.progress=Math.max(0,Math.min(100,Math.round(Number(b.progress)||0)))}
    const {data:old,error:oldErr}=await db.from("client_projects").select("status,progress").eq("id",id).single();if(oldErr)throw oldErr;
    const {data:project,error}=await db.from("client_projects").update(patch).eq("id",id).select("*").single();if(error)throw error;
    if(old.status!==project.status||old.progress!==project.progress){
     const note=str(b.history_note,2000);
-    const statusLabels:Record<string,string>={not_started:"هنوز شروع نشده",in_progress:"در حال انجام",review:"در انتظار بررسی و تأیید شما",on_hold:"متوقف موقت",completed:"تکمیل شده",cancelled:"لغو شده"};
+    const statusLabels:Record<string,string>={awaiting_payment:"در انتظار پرداخت",not_started:"هنوز شروع نشده",in_progress:"در حال انجام",review:"در انتظار بررسی و تأیید شما",on_hold:"متوقف موقت",completed:"تکمیل شده",cancelled:"لغو شده"};
     const changes:string[]=[];
     if(old.status!==project.status)changes.push("وضعیت پروژه از «"+(statusLabels[old.status]||old.status)+"» به «"+(statusLabels[project.status]||project.status)+"» تغییر کرد.");
     if(old.progress!==project.progress)changes.push("میزان پیشرفت پروژه از "+old.progress+"٪ به "+project.progress+"٪ رسید.");
