@@ -640,6 +640,28 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 #faqMoreButton[aria-expanded="true"] .faq-more-arrow svg{transform:rotate(45deg) scale(.92)}
 #faqMoreButton[aria-expanded="true"] .faq-more-arrow{box-shadow:0 0 0 4px #d9ff7218,0 4px 13px #d9ff7233!important}
 @media(max-width:420px){#faqMoreButton .faq-more-arrow{flex-basis:31px!important;width:31px!important;height:31px!important}}
+
+/* HOMEPAGE FEATURE VIDEO — standalone cinematic portrait showcase */
+.homepage-feature-video{position:relative;z-index:1;padding:clamp(34px,5vw,62px) 0 clamp(24px,3vw,38px);text-align:center;isolation:isolate}
+.homepage-feature-video:before{content:"";position:absolute;z-index:-1;top:8%;left:50%;width:min(560px,90vw);height:78%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(217,255,114,.075),rgba(182,160,255,.035) 42%,transparent 72%);filter:blur(24px);pointer-events:none}
+.homepage-video-heading{margin:0 auto 22px;max-width:620px}
+.homepage-video-heading .eyebrow{justify-content:center}
+.homepage-video-heading h2{margin:12px 0 0;font-size:clamp(21px,3vw,30px);line-height:1.6;font-weight:800;letter-spacing:-.4px}
+.homepage-video-shell{position:relative;width:min( min(100% - 36px, 350px), 28vw);min-width:245px;margin:0 auto;padding:7px;border:1px solid rgba(217,255,114,.24);border-radius:29px;background:linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.025) 42%,rgba(182,160,255,.07));box-shadow:0 24px 75px rgba(0,0,0,.48),0 0 0 1px rgba(255,255,255,.025),0 0 48px rgba(217,255,114,.07);overflow:hidden}
+.homepage-video-shell:before{content:"";position:absolute;z-index:2;inset:7px;border:1px solid rgba(255,255,255,.09);border-radius:23px;pointer-events:none}
+.homepage-video{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:contain;border-radius:22px;background:#050608}
+.homepage-video-play{position:absolute;z-index:3;left:50%;top:50%;display:grid;place-items:center;width:70px;height:70px;transform:translate(-50%,-50%);border:1px solid rgba(217,255,114,.9);border-radius:50%;background:linear-gradient(145deg,#e5ff9c,#c8f34e);color:#11150b;box-shadow:0 10px 32px rgba(0,0,0,.38),0 0 0 9px rgba(217,255,114,.13),0 0 35px rgba(217,255,114,.24);cursor:pointer;transition:opacity .25s,transform .25s,box-shadow .25s}
+.homepage-video-play:hover{transform:translate(-50%,-50%) scale(1.07);box-shadow:0 12px 36px rgba(0,0,0,.42),0 0 0 12px rgba(217,255,114,.15),0 0 42px rgba(217,255,114,.3)}
+.homepage-video-play svg{width:24px;height:24px;fill:currentColor;margin-right:-3px}
+.homepage-video-shell.is-playing .homepage-video-play{opacity:0;pointer-events:none}
+.homepage-video-shell.is-playing:hover .homepage-video-play,.homepage-video-shell.is-paused .homepage-video-play{opacity:1;pointer-events:auto}
+.homepage-video-caption{max-width:570px;margin:18px auto 0;padding:0 18px}
+.homepage-video-caption strong{display:block;color:#f1f3eb;font-size:14px;font-weight:800;line-height:1.9}
+.homepage-video-caption p{margin:4px 0 0;color:#969ba5;font-size:11px;line-height:2}
+.homepage-video-play:focus-visible{outline:3px solid #fff;outline-offset:5px}
+@media(max-width:760px){.homepage-feature-video{padding:27px 0 24px}.homepage-video-heading{margin-bottom:17px}.homepage-video-heading h2{font-size:21px}.homepage-video-shell{width:min(76vw,330px);min-width:0;padding:6px;border-radius:25px}.homepage-video-shell:before{inset:6px;border-radius:19px}.homepage-video{border-radius:18px}.homepage-video-play{width:62px;height:62px}.homepage-video-caption{margin-top:14px}.homepage-video-caption strong{font-size:13px}.homepage-video-caption p{font-size:10px}}
+@media(max-width:380px){.homepage-video-shell{width:min(82vw,300px)}.homepage-video-play{width:56px;height:56px}}
+@media(prefers-reduced-motion:reduce){.homepage-video-play{transition:none}}
 </style>
 <style id="multi-service-picker-styles">
 .multi-service-picker{margin:10px 0 18px;padding:15px;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018))}
@@ -1121,6 +1143,54 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <a href="/feedback.html">ثبت بازخورد</a>
 </div></div>
 </nav><div class="nav-actions"><button class="menu-toggle" id="menuToggle" aria-label="باز کردن منو" aria-expanded="false"><span class="header-control-icon" aria-hidden="true">☰</span><span class="header-control-label">منو</span></button><a class="account-cta" href="/login.html" aria-label="ورود به حساب کاربری و ثبت‌نام" title="ورود به حساب کاربری و ثبت‌نام"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-1.5a4.5 4.5 0 0 0-4.5-4.5h-7A4.5 4.5 0 0 0 4 19.5V21"/><circle cx="12" cy="7.5" r="4"/><path d="M18.5 8.5h3m-1.5-1.5v3"/></svg><span class="account-cta-label">حساب کاربری</span><span class="account-status-row"><span class="account-cta-status" hidden>واردشده‌اید</span><span class="account-plus-mark" hidden aria-label="عضویت پلاس+"><span>پلاس+</span></span></span></a></div></div></header>
+<section class="homepage-feature-video" aria-labelledby="homepageVideoTitle">
+  <div class="homepage-video-heading">
+    <span class="eyebrow">A MOMENT OF CREATION</span>
+    <h2 id="homepageVideoTitle">خلاقیت را از نزدیک تماشا کن</h2>
+  </div>
+  <div class="homepage-video-shell" id="homepageVideoShell">
+    <video class="homepage-video" id="homepageFeatureVideo" playsinline preload="metadata" aria-label="ویدئوی معرفی استودیو علی شمس">
+      <source src="/assets/videos/homepage-hero-video.mp4" type="video/mp4">
+      مرورگر شما از پخش ویدئو پشتیبانی نمی‌کند.
+    </video>
+    <button class="homepage-video-play" id="homepageVideoPlay" type="button" aria-label="پخش ویدئو">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.8c0-.78.85-1.26 1.52-.86l9.2 5.45a1.86 1.86 0 0 1 0 3.22l-9.2 5.45A1 1 0 0 1 8 18.2V5.8Z"/></svg>
+    </button>
+  </div>
+  <div class="homepage-video-caption">
+    <strong>هر پروژه، از یک ایده شروع می‌شود.</strong>
+    <p>نگاهی کوتاه به دنیای خلاقیت، طراحی و اجرای دیجیتال در استودیو علی شمس.</p>
+  </div>
+</section>
+<script>
+(function(){
+  var shell=document.getElementById('homepageVideoShell');
+  var video=document.getElementById('homepageFeatureVideo');
+  var button=document.getElementById('homepageVideoPlay');
+  if(!shell||!video||!button)return;
+  function sync(){
+    var playing=!video.paused&&!video.ended;
+    shell.classList.toggle('is-playing',playing);
+    shell.classList.toggle('is-paused',!playing);
+    button.setAttribute('aria-label',playing?'توقف موقت ویدئو':'پخش ویدئو');
+    button.innerHTML=playing
+      ?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>'
+      :'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.8c0-.78.85-1.26 1.52-.86l9.2 5.45a1.86 1.86 0 0 1 0 3.22l-9.2 5.45A1 1 0 0 1 8 18.2V5.8Z"/></svg>';
+  }
+  async function toggle(){
+    if(video.paused||video.ended){
+      try{await video.play()}catch(error){button.setAttribute('aria-label','پخش ویدئو');}
+    }else video.pause();
+    sync();
+  }
+  button.addEventListener('click',toggle);
+  video.addEventListener('click',toggle);
+  video.addEventListener('play',sync);
+  video.addEventListener('pause',sync);
+  video.addEventListener('ended',sync);
+  sync();
+})();
+</script>
 <main id="top">
 <section class="hero"><div class="wrap hero-grid"><div class="hero-copy"><span class="eyebrow">استودیو علی شمس · ۱۴۰۵</span><h1>ایده‌های عالی،<br>با اجرای <span class="accent">درخشان.</span></h1><p>از موشن‌گرافیک و ویدئو تا طراحی وب و محتوای دیجیتال؛ کمک می‌کنم ایده‌ات فقط دیده نشه، بلکه در ذهن مخاطب بمونه.</p><div class="hero-actions"><a class="btn btn-primary" href="https://alishams.ir/#services">پروژه‌ات رو شروع کن <span class="arrow">↗︎</span></a><a class="btn btn-quiet" href="#work">دیدن نمونه‌کارها <span class="arrow">↓︎</span></a></div><div class="hero-meta"><div class="avatars service-avatars" aria-label="موشن‌گرافیک، طراحی وب‌سایت و ویدئوی تبلیغاتی">
 <span class="avatar-motion" aria-label="موشن‌گرافیک"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 14.3 8l5.2-1.1-1.1 5.2 4.4 2.7-4.4 2.7 1.1 5.2-5.2-1.1L12 26l-2.3-4.4-5.2 1.1 1.1-5.2-4.4-2.7 4.4-2.7-1.1-5.2L9.7 8z" transform="translate(0 -2) scale(1 .92)"/><circle cx="12" cy="12" r="3.1"/></svg></span>
