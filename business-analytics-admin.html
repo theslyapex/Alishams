@@ -88,7 +88,7 @@ function exportCsv(){
  snapshot.orders.forEach(x=>rows.push(["سفارش",x.created_at,x.tracking_code,x.status,x.payable_amount||x.quoted_price||0,x.client_name,(x.services||[x.service]).join("، ")]));
  snapshot.payments.forEach(x=>rows.push(["پرداخت",x.paid_at||x.created_at,x.id,x.confirmed?"تأییدشده":"تأییدنشده",x.amount,x.project_id,x.method]));
  const csv="\uFEFF"+rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");
- const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"})),a=document.createElement("a");a.href=url;a.download="alishams-business-report.csv";a.click();URL.revokeObjectURL(url);
+ const url=window.URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"})),a=document.createElement("a");a.href=url;a.download="alishams-business-report.csv";a.click();window.URL.revokeObjectURL(url);
 }
 $("refresh").addEventListener("click",load);$("period").addEventListener("change",render);$("export").addEventListener("click",exportCsv);await load();
 </script>
