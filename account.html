@@ -235,7 +235,8 @@
 #clubPanel .club-stat{padding:15px;border:1px solid #ffffff15;border-radius:15px;background:#090b0c88;min-width:0}
 #clubPanel .club-stat span{display:block;color:#aeb1b7;font-size:10px}
 #clubPanel .club-stat strong{display:block;color:#d9ff72;font-size:clamp(20px,3vw,27px);margin-top:5px;overflow-wrap:anywhere}
-#clubPanel .club-tier-progress{height:8px;border-radius:99px;background:#ffffff15;overflow:hidden;margin:10px 0}
+#clubPanel .club-tier-ranges{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 18px}.club-tier-ranges small{width:100%;color:var(--muted);font-size:11px}.club-tier-ranges span{padding:5px 9px;border:1px solid #ffffff16;border-radius:999px;background:#ffffff06;color:#c8cad2;font-size:10px;line-height:1.7}@media(max-width:520px){.club-tier-ranges{gap:6px}.club-tier-ranges span{font-size:9px;padding:4px 7px}}
+.club-tier-progress{height:8px;border-radius:99px;background:#ffffff15;overflow:hidden;margin:10px 0}
 #clubPanel .club-tier-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#9b7aff,#d9ff72);border-radius:99px}
 #clubPanel .club-subcard{min-width:0}
 #clubPanel .club-subcard h3{font-size:15px;margin:0 0 12px}
@@ -378,6 +379,7 @@
 </div>
 <div class="row" style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><strong id="clubProgressLabel">در حال دریافت سطح باشگاه…</strong><span id="clubNextLabel" class="muted"></span></div>
 <div class="club-tier-progress"><span id="clubProgress"></span></div>
+<div class="club-tier-ranges" aria-label="حدنصاب لیگ‌های باشگاه"><small>حدنصاب لیگ‌ها:</small><span>بدون لیگ: ۰ تا ۲٬۴۹۹</span><span>برنزی: ۲٬۵۰۰ تا ۹٬۹۹۹</span><span>نقره‌ای: ۱۰٬۰۰۰ تا ۱۷٬۹۹۹</span><span>طلایی: ۱۸٬۰۰۰ تا ۲۴٬۹۹۹</span><span>الماس: ۲۵٬۰۰۰ به بالا</span></div>
 <div class="field club-form"><label for="clubDisplayName">نام نمایشی در جدول لیگ</label><div style="display:flex;gap:8px;flex-wrap:wrap"><input id="clubDisplayName" maxlength="32" placeholder="نام مستعار دلخواه" style="flex:1;min-width:180px"><button type="button" class="btn primary" id="clubSaveName">ذخیره نام</button></div><p id="clubProfileNotice" class="notice" aria-live="polite"></p></div>
 </section>
 <section class="card club-subcard"><h3>پاداش‌های باشگاه</h3><div class="club-reward-grid">
