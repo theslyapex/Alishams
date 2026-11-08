@@ -138,6 +138,42 @@ const $=id=>document.getElementById(id),panels=[...document.querySelectorAll(".p
 const loginTarget="/web-design-order.html",nextAuth="/login.html?next="+encodeURIComponent(loginTarget);
 const groups={categories:["فروشگاهی","شرکتی","شخصی و رزومه","خبری و محتوایی","طراحی قالب سایت","امنیت و عملکرد","رفع باگ و توسعه","سایر خدمات"],siteTypes:["سایت اختصاصی از پایه","سایت آماده و قابل توسعه","هنوز مطمئن نیستم"],pages:["تک‌صفحه‌ای","۲ تا ۵ صفحه","۵ تا ۱۰ صفحه","۱۰ تا ۱۵ صفحه","۱۵ تا ۲۰ صفحه","۲۰ تا ۴۰ صفحه","۴۰ تا ۱۰۰ صفحه","۱۰۰ تا ۲۰۰ صفحه"],timelines:["۵ تا ۷ روز","۱۰ تا ۱۴ روز","۱ ماه","۲ ماه","۳ ماه","۴ ماه","۵ ماه","۶ ماه"],budgets:["۵ تا ۷ میلیون","۷ تا ۱۰ میلیون","۱۰ تا ۱۲ میلیون","۱۲ تا ۲۰ میلیون","۲۰ تا ۳۰ میلیون","۳۰ تا ۴۰ میلیون","۴۰ تا ۵۰ میلیون","۵۰ تا ۶۰ میلیون","۶۰ تا ۷۰ میلیون","۷۰ تا ۸۰ میلیون","۸۰ تا ۹۰ میلیون","۹۰ تا ۱۰۰ میلیون","بیش از ۱۰۰ میلیون"]};
 const iconNames={"فروشگاهی":"online-store","شرکتی":"business","شخصی و رزومه":"user","خبری و محتوایی":"news","طراحی قالب سایت":"web-design","امنیت و عملکرد":"security-checked","رفع باگ و توسعه":"bug","سایر خدمات":"services","سایت اختصاصی از پایه":"code","سایت آماده و قابل توسعه":"website","هنوز مطمئن نیستم":"help","تک‌صفحه‌ای":"single-page-mode","۲ تا ۵ صفحه":"documents","۵ تا ۱۰ صفحه":"multiple-devices","۱۰ تا ۱۵ صفحه":"copy","۱۵ تا ۲۰ صفحه":"book","۲۰ تا ۴۰ صفحه":"stack","۴۰ تا ۱۰۰ صفحه":"database","۱۰۰ تا ۲۰۰ صفحه":"data-sheet","۵ تا ۷ روز":"calendar","۱۰ تا ۱۴ روز":"calendar-14","۱ ماه":"calendar","۲ ماه":"calendar","۳ ماه":"calendar","۴ ماه":"calendar","۵ ماه":"calendar","۶ ماه":"calendar"};
+const iconMap={
+"online-store":'<path d="M3 9h18l-1.5-5h-15L3 9Z"/><path d="M5 9v11h14V9M9 20v-6h6v6"/>',
+"business":'<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3M3 12h18"/>',
+"user":'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',
+"news":'<path d="M5 4h14v17H5zM8 8h8M8 12h8M8 16h5"/>',
+"web-design":'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 13h8M8 16h5"/>',
+"security-checked":'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/>',
+"bug":'<path d="M8 8 6 5M16 8l2-3M4 13h16M5 9 3 7M19 9l2-2M5 17l-2 2M19 17l2 2"/><rect x="7" y="7" width="10" height="14" rx="5"/>',
+"services":'<circle cx="12" cy="12" r="3"/><path d="M19 13h2v-2h-2l-1-2 1-2-2-2-2 1-2-1V3h-2v2l-2 1-2-1-2 2 1 2-1 2H3v2h2l1 2-1 2 2 2 2-1 2 1v2h2v-2l2-1 2 1 2-2-1-2Z"/>',
+"code":'<path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>',
+"website":'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 13h8M8 16h5"/>',
+"help":'<circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 4.3 1.7c-1.2 1.1-1.9 1.4-1.9 3M12 17h.01"/>',
+"single-page-mode":'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/>',
+"documents":'<path d="M7 3h9l4 4v14H7zM16 3v5h4M4 7v14h13M10 12h6M10 16h6"/>',
+"multiple-devices":'<rect x="3" y="4" width="14" height="11" rx="2"/><path d="M8 19h4M10 15v4M19 8h2v12h-7v-2"/>',
+"copy":'<rect x="8" y="4" width="12" height="16" rx="2"/><path d="M5 8H4v13h11M11 9h6M11 13h6"/>',
+"book":'<path d="M4 5a3 3 0 0 1 3-3h13v18H7a3 3 0 0 1-3-3zM4 5v12a3 3 0 0 0 3 3M8 6h8M8 10h8"/>',
+"stack":'<path d="m12 3 9 5-9 5-9-5 9-5ZM3 12l9 5 9-5M3 16l9 5 9-5"/>',
+"database":'<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+"data-sheet":'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 9v11M14 9v11M3 14h18"/>',
+"calendar":'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h6"/>',
+"calendar-14":'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h8M8 17h5"/>',
+"control-panel":'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 13h4M7 16h8"/>',
+"blog":'<path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h5"/>',
+"translation":'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+"search":'<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',
+"lock":'<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/>',
+"google-maps":'<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
+"time":'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+"handshake":'<path d="m3 12 4-4 4 2 3-2 7 4-4 6-4-2-3 2-7-6Z"/><path d="m10 13 3 3M13 11l3 3"/>',
+"shield":'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/>',
+"domain":'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+"settings":'<circle cx="12" cy="12" r="3"/><path d="m19 13 2 1-2 4-2-1-2 1v2h-5v-2l-2-1-2 1-2-4 2-1v-2l-2-1 2-4 2 1 2-1V4h5v2l2 1 2-1 2 4-2 1v2Z"/>',
+"checklist":'<path d="m4 7 2 2 3-3M11 8h9M4 15l2 2 3-3M11 16h9"/>'
+};
+function svgFor(name){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+(iconMap[name]||'<circle cx="12" cy="12" r="9"/><path d="M8 12h8"/>')+'</svg>'}
 function icon8(name){return svgFor(iconNames[name]||name)}
 function choices(id,name,items){$(id).innerHTML=items.map((v,i)=>'<div class="choice"><input type="radio" name="'+name+'" id="'+name+i+'" value="'+v.replace(/"/g,'&quot;')+'"><label for="'+name+i+'"><span class="choice-icon">'+icon8(v)+'</span><span class="choice-copy">'+v+'<small>'+(name==="category"?"انتخاب دسته پروژه":"")+'</small></span></label></div>').join("")}
 choices("categories","category",groups.categories);choices("siteTypes","site_type",groups.siteTypes);choices("pages","page_count",groups.pages);choices("timelines","timeline",groups.timelines);choices("budgets","budget",groups.budgets);
