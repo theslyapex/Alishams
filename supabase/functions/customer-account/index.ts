@@ -72,7 +72,7 @@ Deno.serve(async (req: Request) => {
       const websiteAddress = String(body?.website_address || "").trim().slice(0,500);
       const websiteName = String(body?.website_name || "").trim().slice(0,180);
       const domain = String(body?.domain || "").trim().slice(0,40);
-      const references = Array.isArray(body?.references) ? body.references.map((x:any)=>String(x||"").trim().slice(0,500)).filter(Boolean).slice(0,30) : [];
+      const references = Array.isArray(body?.references) ? body.references.map((x:any)=>String(x||"").trim().slice(0,300)).filter(Boolean).slice(0,10) : [];
       const options = body?.options && typeof body.options === "object" ? body.options : {};
       const accepted = body?.terms_accepted === true;
       if (fullName.length < 2 || phone.length < 7 || !category || !siteType || !pageCount || !timeline || !budget || description.length < 30 || description.length > 8000 || !websiteName || !accepted)
@@ -104,7 +104,8 @@ Deno.serve(async (req: Request) => {
           client_name: fullName, contact_info: phone, client_email: email,
           service: "طراحی وب‌سایت — " + category,
           title: "درخواست طراحی وب‌سایت: " + websiteName,
-          details: JSON.stringify(payload), budget,
+          details: description, budget,
+          internal_notes: "اطلاعات تکمیلی فرم سفارش وب‌سایت:\\n" + JSON.stringify({category,site_type:siteType,page_count:pageCount,timeline,budget,website_address:websiteAddress,website_name:websiteName,domain,references,options:safeOptions}),
           status: "new", services: ["طراحی وب‌سایت", category],
           terms_accepted: true, terms_version: "web-design-order-v1",
           terms_accepted_at: new Date().toISOString()
