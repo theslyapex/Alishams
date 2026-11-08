@@ -1,3 +1,7 @@
 [functions.club-api]
 # Public leaderboard requests use the anon key; private actions validate the user JWT inside the function.
 verify_jwt = false
+
+[functions.automation-engine]
+# Scheduler calls are authenticated with a private Vault token; admin actions validate the user's JWT in the function.
+verify_jwt = false
