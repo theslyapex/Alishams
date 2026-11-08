@@ -105,6 +105,24 @@ alter table public.customer_domains enable row level security;
 revoke all on public.automation_rules,public.automation_queue,public.automation_runs,public.customer_domains from anon,authenticated;
 grant all on public.automation_rules,public.automation_queue,public.automation_runs,public.customer_domains to service_role;
 
+
+create or replace function public.automation_user_id_by_email(p_email text)
+returns uuid
+language sql
+stable
+security definer
+set search_path = ''
+as $
+  select u.id
+    from auth.users u
+   where lower(trim(u.email)) = lower(trim(p_email))
+     and u.email_confirmed_at is not null
+   order by u.created_at
+   limit 1;
+$;
+revoke all on function public.automation_user_id_by_email(text) from public,anon,authenticated;
+grant execute on function public.automation_user_id_by_email(text) to service_role;
+
 create or replace function public.verify_automation_cron_token(p_token text)
 returns boolean
 language sql
