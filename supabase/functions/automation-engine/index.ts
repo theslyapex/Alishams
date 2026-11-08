@@ -228,11 +228,20 @@ async function processEngine(db: any, source: string, serviceKey: string, supaba
       const reviewed = new Set((reviews || []).map((r: any) => r.project_id));
       for (const project of completed || []) {
         if (reviewed.has(project.id)) continue;
-        await enqueue("project_review_2d", "project", project.id, {
-          email: project.client_email, projectId: project.id, title: "ثبت تجربه همکاری",
-          message: "پروژه «" + (project.title || "شما") + "» تکمیل شده است. خوشحال می‌شویم تجربه همکاری‌تان را از طریق حساب کاربری ثبت کنید.",
-          channels: project.client_email ? ["email", "account", "push"] : [], eventSuffix: "review"
-        });
+        if (project.client_email) {
+          await enqueue("project_review_2d", "project", project.id, {
+            email: project.client_email, projectId: project.id, title: "ثبت تجربه همکاری",
+            message: "پروژه «" + (project.title || "شما") + "» تکمیل شده است. خوشحال می‌شویم تجربه همکاری‌تان را از طریق حساب کاربری ثبت کنید.",
+            channels: ["email", "account", "push"], eventSuffix: "review"
+          });
+          if ((now - Date.parse(project.updated_at)) >= 7 * 86400000) {
+            await enqueue("project_review_followup_7d", "project", project.id, {
+              email: project.client_email, projectId: project.id, title: "یادآوری ثبت دیدگاه پروژه",
+              message: "اگر فرصت نکرده‌اید، هنوز می‌توانید تجربه همکاری درباره پروژه «" + (project.title || "شما") + "» را در حساب کاربری ثبت کنید.",
+              channels: ["email", "account"], eventSuffix: "followup"
+            });
+          }
+        }
       }
     }
 
@@ -252,9 +261,14 @@ async function processEngine(db: any, source: string, serviceKey: string, supaba
         await db.from("plus_memberships").update({ status: "inactive", updated_at: new Date().toISOString() })
           .eq("user_id", m.user_id).eq("status", "active").lte("ends_at", new Date().toISOString());
       } else {
-        await enqueue("plus_expiry_1d", "membership", m.user_id, {
-          email: m.email, userId: m.user_id, title: "یک روز تا پایان پلاس+",
-          message: "اعتبار عضویت پلاس+ شما کمتر از ۲۴ ساعت دیگر به پایان می‌رسد. در صورت تمایل، تمدید را پیش از پایان اعتبار انجام دهید.",
+        const hoursLeft = (Date.parse(m.ends_at) - now) / 3600000;
+        const rule = hoursLeft <= 12 ? "plus_expiry_today" : "plus_expiry_1d";
+        await enqueue(rule, "membership", m.user_id, {
+          email: m.email, userId: m.user_id,
+          title: hoursLeft <= 12 ? "یادآوری پایان امروز پلاس+" : "یک روز تا پایان پلاس+",
+          message: hoursLeft <= 12
+            ? "اعتبار عضویت پلاس+ شما در ۱۲ ساعت آینده به پایان می‌رسد. در صورت تمایل، تمدید را پیش از پایان اعتبار انجام دهید."
+            : "اعتبار عضویت پلاس+ شما کمتر از ۲۴ ساعت دیگر به پایان می‌رسد. در صورت تمایل، تمدید را پیش از پایان اعتبار انجام دهید.",
           channels: ["email", "account"], eventSuffix: new Date(m.ends_at).toISOString()
         });
       }
@@ -270,6 +284,25 @@ async function processEngine(db: any, source: string, serviceKey: string, supaba
       title: "رسید پلاس+ در انتظار بررسی", message: "رسید عضویت پلاس+ برای " + r.email + " به مبلغ " + Number(r.amount_toman || 0).toLocaleString("fa-IR") + " تومان بیش از ۶ ساعت در انتظار بررسی است.",
       channels: ["telegram"], eventSuffix: "review"
     });
+
+    const { data: subscribers, error: subscriberError } = await db.from("newsletter_subscribers")
+      .select("id,email,confirmed_at,status").eq("status", "active").not("confirmed_at", "is", null)
+      .lte("confirmed_at", new Date(now - 2 * 86400000).toISOString()).limit(500);
+    if (subscriberError) throw subscriberError;
+    scanned += (subscribers || []).length;
+    for (const subscriber of subscribers || []) {
+      const ageDays = (now - Date.parse(subscriber.confirmed_at)) / 86400000;
+      if (ageDays >= 2) await enqueue("newsletter_intro_2d", "newsletter", subscriber.id, {
+        email: subscriber.email, title: "با خدمات Alishams Studio بیشتر آشنا شوید",
+        message: "در Alishams Studio می‌توانید خدمات طراحی وب‌سایت، موشن‌گرافیک و محتوای تبلیغاتی را متناسب با نیاز کسب‌وکار خود بررسی کنید. برای مشاهده خدمات و نمونه‌کارها به وب‌سایت سر بزنید: https://alishams.ir",
+        channels: ["email"], eventSuffix: "intro"
+      });
+      if (ageDays >= 5) await enqueue("newsletter_guide_5d", "newsletter", subscriber.id, {
+        email: subscriber.email, title: "راهنمای آماده‌سازی یک سفارش دقیق",
+        message: "برای شروع یک پروژه بهتر است هدف، مخاطب، نمونه‌های مورد علاقه، امکانات موردنیاز و زمان‌بندی تقریبی را مشخص کنید. این اطلاعات کمک می‌کند پیشنهاد دقیق‌تری دریافت کنید. ثبت سفارش: https://alishams.ir",
+        channels: ["email"], eventSuffix: "guide"
+      });
+    }
 
     const { data: domains, error: domainError } = await db.from("customer_domains")
       .select("id,user_id,customer_name,customer_email,domain_name,expires_at,status")
