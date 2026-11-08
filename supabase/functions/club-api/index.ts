@@ -33,7 +33,7 @@ Deno.serve(async(req:Request)=>{
    ]);if(le||pe||te||ve)throw le||pe||te||ve;
    const {data:summary,error:se}=await db.rpc("club_account_summary",{p_user_id:user.id});if(se)throw se;
    const balance=Number(summary?.[0]?.balance||0),lifetime=Number(summary?.[0]?.lifetime||0);
-   const current=tier(lifetime),threshold={none:0,silver:2500,gold:5000,diamond:9500}[current],next={none:2500,silver:5000,gold:9500,diamond:9500}[current];
+   const current=tier(lifetime),threshold={none:0,bronze:2500,silver:5000,gold:7500,diamond:9500}[current],next={none:2500,bronze:5000,silver:7500,gold:9500,diamond:9500}[current];
    return out({ok:true,display_name:profile?.display_name||"",balance,lifetime,tier:current,next_threshold:next,progress:current==="diamond"?100:Math.max(0,Math.min(100,(lifetime-threshold)/(next-threshold)*100)),ledger:ledger||[],teaser_requests:teasers||[],vouchers:vouchers||[],diamond_eligible:current==="diamond",week_key:weekKey()},200,origin);
   }
   if(action==="profile_update"){
