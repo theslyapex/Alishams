@@ -2234,18 +2234,10 @@ async function loadServiceSettings(){
  }catch(error){console.warn("Service settings could not be loaded; existing fallback statuses remain.",error)}
 }
 loadServiceSettings();
-let __alishamsSupabaseClientPromise;
-function getAlishamsSupabaseClient(){
- if(!__alishamsSupabaseClientPromise){
-  __alishamsSupabaseClientPromise=import("https://esm.sh/@supabase/supabase-js@2")
-   .then(({createClient})=>createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB"))
-   .catch(error=>{__alishamsSupabaseClientPromise=null;throw error;});
- }
- return __alishamsSupabaseClientPromise;
-}
 async function syncDomainOrderExtensions(){
  try{
-  const sb=await getAlishamsSupabaseClient();
+  const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");
+  const sb=createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB");
   const {data,error}=await sb.from("domain_pricing").select("tld,price_toman,display_label").order("tld");
   if(error)throw error;
   const select=document.getElementById("requestedDomainTld");
@@ -2375,10 +2367,10 @@ if(orderQuery.get('openOrder')==='1'&&orderQuery.get('service')==='خرید دا
  setTimeout(()=>openOrderDialog(['خرید دامنه']),250);
 }
 document.getElementById('closeDialog').addEventListener('click',()=>dlg.close());dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
-async function customerHasSession(){try{const sb=await getAlishamsSupabaseClient();const {data}=await sb.auth.getSession();return !!data.session}catch(err){console.error("Customer session check failed",err);return false}}
-async function customerSessionToken(){try{const sb=await getAlishamsSupabaseClient();const {data}=await sb.auth.getSession();return data.session?.access_token||""}catch(err){console.error("Customer session token unavailable",err);return ""}}
-async function customerSessionEmail(){try{const sb=await getAlishamsSupabaseClient();const {data}=await sb.auth.getUser();return data.user?.email||""}catch(err){console.error("Customer session email unavailable",err);return ""}}
-async function customerAccountLevel(){try{const sb=await getAlishamsSupabaseClient();const {data:sessionData}=await sb.auth.getSession();if(!sessionData.session)return 0;const {data,error}=await sb.rpc("get_my_account_level_status");if(error)throw error;return Number(data?.level)||0}catch(err){console.error("Account level lookup failed",err);return null}}
+async function customerHasSession(){try{const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");const sb=createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB");const {data}=await sb.auth.getSession();return !!data.session}catch(err){console.error("Customer session check failed",err);return false}}
+async function customerSessionToken(){try{const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");const sb=createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB");const {data}=await sb.auth.getSession();return data.session?.access_token||""}catch(err){console.error("Customer session token unavailable",err);return ""}}
+async function customerSessionEmail(){try{const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");const sb=createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB");const {data}=await sb.auth.getUser();return data.user?.email||""}catch(err){console.error("Customer session email unavailable",err);return ""}}
+async function customerAccountLevel(){try{const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");const sb=createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB");const {data:sessionData}=await sb.auth.getSession();if(!sessionData.session)return 0;const {data,error}=await sb.rpc("get_my_account_level_status");if(error)throw error;return Number(data?.level)||0}catch(err){console.error("Account level lookup failed",err);return null}}
 (async()=>{const accountLink=document.querySelector(".account-cta");const status=accountLink?.querySelector(".account-cta-status");const plusMark=accountLink?.querySelector(".account-plus-mark");if(!accountLink||!status)return;const signedIn=await customerHasSession();if(signedIn){accountLink.classList.add("is-authenticated");accountLink.href="/account.html";accountLink.setAttribute("aria-label","حساب کاربری؛ واردشده‌اید");accountLink.title="حساب کاربری — واردشده‌اید";status.hidden=false;try{const token=await customerSessionToken();const r=await fetch("https://srfldjfrzmtnlabusssq.supabase.co/functions/v1/plus-membership",{method:"POST",headers:{"Content-Type":"application/json","apikey":"sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB","Authorization":"Bearer "+token},body:JSON.stringify({action:"status"})});const d=await r.json();if(plusMark)plusMark.hidden=!(d?.membership?.is_active===true);}catch(e){console.warn("Plus header status unavailable",e)}}else{status.hidden=true;if(plusMark)plusMark.hidden=true;}})();
 function sendToLogin(next){location.href="/login.html?next="+encodeURIComponent(next)}
 function showDisabledServiceNotice(){let notice=document.getElementById('disabledServiceNotice');if(!notice){notice=document.createElement('div');notice.id='disabledServiceNotice';notice.className='disabled-notice-backdrop';notice.innerHTML='<section class="disabled-notice-card" role="alertdialog" aria-modal="true" aria-labelledby="disabledNoticeTitle" aria-describedby="disabledNoticeText" tabindex="-1"><div class="disabled-notice-icon" aria-hidden="true"><span class="disabled-notice-pulse"></span><svg viewBox="0 0 48 48"><path d="M24 5 44 41H4L24 5Z"/><path d="M24 17v11m0 6v.5"/></svg></div><span class="disabled-notice-kicker">ALISHAMS STUDIO · SERVICE STATUS</span><h3 id="disabledNoticeTitle">این خدمت فعلاً در دسترس نیست</h3><p id="disabledNoticeText">این خدمت درحال حاضر غیرفعال می‌باشد</p><div class="disabled-notice-line"><i></i></div><span class="disabled-notice-foot">از شکیبایی شما سپاسگزاریم</span></section>';document.body.appendChild(notice);const close=()=>{notice.classList.remove('is-visible');document.removeEventListener('keydown',onKey)};const onKey=e=>{if(e.key==='Escape')close()};notice.addEventListener('click',e=>{if(e.target===notice)close()});notice._close=close}notice.classList.remove('is-visible');void notice.offsetWidth;notice.classList.add('is-visible');document.addEventListener('keydown',e=>{if(e.key==='Escape')notice._close()},{once:true});clearTimeout(notice._timer);notice._timer=setTimeout(()=>notice._close(),4300);notice.querySelector('.disabled-notice-card').focus({preventScroll:true})}
