@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
+<title>گزارش کسب‌وکار | Alishams Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#090b0e;--panel:#12171d;--panel2:#171e26;--line:#ffffff14;--text:#f4f6f8;--muted:#96a1ad;--lime:#d6ff59;--cyan:#58d9ee;--purple:#b7a0ff;--red:#ff8585}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#b7a0ff12,transparent 35%),radial-gradient(ellipse at 90% 5%,#d6ff590b,transparent 30%),var(--bg);color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif}
+.shell{width:min(1440px,calc(100% - 32px));margin:auto;padding:24px 0 42px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.brand{font-size:13px;font-weight:900;letter-spacing:.5px}.brand span{color:var(--lime)}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:39px;padding:8px 13px;border:1px solid var(--line);border-radius:11px;background:#ffffff08;color:var(--text);font:600 11px Vazirmatn;cursor:pointer;text-decoration:none}.btn.primary{background:#d6ff5914;border-color:#d6ff5950;color:#e9ffae}.btn:disabled{opacity:.5;cursor:wait}
+.hero{display:flex;justify-content:space-between;align-items:end;gap:18px;margin:25px 0 18px;flex-wrap:wrap}.eyebrow{color:var(--lime);font-size:9px;font-weight:800;letter-spacing:2px}.hero h1{margin:5px 0;font-size:clamp(23px,4vw,34px)}.muted{color:var(--muted);font-size:11px;line-height:1.9}.filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.filters select{min-width:150px;min-height:39px;padding:8px 11px;border:1px solid var(--line);border-radius:10px;background:#11161c;color:var(--text);font:11px Vazirmatn}
+.notice{padding:12px 14px;border:1px solid #b7a0ff30;border-radius:12px;background:#b7a0ff09;color:#dcd3ff;font-size:11px;margin:12px 0}.notice.error{border-color:#ff858550;color:#ffc1c1;background:#ff85850c}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:15px 0}.kpi,.panel{border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#151b22,#101419);box-shadow:0 12px 35px #0002}.kpi{padding:16px;min-width:0;position:relative;overflow:hidden}.kpi:after{content:"";position:absolute;inset:auto -20px -35px auto;width:90px;height:90px;border-radius:50%;background:var(--glow,#d6ff5915);filter:blur(4px)}.kpi small{display:block;color:var(--muted);font-size:10px}.kpi strong{display:block;margin:6px 0 2px;font-size:clamp(21px,3vw,29px);font-weight:900;direction:rtl}.kpi em{font-style:normal;color:#87929e;font-size:9px}.kpi:nth-child(2){--glow:#58d9ee18}.kpi:nth-child(3){--glow:#b7a0ff20}.kpi:nth-child(4){--glow:#ffcf6718}
+.grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.8fr);gap:12px}.panel{padding:17px;min-width:0}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:13px}.panel h2{font-size:13px;margin:0}.panel-head small{font-size:9px;color:var(--muted)}
+.chart{height:235px;display:flex;align-items:stretch;gap:9px;padding:12px 2px 0;overflow-x:auto;direction:rtl}.month{flex:1 0 34px;display:flex;flex-direction:column;align-items:center;justify-content:end;gap:7px;min-width:28px}.bar-area{height:170px;width:100%;display:flex;align-items:end;justify-content:center;border-bottom:1px solid #ffffff16}.bar{width:min(28px,75%);min-height:3px;border-radius:7px 7px 2px 2px;background:linear-gradient(180deg,#d6ff59,#78a928);box-shadow:0 0 18px #d6ff5920;position:relative}.bar.zero{opacity:.18}.month label{font-size:9px;color:#8f9aa6;white-space:nowrap}.month b{font-size:9px;color:#dfe8c8;font-weight:600;white-space:nowrap}
+.legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:9px}.legend i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lime);margin-left:5px}
+.list{display:grid;gap:10px}.list-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}.list-row strong{font-size:10px;font-weight:600;overflow-wrap:anywhere}.list-row small{color:var(--muted);font-size:9px}.track{height:6px;margin-top:6px;border-radius:20px;background:#ffffff0c;overflow:hidden}.track i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--purple),var(--cyan))}
+.status-list{display:grid;gap:10px}.status-row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:9px 10px;border:1px solid #ffffff0d;border-radius:10px;background:#ffffff04;font-size:10px}.status-row b{font-size:11px}.pill{padding:3px 8px;border-radius:20px;background:#ffffff0c;color:#c5ced7;font-size:9px}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.empty{padding:24px 10px;text-align:center;color:var(--muted);font-size:11px}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}}
+@media(max-width:560px){.shell{width:calc(100% - 20px);padding-top:14px}.top{align-items:flex-start}.hero{margin:19px 0 12px}.filters{width:100%}.filters select{flex:1;min-width:0}.panel{padding:13px}.bottom{grid-template-columns:1fr}.chart{height:215px}.bar-area{height:150px}}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="top"><div class="brand">ALISHAMS <span>· BUSINESS INTELLIGENCE</span></div><div class="actions"><a class="btn" href="/admin-panel.html#reports">بازگشت به پنل مدیریت ↗</a><button class="btn primary" id="refresh">به‌روزرسانی گزارش ↻</button><button class="btn" id="export">خروجی CSV</button></div></header>
+<section class="hero"><div><div class="eyebrow">BUSINESS OVERVIEW</div><h1>مرکز گزارش و تحلیل کسب‌وکار</h1><div class="muted">نمایی از سفارش‌ها، درآمد ثبت‌شده، پروژه‌ها و عملکرد خدمات بر پایه داده‌های موجود.</div></div><div class="filters"><select id="period"><option value="30">۳۰ روز اخیر</option><option value="90">۹۰ روز اخیر</option><option value="365" selected>۱۲ ماه اخیر</option><option value="all">تمام دوره</option></select></div></section>
+<div id="notice" class="notice">در حال بررسی دسترسی مدیر و دریافت داده‌ها…</div>
+<section class="kpis">
+<div class="kpi"><small>درآمد تأییدشده</small><strong id="revenue">—</strong><em>از پرداخت‌های ثبت‌شده در سیستم</em></div>
+<div class="kpi"><small>کل سفارش‌ها</small><strong id="orders">—</strong><em>در بازه انتخاب‌شده</em></div>
+<div class="kpi"><small>نرخ تبدیل سفارش</small><strong id="conversion">—</strong><em>سفارش تبدیل‌شده ÷ کل سفارش‌ها</em></div>
+<div class="kpi"><small>پروژه‌های فعال</small><strong id="activeProjects">—</strong><em>در حال اجرا، بررسی یا توقف موقت</em></div>
+</section>
+<section class="grid">
+<article class="panel"><div class="panel-head"><h2>روند درآمد ماهانه</h2><small>تومان · پرداخت‌های تأییدشده</small></div><div class="chart" id="chart"><div class="empty">در انتظار داده…</div></div><div class="legend"><span><i></i> درآمد ثبت‌شده</span><span>ماه‌های بدون پرداخت نیز نمایش داده می‌شوند.</span></div></article>
+<article class="panel"><div class="panel-head"><h2>ترکیب وضعیت سفارش‌ها</h2><small>تعداد</small></div><div class="status-list" id="orderStatuses"><div class="empty">در انتظار داده…</div></div></article>
+</section>
+<section class="bottom">
+<article class="panel"><div class="panel-head"><h2>خدمات پرتقاضا</h2><small>بر اساس سفارش‌های ثبت‌شده</small></div><div class="list" id="services"><div class="empty">در انتظار داده…</div></div></article>
+<article class="panel"><div class="panel-head"><h2>وضعیت پروژه‌ها</h2><small>پروژه‌های بازه انتخاب‌شده</small></div><div class="status-list" id="projectStatuses"><div class="empty">در انتظار داده…</div></div></article>
+</section>
+<p class="muted" style="margin-top:15px">توجه: درآمد این گزارش فقط از پرداخت‌های تأییدشده پروژه‌ها محاسبه می‌شود. درآمد عضویت پلاس+ و آمار بازدیدکنندگان تا زمان اتصال منبع مستقل، در این گزارش لحاظ نشده‌اند؛ نرخ تبدیل نیز از سفارش‌های ثبت‌شده و تبدیل‌شده محاسبه می‌شود، نه از بازدید سایت.</p>
+</main>
+<script type="module">
+import{createClient}from"https://esm.sh/@supabase/supabase-js@2";
+const URL="https://srfldjfrzmtnlabusssq.supabase.co",KEY="sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB",OWNER="theslyapex@gmail.com";
+const sb=createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true}}),$=id=>document.getElementById(id);
+let snapshot=null;
+const fa=n=>Number(n||0).toLocaleString("fa-IR"),money=n=>fa(Math.round(Number(n||0)))+" تومان",esc=v=>String(v??"—").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function setNotice(t,error=false){$("notice").textContent=t;$("notice").classList.toggle("error",error)}
+function inRange(v,days){if(!v)return false;if(days==="all")return true;return new Date(v).getTime()>=Date.now()-Number(days)*86400000}
+function monthKey(d){const x=new Date(d);return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")}
+function render(){
+ if(!snapshot)return;
+ const days=$("period").value,orders=snapshot.orders.filter(x=>inRange(x.created_at,days)),projects=snapshot.projects.filter(x=>inRange(x.created_at,days)),payments=snapshot.payments.filter(x=>x.confirmed!==false&&inRange(x.paid_at||x.created_at,days));
+ const revenue=payments.reduce((s,x)=>s+Number(x.amount||0),0),converted=orders.filter(x=>x.status==="converted").length,active=projects.filter(x=>["not_started","in_progress","review","on_hold"].includes(x.status)).length;
+ $("revenue").textContent=money(revenue);$("orders").textContent=fa(orders.length);$("conversion").textContent=(orders.length?(converted/orders.length*100):0).toLocaleString("fa-IR",{maximumFractionDigits:1})+"٪";$("activeProjects").textContent=fa(active);
+ const now=new Date(),months=[];for(let i=11;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1);months.push({key:monthKey(d),label:d.toLocaleDateString("fa-IR",{month:"short"}),value:0})}
+ payments.forEach(p=>{const k=monthKey(p.paid_at||p.created_at),m=months.find(x=>x.key===k);if(m)m.value+=Number(p.amount||0)});
+ const max=Math.max(1,...months.map(x=>x.value));
+ $("chart").innerHTML=months.map(m=>'<div class="month"><b>'+ (m.value?fa(m.value):"۰") +'</b><div class="bar-area"><div class="bar '+(m.value?"":"zero")+'" style="height:'+Math.max(2,m.value/max*100)+'%"></div></div><label>'+esc(m.label)+'</label></div>').join("");
+ const orderLabels={new:"جدید",reviewing:"در حال بررسی",awaiting_customer:"منتظر مشتری",approved:"تأییدشده",rejected:"ردشده",converted:"تبدیل‌شده"};
+ const projectLabels={not_started:"شروع‌نشده",in_progress:"در حال اجرا",review:"در حال بررسی",on_hold:"متوقف موقت",completed:"تکمیل‌شده",cancelled:"لغوشده"};
+ const makeRows=(list,labels)=>{const counts={};list.forEach(x=>counts[x.status]=(counts[x.status]||0)+1);const entries=Object.entries(counts).sort((a,b)=>b[1]-a[1]);return entries.length?entries.map(([k,v])=>'<div class="status-row"><span>'+esc(labels[k]||k)+'</span><b>'+fa(v)+'</b></div>').join(""):'<div class="empty">داده‌ای در این بازه وجود ندارد.</div>'};
+ $("orderStatuses").innerHTML=makeRows(orders,orderLabels);$("projectStatuses").innerHTML=makeRows(projects,projectLabels);
+ const counts={};orders.forEach(o=>{const list=Array.isArray(o.services)&&o.services.length?o.services:[o.service||"سایر"];list.forEach(s=>{const k=String(s||"سایر").trim();if(k)counts[k]=(counts[k]||0)+1})});
+ const ranked=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,7),top=Math.max(1,...ranked.map(x=>x[1]));
+ $("services").innerHTML=ranked.length?ranked.map(([name,count])=>'<div class="list-row"><div><strong>'+esc(name)+'</strong><div class="track"><i style="width:'+(count/top*100)+'%"></i></div></div><small>'+fa(count)+' سفارش</small></div>').join(""):'<div class="empty">داده‌ای برای رتبه‌بندی خدمات وجود ندارد.</div>';
+}
+async function load(){
+ const b=$("refresh");b.disabled=true;setNotice("در حال بررسی نشست مدیر…");
+ try{
+  const {data,error}=await sb.auth.getSession();if(error)throw error;const session=data.session;
+  if(!session){location.replace("/login.html?next=%2Fadmin-panel.html%23reports");return}
+  if(session.user?.email?.toLowerCase()!==OWNER){throw new Error("این حساب اجازه دسترسی به گزارش مدیریتی را ندارد.")}
+  const {data:aal,error:ae}=await sb.auth.mfa.getAuthenticatorAssuranceLevel();if(ae)throw ae;
+  if(aal?.currentLevel!=="aal2"){location.replace("/admin.html");return}
+  const r=await fetch(URL+"/functions/v1/admin-dashboard",{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+session.access_token},body:JSON.stringify({action:"list"})});
+  const j=await r.json().catch(()=>({}));if(!r.ok||!j.ok)throw new Error(j.error||"دریافت داده‌های مدیریتی ناموفق بود.");
+  snapshot={orders:j.orders||[],projects:j.projects||[],payments:j.payments||[]};render();setNotice("گزارش با موفقیت به‌روزرسانی شد · آخرین دریافت: "+new Date().toLocaleString("fa-IR"));
+ }catch(e){setNotice("خطا: "+e.message,true)}finally{b.disabled=false}
+}
+function exportCsv(){
+ if(!snapshot)return;const rows=[["نوع","تاریخ","شناسه","وضعیت","مبلغ","مشتری","خدمات"]];
+ snapshot.orders.forEach(x=>rows.push(["سفارش",x.created_at,x.tracking_code,x.status,x.payable_amount||x.quoted_price||0,x.client_name,(x.services||[x.service]).join("، ")]));
+ snapshot.payments.forEach(x=>rows.push(["پرداخت",x.paid_at||x.created_at,x.id,x.confirmed?"تأییدشده":"تأییدنشده",x.amount,x.project_id,x.method]));
+ const csv="\uFEFF"+rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");
+ const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"})),a=document.createElement("a");a.href=url;a.download="alishams-business-report.csv";a.click();URL.revokeObjectURL(url);
+}
+$("refresh").addEventListener("click",load);$("period").addEventListener("change",render);$("export").addEventListener("click",exportCsv);await load();
+</script>
+</body></html>
