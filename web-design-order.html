@@ -113,6 +113,27 @@ body,body *{-webkit-user-select:none!important;user-select:none!important;-webki
 input,textarea,[contenteditable="true"]{-webkit-user-select:text!important;user-select:text!important;-webkit-touch-callout:default}
 @media(max-width:560px){.domain-select-trigger{min-height:44px;padding:9px 10px}.domain-select-menu{max-height:235px}}
 
+
+/* Domain selector: compact, single-line labels and one rendering per suffix */
+.domain-select-trigger{white-space:nowrap;flex-wrap:nowrap;min-width:0}
+.domain-select-trigger .domain-trigger-label{display:block;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.5}
+.domain-select-option{white-space:nowrap;flex-wrap:nowrap;min-width:0}
+.domain-select-option .domain-option-label{display:block;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:clip;line-height:1.7}
+.domain-select-option .option-check{flex:none;margin-right:8px}
+.domain-select-menu{min-width:190px}
+@media(max-width:560px){
+  .domain-entry{grid-template-columns:minmax(0,1fr) 132px!important}
+  .domain-select-trigger{font-size:11px;padding-inline:8px}
+  .domain-select-menu{min-width:190px;max-width:min(230px,calc(100vw - 32px))}
+  .domain-select-option{font-size:10.5px;padding:9px 10px}
+  .domain-select-option .domain-option-label{font-size:10.5px}
+  .footer-bottom{display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;text-align:center!important;width:100%;gap:7px;padding-top:20px}
+  .footer-bottom span{display:block!important;width:100%;text-align:center!important;line-height:2}
+}
+@media(min-width:561px){
+  .footer-bottom{justify-content:center!important;align-items:center!important;text-align:center!important}
+  .footer-bottom span{text-align:center!important}
+}
 </style></head><body><header class="topbar"><div class="wrap nav">
 <a class="brand" href="/" aria-label="علی شمس"><span class="brand-mark"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a>
 <nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی"><a href="/#services">خدمات</a><a href="/portfolio.html">نمونه‌کارها</a><a href="/videos.html">ویدئوها</a><a href="/#alishamsLeague">رقابت برای رتبه برتر</a><a href="/about.html">درباره من</a>
@@ -226,7 +247,7 @@ domainTrigger.innerHTML='<span class="domain-trigger-label">انتخاب پسو�
 const domainMenu=document.createElement("div");domainMenu.className="domain-select-menu";domainMenu.setAttribute("role","listbox");domainMenu.setAttribute("aria-label","انتخاب پسوند دامنه");
 domainSelect.parentNode.insertBefore(domainWrap,domainSelect);domainWrap.append(domainSelect,domainTrigger,domainMenu);
 const domainOptions=[...domainSelect.options];
-function renderDomainOptions(){domainMenu.innerHTML=domainOptions.map((o,i)=>{const value=o.value;const label=o.textContent.trim();const isSuffix=!!value;return '<button type="button" class="domain-select-option '+(domainSelect.selectedIndex===i?'selected':'')+'" role="option" aria-selected="'+(domainSelect.selectedIndex===i)+'" data-index="'+i+'"><span>'+label+'</span>'+(isSuffix?'<span class="suffix-value">'+value+'</span>':'<span class="option-check">'+(domainSelect.selectedIndex===i?'✓':'')+'</span>')+'</button>'}).join("");const selected=domainOptions[domainSelect.selectedIndex];domainTrigger.querySelector(".domain-trigger-label").textContent=selected?(selected.value?selected.value:(selected.textContent.trim()==="پسوند"?"انتخاب پسوند":selected.textContent.trim())):"انتخاب پسوند";domainTrigger.querySelector(".domain-trigger-label").classList.toggle("domain-current",!!(selected&&selected.value))}
+function renderDomainOptions(){domainMenu.innerHTML=domainOptions.map((o,i)=>{const label=o.textContent.trim();const active=domainSelect.selectedIndex===i;return '<button type="button" class="domain-select-option '+(active?'selected':'')+'" role="option" aria-selected="'+active+'" data-index="'+i+'"><span class="domain-option-label">'+label+'</span>'+(active?'<span class="option-check" aria-hidden="true">✓</span>':'')+'</button>'}).join("");const selected=domainOptions[domainSelect.selectedIndex];domainTrigger.querySelector(".domain-trigger-label").textContent=selected?(selected.value?selected.value:(selected.textContent.trim()==="پسوند"?"انتخاب پسوند":selected.textContent.trim())):"انتخاب پسوند";domainTrigger.querySelector(".domain-trigger-label").classList.toggle("domain-current",!!(selected&&selected.value))}
 function closeDomainMenu(){domainWrap.classList.remove("open");domainTrigger.setAttribute("aria-expanded","false")}
 domainTrigger.addEventListener("click",()=>{const open=!domainWrap.classList.contains("open");domainWrap.classList.toggle("open",open);domainTrigger.setAttribute("aria-expanded",String(open))});
 domainMenu.addEventListener("click",e=>{const option=e.target.closest("[data-index]");if(!option)return;domainSelect.selectedIndex=Number(option.dataset.index);domainSelect.dispatchEvent(new Event("change",{bubbles:true}));renderDomainOptions();closeDomainMenu()});
