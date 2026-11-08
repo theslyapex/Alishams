@@ -4,7 +4,7 @@ const ORIGINS=new Set(["https://alishams.ir","https://www.alishams.ir"]),OWNER="
 const headers=(o:string)=>({"Access-Control-Allow-Origin":ORIGINS.has(o)?o:"https://alishams.ir","Access-Control-Allow-Headers":"authorization, apikey, content-type","Access-Control-Allow-Methods":"POST, OPTIONS","Vary":"Origin","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});
 const out=(d:unknown,s:number,o:string)=>new Response(JSON.stringify(d),{status:s,headers:headers(o)});
 const str=(v:unknown,n:number)=>String(v??"").trim().slice(0,n);
-const tier=(n:number)=>n>=9500?"diamond":n>=5000?"gold":n>=2500?"silver":"none";
+const tier=(n:number)=>n>=9500?"diamond":n>=7500?"gold":n>=5000?"silver":n>=2500?"bronze":"none";
 const weekKey=()=>{const now=new Date(),d=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()));const day=(d.getUTCDay()+6)%7;d.setUTCDate(d.getUTCDate()-day);return d.toISOString().slice(0,10)};
 Deno.serve(async(req:Request)=>{
  const origin=req.headers.get("origin")||"";
