@@ -17,7 +17,7 @@ Deno.serve(async(req:Request)=>{
   const db=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}});
   const body=await req.json().catch(()=>({})),action=str(body.action,40),jwt=(req.headers.get("Authorization")||"").replace(/^Bearer\s+/i,"");
   let user:any=null,isAdmin=false;
-  if(jwt){const auth=createClient(url,anon,{auth:{persistSession:false,autoRefreshToken:false}});const {data,error}=await auth.auth.getUser(jwt);if(!error&&data.user){user=data.user;isAdmin=user.id===ADMIN_ID&&user.email?.toLowerCase()===OWNER}}
+  if(jwt){const auth=createClient(url,anon,{auth:{persistSession:false,autoRefreshToken:false}});const {data,error}=await auth.auth.getUser(jwt);if(!error&&data.user){user=data.user;isAdmin=user.id===ADMIN_ID&&user.email?.toLowerCase()===OWNER;if(isAdmin){const {data:claims,error:claimError}=await auth.auth.getClaims(jwt);if(claimError||(claims?.claims as any)?.aal!=="aal2")isAdmin=false}}}
   if(action==="leaderboard"){
    const {data:ranked,error}=await db.rpc("club_leaderboard");if(error)throw error;
    const list=(ranked||[]).map((x:any,i:number)=>({rank:i+1,display_name:x.display_name||"عضو باشگاه",lifetime_points:Number(x.lifetime_points||0),tier:x.tier,is_me:user?.id===x.user_id}));
