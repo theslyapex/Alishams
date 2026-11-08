@@ -14,6 +14,35 @@ input,textarea,select,button{font:inherit;border-radius:13px;margin:6px 0;transi
 #title{overflow-wrap:anywhere}#meta{padding:10px 12px;border-radius:12px;background:#ffffff05;border:1px solid var(--line);overflow-wrap:anywhere}#description{padding:15px;border-radius:15px;background:#090b11;border:1px solid var(--line);color:#d2d7e2}
 #result{padding:12px;border-radius:12px;background:#a78bfa0c;border:1px solid #a78bfa24;overflow-wrap:anywhere}
 @media(max-width:850px){body{padding:15px 12px 35px}.grid{grid-template-columns:1fr}.grid>section:first-child{position:static;max-height:none;overflow:visible}#app>section:first-of-type{align-items:stretch}#status{width:100%;margin:4px 0 0}}@media(max-width:480px){main>p:first-child{border-radius:12px}section{border-radius:18px;padding:16px}h1{font-size:27px}h2{font-size:18px}button{padding:10px 13px}}
+
+/* Discount code form: clear vertical field layout */
+#discountManager .discount-form{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:12px;
+  width:100%;
+  max-width:680px;
+  margin-top:18px;
+}
+#discountManager .discount-form>div{min-width:0}
+#discountManager .discount-form label{
+  display:block;
+  margin:0 0 5px;
+  white-space:nowrap;
+  line-height:1.8;
+  font-size:13px;
+}
+#discountManager .discount-form input{
+  display:block;
+  width:100%;
+  min-height:46px;
+  margin:0;
+}
+@media(max-width:480px){
+  #discountManager .discount-form{gap:10px;max-width:none}
+  #discountManager .discount-form label{font-size:12px}
+}
+
 </style><main><p><a href="/">ALISHAMS STUDIO ↖</a></p><section id="login"><h2>ورود مدیر</h2><p>پیوند ورود به ایمیل مدیر ارسال می‌شود.</p><form id="lf"><input id="email" type="email" value="theslyapex@gmail.com" required><button>ارسال پیوند ورود</button></form><p id="notice"></p></section><div id="app" class="hidden"><h1>مرکز فرمان سفارش‌ها</h1><section><button id="refresh">به‌روزرسانی</button> <button id="logout">خروج</button><p id="status" class="muted"></p></section><section id="discountManager">
 <h2>مدیریت کدهای تخفیف</h2>
 <p class="muted">کدهایی بساز که مشتری در فرم سفارش وارد کند. محدودیت خدمت را خالی بگذاری، کد برای همه خدمات فعال خواهد بود.</p>
