@@ -60,6 +60,87 @@ Deno.serve(async (req: Request) => {
     const body = await req.json().catch(() => ({}));
     const action = String(body?.action || "dashboard");
 
+    if (action === "create_web_order") {
+      const fullName = String(body?.client_name || user.user_metadata?.full_name || "").trim().slice(0,120);
+      const phone = String(body?.phone || user.user_metadata?.phone || "").trim().slice(0,40);
+      const category = String(body?.category || "").trim().slice(0,100);
+      const siteType = String(body?.site_type || "").trim().slice(0,80);
+      const pageCount = String(body?.page_count || "").trim().slice(0,40);
+      const timeline = String(body?.timeline || "").trim().slice(0,40);
+      const budget = String(body?.budget || "").trim().slice(0,80);
+      const description = String(body?.description || "").trim();
+      const websiteAddress = String(body?.website_address || "").trim().slice(0,500);
+      const websiteName = String(body?.website_name || "").trim().slice(0,180);
+      const domain = String(body?.domain || "").trim().slice(0,40);
+      const references = Array.isArray(body?.references) ? body.references.map((x:any)=>String(x||"").trim().slice(0,500)).filter(Boolean).slice(0,30) : [];
+      const options = body?.options && typeof body.options === "object" ? body.options : {};
+      const accepted = body?.terms_accepted === true;
+      if (fullName.length < 2 || phone.length < 7 || !category || !siteType || !pageCount || !timeline || !budget || description.length < 30 || description.length > 8000 || !websiteName || !accepted)
+        return out({ error: "اطلاعات ضروری کامل نیست. توضیحات باید بین ۳۰ تا ۸۰۰۰ نویسه باشد و تأیید شرایط نیز لازم است." }, 400, origin);
+      if (websiteAddress && !/^https?:\/\//i.test(websiteAddress))
+        return out({ error: "آدرس وب‌سایت باید با https:// یا http:// شروع شود." }, 400, origin);
+      for (const link of references) {
+        if (!/^https?:\/\//i.test(link)) return out({ error: "هر لینک نمونه باید با https:// یا http:// شروع شود." }, 400, origin);
+      }
+      const domainOptions = [".ir",".com",".co",".ae",".beauty",".blog",".digital",".homes",".info",".io",".kids",".lol",".mom",".net",".pics",".pro",".shop",".world",".xyz"];
+      if (domain && !domainOptions.includes(domain)) return out({ error: "پسوند دامنه انتخاب‌شده معتبر نیست." }, 400, origin);
+      const optionKeys = ["admin_panel","blog","multilingual","seo","ssl","google_maps"];
+      const safeOptions:any = {};
+      for (const key of optionKeys) safeOptions[key] = options[key] === true;
+      const payload = {
+        category, site_type: siteType, page_count: pageCount, timeline, budget,
+        description, website_address: websiteAddress, website_name: websiteName,
+        domain, references, options: safeOptions
+      };
+      const privateKey = Array.from(crypto.getRandomValues(new Uint8Array(32))).map(x=>x.toString(16).padStart(2,"0")).join("");
+      const keyHash = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(privateKey)))).map(x=>x.toString(16).padStart(2,"0")).join("");
+      const makeCode = () => "ORD-" + Array.from(crypto.getRandomValues(new Uint8Array(6))).map(x=>"ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[x%32]).join("");
+      let trackingCode = makeCode();
+      let inserted:any = null;
+      let insertError:any = null;
+      for (let attempt=0; attempt<5; attempt++) {
+        const result = await db.from("client_orders").insert({
+          tracking_code: trackingCode, access_token_hash: keyHash,
+          client_name: fullName, contact_info: phone, client_email: email,
+          service: "طراحی وب‌سایت — " + category,
+          title: "درخواست طراحی وب‌سایت: " + websiteName,
+          details: JSON.stringify(payload), budget,
+          status: "new", services: ["طراحی وب‌سایت", category],
+          terms_accepted: true, terms_version: "web-design-order-v1",
+          terms_accepted_at: new Date().toISOString()
+        }).select("id,tracking_code,title,created_at").single();
+        inserted = result.data; insertError = result.error;
+        if (!insertError) break;
+        if (insertError.code !== "23505") break;
+        trackingCode = makeCode();
+      }
+      if (insertError || !inserted) {
+        console.error("web order insert", insertError);
+        return out({ error: "ثبت سفارش انجام نشد. کمی بعد دوباره تلاش کن." }, 500, origin);
+      }
+      const { error: credentialError } = await db.rpc("store_customer_tracking_credential", {
+        p_owner_email: email, p_item_type: "order", p_tracking_code: trackingCode,
+        p_source_id: inserted.id, p_private_key: privateKey
+      });
+      if (credentialError) {
+        await db.from("client_orders").delete().eq("id", inserted.id);
+        console.error("web order credential vault", credentialError);
+        return out({ error: "ساخت امن اطلاعات پیگیری انجام نشد؛ سفارش ثبت نشد. دوباره تلاش کن." }, 500, origin);
+      }
+      const { error: eventError } = await db.from("client_order_events").insert({
+        order_id: inserted.id, status: "new",
+        public_message: "درخواست طراحی وب‌سایت شما با موفقیت ثبت شد و برای بررسی به مدیریت ارسال شد."
+      });
+      if (eventError) {
+        await db.from("client_orders").delete().eq("id", inserted.id);
+        await db.from("customer_tracking_credentials").delete().eq("item_type","order").eq("tracking_code",trackingCode);
+        console.error("web order event insert", eventError);
+        return out({ error: "ثبت تاریخچه سفارش انجام نشد؛ سفارش ثبت نشد. دوباره تلاش کن." }, 500, origin);
+      }
+      await notifyTelegram("🖥 درخواست طراحی وب‌سایت جدید | Alishams Studio\\n\\n👤 مشتری: " + fullName + "\\n📧 ایمیل: " + email + "\\n📞 تماس: " + phone + "\\n🔎 کد پیگیری: " + trackingCode + "\\n🌐 وب‌سایت: " + websiteName + "\\n🧩 موضوع: " + category + "\\n💰 بودجه: " + budget + "\\n\\n🔗 پنل سفارش‌ها: https://alishams.ir/admin-panel.html");
+      return out({ ok: true, order: inserted, credential: { item_type: "order", tracking_code: trackingCode, private_key: privateKey } }, 201, origin);
+    }
+
 
     if (["project_message","request_revision","submit_review"].includes(action)) {
       const projectId = String(body?.project_id || "").trim();
