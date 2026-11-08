@@ -81,7 +81,15 @@ button,input,select,textarea{font:inherit}.wrap{width:min(1440px,calc(100% - 28p
  $("logout").onclick=async()=>{await sb.auth.signOut();$("app").classList.add("hidden");$("login").classList.remove("hidden");};
  $("loginBtn").onclick=async()=>{const b=$("loginBtn");b.disabled=true;$("loginStatus").textContent="در حال ارسال لینک ورود…";try{const {error}=await sb.auth.signInWithOtp({email:$("loginEmail").value.trim(),options:{emailRedirectTo:location.origin+location.pathname}});if(error)throw error;$("loginStatus").textContent="لینک ورود امن ارسال شد. ایمیل را بررسی کن.";}catch(e){$("loginStatus").textContent=e.message||"ارسال لینک انجام نشد.";}finally{b.disabled=false}};
  async function boot(){const {data,error}=await sb.auth.getSession();if(error)throw error;if(data.session){$("login").classList.add("hidden");$("app").classList.remove("hidden");await load();}}
- const sdk=await import("https://esm.sh/@supabase/supabase-js@2");sb=sdk.createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});sb.auth.onAuthStateChange((_event,session)=>{if(session){$("login").classList.add("hidden");$("app").classList.remove("hidden");load().catch(e=>setStatus(e.message,"error"));}});await boot().catch(e=>setStatus(e.message,"error"));
+ let sdk=null;
+ for(const source of ["https://esm.sh/@supabase/supabase-js@2","https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm","https://unpkg.com/@supabase/supabase-js@2?module"]){
+  try{const candidate=await import(source);if(candidate.createClient||candidate.default?.createClient){sdk=candidate;break;}}catch(error){console.warn("Supabase SDK load failed",source,error);}
+ }
+ const createClient=sdk?.createClient||sdk?.default?.createClient;
+ if(!createClient){$("loginStatus").textContent="اتصال به کتابخانه سرویس انجام نشد؛ اتصال اینترنت را بررسی کن.";return;}
+ sb=createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ sb.auth.onAuthStateChange((_event,session)=>{if(session){$("login").classList.add("hidden");$("app").classList.remove("hidden");load().catch(e=>setStatus(e.message,"error"));}});
+ await boot().catch(e=>setStatus(e.message,"error"));
 })();
 </script>
 </body></html>
