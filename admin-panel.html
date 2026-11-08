@@ -114,22 +114,57 @@ iframe{min-width:0}
  .frame-wrap{border-radius:14px}
 }
 @media(prefers-reduced-motion:reduce){.loader-ring{animation:none}}
+
+/* Premium unified Icons8 module icon system */
+.nav button{gap:12px;min-height:58px;padding:9px 11px}
+.nav button .ico{
+  position:relative;width:40px;height:40px;flex:0 0 40px;
+  display:grid;place-items:center;border-radius:13px;
+  border:1px solid #ffffff20;
+  background:linear-gradient(145deg,#ffffff12,#ffffff04);
+  box-shadow:inset 0 1px 0 #ffffff12,0 5px 14px #0003;
+  transition:transform .2s,border-color .2s,box-shadow .2s,background .2s;
+}
+.nav button .ico img{width:23px;height:23px;opacity:1;filter:drop-shadow(0 2px 4px #0005);transition:transform .2s,filter .2s}
+.nav button:hover .ico{transform:translateY(-1px);border-color:#ffffff40;box-shadow:inset 0 1px 0 #ffffff18,0 7px 18px #0005}
+.nav button:hover .ico img{transform:scale(1.08)}
+.nav button.active .ico{border-color:#d6ff5970;background:linear-gradient(145deg,#d6ff5930,#d6ff590d);box-shadow:0 0 0 3px #d6ff590b,0 6px 18px #0005}
+.nav button.active .ico img{filter:drop-shadow(0 0 5px #d6ff5966)}
+.nav button[data-key="dashboard"] .ico{background:linear-gradient(145deg,#8b75ff30,#5944b51a)}
+.nav button[data-key="orders"] .ico{background:linear-gradient(145deg,#50c9e630,#167b9e1a)}
+.nav button[data-key="projects"] .ico{background:linear-gradient(145deg,#d6ff5930,#789b251a)}
+.nav button[data-key="messages"] .ico{background:linear-gradient(145deg,#5da8ff30,#245baf1a)}
+.nav button[data-key="videos"] .ico{background:linear-gradient(145deg,#ff668b30,#a92f561a)}
+.nav button[data-key="comments"] .ico{background:linear-gradient(145deg,#b7a0ff30,#6848b21a)}
+.nav button[data-key="portfolio"] .ico{background:linear-gradient(145deg,#f2b65a30,#a56a1d1a)}
+.nav button[data-key="services"] .ico{background:linear-gradient(145deg,#53d6b130,#187c601a)}
+.nav button[data-key="feedback"] .ico{background:linear-gradient(145deg,#ff9c6530,#a94f271a)}
+.nav button[data-key="community"] .ico{background:linear-gradient(145deg,#56c9d530,#216d7a1a)}
+.nav button[data-key="club"] .ico{background:linear-gradient(145deg,#f5d36b38,#a67a1b1c)}
+.nav button[data-key="plus"] .ico{background:linear-gradient(145deg,#c1a4ff38,#6942b51c)}
+.nav button.active .ico{background:linear-gradient(145deg,#d6ff5938,#d6ff5910)}
+@media(max-width:850px){
+ .nav button{min-height:50px;gap:8px;padding:5px 9px}
+ .nav button .ico{width:34px;height:34px;flex-basis:34px;border-radius:11px}
+ .nav button .ico img{width:20px;height:20px}
+}
+
 </style></head>
 <body><div class="app">
 <header class="topbar"><div class="brand"><div class="logo"><img src="/assets/images/alishams-studio-logo.png" alt="Alishams Studio"></div><div><strong>ALISHAMS STUDIO</strong><small>UNIFIED MANAGEMENT CENTER</small></div></div><div class="topright"><span class="secure"><i class="dot"></i> محیط مدیریتی امن</span><a class="site" href="/" target="_blank" rel="noopener">مشاهده سایت ↗</a></div></header>
 <aside class="sidebar"><div class="side-label">مرکز مدیریت استودیو</div><label class="side-search" for="moduleSearch"><span aria-hidden="true">⌕</span><input id="moduleSearch" type="search" placeholder="جست‌وجوی بخش‌ها…" autocomplete="off"><kbd>/</kbd></label><div class="nav-section-label">مدیریت و عملیات</div><nav class="nav" id="mainNav">
-<button class="active" data-key="dashboard" data-src="admin.html"><span class="ico"><img src="https://img.icons8.com/ios/50/FFFFFF/dashboard-layout.png" alt="داشبورد" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>داشبورد اصلی</b><small>آمار و کنترل کلی</small></span></button>
-<button data-key="orders" data-src="orders-admin.html"><span class="ico"><img src="https://img.icons8.com/ios/50/FFFFFF/shopping-cart.png" alt="سفارش‌ها" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>سفارش‌ها</b><small>ثبت، بررسی و تبدیل سفارش</small></span></button>
-<button data-key="projects" data-src="admin-projects.html"><span class="ico"><img src="https://img.icons8.com/ios/50/FFFFFF/project.png" alt="پروژه‌ها" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>پروژه‌ها</b><small>وضعیت، پرداخت و تحویل</small></span></button>
-<span class="nav-section-label nav-divider">محتوا و ارتباط با مشتری</span><button data-key="messages" data-src="admin-messages.html"><span class="ico"><img src="https://img.icons8.com/ios/50/FFFFFF/chat.png" alt="مکاتبات و پیام‌ها" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>مکاتبات و پیام‌ها</b><small>صندوق درخواست و پاسخ‌ها</small></span></button>
-<button data-key="videos" data-src="videos-admin.html"><span class="ico"><img src="https://img.icons8.com/ios/50/FFFFFF/video.png" alt="ویدئوها" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>مدیریت ویدئوها</b><small>انتشار و آمار بازدید</small></span></button>
-<button data-key="comments" data-src="comments-admin.html"><span class="ico"><img src="https://img.icons8.com/ios/50/FFFFFF/comments.png" alt="دیدگاه‌ها" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>دیدگاه‌ها</b><small>تأیید، پنهان و مدیریت</small></span></button>
-<button data-key="portfolio" data-src="portfolio-admin.html"><span class="ico"><img src="https://img.icons8.com/ios/50/FFFFFF/image.png" alt="نمونه‌کارها" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>نمونه‌کارها</b><small>گالری و محتوای نمونه‌کار</small></span></button>
-<button data-key="services" data-src="service-settings-admin.html"><span class="ico"><img src="https://img.icons8.com/ios/50/FFFFFF/services.png" alt="خدمات" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>وضعیت خدمات</b><small>فعال‌سازی و غیرفعال‌سازی خدمات</small></span></button>
-<button data-key="feedback" data-src="feedback-admin.html"><span class="ico"><img src="https://img.icons8.com/ios/50/FFFFFF/feedback.png" alt="بازخورد مشتریان" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>بازخورد مشتریان</b><small>امتیازها، پیشنهادها و گزارش مشکلات</small></span></button>
-<button data-key="community" data-src="community-admin.html"><span class="ico"><img src="https://img.icons8.com/ios/50/FFFFFF/conference-call.png" alt="انجمن" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>مدیریت انجمن</b><small>پیام‌ها، گزارش‌ها و اعضا</small></span></button>
-<span class="nav-section-label nav-divider">وفاداری و جامعه مشتریان</span><button data-key="club" data-src="club-admin.html"><span class="ico"><img src="https://img.icons8.com/ios/50/FFFFFF/crown.png" alt="باشگاه مشتریان" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>باشگاه مشتریان</b><small>امتیازها، سطح اعضا، جوایز و تیزرها</small></span></button>
-<button data-key="plus" data-src="plus-admin.html"><span class="ico"><img src="https://img.icons8.com/ios/50/FFFFFF/membership-card.png" alt="عضویت پلاس" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>عضویت پلاس+</b><small>اعضا، تمدید و درخواست‌های هدیه</small></span></button>
+<button class="active" data-key="dashboard" data-src="admin.html"><span class="ico"><img src="https://img.icons8.com/ios-filled/50/FFFFFF/dashboard-layout.png" alt="داشبورد" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>داشبورد اصلی</b><small>آمار و کنترل کلی</small></span></button>
+<button data-key="orders" data-src="orders-admin.html"><span class="ico"><img src="https://img.icons8.com/ios-filled/50/FFFFFF/shopping-cart.png" alt="سفارش‌ها" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>سفارش‌ها</b><small>ثبت، بررسی و تبدیل سفارش</small></span></button>
+<button data-key="projects" data-src="admin-projects.html"><span class="ico"><img src="https://img.icons8.com/ios-filled/50/FFFFFF/project.png" alt="پروژه‌ها" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>پروژه‌ها</b><small>وضعیت، پرداخت و تحویل</small></span></button>
+<span class="nav-section-label nav-divider">محتوا و ارتباط با مشتری</span><button data-key="messages" data-src="admin-messages.html"><span class="ico"><img src="https://img.icons8.com/ios-filled/50/FFFFFF/chat.png" alt="مکاتبات و پیام‌ها" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>مکاتبات و پیام‌ها</b><small>صندوق درخواست و پاسخ‌ها</small></span></button>
+<button data-key="videos" data-src="videos-admin.html"><span class="ico"><img src="https://img.icons8.com/ios-filled/50/FFFFFF/video.png" alt="ویدئوها" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>مدیریت ویدئوها</b><small>انتشار و آمار بازدید</small></span></button>
+<button data-key="comments" data-src="comments-admin.html"><span class="ico"><img src="https://img.icons8.com/ios-filled/50/FFFFFF/comments.png" alt="دیدگاه‌ها" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>دیدگاه‌ها</b><small>تأیید، پنهان و مدیریت</small></span></button>
+<button data-key="portfolio" data-src="portfolio-admin.html"><span class="ico"><img src="https://img.icons8.com/ios-filled/50/FFFFFF/image.png" alt="نمونه‌کارها" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>نمونه‌کارها</b><small>گالری و محتوای نمونه‌کار</small></span></button>
+<button data-key="services" data-src="service-settings-admin.html"><span class="ico"><img src="https://img.icons8.com/ios-filled/50/FFFFFF/services.png" alt="خدمات" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>وضعیت خدمات</b><small>فعال‌سازی و غیرفعال‌سازی خدمات</small></span></button>
+<button data-key="feedback" data-src="feedback-admin.html"><span class="ico"><img src="https://img.icons8.com/ios-filled/50/FFFFFF/feedback.png" alt="بازخورد مشتریان" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>بازخورد مشتریان</b><small>امتیازها، پیشنهادها و گزارش مشکلات</small></span></button>
+<button data-key="community" data-src="community-admin.html"><span class="ico"><img src="https://img.icons8.com/ios-filled/50/FFFFFF/conference-call.png" alt="انجمن" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>مدیریت انجمن</b><small>پیام‌ها، گزارش‌ها و اعضا</small></span></button>
+<span class="nav-section-label nav-divider">وفاداری و جامعه مشتریان</span><button data-key="club" data-src="club-admin.html"><span class="ico"><img src="https://img.icons8.com/ios-filled/50/FFFFFF/crown.png" alt="باشگاه مشتریان" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>باشگاه مشتریان</b><small>امتیازها، سطح اعضا، جوایز و تیزرها</small></span></button>
+<button data-key="plus" data-src="plus-admin.html"><span class="ico"><img src="https://img.icons8.com/ios-filled/50/FFFFFF/membership-card.png" alt="عضویت پلاس" width="20" height="20" decoding="async"></span><span class="nav-copy"><b>عضویت پلاس+</b><small>اعضا، تمدید و درخواست‌های هدیه</small></span></button>
 </nav><div class="nav-empty" id="navEmpty" hidden>بخشی با این عنوان پیدا نشد.</div><div class="side-foot">تمام ابزارهای مدیریتی در یک فضای یکپارچه گردآوری شده‌اند. دسترسی هر بخش مطابق مجوز و ورود امن همان بخش کنترل می‌شود.</div></aside>
 <main class="workspace"><div class="workspace-head"><div class="crumb"><strong id="moduleTitle">داشبورد اصلی</strong><span> / مرکز فرماندهی</span></div><button class="reload" id="reloadModule">بارگذاری مجدد ↻</button></div><div class="frame-wrap"><div class="frame-loading" id="frameLoading"><span class="loader-ring"></span><b>در حال آماده‌سازی بخش مدیریت</b><small>لطفاً چند لحظه صبر کنید…</small></div><iframe id="moduleFrame" title="بخش مدیریت انتخاب‌شده" src="admin.html"></iframe></div></main>
 </div>
