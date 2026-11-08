@@ -45,11 +45,13 @@ async function sendTelegram(message: string) {
   if (!response.ok || result?.ok !== true) throw new Error("ارسال تلگرام ناموفق بود.");
 }
 
-async function sendEmail(to: string, subject: string, message: string) {
+async function sendEmail(to: string, subject: string, message: string, unsubscribeToken = "") {
   const key = Deno.env.get("RESEND_API_KEY") || "";
   if (!key) throw new Error("کلید ارسال ایمیل تنظیم نشده است.");
   const safeSubject = subject.replace(/[\r\n]/g, " ").slice(0, 180);
   const html = '<div dir="rtl" style="font-family:Tahoma,Arial,sans-serif;background:#0b0d12;color:#f4f5f8;padding:28px;border-radius:18px;line-height:2"><div style="color:#d6ff59;font-weight:bold;letter-spacing:2px">ALISHAMS STUDIO</div><h2 style="font-size:20px">' + esc(subject) + '</h2><p style="white-space:pre-line">' + esc(message) + '</p><p><a href="https://alishams.ir/account.html" style="display:inline-block;background:#d6ff59;color:#10120b;padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:bold">ورود به حساب کاربری</a></p></div>';
+  const unsubscribeUrl = unsubscribeToken ? "https://alishams.ir/newsletter.html?action=unsubscribe&token=" + encodeURIComponent(unsubscribeToken) : "";
+  const unsubscribeHtml = unsubscribeUrl ? '<p style="margin-top:24px;border-top:1px solid #ffffff22;padding-top:14px;font-size:12px;color:#aeb6c2">برای لغو عضویت خبرنامه <a href="' + esc(unsubscribeUrl) + '" style="color:#d6ff59">اینجا کلیک کنید</a>.</p>' : "";
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
@@ -71,7 +73,7 @@ async function deliver(db: any, item: QueueItem, serviceKey: string, supabaseUrl
       await sendTelegram("🔔 اتوماسیون Alishams\n\n" + item.title + "\n" + item.message + "\n\nشناسه: " + item.target_id);
     } else if (channel === "email") {
       if (!item.recipient_email) throw new Error("ایمیل گیرنده ثبت نشده است.");
-      await sendEmail(item.recipient_email, item.title, item.message);
+      await sendEmail(item.recipient_email, item.title, item.message, text(item.payload?.unsubscribe_token, 100));
     } else if (channel === "account") {
       if (item.user_id) {
         const { error } = await db.from("account_notifications").upsert({
@@ -289,7 +291,7 @@ async function processEngine(db: any, source: string, serviceKey: string, supaba
     });
 
     const { data: subscribers, error: subscriberError } = await db.from("newsletter_subscribers")
-      .select("id,email,confirmed_at,status").eq("status", "active").not("confirmed_at", "is", null)
+      .select("id,email,confirmed_at,status,unsubscribe_token").eq("status", "active").not("confirmed_at", "is", null)
       .lte("confirmed_at", new Date(now - 2 * 86400000).toISOString()).limit(500);
     if (subscriberError) throw subscriberError;
     scanned += (subscribers || []).length;
@@ -298,12 +300,12 @@ async function processEngine(db: any, source: string, serviceKey: string, supaba
       if (ageDays >= 2) await enqueue("newsletter_intro_2d", "newsletter", subscriber.id, {
         email: subscriber.email, title: "با خدمات Alishams Studio بیشتر آشنا شوید",
         message: "در Alishams Studio می‌توانید خدمات طراحی وب‌سایت، موشن‌گرافیک و محتوای تبلیغاتی را متناسب با نیاز کسب‌وکار خود بررسی کنید. برای مشاهده خدمات و نمونه‌کارها به وب‌سایت سر بزنید: https://alishams.ir",
-        channels: ["email"], eventSuffix: "intro"
+        channels: ["email"], eventSuffix: "intro", payload: { unsubscribe_token: subscriber.unsubscribe_token }
       });
       if (ageDays >= 5) await enqueue("newsletter_guide_5d", "newsletter", subscriber.id, {
         email: subscriber.email, title: "راهنمای آماده‌سازی یک سفارش دقیق",
         message: "برای شروع یک پروژه بهتر است هدف، مخاطب، نمونه‌های مورد علاقه، امکانات موردنیاز و زمان‌بندی تقریبی را مشخص کنید. این اطلاعات کمک می‌کند پیشنهاد دقیق‌تری دریافت کنید. ثبت سفارش: https://alishams.ir",
-        channels: ["email"], eventSuffix: "guide"
+        channels: ["email"], eventSuffix: "guide", payload: { unsubscribe_token: subscriber.unsubscribe_token }
       });
     }
 
