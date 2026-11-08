@@ -62,6 +62,7 @@ Deno.serve(async(req:Request)=>{
    const {data,error}=await db.from("club_teaser_requests").insert({user_id:user.id,week_key:weekKey(),brief}).select("id,status,week_key,created_at").single();if(error?.code==="23505")return out({error:"سهمیه تیزر رایگان این هفته را قبلاً ثبت کرده‌ای."},409,origin);if(error)throw error;return out({ok:true,request:data},201,origin);
   }
   if(!isAdmin)return out({error:"دسترسی مدیریت مجاز نیست."},403,origin);
+  const audit=async(actionKey:string,entityType:string,entityId:string,summary:string,before:any=null,after:any=null)=>{const {error}=await db.from("admin_audit_logs").insert({actor_user_id:user.id,actor_email:user.email||OWNER,action_key:actionKey,entity_type:entityType,entity_id:entityId||null,summary,before_data:before,after_data:after});if(error)console.error("club audit insert failed",error.message)};
   if(action==="admin_users"){
    const page=Math.max(1,Math.min(100,Number(body.page)||1));
    const authRes=await fetch(url+"/auth/v1/admin/users?page="+page+"&per_page=1000",{headers:{"apikey":service,"Authorization":"Bearer "+service}});
@@ -81,15 +82,15 @@ Deno.serve(async(req:Request)=>{
   }
   if(action==="admin_adjust"){
    const uid=str(body.user_id,50),points=Number(body.points),description=str(body.description,250);if(!/^[0-9a-f-]{36}$/i.test(uid)||!Number.isInteger(points)||points===0||Math.abs(points)>100000||!description)return out({error:"اطلاعات تغییر امتیاز معتبر نیست."},400,origin);
-   const {error}=await db.from("club_point_ledger").insert({user_id:uid,points,event_type:"admin_adjustment",source_id:crypto.randomUUID(),description});if(error)throw error;return out({ok:true},200,origin);
+   const {data:row,error}=await db.from("club_point_ledger").insert({user_id:uid,points,event_type:"admin_adjustment",source_id:crypto.randomUUID(),description}).select("id,points,event_type").single();if(error)throw error;await audit("club.points_adjusted","club_member",uid,"تغییر دستی امتیاز عضو باشگاه",{},{points:row.points,event_type:row.event_type,description});return out({ok:true},200,origin);
   }
   if(action==="admin_award_service"){
    const uid=str(body.user_id,50),order=str(body.order_id,50),amount=Number(body.amount_toman);if(!/^[0-9a-f-]{36}$/i.test(uid)||!/^[0-9a-f-]{36}$/i.test(order)||!Number.isSafeInteger(amount)||amount<0)return out({error:"اطلاعات سفارش معتبر نیست."},400,origin);
-   const {data,error}=await db.rpc("club_award_service_purchase",{p_user_id:uid,p_order_id:order,p_amount_toman:amount});if(error)throw error;return out({ok:true,points:data},200,origin);
+   const {data,error}=await db.rpc("club_award_service_purchase",{p_user_id:uid,p_order_id:order,p_amount_toman:amount});if(error)throw error;await audit("club.service_points_awarded","club_member",uid,"ثبت امتیاز خرید خدمت",{},{order_id:order,amount_toman:amount,points:Number(data)||0});return out({ok:true,points:data},200,origin);
   }
   if(action==="admin_teaser_update"){
    const id=str(body.id,50),status=str(body.status,20),note=str(body.admin_note,800),link=str(body.delivery_url,500);if(!/^[0-9a-f-]{36}$/i.test(id)||!["pending","in_progress","delivered","rejected"].includes(status))return out({error:"وضعیت درخواست معتبر نیست."},400,origin);
-   const {data,error}=await db.from("club_teaser_requests").update({status,admin_note:note,delivery_url:link,updated_at:new Date().toISOString()}).eq("id",id).select("id,status").single();if(error)throw error;return out({ok:true,request:data},200,origin);
+   const {data:before}=await db.from("club_teaser_requests").select("status").eq("id",id).maybeSingle();const {data,error}=await db.from("club_teaser_requests").update({status,admin_note:note,delivery_url:link,updated_at:new Date().toISOString()}).eq("id",id).select("id,status,user_id").single();if(error)throw error;await audit("club.teaser_updated","club_teaser_request",id,"به‌روزرسانی درخواست تیزر عضو",{status:before?.status},{status:data.status,user_id:data.user_id,delivery_url:link||null});return out({ok:true,request:data},200,origin);
   }
   return out({error:"عملیات ناشناخته است."},400,origin);
  }catch(e){console.error("club-api",e);return out({error:"عملیات باشگاه انجام نشد. دوباره تلاش کن."},500,origin)}
