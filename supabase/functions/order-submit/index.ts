@@ -14,6 +14,26 @@ const b=await req.json(),client_name=str(b.client_name,120),client_email=str(b.c
 if(!client_name||!client_email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(client_email)||contact_info.length<2||!service||!title||!details)return res({error:"لطفاً نام، ایمیل معتبر، شماره تماس، خدمت، عنوان و توضیحات سفارش را کامل کن."},400,o);
 const url=Deno.env.get("SUPABASE_URL"),key=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");if(!url||!key)return res({error:"سرویس ثبت سفارش فعلاً در دسترس نیست."},503,o);
 const db=createClient(url,key,{auth:{persistSession:false}});
+const orderJwt=(req.headers.get("Authorization")||"").replace(/^Bearer\\s+/i,"");
+if(!orderJwt)return res({error:"برای ثبت سفارش ابتدا وارد حساب کاربری شو و ایمیلت را تأیید کن."},401,o);
+const anon=Deno.env.get("SUPABASE_ANON_KEY")||"";
+if(!anon)return res({error:"اعتبارسنجی حساب در دسترس نیست."},503,o);
+const authClient=createClient(url,anon,{auth:{persistSession:false,autoRefreshToken:false}});
+const {data:verifiedAuth,error:verifiedAuthError}=await authClient.auth.getUser(orderJwt);
+const verifiedAccount=verifiedAuth?.user;
+if(verifiedAuthError||!verifiedAccount?.id||String(verifiedAccount.email||"").trim().toLowerCase()!==client_email)
+ return res({error:"برای ثبت سفارش باید با همان حسابی وارد شوی که ایمیل آن در فرم سفارش وارد شده است."},403,o);
+const emailVerified=!!verifiedAccount.email_confirmed_at;
+if(!emailVerified)return res({error:"برای ثبت سفارش ابتدا ایمیل حساب کاربری را تأیید کن."},403,o);
+const {data:level3Record,error:level3Error}=await db.from("account_level_verifications").select("status").eq("user_id",verifiedAccount.id).maybeSingle();
+if(level3Error)throw level3Error;
+const githubVerified=Array.isArray(verifiedAccount.identities)&&verifiedAccount.identities.some((identity:any)=>identity.provider==="github");
+const accountLevel=level3Record?.status==="approved"&&githubVerified?3:githubVerified?2:1;
+const accessText=[...services,title].join(" ").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\\u200c\\u200f\\u200e]/g," ").replace(/\\s+/g," ").trim().toLowerCase();
+const isPackageOrder=/(پک|پکیج|package|packages)/i.test(accessText);
+const isWebsiteDesignOrder=/(طراحی\\s*وب|طراحی\\s*سایت|طراحی\\s*اختصاصی\\s*برند|قالب\\s*وبلاگ|website\\s*design|web\\s*design)/i.test(accessText);
+if(isPackageOrder&&accountLevel<1)
+ return res({error:"برای ثبت سفارش ابتدا ایمیل حساب کاربری را تأیید کن.",required_level:1,current_level:accountLevel},403,o);
 const {data:availability,error:availabilityError}=await db.from("site_service_settings").select("order_services").eq("setting_key","main").single();
 if(availabilityError)throw availabilityError;
 const unavailable=services.filter((name:string)=>availability?.order_services?.[name]===false);
@@ -56,7 +76,7 @@ if(!domainOnly&&discount_code.startsWith("CLUB-")){
 }
 let tracking=code();
 for(let i=0;i<4;i++){const {data}=await db.from("client_orders").select("id").eq("tracking_code",tracking).maybeSingle();if(!data)break;tracking=code()}
-const {data:order,error}=await db.from("client_orders").insert({tracking_code:tracking,user_id:clubAccountId||null,access_token_hash:await hash(access),client_name,client_email,contact_info,service,services,title,details,budget}).select("id,tracking_code,created_at").single();
+const {data:order,error}=await db.from("client_orders").insert({tracking_code:tracking,user_id:verifiedAccount.id,access_token_hash:await hash(access),client_name,client_email,contact_info,service,services,title,details,budget}).select("id,tracking_code,created_at").single();
 if(error)throw error;
 if(clubVoucherId){
  const {error:orderVoucherError}=await db.from("client_orders").update({club_reward_toman:clubRewardAmount,club_reward_code:clubVoucherCode}).eq("id",order.id);
