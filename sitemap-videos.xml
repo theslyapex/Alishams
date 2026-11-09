@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://alishams.ir/videos.html?v=motion-graphic-05</loc>
     <video:video>
       <video:thumbnail_loc>https://my.uploadkon.ir/d/P4GHXS6AAoDszXI88o0KSJAk3KP5Aq/MTEwODIxfHBhZA.jpg</video:thumbnail_loc>
-      <video:title>تیزر تبلیغاتی دکتر مریم احسانی</video:title>
+      <video:title>تیزر تبلیغاتی کارشناس مامایی</video:title>
       <video:description>ساخت تیزر تبلیغاتی حرفه‌ای به سبک موشن‌گرافیک برای معرفی خدمات دکتر مامایی، با طراحی بصری جذاب، انیمیشن‌های نرم و مدرن، المان‌های مرتبط با سلامت مادر و نوزاد، تایپوگرافی چشم‌نواز و فضاسازی آرامش‌بخش؛ با هدف معرفی تخصص، خدمات و ایجاد حس اعتماد در مخاطبان.</video:description>
       <video:content_loc>https://my.uploadkon.ir/d/vR4I0LoC4Ritev9dNF7QjdvhYi5nAW/MTEwODA0fHBhZA.mp4</video:content_loc>
       <video:publication_date>2026-11-07T19:30:55Z</video:publication_date>
@@ -48,16 +48,6 @@
       <video:description>این پروژه با هدف معرفی هویت بصری و فضای خلاقانه‌ی Alishams Digital Studio طراحی و اجرا شده است. در این تیزر تبلیغاتی، از تکنیک‌های موشن‌گرافیک، انیمیشن و ترکیب‌بندی پویا برای خلق تجربه‌ای بصری منسجم و هماهنگ با هویت برند استفاده شده است. تمرکز پروژه بر ارائه‌ی جذاب برند، تقویت جلوه‌ی بصری آن و ایجاد ارتباط مؤثرتر با مخاطب است. ابعاد ویدئو: 16:9</video:description>
       <video:content_loc>https://my.uploadkon.ir/d/XEKeq2ygayoo5GEwqzvN8RXfPGA9FR/NzgxNzF8cGFkZA.mp4</video:content_loc>
       <video:publication_date>2026-10-25T13:11:53Z</video:publication_date>
-    </video:video>
-  </url>
-  <url>
-    <loc>https://alishams.ir/</loc>
-    <video:video>
-      <video:thumbnail_loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/homepage-media/homepage/poster-1794152712702-1g2p6k.png</video:thumbnail_loc>
-      <video:title>خلاقیت را از نزدیک تماشا کن | ویدئوی معرفی استودیو علی شمس</video:title>
-      <video:description>نگاهی کوتاه به دنیای خلاقیت، طراحی و اجرای دیجیتال در استودیو علی شمس.</video:description>
-      <video:content_loc>https://alishams.ir/assets/videos/homepage-hero-video.mp4</video:content_loc>
-      <video:publication_date>2026-11-08T15:45:35Z</video:publication_date>
     </video:video>
   </url>
 </urlset>
