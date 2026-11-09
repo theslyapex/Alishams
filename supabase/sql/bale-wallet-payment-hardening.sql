@@ -599,3 +599,161 @@ revoke all on function public.apply_project_discount(uuid,text,text) from public
 grant execute on function public.apply_project_discount(uuid,text,text) to service_role;
 revoke all on function public.settle_project_discount_if_paid(uuid) from public, anon, authenticated;
 grant execute on function public.settle_project_discount_if_paid(uuid) to service_role;
+
+
+-- Restrict project-stage discounts to the explicitly accepted dedicated-order workflow.
+CREATE OR REPLACE FUNCTION public.apply_project_discount(p_project_id uuid, p_customer_email text, p_code text DEFAULT NULL::text)
+ RETURNS jsonb
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'pg_catalog', 'public'
+AS $function$
+declare
+  v_project public.client_projects%rowtype;
+  v_order public.client_orders%rowtype;
+  v_membership public.plus_memberships%rowtype;
+  v_coupon public.discount_codes%rowtype;
+  v_services text;
+  v_code text := upper(trim(coalesce(p_code,'')));
+  v_plus_percent numeric(5,2) := 0;
+  v_coupon_percent numeric(5,2) := 0;
+  v_selected_percent numeric(5,2) := 0;
+  v_selected_code text := '';
+  v_use_plus boolean := false;
+  v_amount numeric(18,2) := 0;
+  v_paid numeric(18,2) := 0;
+begin
+  select * into v_project
+  from public.client_projects
+  where id = p_project_id
+  for update;
+
+  if not found or lower(trim(v_project.client_email)) <> lower(trim(p_customer_email)) then
+    raise exception 'این پروژه به حساب شما تعلق ندارد.';
+  end if;
+
+  select * into v_order
+  from public.client_orders
+  where project_id = p_project_id
+    and lower(trim(client_email)) = lower(trim(p_customer_email))
+    and status = 'converted'
+    and offer_accepted_at is not null
+    and nullif(trim(offer_terms_version),'') is not null
+  order by updated_at desc
+  limit 1
+  for update;
+
+  if not found then
+    raise exception 'اعمال تخفیف فقط برای سفارش‌های ثبت‌شده از مسیر سفارش اختصاصی فعال است.';
+  end if;
+
+  if v_project.status <> 'awaiting_payment' or v_project.discount_redeemed then
+    raise exception 'در این مرحله امکان تغییر تخفیف پروژه وجود ندارد.';
+  end if;
+
+  select coalesce(sum(amount),0) into v_paid
+  from public.project_payments
+  where project_id = p_project_id and confirmed = true;
+
+  if v_paid > 0 then
+    raise exception 'پس از ثبت پرداخت، امکان تغییر تخفیف وجود ندارد.';
+  end if;
+
+  v_services := lower(
+    coalesce(v_project.service,'') || ' ' ||
+    coalesce(array_to_string(v_project.services,' '),'') || ' ' ||
+    coalesce(v_order.service,'') || ' ' ||
+    coalesce(array_to_string(v_order.services,' '),'')
+  );
+
+  if position('دامنه' in v_services) > 0 then
+    raise exception 'برای سفارش‌های دارای خدمت دامنه، ابتدا مبلغ طراحی و دامنه باید جداگانه مشخص شود؛ فعلاً تخفیف روی این سفارش قابل اعمال نیست.';
+  end if;
+
+  if v_code <> '' then
+    if v_code !~ '^[A-Z0-9_-]{3,32}$' then
+      raise exception 'فرمت کد تخفیف معتبر نیست.';
+    end if;
+
+    select * into v_coupon
+    from public.discount_codes
+    where upper(code) = v_code
+    limit 1
+    for update;
+
+    if not found or not v_coupon.active then
+      raise exception 'این کد تخفیف معتبر یا فعال نیست.';
+    end if;
+    if v_coupon.starts_at is not null and v_coupon.starts_at > now() then
+      raise exception 'زمان استفاده از این کد هنوز آغاز نشده است.';
+    end if;
+    if v_coupon.expires_at is not null and v_coupon.expires_at <= now() then
+      raise exception 'اعتبار این کد تخفیف به پایان رسیده است.';
+    end if;
+    if v_coupon.max_uses is not null and coalesce(v_coupon.usage_count,0) >= v_coupon.max_uses then
+      raise exception 'ظرفیت استفاده از این کد تکمیل شده است.';
+    end if;
+    if coalesce(array_length(v_coupon.services,1),0) > 0
+       and not (
+         v_order.service = any(v_coupon.services)
+         or v_project.service = any(v_coupon.services)
+         or exists (
+           select 1 from unnest(coalesce(v_project.services,'{}'::text[]) || coalesce(v_order.services,'{}'::text[])) s
+           where s = any(v_coupon.services)
+         )
+       ) then
+      raise exception 'این کد برای خدمات این پروژه قابل استفاده نیست.';
+    end if;
+    v_coupon_percent := greatest(0, least(100, coalesce(v_coupon.percent,0)));
+  end if;
+
+  select * into v_membership
+  from public.plus_memberships
+  where lower(email) = lower(trim(p_customer_email))
+    and status = 'active'
+    and (starts_at is null or starts_at <= now())
+    and (ends_at is null or ends_at > now())
+  order by updated_at desc
+  limit 1
+  for update;
+
+  if found then
+    v_plus_percent := case when coalesce(v_membership.discount_use_count,0) >= 2 then 18 else 10 end;
+  end if;
+
+  if v_plus_percent >= v_coupon_percent and v_plus_percent > 0 then
+    v_selected_percent := v_plus_percent;
+    v_use_plus := true;
+  elsif v_coupon_percent > 0 then
+    v_selected_percent := v_coupon_percent;
+    v_selected_code := v_coupon.code;
+  end if;
+
+  v_amount := round(coalesce(v_project.total_price,0) * v_selected_percent / 100, 2);
+
+  update public.client_projects
+  set discount_code = v_selected_code,
+      discount_percent = v_selected_percent,
+      discount_amount = v_amount,
+      plus_discount_applied = v_use_plus,
+      discount_redeemed = false,
+      updated_at = now()
+  where id = p_project_id;
+
+  update public.bale_payment_intents
+  set status = 'expired', expires_at = now(), updated_at = now()
+  where project_id = p_project_id and status in ('pending','precheckout');
+
+  return jsonb_build_object(
+    'ok', true,
+    'discount_percent', v_selected_percent,
+    'discount_amount', v_amount,
+    'discount_code', v_selected_code,
+    'plus_discount_applied', v_use_plus,
+    'base_amount', coalesce(v_project.total_price,0),
+    'payable_amount', greatest(0,coalesce(v_project.total_price,0)-v_amount),
+    'selected_source', case when v_use_plus then 'plus' when v_selected_code <> '' then 'coupon' else 'none' end
+  );
+end;
+$function$
+
