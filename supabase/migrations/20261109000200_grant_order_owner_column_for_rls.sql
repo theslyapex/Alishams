@@ -1,0 +1,1 @@
+grant select (user_id) on public.client_orders to authenticated;
