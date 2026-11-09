@@ -68,17 +68,77 @@ const URL="https://srfldjfrzmtnlabusssq.supabase.co",KEY="sb_publishable_UW2Wzzp
 const sb=createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true}});
 const $=id=>document.getElementById(id),fmt=n=>Number(n||0).toLocaleString("fa-IR"),dt=v=>v?new Date(v).toLocaleString("fa-IR"):"—";
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-let session=null,users=[],userPage=1,devicePage=0,selected=new Set(),activeTab="push";
+let session=null,users=[],userPage=1,devicePage=0,selected=new Set(),activeTab="push",authEntryInProgress=false,mfaVerifyInProgress=false,mfaChallengePending=false;
 function notice(id,msg,type=""){const el=$(id);el.textContent=msg;el.className="notice "+type;el.hidden=false}
 function status(msg,type=""){notice("status",msg,type)}
 async function api(action,extra={}){if(!session?.access_token)throw Error("نشست مدیر در دسترس نیست.");const r=await fetch(URL+"/functions/v1/mobile-app-admin",{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+session.access_token},body:JSON.stringify({action,...extra})});const raw=await r.text();let d={};try{d=raw?JSON.parse(raw):{}}catch{throw Error("پاسخ سرور قابل خواندن نیست.")}if(!r.ok||!d.ok)throw Error(d.error||"درخواست انجام نشد.");return d}
 function showLogin(msg,type=""){ $("login").hidden=false;$("app").hidden=true;if(msg)notice("loginNotice",msg,type)}
-async function enter(s){session=s;if(!s?.user||s.user.email?.toLowerCase()!==OWNER){await sb.auth.signOut();session=null;showLogin("این حساب اجازه ورود به مدیریت اپلیکیشن را ندارد.","error");return}
- const level=s.user.app_metadata?.aal||s.access_token&&JSON.parse(atob(s.access_token.split(".")[1])).aal;
- if(level!=="aal2"){await startMfa();return}
- try{await api("overview");$("login").hidden=true;$("app").hidden=false;$("refresh").hidden=false;$("logout").hidden=false;await loadAll()}catch(e){showLogin(e.message,"error")}
+async function enter(s){
+ if(!s?.access_token)return;
+ if(authEntryInProgress)return;
+ authEntryInProgress=true;
+ session=s;
+ try{
+  if(!s.user||s.user.email?.toLowerCase()!==OWNER){
+   await sb.auth.signOut();session=null;
+   showLogin("این حساب اجازه ورود به مدیریت اپلیکیشن را ندارد.","error");return;
+  }
+  const {data:assurance,error:assuranceError}=await sb.auth.mfa.getAuthenticatorAssuranceLevel();
+  if(assuranceError)throw assuranceError;
+  if(assurance?.currentLevel!=="aal2"){
+   await startMfa();return;
+  }
+  const result=await api("overview");
+  $("login").hidden=true;$("app").hidden=false;
+  $("refresh").hidden=false;$("logout").hidden=false;
+  status("احراز هویت دومرحله‌ای تأیید شد؛ در حال آماده‌سازی پنل…","success");
+  await loadAll();
+ }catch(e){showLogin(e.message||"ورود به پنل انجام نشد.","error")}
+ finally{authEntryInProgress=false}
 }
-async function startMfa(){try{const {data,error}=await sb.auth.mfa.listFactors();if(error)throw error;const factors=[...(data.totp||[]),...(data.phone||[])].filter(x=>x.status==="verified");if(!factors.length){showLogin("برای ورود مدیر، ابتدا تأیید دومرحله‌ای حساب را فعال کن.","error");return}const factor=factors.find(x=>x.factor_type==="totp")||factors[0];const {data:challenge,error:ce}=await sb.auth.mfa.challenge({factorId:factor.id});if(ce)throw ce;window.__mfa={factorId:factor.id,challengeId:challenge.id};$("mfaBox").hidden=false;notice("loginNotice","کد تأیید دومرحله‌ای را وارد کن تا دسترسی مدیریتی فعال شود.");$("verifyMfa").onclick=async()=>{try{const {data,error}=await sb.auth.mfa.verify({...window.__mfa,code:$("mfaCode").value.trim()});if(error)throw error;const {data:refreshed}=await sb.auth.refreshSession();await enter(refreshed.session||data.session)}catch(e){notice("loginNotice",e.message||"کد تأیید معتبر نیست.","error")}}}catch(e){showLogin("بررسی تأیید دومرحله‌ای انجام نشد: "+e.message,"error")}}
+async function startMfa(){
+ if(mfaChallengePending||mfaVerifyInProgress)return;
+ mfaChallengePending=true;
+ try{
+  const {data,error}=await sb.auth.mfa.listFactors();if(error)throw error;
+  const factors=[...(data.totp||[]),...(data.phone||[])].filter(x=>x.status==="verified");
+  if(!factors.length){mfaChallengePending=false;showLogin("برای ورود مدیر، ابتدا تأیید دومرحله‌ای حساب را فعال کن.","error");return}
+  const factor=factors.find(x=>x.factor_type==="totp")||factors[0];
+  const {data:challenge,error:ce}=await sb.auth.mfa.challenge({factorId:factor.id});if(ce)throw ce;
+  window.__mfa={factorId:factor.id,challengeId:challenge.id};
+  $("mfaBox").hidden=false;
+  $("mfaCode").value="";
+  notice("loginNotice","کد تازه برنامه احراز هویت را وارد کن تا دسترسی مدیریتی فعال شود.");
+ }catch(e){mfaChallengePending=false;showLogin("بررسی تأیید دومرحله‌ای انجام نشد: "+(e.message||"خطای ناشناخته"),"error")}
+}
+$("verifyMfa").onclick=async()=>{
+ if(mfaVerifyInProgress||!window.__mfa)return;
+ const code=$("mfaCode").value.trim();
+ if(!code){notice("loginNotice","کد تأیید را وارد کن.","error");return}
+ mfaVerifyInProgress=true;
+ const button=$("verifyMfa");button.disabled=true;button.textContent="در حال تأیید…";
+ try{
+  const {data,error}=await sb.auth.mfa.verify({...window.__mfa,code});
+  if(error){
+   const codeKey=error.code||error.name||"";
+   if(codeKey==="mfa_ip_address_mismatch"||/IP addresses mismatch/i.test(error.message||"")){
+    mfaChallengePending=false;window.__mfa=null;$("mfaCode").value="";
+    notice("loginNotice","نشست تأیید با شبکه فعلی هم‌خوان نبود. یک درخواست تأیید تازه صادر شد؛ کد جدید را وارد کن.","error");
+    mfaVerifyInProgress=false;button.disabled=false;button.textContent="تأیید و ورود";
+    await startMfa();return;
+   }
+   throw error;
+  }
+  mfaChallengePending=false;window.__mfa=null;
+  const verifiedSession=data?.session||(await sb.auth.getSession()).data.session;
+  if(!verifiedSession)throw new Error("تأیید انجام شد اما نشست امن دریافت نشد؛ صفحه را یک‌بار تازه‌سازی کن.");
+  await enter(verifiedSession);
+ }catch(e){
+  notice("loginNotice",e.message||"کد تأیید معتبر نیست.","error");
+ }finally{
+  mfaVerifyInProgress=false;button.disabled=false;button.textContent="تأیید و ورود";
+ }
+};
 async function loadAll(){status("در حال دریافت آمار و اطلاعات اپلیکیشن…");try{const d=await api("overview");const s=d.stats||{};const cards=[["کاربران دارای دستگاه فعال",s.active_app_users,"حساب‌هایی با ثبت دستگاه"],["دستگاه‌های فعال",s.active_devices,"قابل دریافت اعلان پوش"],["سفارش‌ها",s.orders,"کل سفارش‌های ثبت‌شده"],["پروژه‌ها",s.projects,"کل پروژه‌ها"],["درخواست‌های پشتیبانی باز",s.open_support,"در انتظار رسیدگی"],["عضویت‌های فعال پلاس+",s.active_plus,"در حال اعتبار"],["اعضای باشگاه",s.club_members,"پروفایل‌های باشگاه"],["اعلان‌های خوانده‌نشده",s.unread_notifications,"در همه حساب‌ها"]];$("stats").innerHTML=cards.map(x=>'<div class="stat"><span>'+esc(x[0])+'</span><b>'+fmt(x[1])+'</b><small>'+esc(x[2])+'</small></div>').join("");status("اتصال مدیریتی برقرار است · آخرین به‌روزرسانی: "+dt(new Date().toISOString()),"success");await loadUsers(1);await loadHistory()}catch(e){status(e.message,"error")}}
 async function loadUsers(page){userPage=page;try{const d=await api("users",{page});users=d.users||[];renderUsers();$("usersPrev").disabled=page<=1;$("usersNext").disabled=!d.has_more}catch(e){status(e.message,"error")}}
 function renderUsers(){const q=$("userSearch").value.trim().toLowerCase();const rows=users.filter(u=>[u.email,u.display_name,u.id,u.phone].some(v=>String(v||"").toLowerCase().includes(q)));$("userCount").textContent="صفحه "+fmt(userPage)+" · "+fmt(rows.length)+" کاربر";$("usersBody").innerHTML=rows.length?rows.map(u=>'<tr><td><label class="user-row"><input type="checkbox" data-user="'+esc(u.id)+'" '+(selected.has(u.id)?"checked":"")+'> انتخاب</label></td><td>'+esc(u.display_name||"—")+'</td><td>'+esc(u.email||u.phone||"—")+'</td><td title="'+esc(u.id)+'">'+esc(u.id.slice(0,8))+'…</td><td>'+dt(u.last_sign_in_at)+'</td><td><span class="pill '+(u.email_confirmed_at?"ok":"off")+'">'+(u.email_confirmed_at?"تأییدشده":"تأییدنشده")+'</span></td></tr>').join(""):'<tr><td colspan="6" class="empty">کاربری پیدا نشد.</td></tr>';$("selectedCount").textContent=fmt(selected.size)+" کاربر انتخاب شده";}
@@ -117,6 +177,9 @@ $("sendPush").onclick=async()=>{const title=$("pushTitle").value.trim(),message=
  $("sendProgress").style.width="100%";notice("sendNotice","ارسال تکمیل شد · "+fmt(totalTarget)+" مخاطب · "+fmt(totalSent)+" اعلان پوش تحویل‌شده به سرویس · "+fmt(totalFailed)+" خطا.","success");$("pushTitle").value="";$("pushMessage").value="";await loadHistory();await loadAll()}catch(e){notice("sendNotice","ارسال کامل نشد: "+e.message,"error")}finally{btn.disabled=false;btn.textContent="ارسال اعلان"}
 };
 const {data}=await sb.auth.getSession();if(data.session)await enter(data.session);else showLogin();
-sb.auth.onAuthStateChange((_event,s)=>{if(s&&s.access_token)enter(s);else if(!s){session=null;showLogin()}});
+sb.auth.onAuthStateChange((event,s)=>{
+ if(event==="SIGNED_OUT"){session=null;mfaChallengePending=false;showLogin();return}
+ if(!mfaVerifyInProgress&&s?.access_token&&!session&&["INITIAL_SESSION","SIGNED_IN"].includes(event))void enter(s);
+});
 </script>
 </body></html>
