@@ -84,6 +84,7 @@ form.addEventListener("submit", async event => {
       return;
     }
     if (data.session) {
+      try { await sb.functions.invoke("mobile-account-security", { body: { event: "signup" } }); } catch (securityError) { console.warn("Security notification unavailable:", securityError); }
       notice("حساب ساخته شد؛ در حال انتقال به فضای مشتریان…", "success");
       location.replace(getNextUrl());
       return;
