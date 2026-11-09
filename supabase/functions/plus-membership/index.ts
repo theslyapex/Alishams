@@ -20,7 +20,6 @@ Deno.serve(async(req:Request)=>{
   if(authError||!user?.id||!user.email)return out({error:"برای ادامه وارد حساب کاربری شو."},401,origin);
   const db=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}});
   const b=await req.json().catch(()=>({})),action=str(b.action,40),isAdmin=user.id===ADMIN_ID&&user.email.toLowerCase()===OWNER;
-  if(isAdmin){const {data:claims,error:claimError}=await auth.auth.getClaims(jwt);if(claimError||(claims?.claims as any)?.aal!=="aal2")return out({error:"برای عملیات مدیریتی، تأیید دومرحله‌ای لازم است."},403,origin)}
   if(action==="status"){
    const {data:membership,error}=await db.from("plus_memberships").select("*").eq("user_id",user.id).maybeSingle();if(error)throw error;
    const [{data:reels,error:re},{data:domains,error:de}]=await Promise.all([
@@ -73,6 +72,7 @@ Deno.serve(async(req:Request)=>{
    return out({ok:true,payment:row},201,origin);
   }
   if(!isAdmin)return out({error:"دسترسی مدیریت مجاز نیست."},403,origin);
+  const {data:claims,error:claimError}=await auth.auth.getClaims(jwt);if(claimError||(claims?.claims as any)?.aal!=="aal2")return out({error:"برای عملیات مدیریتی، تأیید دومرحله‌ای لازم است."},403,origin);
   const audit=async(actionKey:string,entityType:string,entityId:string,summary:string,before:any=null,after:any=null)=>{const {error}=await db.from("admin_audit_logs").insert({actor_user_id:user.id,actor_email:user.email||OWNER,action_key:actionKey,entity_type:entityType,entity_id:entityId||null,summary,before_data:before,after_data:after});if(error)console.error("plus audit insert failed",error.message)};
   if(action==="admin_search"){
    const q=str(b.query,180).toLowerCase();if(q.length<2)return out({ok:true,users:[]},200,origin);
@@ -153,7 +153,7 @@ Deno.serve(async(req:Request)=>{
     end=b.ends_at?new Date(b.ends_at):(currentStillActive?new Date(new Date(old.ends_at).getTime()+30*86400000):new Date(start.getTime()+30*86400000));
     if(!Number.isFinite(start.getTime())||!Number.isFinite(end.getTime())||end<=start)return out({error:"تاریخ شروع و پایان معتبر نیست."},400,origin);
    }
-   const patch:any={email:target.user.email,status:enabled?"active":"inactive",starts_at:enabled?start!.toISOString():null,ends_at:enabled?end!.toISOString():null,discount_percent:(Number(old?.purchase_count)||0)>=3?18:10,admin_note:str(b.admin_note,1000),updated_at:now.toISOString()};
+   const patch:any={email:target.user.email,status:enabled?"active":"inactive",starts_at:enabled?start!.toISOString():null,ends_at:enabled?end!.toISOString():null,discount_percent:(Number(old?.discount_use_count)||0)>=2?18:10,admin_note:str(b.admin_note,1000),updated_at:now.toISOString()};
    if(enabled)patch.last_purchase_at=now.toISOString();
    let row:any=null;
    if(old){
