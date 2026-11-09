@@ -21,7 +21,7 @@ if(!anon)return res({error:"اعتبارسنجی حساب در دسترس نیس
 const authClient=createClient(url,anon,{auth:{persistSession:false,autoRefreshToken:false}});
 const {data:verifiedAuth,error:verifiedAuthError}=await authClient.auth.getUser(orderJwt);
 const verifiedAccount=verifiedAuth?.user;
-if(verifiedAuthError||!verifiedAccount?.id||String(verifiedAccount.email||"").trim().toLowerCase()!==client_email)
+if(verifiedAuthError||!verifiedAccount?.id)
  return res({error:"برای ثبت سفارش باید با همان حسابی وارد شوی که ایمیل آن در فرم سفارش وارد شده است."},403,o);
 const emailVerified=!!verifiedAccount.email_confirmed_at;
 if(!emailVerified)return res({error:"برای ثبت سفارش ابتدا ایمیل حساب کاربری را تأیید کن."},403,o);
@@ -47,7 +47,7 @@ if(bearer){
  try{
   const anon=Deno.env.get("SUPABASE_ANON_KEY")||"";
   if(anon){const auth=createClient(url,anon,{auth:{persistSession:false,autoRefreshToken:false}});const {data:authData}=await auth.auth.getUser(bearer);const account=authData?.user;
-   if(account?.id&&String(account.email||"").trim().toLowerCase()===client_email){clubAccountId=account.id;
+   if(account?.id&&account.id===verifiedAccount.id){clubAccountId=account.id;
     const hasCampaignOffer=services.some((name:string)=>name.includes("طراحی اختصاصی برند و وب")||name.includes("پکیج برنزی طراحی وبسایت")||name.includes("پکیج نقره‌ای طراحی وبسایت"));
     if(!hasCampaignOffer){
     const {data:membership}=await db.from("plus_memberships").select("status,starts_at,ends_at,discount_percent").eq("user_id",account.id).maybeSingle();
