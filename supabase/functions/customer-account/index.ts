@@ -61,6 +61,56 @@ Deno.serve(async (req: Request) => {
     const body = await req.json().catch(() => ({}));
     const action = String(body?.action || "dashboard");
 
+    if (action === "apply_project_discount") {
+      const projectId = String(body?.project_id || "").trim();
+      const code = String(body?.code || "").trim().toUpperCase().slice(0,32);
+      if (!/^[0-9a-f-]{36}$/i.test(projectId) || (code && !/^[A-Z0-9_-]{3,32}$/.test(code)))
+        return out({ error: "شناسه پروژه یا کد تخفیف معتبر نیست." }, 400, origin);
+      const { data: discount, error: discountError } = await db.rpc("apply_project_discount", {
+        p_project_id: projectId, p_customer_email: email, p_code: code || null
+      });
+      if (discountError) {
+        const message = String(discountError.message || "");
+        return out({ error: message.includes("این پروژه") || message.includes("تخفیف") || message.includes("کد") || message.includes("پرداخت") || message.includes("دامنه") || message.includes("مرحله") ? message : "بررسی و اعمال تخفیف انجام نشد. دوباره تلاش کن." }, 400, origin);
+      }
+      if (!discount?.ok) return out({ error: "تخفیفی برای این پروژه قابل اعمال نیست." }, 400, origin);
+      return out({ ok: true, discount }, 200, origin);
+    }
+
+    if (action === "accept_order_offer") {
+      const orderId = String(body?.order_id || "").trim();
+      if (!/^[0-9a-f-]{36}$/i.test(orderId) || body?.accept_offer !== true)
+        return out({ error: "برای پذیرش پیشنهاد، تأیید صریح و سفارش معتبر لازم است." }, 400, origin);
+      const { data: order, error: orderError } = await db.from("client_orders")
+        .select("id,tracking_code,status,quoted_price,offer_accepted_at,project_id")
+        .eq("id", orderId).ilike("client_email", emailPattern).maybeSingle();
+      if (orderError) throw orderError;
+      if (!order) return out({ error: "این سفارش به حساب کاربری شما تعلق ندارد." }, 404, origin);
+      if (order.project_id) return out({ error: "این سفارش قبلاً به پروژه تبدیل شده است." }, 409, origin);
+      if (!["awaiting_customer","ready_to_convert","approved"].includes(order.status))
+        return out({ error: "این سفارش هنوز در مرحله پذیرش پیشنهاد نیست." }, 409, origin);
+      if (order.offer_accepted_at) return out({ error: "پیشنهاد این سفارش قبلاً پذیرفته شده است." }, 409, origin);
+      if (!(Number(order.quoted_price) > 0)) return out({ error: "مبلغ نهایی هنوز از سوی استودیو اعلام نشده است." }, 409, origin);
+      const now = new Date().toISOString(), early = body?.early_start_consent === true;
+      const { data: updated, error: updateError } = await db.from("client_orders").update({
+        status: "approved", offer_accepted_at: now, offer_terms_version: "2026-11-09-account-v1",
+        early_start_consent: early, early_start_consent_at: early ? now : null, updated_at: now
+      }).eq("id", orderId).ilike("client_email", emailPattern)
+        .in("status", ["awaiting_customer","ready_to_convert","approved"])
+        .is("offer_accepted_at", null).is("project_id", null)
+        .select("id,status,offer_accepted_at,offer_terms_version,early_start_consent").maybeSingle();
+      if (updateError) throw updateError;
+      if (!updated) return out({ error: "وضعیت سفارش تغییر کرده است؛ صفحه را تازه‌سازی کن." }, 409, origin);
+      const eventText = early
+        ? "مشتری از حساب کاربری، پیشنهاد نهایی را پذیرفت و جداگانه با شروع زودهنگام خدمت موافقت کرد."
+        : "مشتری از حساب کاربری، پیشنهاد نهایی را پذیرفت. شروع اجرا تا پایان مهلت قانونی انصراف، در موارد قابل اعمال، متوقف می‌ماند.";
+      const { error: eventError } = await db.from("client_order_events").insert({
+        order_id: orderId, status: "approved", public_message: eventText
+      });
+      if (eventError) throw eventError;
+      return out({ ok: true, order: updated }, 200, origin);
+    }
+
     if (action === "create_web_order") {
       const fullName = String(body?.client_name || user.user_metadata?.full_name || "").trim().slice(0,120);
       const phone = String(body?.phone || user.user_metadata?.phone || "").trim().slice(0,40);
@@ -367,10 +417,10 @@ Deno.serve(async (req: Request) => {
 
     const [ordersR, projectsR, requestsR] = await Promise.all([
       db.from("client_orders")
-        .select("id,tracking_code,client_name,service,title,budget,status,quoted_price,discount_code,discount_percent,discount_amount,payable_amount,eta_date,public_message,project_id,created_at,updated_at")
+        .select("id,tracking_code,client_name,service,title,budget,status,quoted_price,discount_code,discount_percent,discount_amount,payable_amount,eta_date,public_message,project_id,created_at,updated_at,offer_accepted_at,offer_terms_version,early_start_consent")
         .ilike("client_email", emailPattern).order("created_at", { ascending: false }).limit(100),
       db.from("client_projects")
-        .select("id,tracking_code,client_name,title,description,status,progress,total_price,created_at,updated_at,target_date")
+        .select("id,tracking_code,client_name,title,description,status,progress,total_price,service,services,discount_code,discount_percent,discount_amount,plus_discount_applied,discount_redeemed,created_at,updated_at,target_date")
         .ilike("client_email", emailPattern).order("updated_at", { ascending: false }).limit(100),
       db.from("communication_requests")
         .select("id,tracking_code,sender_name,sender_email,subject,category,status,customer_rating,customer_rating_at,created_at,updated_at,account_user_id")
@@ -429,6 +479,29 @@ Deno.serve(async (req: Request) => {
     if (messagesR.error || eventsR.error || paymentsR.error || historyR.error || projectFilesR.error || projectMessagesR.error || notificationsR.error || accountNotificationsR.error || revisionsR.error || reviewsR.error) {
       console.error("customer-account detail query", messagesR.error, eventsR.error, paymentsR.error, historyR.error, projectFilesR.error, projectMessagesR.error, notificationsR.error, accountNotificationsR.error, revisionsR.error, reviewsR.error);
       return out({ error: "دریافت تاریخچه جزئیات انجام نشد. کمی بعد دوباره تلاش کن." }, 500, origin);
+    }
+
+    const paymentRows = paymentsR.data || [];
+    for (const project of projects) {
+      const linkedOrder = orders.find((order: any) => order.project_id === project.id && order.status === "converted");
+      const serviceText = [project.service, ...(Array.isArray(project.services) ? project.services : []), linkedOrder?.service, ...(Array.isArray(linkedOrder?.services) ? linkedOrder.services : [])].filter(Boolean).join(" ").toLowerCase();
+      project.discount_eligible = !!linkedOrder && !serviceText.includes("دامنه");
+      const projectPaid = paymentRows.filter((payment: any) => payment.project_id === project.id && payment.confirmed).reduce((sum: number, payment: any) => sum + Number(payment.amount || 0), 0);
+      project.discount_locked = projectPaid > 0 || project.discount_redeemed === true;
+      if (project.discount_eligible && project.status === "awaiting_payment" && projectPaid === 0 && !project.discount_redeemed
+          && !project.discount_code && !project.plus_discount_applied && Number(project.discount_amount || 0) === 0) {
+        const { data: automaticDiscount, error: automaticDiscountError } = await db.rpc("apply_project_discount", {
+          p_project_id: project.id, p_customer_email: email, p_code: null
+        });
+        if (automaticDiscountError) {
+          console.error("automatic project Plus discount", automaticDiscountError.code || "unknown");
+        } else if (automaticDiscount?.ok) {
+          project.discount_percent = Number(automaticDiscount.discount_percent || 0);
+          project.discount_amount = Number(automaticDiscount.discount_amount || 0);
+          project.discount_code = automaticDiscount.discount_code || "";
+          project.plus_discount_applied = automaticDiscount.plus_discount_applied === true;
+        }
+      }
     }
 
     const messageIds = (messagesR.data || []).map((m: any) => m.id);
