@@ -15,6 +15,9 @@ function getClient(){
  if(!sbPromise) sbPromise=Promise.resolve(window.supabase?.createClient ? window.supabase : null).then(lib=>lib||import("https://esm.sh/@supabase/supabase-js@2")).then(lib=>lib.createClient("https://srfldjfrzmtnlabusssq.supabase.co","sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}));
  return sbPromise;
 }
+async function recordAccountSecurityEvent(sb,event){
+ try{await sb.functions.invoke("mobile-account-security",{body:{event}})}catch(error){console.warn("Security notification unavailable:",error)}
+}
 form.addEventListener("submit",async function(e){
  e.preventDefault();
  if(button.disabled)return;
@@ -30,6 +33,7 @@ form.addEventListener("submit",async function(e){
   notice("در حال بررسی اطلاعات ورود…");
   const {data,error}=await sb.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
   if(error){notice(error.message==="Invalid login credentials"?"ایمیل یا رمز عبور اشتباه است.":error.message,"error");return}
+  await recordAccountSecurityEvent(sb,"login");
   location.replace(getNextUrl());
  }catch(err){console.error("Login failed:",err);notice("ارتباط با سامانه ورود برقرار نشد. اتصال اینترنت را بررسی کن و دوباره امتحان کن.","error")}
  finally{button.disabled=false;button.innerHTML='ورود امن به حساب <span aria-hidden="true">↗</span>'}
