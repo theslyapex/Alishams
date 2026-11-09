@@ -483,7 +483,7 @@ Deno.serve(async (req: Request) => {
 
     const paymentRows = paymentsR.data || [];
     for (const project of projects) {
-      const linkedOrder = orders.find((order: any) => order.project_id === project.id && order.status === "converted");
+      const linkedOrder = orders.find((order: any) => order.project_id === project.id && order.status === "converted" && !!order.offer_accepted_at && !!order.offer_terms_version);
       const serviceText = [project.service, ...(Array.isArray(project.services) ? project.services : []), linkedOrder?.service, ...(Array.isArray(linkedOrder?.services) ? linkedOrder.services : [])].filter(Boolean).join(" ").toLowerCase();
       project.discount_eligible = !!linkedOrder && !serviceText.includes("دامنه");
       const projectPaid = paymentRows.filter((payment: any) => payment.project_id === project.id && payment.confirmed).reduce((sum: number, payment: any) => sum + Number(payment.amount || 0), 0);
