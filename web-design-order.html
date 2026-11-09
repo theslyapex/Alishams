@@ -139,7 +139,30 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text!important;user-
   .footer-bottom{justify-content:center!important;align-items:center!important;text-align:center!important}
   .footer-bottom span{text-align:center!important}
 }
-</style></head><body><header class="topbar"><div class="wrap nav">
+</style><style id="web-order-nav-scroll-fix">
+@media(max-width:850px){
+  #navlinks.open{
+    max-height:calc(100vh - 72px);
+    max-height:calc(100dvh - 72px - env(safe-area-inset-bottom, 0px));
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+    scrollbar-color:#d9ff7260 transparent;
+    touch-action:pan-y;
+  }
+  #navlinks.open::-webkit-scrollbar{width:5px}
+  #navlinks.open::-webkit-scrollbar-thumb{background:#d9ff7260;border-radius:10px}
+}
+@media(max-width:560px){
+  #navlinks.open{
+    max-height:calc(100vh - 66px);
+    max-height:calc(100dvh - 66px - env(safe-area-inset-bottom, 0px));
+  }
+}
+</style>
+</head><body><header class="topbar"><div class="wrap nav">
 <a class="brand" href="/" aria-label="علی شمس"><span class="brand-mark"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a>
 <nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی"><a href="/#services">خدمات</a><a href="/portfolio.html">نمونه‌کارها</a><a href="/videos.html">ویدئوها</a><a href="/#alishamsLeague">رقابت برای رتبه برتر</a><a href="/about.html">درباره من</a>
 <div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false">همکاری ⌄</button><div class="nav-dropdown-menu"><a href="/pricing.html">قیمت‌گذاری</a><a href="/terms.html">شرایط و قوانین سفارش</a><a href="/plus.html">عضویت پلاس+</a><a href="/support.html">حمایت مالی</a><a href="/packages.html">پکیج‌های فروشگاهی</a><a href="/domain-lab.html">آزمایشگاه دامنه</a><a href="/services/economic-website-package.html">پک اقتصادی طراحی سایت</a><a href="/services/economic-logo-motion-package.html">پک اقتصادی لوگو و موشن</a><a href="/#reviews">رویکرد کاری</a><a href="/#trust">شفافیت همکاری</a></div></div>
