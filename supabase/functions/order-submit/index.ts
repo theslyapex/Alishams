@@ -56,7 +56,7 @@ if(!domainOnly&&discount_code.startsWith("CLUB-")){
 }
 let tracking=code();
 for(let i=0;i<4;i++){const {data}=await db.from("client_orders").select("id").eq("tracking_code",tracking).maybeSingle();if(!data)break;tracking=code()}
-const {data:order,error}=await db.from("client_orders").insert({tracking_code:tracking,access_token_hash:await hash(access),client_name,client_email,contact_info,service,services,title,details,budget}).select("id,tracking_code,created_at").single();
+const {data:order,error}=await db.from("client_orders").insert({tracking_code:tracking,user_id:clubAccountId||null,access_token_hash:await hash(access),client_name,client_email,contact_info,service,services,title,details,budget}).select("id,tracking_code,created_at").single();
 if(error)throw error;
 if(clubVoucherId){
  const {error:orderVoucherError}=await db.from("client_orders").update({club_reward_toman:clubRewardAmount,club_reward_code:clubVoucherCode}).eq("id",order.id);
