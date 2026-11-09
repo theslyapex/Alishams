@@ -52,7 +52,28 @@ $("uploadProjectFile").onclick=async()=>{
 $("saveProjectText").onclick=async()=>{if(!selected)return say("projectFileStatus","ابتدا پروژه را انتخاب کن.");const title=$("projectTextTitle").value.trim(),content=$("projectTextContent").value.trim();if(!title||!content)return say("projectFileStatus","عنوان و متن را کامل وارد کن.");const btn=$("saveProjectText");btn.disabled=true;try{await registerProjectItem({file_type:"text",file_name:title,content,description:"متن تحویلی پروژه",file_size:0,is_invoice:false});$("projectTextTitle").value="";$("projectTextContent").value="";say("projectFileStatus","متن با موفقیت برای مشتری ثبت شد.")}catch(e){say("projectFileStatus",e.message)}finally{btn.disabled=false}};
 $("saveProjectLink").onclick=async()=>{if(!selected)return say("projectFileStatus","ابتدا پروژه را انتخاب کن.");const title=$("projectLinkTitle").value.trim(),url=$("projectLinkUrl").value.trim();if(!title||!url)return say("projectFileStatus","عنوان و آدرس لینک را کامل وارد کن.");const btn=$("saveProjectLink");btn.disabled=true;try{await registerProjectItem({file_type:"link",file_name:title,external_url:url,description:$("projectLinkDescription").value.trim(),file_size:0,is_invoice:false});$("projectLinkTitle").value="";$("projectLinkUrl").value="";$("projectLinkDescription").value="";say("projectFileStatus","لینک با موفقیت برای مشتری ثبت شد.")}catch(e){say("projectFileStatus",e.message)}finally{btn.disabled=false}};
 
-function renderPayments(){const list=payments.filter(x=>x.project_id===selected.id);const paid=list.filter(x=>x.confirmed).reduce((s,x)=>s+Number(x.amount||0),0);const total=Number(selected.total_price||0);const balance=Math.max(0,total-paid);const fmt=n=>new Intl.NumberFormat("fa-IR",{maximumFractionDigits:2}).format(n);$("paymentSummary").innerHTML='<div class="stat"><strong>'+fmt(total)+'</strong>مبلغ کل توافق‌شده</div><div class="stat"><strong>'+fmt(paid)+'</strong>پرداخت تأییدشده</div><div class="stat"><strong>'+fmt(balance)+'</strong>مانده حساب</div>';$("payments").innerHTML=list.length?'<table><thead><tr><th>تاریخ</th><th>مبلغ</th><th>روش</th><th>یادداشت</th></tr></thead><tbody>'+list.map(p=>'<tr><td>'+new Date(p.paid_at).toLocaleDateString("fa-IR")+'</td><td>'+new Intl.NumberFormat("fa-IR").format(p.amount)+'</td><td>'+({cash:"نقدی",bank_transfer:"انتقال بانکی",online:"آنلاین",other:"سایر"}[p.method]||p.method)+'</td><td>'+esc(p.note||"—")+'</td></tr>').join("")+'</tbody></table>':'<p class="empty">پرداختی ثبت نشده است.</p>'}
+function renderPayments(){
+ const list=payments.filter(x=>x.project_id===selected.id);
+ const paid=list.filter(x=>x.confirmed).reduce((s,x)=>s+Number(x.amount||0),0);
+ const baseTotal=Math.max(0,Number(selected.total_price)||0);
+ const discountAmount=Math.min(baseTotal,Math.max(0,Number(selected.discount_amount)||0));
+ const discountPercent=Math.max(0,Number(selected.discount_percent)||0);
+ const finalTotal=Math.max(0,baseTotal-discountAmount);
+ const balance=Math.max(0,finalTotal-paid);
+ const fmt=n=>new Intl.NumberFormat("fa-IR",{maximumFractionDigits:2}).format(n);
+ const hasDiscount=discountAmount>0;
+ const discountSource=selected.plus_discount_applied===true?"تخفیف عضویت پلاس":selected.discount_code?"کد تخفیف "+esc(selected.discount_code):"تخفیف پروژه";
+ const discountDetails=hasDiscount
+  ? '<div class="stat"><strong>'+fmt(discountAmount)+'</strong>مبلغ تخفیف · '+(discountPercent?fmt(discountPercent)+'٪':'')+'</div><div class="stat"><strong>'+discountSource+'</strong>نوع تخفیف اعمال‌شده</div>'
+  : '<div class="stat"><strong>—</strong>تخفیفی اعمال نشده</div>';
+ $("paymentSummary").innerHTML=
+  '<div class="stat"><strong>'+fmt(baseTotal)+'</strong>مبلغ پایه پروژه</div>'+
+  discountDetails+
+  '<div class="stat"><strong>'+fmt(finalTotal)+'</strong>مبلغ نهایی پس از تخفیف</div>'+
+  '<div class="stat"><strong>'+fmt(paid)+'</strong>مجموع پرداخت تأییدشده</div>'+
+  '<div class="stat"><strong>'+fmt(balance)+'</strong>مانده قابل پرداخت</div>';
+ $("payments").innerHTML=list.length?'<table><thead><tr><th>تاریخ</th><th>مبلغ</th><th>روش</th><th>یادداشت</th></tr></thead><tbody>'+list.map(p=>'<tr><td>'+new Date(p.paid_at).toLocaleDateString("fa-IR")+'</td><td>'+new Intl.NumberFormat("fa-IR").format(p.amount)+'</td><td>'+({cash:"نقدی",bank_transfer:"انتقال بانکی",online:"آنلاین",other:"سایر"}[p.method]||p.method)+'</td><td>'+esc(p.note||"—")+'</td></tr>').join("")+'</tbody></table>':'<p class="empty">پرداختی ثبت نشده است.</p>';
+}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 show();
 </script></body></html>
