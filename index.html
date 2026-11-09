@@ -1103,6 +1103,36 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
  .route-inline-nav a,.discovery-index a,.route-wordmark-inner>a,.utility-dock-links a{transition:none!important}
 }
 </style>
+
+<style id="website-order-launcher-styles">
+#website-order-launcher{position:fixed;right:max(22px,env(safe-area-inset-right));bottom:max(22px,env(safe-area-inset-bottom));z-index:9996;font-family:inherit;direction:rtl}
+#website-order-launcher .wol-trigger{width:62px;height:62px;border:1px solid rgba(197,178,255,.7);border-radius:21px;display:grid;place-items:center;position:relative;cursor:pointer;color:#f4efff;background:linear-gradient(145deg,#42316c,#211b38);box-shadow:0 12px 38px #0008,0 0 0 7px #b6a0ff12,0 0 30px #b6a0ff30;transition:transform .25s,box-shadow .25s}
+#website-order-launcher .wol-trigger:hover{transform:translateY(-4px) rotate(3deg);box-shadow:0 16px 42px #0009,0 0 0 9px #b6a0ff19,0 0 36px #b6a0ff44}
+#website-order-launcher .wol-trigger img{width:31px;height:31px;object-fit:contain;filter:brightness(0) saturate(100%) invert(91%) sepia(23%) saturate(672%) hue-rotate(24deg) brightness(105%) contrast(103%)}
+#website-order-launcher .wol-trigger:after{content:"";position:absolute;inset:-6px;border:1px solid #b6a0ff38;border-radius:25px;animation:wolPulse 2.8s ease-out infinite;pointer-events:none}
+#website-order-launcher .wol-panel{position:absolute;right:0;bottom:80px;width:min(365px,calc(100vw - 32px));padding:18px;border:1px solid #ffffff20;border-radius:23px;background:linear-gradient(145deg,rgba(26,29,37,.97),rgba(12,14,19,.98));box-shadow:0 25px 80px #000b,0 0 45px #b6a0ff12;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);opacity:0;visibility:hidden;transform:translateY(12px) scale(.97);transform-origin:bottom right;transition:opacity .22s,transform .22s,visibility .22s}
+#website-order-launcher.is-open .wol-panel{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+#website-order-launcher .wol-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px}
+#website-order-launcher .wol-kicker{display:block;color:#c5b2ff;font-size:9px;font-weight:900;letter-spacing:1.5px;margin-bottom:5px}
+#website-order-launcher .wol-title{margin:0;color:#f7f8f2;font-size:17px;font-weight:900}
+#website-order-launcher .wol-subtitle{margin:5px 0 0;color:#a7aab4;font-size:11px;line-height:1.9}
+#website-order-launcher .wol-close{flex:0 0 31px;width:31px;height:31px;border:1px solid #ffffff18;border-radius:10px;background:#ffffff08;color:#c9cbd2;display:flex;align-items:center;justify-content:center;padding:0;line-height:1;font-family:Arial,sans-serif;font-size:21px;cursor:pointer}
+#website-order-launcher .wol-options{display:grid;gap:10px}
+#website-order-launcher .wol-option{display:flex;align-items:center;gap:12px;min-width:0;padding:13px;border:1px solid #b6a0ff30;border-radius:16px;background:linear-gradient(110deg,#b6a0ff12,#ffffff03);text-decoration:none;transition:border-color .2s,background .2s,transform .2s}
+#website-order-launcher .wol-option:hover{border-color:#b6a0ff88;background:#b6a0ff17;transform:translateX(-3px)}
+#website-order-launcher .wol-icon{width:45px;height:45px;flex:0 0 45px;display:grid;place-items:center;border-radius:14px;color:#d9ff72;background:linear-gradient(145deg,#d9ff721c,#d9ff7208);border:1px solid #d9ff722b}
+#website-order-launcher .wol-icon img{display:block;width:27px;height:27px;object-fit:contain}
+#website-order-launcher .wol-copy{flex:1;min-width:0}
+#website-order-launcher .wol-copy strong{display:block;color:#f3f4f6;font-size:12px;font-weight:850}
+#website-order-launcher .wol-copy small{display:block;margin-top:4px;color:#9da1ac;font-size:10px;line-height:1.7}
+#website-order-launcher .wol-arrow{color:#c5b2ff;font-size:17px;transition:transform .2s}
+#website-order-launcher .wol-option:hover .wol-arrow{transform:translateX(-3px);color:#d9ff72}
+#website-order-launcher .wol-foot{margin:13px 2px 0;color:#747986;font-size:9px;text-align:center}
+@keyframes wolPulse{0%{transform:scale(.94);opacity:.8}75%,100%{transform:scale(1.22);opacity:0}}
+@media(max-width:480px){#website-order-launcher{right:max(15px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom))}#website-order-launcher .wol-trigger{width:56px;height:56px;border-radius:19px}#website-order-launcher .wol-panel{bottom:72px;width:min(350px,calc(100vw - 30px));padding:15px;border-radius:20px}}
+@media(prefers-reduced-motion:reduce){#website-order-launcher *,#website-order-launcher *:before{animation:none!important;transition:none!important}}
+</style>
+
 </head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="علی شمس"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی">
@@ -2728,6 +2758,32 @@ panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setOpen(fa
 </script>
 
 
+
+
+<div id="website-order-launcher">
+ <button class="wol-trigger" type="button" aria-label="باز کردن سفارش طراحی وب‌سایت" aria-expanded="false" aria-controls="website-order-panel">
+  <img src="https://img.icons8.com/material-rounded/96/d9ff72/web-design.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+ </button>
+ <section class="wol-panel" id="website-order-panel" aria-label="سفارش اختصاصی طراحی وب‌سایت" aria-hidden="true">
+  <div class="wol-head"><div><span class="wol-kicker">ALISHAMS · WEB DESIGN</span><h2 class="wol-title">سفارش وب‌سایتت رو شروع کن</h2><p class="wol-subtitle">برای ثبت سفارش اختصاصی طراحی وب‌سایت، از مسیر زیر وارد شو.</p></div><button class="wol-close" type="button" aria-label="بستن پنجره">×</button></div>
+  <nav class="wol-options" aria-label="مسیر سفارش طراحی وب‌سایت">
+   <a class="wol-option" href="/web-design-order.html">
+    <span class="wol-icon" aria-hidden="true"><img src="https://img.icons8.com/material-rounded/96/d9ff72/domain.png" alt="" loading="lazy" decoding="async"></span>
+    <span class="wol-copy"><strong>سفارش طراحی وبسایت</strong><small>ثبت سفارش اختصاصی و ارسال جزئیات پروژه</small></span><span class="wol-arrow" aria-hidden="true">←</span>
+   </a>
+  </nav>
+  <p class="wol-foot">مسیر اختصاصی ثبت سفارش طراحی وب‌سایت</p>
+ </section>
+</div>
+<script id="website-order-launcher-script">
+(()=>{const root=document.getElementById('website-order-launcher');if(!root||root.dataset.ready)return;root.dataset.ready='1';const trigger=root.querySelector('.wol-trigger'),panel=root.querySelector('.wol-panel'),close=root.querySelector('.wol-close');
+const setOpen=open=>{root.classList.toggle('is-open',open);trigger.setAttribute('aria-expanded',String(open));panel.setAttribute('aria-hidden',String(!open));if(open)close.focus();else trigger.focus()};
+trigger.addEventListener('click',()=>setOpen(!root.classList.contains('is-open')));close.addEventListener('click',()=>setOpen(false));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&root.classList.contains('is-open'))setOpen(false)});
+document.addEventListener('click',e=>{if(root.classList.contains('is-open')&&!root.contains(e.target))setOpen(false)});
+panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setOpen(false)));
+})();
+</script>
 
 </body>
 <style id="remove-visible-legacy-order-service">
