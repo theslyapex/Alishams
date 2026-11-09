@@ -148,7 +148,7 @@ Deno.serve(async (req: Request) => {
       let insertError:any = null;
       for (let attempt=0; attempt<5; attempt++) {
         const result = await db.from("client_orders").insert({
-          tracking_code: trackingCode, access_token_hash: keyHash,
+          tracking_code: trackingCode, user_id: user.id, access_token_hash: keyHash,
           client_name: fullName, contact_info: phone, client_email: email,
           service: "طراحی وب‌سایت — " + category,
           title: ("درخواست طراحی وب‌سایت: " + websiteName).slice(0,180),
