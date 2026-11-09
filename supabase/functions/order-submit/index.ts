@@ -14,7 +14,7 @@ const b=await req.json(),client_name=str(b.client_name,120),client_email=str(b.c
 if(!client_name||!client_email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(client_email)||contact_info.length<2||!service||!title||!details)return res({error:"لطفاً نام، ایمیل معتبر، شماره تماس، خدمت، عنوان و توضیحات سفارش را کامل کن."},400,o);
 const url=Deno.env.get("SUPABASE_URL"),key=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");if(!url||!key)return res({error:"سرویس ثبت سفارش فعلاً در دسترس نیست."},503,o);
 const db=createClient(url,key,{auth:{persistSession:false}});
-const orderJwt=(req.headers.get("Authorization")||"").replace(/^Bearer\\s+/i,"");
+const orderJwt=(req.headers.get("Authorization")||"").replace(/^Bearer\s+/i,"");
 if(!orderJwt)return res({error:"برای ثبت سفارش ابتدا وارد حساب کاربری شو و ایمیلت را تأیید کن."},401,o);
 const anon=Deno.env.get("SUPABASE_ANON_KEY")||"";
 if(!anon)return res({error:"اعتبارسنجی حساب در دسترس نیست."},503,o);
