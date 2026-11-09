@@ -181,8 +181,14 @@ Deno.serve(async(req:Request)=>{
    if(b.target_date!==undefined)patch.target_date=str(b.target_date,10)||null;
    if(b.status!==undefined){patch.status=str(b.status,30);if(!["awaiting_payment","not_started","in_progress","review","on_hold","completed","cancelled"].includes(patch.status))return out({error:"وضعیت معتبر نیست."},400,origin)}
    if(b.progress!==undefined){patch.progress=Math.max(0,Math.min(100,Math.round(Number(b.progress)||0)))}
-   const {data:old,error:oldErr}=await db.from("client_projects").select("status,progress").eq("id",id).single();if(oldErr)throw oldErr;
-   const {data:project,error}=await db.from("client_projects").update(patch).eq("id",id).select("*").single();if(error)throw error;
+   const {data:old,error:oldErr}=await storageDb.from("client_projects").select("status,progress,total_price,discount_percent,discount_amount").eq("id",id).single();if(oldErr)throw oldErr;
+   if(b.total_price!==undefined&&Number(b.total_price)!==Number(old.total_price||0)){
+    const {data:existingPayments,error:paymentCheckError}=await storageDb.from("project_payments").select("id").eq("project_id",id).eq("confirmed",true).limit(1);if(paymentCheckError)throw paymentCheckError;
+    if((existingPayments||[]).length)return out({error:"پس از ثبت پرداخت، مبلغ پایه پروژه قابل تغییر نیست."},409,origin);
+    if(Number(old.discount_percent||0)>0)patch.discount_amount=Number((Number(patch.total_price)*Number(old.discount_percent)/100).toFixed(2));
+    const {error:expireError}=await storageDb.from("bale_payment_intents").update({status:"expired",expires_at:new Date().toISOString(),updated_at:new Date().toISOString()}).eq("project_id",id).in("status",["pending","precheckout"]);if(expireError)throw expireError;
+   }
+   const {data:project,error}=await storageDb.from("client_projects").update(patch).eq("id",id).select("*").single();if(error)throw error;
    if(old.status!==project.status||old.progress!==project.progress){
     const note=str(b.history_note,2000);
     const statusLabels:Record<string,string>={awaiting_payment:"در انتظار پرداخت",not_started:"هنوز شروع نشده",in_progress:"در حال انجام",review:"در انتظار بررسی و تأیید شما",on_hold:"متوقف موقت",completed:"تکمیل شده",cancelled:"لغو شده"};
@@ -202,8 +208,13 @@ Deno.serve(async(req:Request)=>{
   if(action==="payment"){
    const project_id=str(b.project_id,50),amount=Number(b.amount),note=str(b.note,1000),method=str(b.method,30)||"other";
    if(!project_id||!Number.isFinite(amount)||amount<=0||!["cash","bank_transfer","online","other"].includes(method))return out({error:"مبلغ یا اطلاعات پرداخت معتبر نیست."},400,origin);
-   const {data:payment,error}=await db.from("project_payments").insert({project_id,amount,note,method,confirmed:true}).select("*").single();if(error)throw error;
-   return out({ok:true,payment},201,origin);
+   const {data:project,error:projectError}=await storageDb.from("client_projects").select("id,total_price,discount_amount,status").eq("id",project_id).maybeSingle();if(projectError)throw projectError;if(!project)return out({error:"پروژه پیدا نشد."},404,origin);
+   const {data:priorPayments,error:priorError}=await storageDb.from("project_payments").select("amount").eq("project_id",project_id).eq("confirmed",true);if(priorError)throw priorError;
+   const paid=(priorPayments||[]).reduce((sum:any,row:any)=>sum+Number(row.amount||0),0),remaining=Math.max(0,Number(project.total_price||0)-Number(project.discount_amount||0)-paid);
+   if(amount>remaining)return out({error:"مبلغ پرداخت از مانده نهایی پروژه بیشتر است."},400,origin);
+   const {data:payment,error}=await storageDb.from("project_payments").insert({project_id,amount,note,method,confirmed:true}).select("*").single();if(error)throw error;
+   const {data:settlement,error:settlementError}=await storageDb.rpc("settle_project_discount_if_paid",{p_project_id:project_id});if(settlementError)throw settlementError;
+   return out({ok:true,payment,settlement},201,origin);
   }
   if(action==="delete"){
    const id=str(b.id,50);if(!id)return out({error:"شناسه پروژه لازم است."},400,origin);
