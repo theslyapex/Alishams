@@ -47,6 +47,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{width:min(
 <button class="tab" data-tab="devices">دستگاه‌ها</button>
 <button class="tab" data-tab="history">تاریخچه اعلان‌ها</button>
 <button class="tab" data-tab="release">نسخه و انتشار</button>
+<button class="tab" data-tab="portfolio">نمایش نمونه‌کارها در اپ</button>
 </div>
 <section id="tab-push" class="panel">
 <h2>ارسال اعلان به اپلیکیشن</h2><p class="sub">اعلان هم‌زمان در مرکز اعلان‌های داخل اپ ثبت می‌شود. ارسال همگانی فقط برای حساب‌هایی انجام می‌شود که حداقل یک دستگاه فعال ثبت کرده‌اند.</p>
@@ -59,6 +60,13 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{width:min(
 <section id="tab-users" class="panel" hidden><h2>فهرست کاربران</h2><p class="sub">اطلاعات حساب از سرویس احراز هویت دریافت می‌شود. کنترل ورود، امکان ورودهای جدید را محدود یا دوباره فعال می‌کند؛ نشست‌های از قبل فعال ممکن است تا پایان اعتبار توکن باقی بمانند.</p><div class="toolbar"><input id="userSearch" class="search" type="search" placeholder="جست‌وجو بر اساس ایمیل، نام یا شناسه"><span class="muted" id="userCount"></span><button class="btn alt" id="usersPrev">صفحه قبل</button><button class="btn alt" id="usersNext">صفحه بعد</button></div><div class="table-wrap"><table><thead><tr><th>انتخاب</th><th>نام نمایشی</th><th>ایمیل</th><th>شناسه کاربر</th><th>آخرین ورود</th><th>وضعیت ایمیل</th><th>دسترسی حساب</th><th>کنترل ورود</th></tr></thead><tbody id="usersBody"></tbody></table></div><p class="sub" id="selectedCount">۰ کاربر انتخاب شده</p></section>
 <section id="tab-devices" class="panel" hidden><h2>دستگاه‌های ثبت‌شده</h2><p class="sub">توکن‌های محرمانه FCM در این پنل نمایش داده نمی‌شوند. فقط شناسه دستگاه، نوع سیستم، وضعیت و آخرین فعالیت قابل مشاهده است.</p><div class="toolbar"><input id="deviceSearch" class="search" type="search" placeholder="فیلتر بر اساس شناسه کاربر"><button class="btn alt" id="devicePrev">صفحه قبل</button><button class="btn alt" id="deviceNext">صفحه بعد</button><button class="btn alt" id="loadDevices">بارگذاری دستگاه‌ها</button></div><div class="table-wrap"><table><thead><tr><th>کاربر</th><th>دستگاه</th><th>سیستم</th><th>وضعیت</th><th>آخرین فعالیت</th><th>ثبت‌شده در</th><th>عملیات</th></tr></thead><tbody id="devicesBody"></tbody></table></div></section>
 <section id="tab-history" class="panel" hidden><h2>تاریخچه اعلان‌های ارسالی</h2><p class="sub">آخرین اعلان‌هایی که از همین مرکز ارسال شده‌اند.</p><div class="history" id="historyList"></div></section>
+<section id="tab-portfolio" class="panel" hidden>
+<h2>مدیریت نمایش نمونه‌کارها در اپلیکیشن</h2>
+<p class="sub">از این قسمت می‌توانی نمایش هر نمونه‌کار را در اپلیکیشن مستقل از وب‌سایت روشن یا خاموش کنی. پنهان‌سازی در اپ، محتوای وب‌سایت یا وضعیت انتشار آن را تغییر نمی‌دهد.</p>
+<div class="toolbar"><input id="portfolioSearch" class="search" type="search" placeholder="جست‌وجوی عنوان نمونه‌کار"><span class="muted" id="portfolioCount"></span><button class="btn alt" id="portfolioReload">بارگذاری دوباره</button></div>
+<div id="portfolioStatus" class="notice">در حال دریافت نمونه‌کارها…</div>
+<div class="table-wrap"><table><thead><tr><th>عنوان نمونه‌کار</th><th>دسته‌بندی</th><th>منبع</th><th>وضعیت وب‌سایت</th><th>نمایش در اپ</th><th>عملیات</th></tr></thead><tbody id="portfolioVisibilityBody"></tbody></table></div>
+</section>
 <section id="tab-release" class="panel" hidden><h2>ساخت و انتشار نسخه اندروید</h2><p class="sub">ساخت APK در گردش‌کار خودکار مخزن انجام می‌شود. این بخش برای مشاهده وضعیت ساخت و رفتن به سوابق انتشار است؛ انتشار نسخه جدید هنوز به‌صورت خودکار روی دستگاه کاربران نصب نمی‌شود.</p><div class="modules"><a class="module" href="https://github.com/theslyapex/Alishams-Mobile/actions" target="_blank" rel="noopener"><span class="mi">↗</span><span><b>گردش‌کار ساخت APK</b><small>مشاهده اجراها، خطاها و فایل خروجی</small></span></a><a class="module" href="https://github.com/theslyapex/Alishams-Mobile/releases" target="_blank" rel="noopener"><span class="mi">⬆</span><span><b>نسخه‌های منتشرشده</b><small>بررسی نسخه‌ها و یادداشت انتشار</small></span></a></div><div class="notice">مدیریت اجباری‌بودن به‌روزرسانی و حداقل نسخه مجاز را بعداً می‌توان با یک تنظیم سروری اضافه کرد؛ در این مرحله عمداً بدون ساخت جدول یا تغییر طرح پایگاه داده، چنین محدودیتی اعمال نشده است.</div></section>
 </main>
 </div>
@@ -152,7 +160,54 @@ async function loadDevices(){
  }catch(e){status(e.message,"error")}
 }
 async function loadHistory(){try{const d=await api("recent_push");const rows=d.notifications||[];$("historyList").innerHTML=rows.length?rows.map(x=>'<article class="history-item"><b>'+esc(x.title)+'</b><p>'+esc(x.body)+'</p><small>'+dt(x.created_at)+' · شناسه کاربر: '+esc(x.user_id)+'</small></article>').join(""):'<div class="empty">هنوز اعلانی از این پنل ارسال نشده است.</div>'}catch(e){$("historyList").innerHTML='<div class="empty">تاریخچه اعلان‌ها دریافت نشد.</div>'}}
-function setTab(tab){activeTab=tab;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));["push","users","devices","history","release"].forEach(x=>$("tab-"+x).hidden=x!==tab);if(tab==="devices")loadDevices();if(tab==="history")loadHistory();if(tab==="users")renderUsers()}
+
+const staticWebsitePortfolio=[
+ {key:"website-iran-ma",title:"ایران‌ما",category:"وب‌سایت محتوایی",source:"website",published:true},
+ {key:"website-apex",title:"Apex Video Compressor",category:"ابزار آنلاین",source:"website",published:true},
+ {key:"website-nova",title:"Nova Image Lab",category:"ابزار تصویری",source:"website",published:true},
+ {key:"website-abzarino",title:"ابزارینو",category:"مجموعه ابزار",source:"website",published:true},
+ {key:"website-shirazeh",title:"SHIRAZEH · رزومه‌ساز",category:"وب‌اپلیکیشن",source:"website",published:true}
+];
+let portfolioVisibilityItems=[];
+async function loadPortfolioVisibility(){
+ const box=$("portfolioStatus"),body=$("portfolioVisibilityBody");
+ box.className="notice";box.textContent="در حال دریافت فهرست نمونه‌کارها…";body.innerHTML="";
+ try{
+  const [gallery,videos,settings]=await Promise.all([
+   sb.from("portfolio_items").select("id,title,category,published").order("created_at",{ascending:false}),
+   sb.from("studio_videos").select("id,slug,title,category,is_published").order("created_at",{ascending:false}),
+   sb.from("mobile_app_portfolio_visibility").select("item_key,is_visible")
+  ]);
+  if(gallery.error)throw gallery.error;if(videos.error)throw videos.error;if(settings.error)throw settings.error;
+  const visibleMap=new Map((settings.data||[]).map(x=>[x.item_key,x.is_visible]));
+  const galleryItems=(gallery.data||[]).map(x=>({key:"portfolio:"+x.id,title:x.title,category:x.category==="logo"?"لوگو":"تصویر تبلیغاتی",source:"portfolio",published:!!x.published}));
+  const videoItems=(videos.data||[]).map(x=>({key:"video:"+x.id,title:x.title,category:x.category||"ویدئو",source:"video",published:!!x.is_published}));
+  portfolioVisibilityItems=[...staticWebsitePortfolio,...galleryItems,...videoItems].map(x=>({...x,visible:visibleMap.has(x.key)?visibleMap.get(x.key):true}));
+  renderPortfolioVisibility();
+  box.className="notice success";box.textContent="فهرست نمونه‌کارها به‌روز شد. خاموش‌کردن نمایش در اپ هیچ اثری روی انتشار وب‌سایت ندارد.";
+ }catch(e){box.className="notice error";box.textContent="دریافت فهرست نمونه‌کارها انجام نشد: "+(e.message||"خطای نامشخص");}
+}
+function renderPortfolioVisibility(){
+ const q=$("portfolioSearch").value.trim().toLowerCase();
+ const rows=portfolioVisibilityItems.filter(x=>(x.title+" "+x.category).toLowerCase().includes(q));
+ $("portfolioCount").textContent=fmt(rows.length)+" نمونه‌کار";
+ $("portfolioVisibilityBody").innerHTML=rows.length?rows.map(x=>'<tr><td>'+esc(x.title)+'</td><td>'+esc(x.category)+'</td><td>'+({website:"وب‌سایت",portfolio:"گالری تصاویر",video:"ویدئوهای استودیو"}[x.source])+'</td><td><span class="pill '+(x.published?"ok":"off")+'">'+(x.published?"منتشرشده":"پیش‌نویس")+'</span></td><td><span class="pill '+(x.visible?"ok":"off")+'">'+(x.visible?"نمایش داده می‌شود":"پنهان است")+'</span></td><td><button class="btn '+(x.visible?"alt":"primary")+'" data-portfolio-toggle="'+esc(x.key)+'" data-next="'+(!x.visible)+'">'+(x.visible?"پنهان‌کردن در اپ":"نمایش در اپ")+'</button></td></tr>').join(""):'<tr><td colspan="6" class="empty">نمونه‌کاری مطابق جست‌وجو پیدا نشد.</td></tr>';
+}
+async function togglePortfolioVisibility(key,next){
+ const item=portfolioVisibilityItems.find(x=>x.key===key);if(!item)return;
+ const buttons=[...document.querySelectorAll("[data-portfolio-toggle]")];buttons.forEach(b=>{if(b.dataset.portfolioToggle===key)b.disabled=true});
+ try{
+  const {error}=await sb.from("mobile_app_portfolio_visibility").upsert({item_key:key,source:item.source,title:item.title,is_visible:next,updated_at:new Date().toISOString()},{onConflict:"item_key"});
+  if(error)throw error;
+  item.visible=next;renderPortfolioVisibility();
+  $("portfolioStatus").className="notice success";
+  $("portfolioStatus").textContent=next?"این نمونه‌کار دوباره در اپلیکیشن نمایش داده می‌شود.":"این نمونه‌کار فقط از اپلیکیشن پنهان شد؛ در وب‌سایت تغییری ایجاد نشد.";
+ }catch(e){$("portfolioStatus").className="notice error";$("portfolioStatus").textContent="ذخیره تغییر انجام نشد: "+(e.message||"خطای نامشخص");renderPortfolioVisibility()}
+}
+$("portfolioVisibilityBody").addEventListener("click",e=>{const b=e.target.closest("[data-portfolio-toggle]");if(!b)return;togglePortfolioVisibility(b.dataset.portfolioToggle,b.dataset.next==="true")});
+$("portfolioReload").onclick=loadPortfolioVisibility;
+$("portfolioSearch").oninput=renderPortfolioVisibility;
+function setTab(tab){activeTab=tab;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));["push","users","devices","history","release","portfolio"].forEach(x=>$("tab-"+x).hidden=x!==tab);if(tab==="devices")loadDevices();if(tab==="history")loadHistory();if(tab==="users")renderUsers();if(tab==="portfolio")loadPortfolioVisibility()}
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
 document.querySelectorAll(".module[data-path]").forEach(b=>b.addEventListener("click",()=>{const path=b.dataset.path;if(window.parent!==window){window.parent.postMessage({type:"alishams-admin-nav",path},location.origin)}else location.href=path}));
 $("sendOtp").onclick=async()=>{try{const {error}=await sb.auth.signInWithOtp({email:OWNER,options:{emailRedirectTo:location.href.split("#")[0]}});if(error)throw error;notice("loginNotice","پیوند ورود امن برای ایمیل مدیر ارسال شد.","success")}catch(e){notice("loginNotice",e.message,"error")}};
