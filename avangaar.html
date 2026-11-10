@@ -80,12 +80,22 @@ let posts=[],profiles={},activeTopic='همه',selectedImages=[null,null,null],cu
 function cleanRichHtml(input){
  const doc=new DOMParser().parseFromString('<div>'+String(input||'')+'</div>','text/html'),root=doc.body.firstElementChild;
  const allowed=new Set(['B','STRONG','I','EM','U','P','BR','DIV','A','SPAN','UL','OL','LI']);
- function clean(node){[...node.children].forEach(el=>{clean(el);if(!allowed.has(el.tagName)){el.replaceWith(...el.childNodes);return}
-  const originalHref=el.getAttribute('href');[...el.attributes].forEach(a=>el.removeAttribute(a.name));
-  if(el.tagName==='A'){const raw=originalHref||'';let url='';try{const u=new URL(raw);if(['http:','https:','mailto:'].includes(u.protocol))url=u.href}catch(_){}if(url){el.setAttribute('href',url);el.setAttribute('target','_blank');el.setAttribute('rel','noopener noreferrer')}else el.replaceWith(...el.childNodes)}
-  if(el.tagName==='SPAN')el.setAttribute('style','color:#D9FF72');
+ function clean(node){[...node.children].forEach(el=>{
+  clean(el);
+  if(!allowed.has(el.tagName)){el.replaceWith(...el.childNodes);return}
+  const originalHref=el.getAttribute('href')||'',originalStyle=(el.getAttribute('style')||'').toLowerCase();
+  [...el.attributes].forEach(a=>el.removeAttribute(a.name));
+  if(el.tagName==='A'){let url='';try{const u=new URL(originalHref);if(['http:','https:','mailto:'].includes(u.protocol))url=u.href}catch(_){}if(url){el.setAttribute('href',url);el.setAttribute('target','_blank');el.setAttribute('rel','noopener noreferrer')}else el.replaceWith(...el.childNodes)}
+  if(el.tagName==='SPAN'){
+   const bold=/font-weight\s*:\s*(bold|[7-9]00)/.test(originalStyle),italic=/font-style\s*:\s*italic/.test(originalStyle),underline=/text-decoration(?:-line)?\s*:\s*[^;]*underline/.test(originalStyle),lime=originalStyle.includes('#d9ff72');
+   if(bold||italic||underline){const tag=bold?'strong':italic?'em':'u',replacement=doc.createElement(tag);if(bold&&italic){const em=doc.createElement('em');while(el.firstChild)em.append(el.firstChild);replacement.append(em)}else while(el.firstChild)replacement.append(el.firstChild);el.replaceWith(replacement);if(underline&&!bold&&!italic){replacement.replaceWith(...replacement.childNodes);const u=doc.createElement('u');while(replacement.firstChild)u.append(replacement.firstChild);replacement.replaceWith(u)}}
+   else if(lime)el.setAttribute('style','color:#D9FF72');else el.replaceWith(...el.childNodes);
+  }
  });}
-  clean(root);const walker=doc.createTreeWalker(root,NodeFilter.SHOW_TEXT);let textNode;while(textNode=walker.nextNode())textNode.nodeValue=textNode.nodeValue.replace(/\\r\\n/g,'\n').replace(/\\n/g,'\n');return root.innerHTML;
+ clean(root);
+ const walker=doc.createTreeWalker(root,NodeFilter.SHOW_TEXT);let textNode;
+ while(textNode=walker.nextNode())textNode.nodeValue=textNode.nodeValue.replace(/\\r\\n/g,'\n').replace(/\\n/g,'\n');
+ return root.innerHTML;
 }
 function syncRichEditor(){const editor=$('bodyEditor'),field=$('postForm').elements.body;if(editor&&field)field.value=cleanRichHtml(editor.innerHTML)}
 function richCommand(kind){
