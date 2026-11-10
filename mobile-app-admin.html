@@ -48,6 +48,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{width:min(
 <button class="tab" data-tab="history">تاریخچه اعلان‌ها</button>
 <button class="tab" data-tab="release">نسخه و انتشار</button>
 <button class="tab" data-tab="portfolio">نمایش نمونه‌کارها در اپ</button>
+<button class="tab" data-tab="home-featured">انتخاب ۸ نمونه‌کار صفحه خانه</button>
 </div>
 <section id="tab-push" class="panel">
 <h2>ارسال اعلان به اپلیکیشن</h2><p class="sub">اعلان هم‌زمان در مرکز اعلان‌های داخل اپ ثبت می‌شود. ارسال همگانی فقط برای حساب‌هایی انجام می‌شود که حداقل یک دستگاه فعال ثبت کرده‌اند.</p>
@@ -66,6 +67,13 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{width:min(
 <div class="toolbar"><input id="portfolioSearch" class="search" type="search" placeholder="جست‌وجوی عنوان نمونه‌کار"><span class="muted" id="portfolioCount"></span><button class="btn alt" id="portfolioReload">بارگذاری دوباره</button></div>
 <div id="portfolioStatus" class="notice">در حال دریافت نمونه‌کارها…</div>
 <div class="table-wrap"><table><thead><tr><th>پیش‌نمایش</th><th>عنوان نمونه‌کار</th><th>دسته‌بندی</th><th>منبع</th><th>وضعیت وب‌سایت</th><th>نمایش در اپ</th><th>عملیات</th></tr></thead><tbody id="portfolioVisibilityBody"></tbody></table></div>
+</section>
+<section id="tab-home-featured" class="panel" hidden>
+<h2>چیدمان نمونه‌کارهای صفحه اصلی اپ</h2>
+<p class="sub">دقیقاً ۸ نمونه‌کار را به ترتیب دلخواه انتخاب کن. ترتیب ردیف‌ها همان ترتیب نمایش در بخش «بخشی از دنیای پروژه‌ها» در ماژول خانه خواهد بود. فقط نمونه‌کارهای منتشرشده و فعال برای نمایش در اپ قابل انتخاب‌اند.</p>
+<div id="homeFeaturedStatus" class="notice">ابتدا فهرست نمونه‌کارها دریافت می‌شود…</div>
+<div id="homeFeaturedSlots" class="grid"></div>
+<div class="toolbar"><span class="muted" id="homeFeaturedCount">۰ از ۸ انتخاب شده</span><button class="btn primary" id="saveHomeFeatured">ذخیره چیدمان ۸ نمونه‌کار</button></div>
 </section>
 <section id="tab-release" class="panel" hidden><h2>ساخت و انتشار نسخه اندروید</h2><p class="sub">ساخت APK در گردش‌کار خودکار مخزن انجام می‌شود. این بخش برای مشاهده وضعیت ساخت و رفتن به سوابق انتشار است؛ انتشار نسخه جدید هنوز به‌صورت خودکار روی دستگاه کاربران نصب نمی‌شود.</p><div class="modules"><a class="module" href="https://github.com/theslyapex/Alishams-Mobile/actions" target="_blank" rel="noopener"><span class="mi">↗</span><span><b>گردش‌کار ساخت APK</b><small>مشاهده اجراها، خطاها و فایل خروجی</small></span></a><a class="module" href="https://github.com/theslyapex/Alishams-Mobile/releases" target="_blank" rel="noopener"><span class="mi">⬆</span><span><b>نسخه‌های منتشرشده</b><small>بررسی نسخه‌ها و یادداشت انتشار</small></span></a></div><div class="notice">مدیریت اجباری‌بودن به‌روزرسانی و حداقل نسخه مجاز را بعداً می‌توان با یک تنظیم سروری اضافه کرد؛ در این مرحله عمداً بدون ساخت جدول یا تغییر طرح پایگاه داده، چنین محدودیتی اعمال نشده است.</div></section>
 </main>
@@ -169,6 +177,7 @@ const staticWebsitePortfolio=[
  {key:"website-shirazeh",title:"SHIRAZEH · رزومه‌ساز",category:"وب‌اپلیکیشن",source:"website",published:true,preview:"https://raw.githubusercontent.com/theslyapex/Alishams-Mobile/main/assets/images/site/shirazeh.jpg"}
 ];
 let portfolioVisibilityItems=[];
+let homeFeaturedKeys=Array(8).fill("");
 async function loadPortfolioVisibility(){
  const box=$("portfolioStatus"),body=$("portfolioVisibilityBody");
  box.className="notice";box.textContent="در حال دریافت فهرست نمونه‌کارها…";body.innerHTML="";
@@ -210,7 +219,56 @@ async function togglePortfolioVisibility(key,next){
 $("portfolioVisibilityBody").addEventListener("click",e=>{const b=e.target.closest("[data-portfolio-toggle]");if(!b)return;togglePortfolioVisibility(b.dataset.portfolioToggle,b.dataset.next==="true")});
 $("portfolioReload").onclick=loadPortfolioVisibility;
 $("portfolioSearch").oninput=renderPortfolioVisibility;
-function setTab(tab){activeTab=tab;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));["push","users","devices","history","release","portfolio"].forEach(x=>$("tab-"+x).hidden=x!==tab);if(tab==="devices")loadDevices();if(tab==="history")loadHistory();if(tab==="users")renderUsers();if(tab==="portfolio")loadPortfolioVisibility()}
+async function loadHomeFeaturedSelection(){
+ const statusBox=$("homeFeaturedStatus");
+ statusBox.className="notice";statusBox.textContent="در حال دریافت چیدمان فعلی…";
+ try{
+  const {data,error}=await sb.from("mobile_app_home_featured_portfolio").select("slot,item_key").order("slot");
+  if(error)throw error;
+  homeFeaturedKeys=Array(8).fill("");
+  (data||[]).forEach(row=>{const index=Number(row.slot)-1;if(index>=0&&index<8)homeFeaturedKeys[index]=row.item_key||""});
+  renderHomeFeaturedSlots();
+  statusBox.className="notice success";
+  statusBox.textContent="۸ جایگاه آماده انتخاب است. ترتیب انتخاب‌ها در صفحه خانه حفظ می‌شود.";
+ }catch(e){statusBox.className="notice error";statusBox.textContent="دریافت چیدمان انجام نشد: "+(e.message||"خطای نامشخص")}
+}
+function renderHomeFeaturedSlots(){
+ const eligible=portfolioVisibilityItems.filter(x=>x.published&&x.visible);
+ $("homeFeaturedSlots").innerHTML=homeFeaturedKeys.map((key,index)=>{
+  const current=eligible.find(x=>x.key===key);
+  const image=current?.preview?'<img class="portfolio-thumb" src="'+esc(current.preview)+'" alt="" loading="lazy">':'<span class="portfolio-thumb-link">پیش‌نمایش</span>';
+  const options=eligible.map(x=>{
+   const usedElsewhere=homeFeaturedKeys.some((v,i)=>i!==index&&v===x.key);
+   return '<option value="'+esc(x.key)+'" '+(x.key===key?'selected':'')+' '+(usedElsewhere?'disabled':'')+'>'+esc(x.title)+' · '+esc(x.category)+'</option>';
+  }).join("");
+  return '<div class="panel" style="display:grid;grid-template-columns:104px minmax(0,1fr);gap:12px;align-items:center;padding:12px"><div>'+image+'</div><div><div style="font-size:11px;color:var(--muted);margin-bottom:7px">جایگاه '+fmt(index+1)+'</div><select class="search home-featured-select" data-slot="'+index+'"><option value="">انتخاب نمونه‌کار…</option>'+options+'</select></div></div>';
+ }).join("");
+ $("homeFeaturedCount").textContent=fmt(homeFeaturedKeys.filter(Boolean).length)+" از ۸ انتخاب شده";
+}
+$("homeFeaturedSlots").addEventListener("change",e=>{
+ const select=e.target.closest(".home-featured-select");if(!select)return;
+ homeFeaturedKeys[Number(select.dataset.slot)]=select.value;
+ renderHomeFeaturedSlots();
+});
+$("saveHomeFeatured").onclick=async()=>{
+ const keys=homeFeaturedKeys.filter(Boolean);
+ if(keys.length!==8||new Set(keys).size!==8){
+  $("homeFeaturedStatus").className="notice error";
+  $("homeFeaturedStatus").textContent="برای ذخیره، هر ۸ جایگاه را با ۸ نمونه‌کار متفاوت تکمیل کن.";return;
+ }
+ const button=$("saveHomeFeatured");button.disabled=true;button.textContent="در حال ذخیره…";
+ try{
+  const rows=homeFeaturedKeys.map((key,index)=>({slot:index+1,item_key:key,updated_at:new Date().toISOString()}));
+  const {error}=await sb.from("mobile_app_home_featured_portfolio").upsert(rows,{onConflict:"slot"});
+  if(error)throw error;
+  $("homeFeaturedStatus").className="notice success";
+  $("homeFeaturedStatus").textContent="چیدمان ۸ نمونه‌کار با موفقیت ذخیره شد. با تازه‌سازی داده‌های اپ، همین ترتیب در صفحه خانه نمایش داده می‌شود.";
+ }catch(e){
+  $("homeFeaturedStatus").className="notice error";
+  $("homeFeaturedStatus").textContent="ذخیره چیدمان انجام نشد: "+(e.message||"خطای نامشخص");
+ }finally{button.disabled=false;button.textContent="ذخیره چیدمان ۸ نمونه‌کار"}
+};
+function setTab(tab){activeTab=tab;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));["push","users","devices","history","release","portfolio","home-featured"].forEach(x=>$("tab-"+x).hidden=x!==tab);if(tab==="devices")loadDevices();if(tab==="history")loadHistory();if(tab==="users")renderUsers();if(tab==="portfolio")loadPortfolioVisibility();if(tab==="home-featured")loadPortfolioVisibility().then(loadHomeFeaturedSelection)}
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
 document.querySelectorAll(".module[data-path]").forEach(b=>b.addEventListener("click",()=>{const path=b.dataset.path;if(window.parent!==window){window.parent.postMessage({type:"alishams-admin-nav",path},location.origin)}else location.href=path}));
 $("sendOtp").onclick=async()=>{try{const {error}=await sb.auth.signInWithOtp({email:OWNER,options:{emailRedirectTo:location.href.split("#")[0]}});if(error)throw error;notice("loginNotice","پیوند ورود امن برای ایمیل مدیر ارسال شد.","success")}catch(e){notice("loginNotice",e.message,"error")}};
