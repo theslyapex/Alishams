@@ -180,7 +180,7 @@ async function loadPortfolioVisibility(){
   ]);
   if(gallery.error)throw gallery.error;if(videos.error)throw videos.error;if(settings.error)throw settings.error;
   const visibleMap=new Map((settings.data||[]).map(x=>[x.item_key,x.is_visible]));
-  const galleryItems=(gallery.data||[]).map(x=>{const path=x.cover_path||x.image_path||"";return {key:"portfolio:"+x.id,title:x.title,category:x.category==="logo"?"لوگو":"تصویر تبلیغاتی",source:"portfolio",published:!!x.published,preview:path?(/^https?:\\/\\//i.test(path)?path:sb.storage.from("portfolio-images").getPublicUrl(path).data.publicUrl):""}});
+  const galleryItems=(gallery.data||[]).map(x=>{const path=x.cover_path||x.image_path||"";return {key:"portfolio:"+x.id,title:x.title,category:x.category==="logo"?"لوگو":"تصویر تبلیغاتی",source:"portfolio",published:!!x.published,preview:path?(/^https?:\/\//i.test(path)?path:sb.storage.from("portfolio-images").getPublicUrl(path).data.publicUrl):""}});
   const videoItems=(videos.data||[]).map(x=>({key:"video:"+x.id,title:x.title,category:x.category||"ویدئو",source:"video",published:!!x.is_published,preview:x.poster_url||""}));
   portfolioVisibilityItems=[...staticWebsitePortfolio,...galleryItems,...videoItems].map(x=>({...x,visible:visibleMap.has(x.key)?visibleMap.get(x.key):true}));
   renderPortfolioVisibility();
