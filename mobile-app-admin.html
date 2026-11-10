@@ -18,7 +18,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{width:min(
 .tabs{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0 12px}.tab{border:1px solid var(--line);border-radius:10px;background:#ffffff06;color:#aeb8c3;padding:9px 13px;font-size:11px}.tab.active{color:var(--lime);border-color:#d6ff5955;background:#d6ff5910}
 .toolbar{display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap;margin:12px 0}.toolbar .search{max-width:360px}
 .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:660px;font-size:11px}th,td{padding:11px 12px;text-align:right;border-bottom:1px solid #ffffff0d;white-space:nowrap}th{color:#aab4bf;background:#ffffff06;font-weight:700}td{color:#e0e6eb}tr:last-child td{border-bottom:0}.muted{color:var(--muted)}.pill{display:inline-flex;padding:4px 8px;border-radius:20px;font-size:9px;background:#ffffff0b;color:#b7c1cb}.pill.ok{background:#8ee0ad12;color:var(--green)}.pill.off{background:#ff817c12;color:#ffaaa5}
-.user-row{display:flex;align-items:center;gap:9px}.user-row input{accent-color:var(--lime);width:16px;height:16px}.empty{padding:25px;text-align:center;color:var(--muted);font-size:11px}
+.portfolio-thumb{width:104px;height:68px;object-fit:cover;border-radius:9px;border:1px solid #ffffff20;background:#080c11;display:block}.portfolio-thumb-link{display:inline-flex;align-items:center;justify-content:center;min-width:104px;min-height:68px;border-radius:9px;background:#ffffff08;color:var(--muted);font-size:10px;text-decoration:none;overflow:hidden}.user-row{display:flex;align-items:center;gap:9px}.user-row input{accent-color:var(--lime);width:16px;height:16px}.empty{padding:25px;text-align:center;color:var(--muted);font-size:11px}
 .composer{display:grid;grid-template-columns:1fr 1fr;gap:12px}.composer .wide{grid-column:1/-1}.radio-row{display:flex;gap:8px;flex-wrap:wrap}.radio{display:flex;align-items:center;gap:7px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;color:#cbd3db;font-size:11px;background:#ffffff05}.radio input{accent-color:var(--lime)}.send-progress{height:7px;background:#ffffff12;border-radius:20px;overflow:hidden;margin:12px 0}.send-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--lime));transition:width .2s}
 .history{display:grid;gap:8px}.history-item{padding:12px;border:1px solid var(--line);border-radius:12px;background:#ffffff04}.history-item b{font-size:11px}.history-item p{font-size:10px;line-height:1.8;color:var(--muted);margin:5px 0}.history-item small{font-size:9px;color:#778390}
 @media(max-width:900px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.modules{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -65,7 +65,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{width:min(
 <p class="sub">از این قسمت می‌توانی نمایش هر نمونه‌کار را در اپلیکیشن مستقل از وب‌سایت روشن یا خاموش کنی. پنهان‌سازی در اپ، محتوای وب‌سایت یا وضعیت انتشار آن را تغییر نمی‌دهد.</p>
 <div class="toolbar"><input id="portfolioSearch" class="search" type="search" placeholder="جست‌وجوی عنوان نمونه‌کار"><span class="muted" id="portfolioCount"></span><button class="btn alt" id="portfolioReload">بارگذاری دوباره</button></div>
 <div id="portfolioStatus" class="notice">در حال دریافت نمونه‌کارها…</div>
-<div class="table-wrap"><table><thead><tr><th>عنوان نمونه‌کار</th><th>دسته‌بندی</th><th>منبع</th><th>وضعیت وب‌سایت</th><th>نمایش در اپ</th><th>عملیات</th></tr></thead><tbody id="portfolioVisibilityBody"></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>پیش‌نمایش</th><th>عنوان نمونه‌کار</th><th>دسته‌بندی</th><th>منبع</th><th>وضعیت وب‌سایت</th><th>نمایش در اپ</th><th>عملیات</th></tr></thead><tbody id="portfolioVisibilityBody"></tbody></table></div>
 </section>
 <section id="tab-release" class="panel" hidden><h2>ساخت و انتشار نسخه اندروید</h2><p class="sub">ساخت APK در گردش‌کار خودکار مخزن انجام می‌شود. این بخش برای مشاهده وضعیت ساخت و رفتن به سوابق انتشار است؛ انتشار نسخه جدید هنوز به‌صورت خودکار روی دستگاه کاربران نصب نمی‌شود.</p><div class="modules"><a class="module" href="https://github.com/theslyapex/Alishams-Mobile/actions" target="_blank" rel="noopener"><span class="mi">↗</span><span><b>گردش‌کار ساخت APK</b><small>مشاهده اجراها، خطاها و فایل خروجی</small></span></a><a class="module" href="https://github.com/theslyapex/Alishams-Mobile/releases" target="_blank" rel="noopener"><span class="mi">⬆</span><span><b>نسخه‌های منتشرشده</b><small>بررسی نسخه‌ها و یادداشت انتشار</small></span></a></div><div class="notice">مدیریت اجباری‌بودن به‌روزرسانی و حداقل نسخه مجاز را بعداً می‌توان با یک تنظیم سروری اضافه کرد؛ در این مرحله عمداً بدون ساخت جدول یا تغییر طرح پایگاه داده، چنین محدودیتی اعمال نشده است.</div></section>
 </main>
@@ -162,11 +162,11 @@ async function loadDevices(){
 async function loadHistory(){try{const d=await api("recent_push");const rows=d.notifications||[];$("historyList").innerHTML=rows.length?rows.map(x=>'<article class="history-item"><b>'+esc(x.title)+'</b><p>'+esc(x.body)+'</p><small>'+dt(x.created_at)+' · شناسه کاربر: '+esc(x.user_id)+'</small></article>').join(""):'<div class="empty">هنوز اعلانی از این پنل ارسال نشده است.</div>'}catch(e){$("historyList").innerHTML='<div class="empty">تاریخچه اعلان‌ها دریافت نشد.</div>'}}
 
 const staticWebsitePortfolio=[
- {key:"website-iran-ma",title:"ایران‌ما",category:"وب‌سایت محتوایی",source:"website",published:true},
- {key:"website-apex",title:"Apex Video Compressor",category:"ابزار آنلاین",source:"website",published:true},
- {key:"website-nova",title:"Nova Image Lab",category:"ابزار تصویری",source:"website",published:true},
- {key:"website-abzarino",title:"ابزارینو",category:"مجموعه ابزار",source:"website",published:true},
- {key:"website-shirazeh",title:"SHIRAZEH · رزومه‌ساز",category:"وب‌اپلیکیشن",source:"website",published:true}
+ {key:"website-iran-ma",title:"ایران‌ما",category:"وب‌سایت محتوایی",source:"website",published:true,preview:"https://raw.githubusercontent.com/theslyapex/Alishams-Mobile/main/assets/images/site/iran-ma-website-preview.jpg"},
+ {key:"website-apex",title:"Apex Video Compressor",category:"ابزار آنلاین",source:"website",published:true,preview:"https://raw.githubusercontent.com/theslyapex/Alishams-Mobile/main/assets/images/site/apex-video-compressor.jpg"},
+ {key:"website-nova",title:"Nova Image Lab",category:"ابزار تصویری",source:"website",published:true,preview:"https://raw.githubusercontent.com/theslyapex/Alishams-Mobile/main/assets/images/site/nova-image-lab.jpg"},
+ {key:"website-abzarino",title:"ابزارینو",category:"مجموعه ابزار",source:"website",published:true,preview:"https://raw.githubusercontent.com/theslyapex/Alishams-Mobile/main/assets/images/site/abzarino.jpg"},
+ {key:"website-shirazeh",title:"SHIRAZEH · رزومه‌ساز",category:"وب‌اپلیکیشن",source:"website",published:true,preview:"https://raw.githubusercontent.com/theslyapex/Alishams-Mobile/main/assets/images/site/shirazeh.jpg"}
 ];
 let portfolioVisibilityItems=[];
 async function loadPortfolioVisibility(){
@@ -174,14 +174,14 @@ async function loadPortfolioVisibility(){
  box.className="notice";box.textContent="در حال دریافت فهرست نمونه‌کارها…";body.innerHTML="";
  try{
   const [gallery,videos,settings]=await Promise.all([
-   sb.from("portfolio_items").select("id,title,category,published").order("created_at",{ascending:false}),
-   sb.from("studio_videos").select("id,slug,title,category,is_published").order("created_at",{ascending:false}),
+   sb.from("portfolio_items").select("id,title,category,published,image_path,cover_path").order("created_at",{ascending:false}),
+   sb.from("studio_videos").select("id,slug,title,category,is_published,poster_url").order("created_at",{ascending:false}),
    sb.from("mobile_app_portfolio_visibility").select("item_key,is_visible")
   ]);
   if(gallery.error)throw gallery.error;if(videos.error)throw videos.error;if(settings.error)throw settings.error;
   const visibleMap=new Map((settings.data||[]).map(x=>[x.item_key,x.is_visible]));
-  const galleryItems=(gallery.data||[]).map(x=>({key:"portfolio:"+x.id,title:x.title,category:x.category==="logo"?"لوگو":"تصویر تبلیغاتی",source:"portfolio",published:!!x.published}));
-  const videoItems=(videos.data||[]).map(x=>({key:"video:"+x.id,title:x.title,category:x.category||"ویدئو",source:"video",published:!!x.is_published}));
+  const galleryItems=(gallery.data||[]).map(x=>{const path=x.cover_path||x.image_path||"";return {key:"portfolio:"+x.id,title:x.title,category:x.category==="logo"?"لوگو":"تصویر تبلیغاتی",source:"portfolio",published:!!x.published,preview:path?(/^https?:\\/\\//i.test(path)?path:sb.storage.from("portfolio-images").getPublicUrl(path).data.publicUrl):""}});
+  const videoItems=(videos.data||[]).map(x=>({key:"video:"+x.id,title:x.title,category:x.category||"ویدئو",source:"video",published:!!x.is_published,preview:x.poster_url||""}));
   portfolioVisibilityItems=[...staticWebsitePortfolio,...galleryItems,...videoItems].map(x=>({...x,visible:visibleMap.has(x.key)?visibleMap.get(x.key):true}));
   renderPortfolioVisibility();
   box.className="notice success";box.textContent="فهرست نمونه‌کارها به‌روز شد. خاموش‌کردن نمایش در اپ هیچ اثری روی انتشار وب‌سایت ندارد.";
@@ -191,7 +191,10 @@ function renderPortfolioVisibility(){
  const q=$("portfolioSearch").value.trim().toLowerCase();
  const rows=portfolioVisibilityItems.filter(x=>(x.title+" "+x.category).toLowerCase().includes(q));
  $("portfolioCount").textContent=fmt(rows.length)+" نمونه‌کار";
- $("portfolioVisibilityBody").innerHTML=rows.length?rows.map(x=>'<tr><td>'+esc(x.title)+'</td><td>'+esc(x.category)+'</td><td>'+({website:"وب‌سایت",portfolio:"گالری تصاویر",video:"ویدئوهای استودیو"}[x.source])+'</td><td><span class="pill '+(x.published?"ok":"off")+'">'+(x.published?"منتشرشده":"پیش‌نویس")+'</span></td><td><span class="pill '+(x.visible?"ok":"off")+'">'+(x.visible?"نمایش داده می‌شود":"پنهان است")+'</span></td><td><button class="btn '+(x.visible?"alt":"primary")+'" data-portfolio-toggle="'+esc(x.key)+'" data-next="'+(!x.visible)+'">'+(x.visible?"پنهان‌کردن در اپ":"نمایش در اپ")+'</button></td></tr>').join(""):'<tr><td colspan="6" class="empty">نمونه‌کاری مطابق جست‌وجو پیدا نشد.</td></tr>';
+ $("portfolioVisibilityBody").innerHTML=rows.length?rows.map(x=>{
+  const preview=x.preview?'<a class="portfolio-thumb-link" href="'+esc(x.preview)+'" target="_blank" rel="noopener"><img class="portfolio-thumb" src="'+esc(x.preview)+'" alt="پیش‌نمایش '+esc(x.title)+'" loading="lazy" onerror="this.parentElement.textContent=\'تصویر در دسترس نیست\';this.parentElement.removeAttribute(\'href\')"></a>':'<span class="portfolio-thumb-link">بدون پوستر</span>';
+  return '<tr><td>'+preview+'</td><td>'+esc(x.title)+'</td><td>'+esc(x.category)+'</td><td>'+({website:"وب‌سایت",portfolio:"گالری تصاویر",video:"ویدئوهای استودیو"}[x.source])+'</td><td><span class="pill '+(x.published?"ok":"off")+'">'+(x.published?"منتشرشده":"پیش‌نویس")+'</span></td><td><span class="pill '+(x.visible?"ok":"off")+'">'+(x.visible?"نمایش داده می‌شود":"پنهان است")+'</span></td><td><button class="btn '+(x.visible?"alt":"primary")+'" data-portfolio-toggle="'+esc(x.key)+'" data-next="'+(!x.visible)+'">'+(x.visible?"پنهان‌کردن در اپ":"نمایش در اپ")+'</button></td></tr>';
+ }).join(""):'<tr><td colspan="7" class="empty">نمونه‌کاری مطابق جست‌وجو پیدا نشد.</td></tr>';
 }
 async function togglePortfolioVisibility(key,next){
  const item=portfolioVisibilityItems.find(x=>x.key===key);if(!item)return;
