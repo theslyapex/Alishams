@@ -99,7 +99,22 @@ function renderOrderSpecs(o){
  const root=$("orderSpecs");root.replaceChildren();
  const heading=document.createElement("h3");heading.textContent="جزئیات فرم سفارش — به تفکیک مراحل";root.append(heading);
  const m=orderMetadata(o);
- if(!m){const p=document.createElement("p");p.className="muted";p.textContent="اطلاعات تکمیلی ساختاریافته برای این سفارش ذخیره نشده است. شرح اصلی درخواست و اطلاعات تماس در بخش بالای سفارش موجود است.";root.append(p);return}
+ if(!m){
+  const raw=String(o.details||"");
+  const marker="اطلاعات اختصاصی خدمت:\\n";
+  const start=raw.indexOf(marker);
+  if(start>=0){
+   const section=raw.slice(start+marker.length).split(/\\n\\nتوضیحات تکمیلی:/)[0];
+   const group=specGroup(root,"پاسخ‌های اختصاصی فرم خدمت");
+   let count=0;
+   section.split(/\\r?\\n/).forEach(line=>{
+    const match=line.match(/^\\s*[•·-]\\s*([^:：]{1,100})[:：]\\s*(.*)$/);
+    if(match){addSpec(group,match[1].trim(),match[2].trim(),match[2].length>70);count++;}
+   });
+   if(count){const p=document.createElement("p");p.className="muted";p.textContent="این اطلاعات از فرم اختصاصی خدمت در اپلیکیشن دریافت شده است.";root.append(p);return;}
+  }
+  const p=document.createElement("p");p.className="muted";p.textContent="برای این سفارش پاسخ اختصاصی قابل تفکیکی ثبت نشده است. شرح اصلی درخواست در بخش بالای سفارش موجود است.";root.append(p);return;
+ }
  const contact=specGroup(root,"مرحله ۱ · اطلاعات مشتری");
  addSpec(contact,"نام مشتری",o.client_name);
  addSpec(contact,"شماره تماس",o.contact_info);
