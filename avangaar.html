@@ -81,12 +81,11 @@ function cleanRichHtml(input){
  const doc=new DOMParser().parseFromString('<div>'+String(input||'')+'</div>','text/html'),root=doc.body.firstElementChild;
  const allowed=new Set(['B','STRONG','I','EM','U','P','BR','DIV','A','SPAN','UL','OL','LI']);
  function clean(node){[...node.children].forEach(el=>{clean(el);if(!allowed.has(el.tagName)){el.replaceWith(...el.childNodes);return}
-  [...el.attributes].forEach(a=>el.removeAttribute(a.name));
-  if(el.tagName==='A'){const raw=nodeValue(el);let url='';try{const u=new URL(raw);if(['http:','https:','mailto:'].includes(u.protocol))url=u.href}catch(_){}if(url){el.setAttribute('href',url);el.setAttribute('target','_blank');el.setAttribute('rel','noopener noreferrer')}else el.replaceWith(...el.childNodes)}
+  const originalHref=el.getAttribute('href');[...el.attributes].forEach(a=>el.removeAttribute(a.name));
+  if(el.tagName==='A'){const raw=originalHref||'';let url='';try{const u=new URL(raw);if(['http:','https:','mailto:'].includes(u.protocol))url=u.href}catch(_){}if(url){el.setAttribute('href',url);el.setAttribute('target','_blank');el.setAttribute('rel','noopener noreferrer')}else el.replaceWith(...el.childNodes)}
   if(el.tagName==='SPAN')el.setAttribute('style','color:#D9FF72');
  });}
- function nodeValue(el){return el.getAttribute('href')||''}
- clean(root);return root.innerHTML;
+  clean(root);return root.innerHTML;
 }
 function syncRichEditor(){const editor=$('bodyEditor'),field=$('postForm').elements.body;if(editor&&field)field.value=cleanRichHtml(editor.innerHTML)}
 function richCommand(kind){
