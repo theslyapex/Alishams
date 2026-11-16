@@ -91,7 +91,7 @@ body,body *{-webkit-user-select:none!important;user-select:none!important;-webki
 
 <div class="calc-field" id="calcModeWrap" hidden><label for="calcMode">نوع سفارش</label><select id="calcMode"><option value="session">جلسه مشاوره</option><option value="project">پروژه مشاوره</option></select></div>
 </div>
-<div class="calc-result" aria-live="polite"><span class="result-label">برآورد اولیه هزینه</span><output id="calcAmount">۶۹۵ هزار تا ۲ میلیون و ۳۰۰ هزار تومان</output><p id="calcExplanation">مبلغ نهایی پس از بررسی جزئیات و توافق مشخص می‌شود.</p><p id="plusCalcPersonalized" class="plus-calc-personalized" aria-live="polite" hidden></p><a class="btn primary" id="calcOrder" href="index.html?service=%D9%85%D9%88%D8%B4%D9%86%E2%80%8C%DA%AF%D8%B1%D8%A7%D9%81%DB%8C%DA%A9&openOrder=1">ثبت سفارش این خدمت ↗</a></div></div>
+<div class="calc-result" aria-live="polite"><span class="result-label">برآورد اولیه هزینه</span><output id="calcAmount">۱ میلیون و ۷۵۰ هزار تا ۲۵ میلیون تومان</output><p id="calcExplanation">مبلغ نهایی پس از بررسی جزئیات و توافق مشخص می‌شود.</p><p id="plusCalcPersonalized" class="plus-calc-personalized" aria-live="polite" hidden></p><a class="btn primary" id="calcOrder" href="index.html?service=%D9%85%D9%88%D8%B4%D9%86%E2%80%8C%DA%AF%D8%B1%D8%A7%D9%81%DB%8C%DA%A9&openOrder=1">ثبت سفارش این خدمت ↗</a></div></div>
 <p class="calc-disclaimer">این ابزار فقط برآورد راهنماست و پیش‌فاکتور یا تعهد قیمت محسوب نمی‌شود. خدمات دارای قیمت متغیر یا استعلامی، پس از دریافت جزئیات بررسی می‌شوند. هزینه سرویس‌های جانبی، تبلیغات و مالیات احتمالی (در صورت تعلق) جداگانه اعلام خواهد شد.</p><div class="plus-calc-benefit plus-tier-preview"><span class="plus-tier-label">قیمت‌گذاری ویژه اعضای پلاس+</span><p>در سفارش‌های واجد شرایط، تخفیف عضویت پس از بررسی حساب و تعیین مبلغ نهایی اعمال می‌شود:</p><div class="plus-tier-row" data-discount="10"><span>دو خرید نخست</span><b>۱۰٪ تخفیف</b></div><div class="plus-tier-row" data-discount="18"><span>از خرید سوم به بعد</span><b>۱۸٪ تخفیف</b></div><small>مبلغ این برآورد، قیمت نهایی نیست. تخفیف پلاس+ با کد تخفیف یا پیشنهادهای دیگر تجمیع نمی‌شود و درصد معتبر عضویت هنگام ثبت سفارش بررسی خواهد شد.</small><a href="/plus.html">مشاهده شرایط پلاس+ ↗</a></div>
 </div></div></section>
 <section class="section package-pricing" id="websitePackages"><div class="wrap">
@@ -205,7 +205,8 @@ search.addEventListener('input',applyFilters);filters.forEach(btn=>btn.addEventL
 ['contextmenu','copy','cut','selectstart','dragstart'].forEach(type=>document.addEventListener(type,e=>{if(!e.target.closest('input,textarea'))e.preventDefault();}));
 
 const calcData={
- motion:{name:'موشن‌گرافیک',min:695000,max:2300000,unit:'پروژه',label:'تعداد پروژه'},
+ motion:{name:'موشن‌گرافیک',min:1750000,max:25000000,unit:'پروژه',label:'تعداد پروژه'},
+ blogTemplate:{name:'طراحی قالب وبلاگ',min:1450000,max:1450000,unit:'قالب',label:'تعداد قالب'},
  website:{name:'طراحی سایت',min:13795000,max:150000000,unit:'پروژه',label:'تعداد پروژه'},
  reels:{name:'ساخت ریلز اینستاگرام',min:2000000,max:18000000,unit:'ویدئو',label:'تعداد ویدئو'},
  trailer:{name:'تیزر تبلیغاتی',min:695000,max:7850000,unit:'پروژه',label:'تعداد تیزر'},
