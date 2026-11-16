@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="180" viewBox="0 0 600 180" role="img" aria-labelledby="title desc">
+<title id="title">دریافت از بازار</title><desc id="desc">نشان دانلود اپلیکیشن از بازار با فضای شفاف پیرامون نشان</desc>
+<defs><linearGradient id="bag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a8e900"/><stop offset="1" stop-color="#00a86b"/></linearGradient></defs>
+<rect x="2" y="2" width="596" height="176" rx="27" fill="#050505" stroke="#55585d" stroke-width="4"/>
+<g transform="translate(68 29)"><path d="M42 42V29C42 5 58 -10 82 -10s40 15 40 39v13" fill="none" stroke="url(#bag)" stroke-width="13" stroke-linecap="round"/><path d="M22 43h120l-8 91c-1 10-9 17-19 17H49c-10 0-18-7-19-17z" fill="url(#bag)"/></g>
+<g fill="#fff" text-anchor="middle" direction="rtl" font-family="Estedad, Vazirmatn, Tahoma, sans-serif"><text x="390" y="77" font-size="39" font-weight="500">دریافت از</text><text x="390" y="137" font-size="58" font-weight="800">بازار</text></g>
+</svg>
