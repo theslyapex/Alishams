@@ -1133,6 +1133,33 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 @media(prefers-reduced-motion:reduce){#website-order-launcher *,#website-order-launcher *:before{animation:none!important;transition:none!important}}
 </style>
 
+<style id="mobile-app-portfolio-styles">
+.mobile-apps-showcase{position:relative;isolation:isolate;overflow:hidden}
+.mobile-apps-showcase:before{content:"";position:absolute;z-index:-1;inset:5% 12%;background:radial-gradient(ellipse,#b6a0ff12,transparent 68%);pointer-events:none}
+.mobile-apps-heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:28px}
+.mobile-apps-heading h2{font-size:clamp(29px,4vw,46px);line-height:1.45;margin:12px 0 7px}
+.mobile-apps-heading p{max-width:430px;color:var(--muted);font-size:13px;line-height:2.1;margin:0}
+.mobile-apps-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.mobile-app-card{position:relative;min-width:0;overflow:hidden;border:1px solid #ffffff18;border-radius:25px;background:linear-gradient(145deg,#171920,#0e1015);box-shadow:0 24px 65px #0004;transition:transform .35s,border-color .35s}
+.mobile-app-card:hover{transform:translateY(-6px);border-color:#b6a0ff70}
+.mobile-app-card-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:#14161c}
+.mobile-app-card-media:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#090a0de8)}
+.mobile-app-card-media>img{width:100%;height:100%;object-fit:cover;transition:transform .65s}
+.mobile-app-card:hover .mobile-app-card-media>img{transform:scale(1.045)}
+.mobile-app-card-icon{position:absolute;z-index:2;right:20px;bottom:15px;width:66px;height:66px;object-fit:cover;border:2px solid #ffffff55;border-radius:18px;box-shadow:0 10px 30px #0009}
+.mobile-app-card-body{padding:20px 22px 23px}
+.mobile-app-card-kicker{color:var(--lav);font:700 10px Manrope,sans-serif;letter-spacing:1.3px}
+.mobile-app-card h3{font-size:22px;line-height:1.5;margin:7px 0}
+.mobile-app-card p{color:var(--muted);font-size:12px;line-height:2.1;margin:0 0 16px}
+.mobile-app-card-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.mobile-app-card-tags{display:flex;gap:7px;flex-wrap:wrap}
+.mobile-app-card-tags span{padding:5px 9px;border:1px solid #ffffff18;border-radius:999px;color:#d4d4dc;font-size:10px}
+.mobile-app-card-link{display:inline-flex;align-items:center;gap:9px;color:var(--lime);font-size:12px;font-weight:800}
+.mobile-app-card-link b{font:700 18px Manrope;transition:transform .2s}
+.mobile-app-card-link:hover b{transform:translateX(-4px)}
+@media(max-width:760px){.mobile-apps-heading{display:block}.mobile-apps-heading p{margin-top:10px}.mobile-apps-grid{grid-template-columns:1fr;gap:15px}.mobile-app-card-body{padding:17px}.mobile-app-card h3{font-size:20px}.mobile-app-card-icon{width:58px;height:58px;right:15px;bottom:12px;border-radius:15px}}
+@media(prefers-reduced-motion:reduce){.mobile-app-card,.mobile-app-card-media>img,.mobile-app-card-link b{transition:none!important}}
+</style>
 </head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="علی شمس"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی">
@@ -1519,6 +1546,29 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
     <div class="portfolio-showcase-meta"><span><i></i> طراحی چشم‌گیر</span><span><i></i> پیام روشن</span><span><i></i> مناسب فضای دیجیتال</span></div>
     <a class="portfolio-showcase-cta" href="ad-image-portfolio.html">مشاهده تصاویر تبلیغاتی <b aria-hidden="true">↗</b></a>
    </div>
+  </div>
+ </div>
+</section>
+
+<section class="section mobile-apps-showcase" id="mobile-apps-showcase" aria-labelledby="mobileAppsShowcaseTitle">
+ <div class="wrap">
+  <div class="mobile-apps-heading">
+   <div><span class="eyebrow">MOBILE APPLICATIONS · PRODUCT EXPERIENCE</span><h2 id="mobileAppsShowcaseTitle">تجربه‌های دیجیتال، <span style="color:var(--lav)">در دستان شما.</span></h2></div>
+   <p>از ایده تا تجربه‌ای که روی موبایل زندگی می‌کند؛ نگاهی به دو پروژه اپلیکیشن موبایل طراحی و توسعه‌یافته در استودیو دیجیتال علی شمس.</p>
+  </div>
+  <div class="mobile-apps-grid">
+   <article class="mobile-app-card">
+    <a href="case-studies/homagram.html" aria-label="مطالعه موردی اپلیکیشن HomaGram">
+     <div class="mobile-app-card-media"><img src="/assets/images/mobile-apps/social-network/cover.jpg" alt="پیش‌نمایش اپلیکیشن شبکه اجتماعی HomaGram" loading="lazy" decoding="async"><img class="mobile-app-card-icon" src="/assets/images/mobile-apps/social-network/homagram_app_icon.png" alt="" loading="lazy" decoding="async"></div>
+     <div class="mobile-app-card-body"><span class="mobile-app-card-kicker">SOCIAL NETWORK · ANDROID</span><h3>HomaGram | شبکه اجتماعی موبایل</h3><p>یک تجربه اجتماعی با الهام از قابلیت‌های آشنای شبکه‌های اجتماعی محبوب، در قالب یک اپلیکیشن موبایل مستقل.</p><div class="mobile-app-card-foot"><span class="mobile-app-card-tags"><span>شبکه اجتماعی</span><span>اپلیکیشن اندروید</span></span><span class="mobile-app-card-link">مطالعه موردی <b>↗</b></span></div></div>
+    </a>
+   </article>
+   <article class="mobile-app-card">
+    <a href="case-studies/studio-ordering.html" aria-label="مطالعه موردی اپلیکیشن سفارش‌گیری استودیو">
+     <div class="mobile-app-card-media"><img src="/assets/images/mobile-apps/studio-ordering/cover.jpg" alt="پیش‌نمایش اپلیکیشن سفارش‌گیری استودیو دیجیتال علی شمس" loading="lazy" decoding="async"><img class="mobile-app-card-icon" src="/assets/images/mobile-apps/studio-ordering/AlishamsDigitalStudio_app_icon.png" alt="" loading="lazy" decoding="async"></div>
+     <div class="mobile-app-card-body"><span class="mobile-app-card-kicker">BUSINESS APP · ANDROID</span><h3>اپلیکیشن سفارش‌گیری استودیو دیجیتال</h3><p>راهکاری موبایلی برای آشنایی با خدمات استودیو و ساده‌تر کردن مسیر ثبت و پیگیری درخواست‌ها.</p><div class="mobile-app-card-foot"><span class="mobile-app-card-tags"><span>اپلیکیشن اختصاصی</span><span>خدمات دیجیتال</span></span><span class="mobile-app-card-link">مطالعه موردی <b>↗</b></span></div></div>
+    </a>
+   </article>
   </div>
  </div>
 </section>
