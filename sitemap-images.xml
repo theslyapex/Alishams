@@ -17,6 +17,10 @@
           <image:loc>https://alishams.ir/assets/images/alishams-studio-workspace.jpg</image:loc>
           <image:title>فضای کاری استودیو دیجیتال علی شمس</image:title>
         </image:image>
+    <image:image>
+      <image:loc>https://alishams.ir/assets/images/portfolio/hardware-shenas/gallery-01.jpg</image:loc>
+      <image:title>پیش‌نمایش اپلیکیشن سخت‌افزار شناس در صفحه اصلی</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://alishams.ir/portfolio.html</loc>
@@ -24,6 +28,10 @@
           <image:loc>https://alishams.ir/assets/images/iran-ma-website-preview.jpg</image:loc>
           <image:title>پیش‌نمایش وب‌سایت ایران‌ما</image:title>
         </image:image>
+    <image:image>
+      <image:loc>https://alishams.ir/assets/images/portfolio/hardware-shenas/gallery-01.jpg</image:loc>
+      <image:title>پیش‌نمایش پروژه سخت‌افزار شناس در فهرست نمونه‌کارها</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://alishams.ir/case-studies/iran-ma.html</loc>
@@ -189,6 +197,19 @@
     <image:image><image:loc>https://alishams.ir/assets/images/mobile-apps/studio-ordering/gallery-11.jpg</image:loc><image:title>تصویر 11 از گالری اپلیکیشن سفارش‌گیری استودیو علی شمس</image:title></image:image>
     <image:image><image:loc>https://alishams.ir/assets/images/mobile-apps/studio-ordering/gallery-12.jpg</image:loc><image:title>تصویر 12 از گالری اپلیکیشن سفارش‌گیری استودیو علی شمس</image:title></image:image>
     <image:image><image:loc>https://alishams.ir/assets/images/bazaar-badge.jpg</image:loc><image:title>نشان دریافت اپلیکیشن سفارش‌گیری از کافه‌بازار</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://alishams.ir/case-studies/hardware-shenas.html</loc>
+    <image:image><image:loc>https://alishams.ir/assets/images/portfolio/hardware-shenas/gallery-01.jpg</image:loc><image:title>تصویر 1 از گالری اپلیکیشن سخت‌افزار شناس</image:title></image:image>
+    <image:image><image:loc>https://alishams.ir/assets/images/portfolio/hardware-shenas/gallery-02.jpg</image:loc><image:title>تصویر 2 از گالری اپلیکیشن سخت‌افزار شناس</image:title></image:image>
+    <image:image><image:loc>https://alishams.ir/assets/images/portfolio/hardware-shenas/gallery-03.jpg</image:loc><image:title>تصویر 3 از گالری اپلیکیشن سخت‌افزار شناس</image:title></image:image>
+    <image:image><image:loc>https://alishams.ir/assets/images/portfolio/hardware-shenas/gallery-04.jpg</image:loc><image:title>تصویر 4 از گالری اپلیکیشن سخت‌افزار شناس</image:title></image:image>
+    <image:image><image:loc>https://alishams.ir/assets/images/portfolio/hardware-shenas/gallery-05.jpg</image:loc><image:title>تصویر 5 از گالری اپلیکیشن سخت‌افزار شناس</image:title></image:image>
+    <image:image><image:loc>https://alishams.ir/assets/images/portfolio/hardware-shenas/gallery-06.jpg</image:loc><image:title>تصویر 6 از گالری اپلیکیشن سخت‌افزار شناس</image:title></image:image>
+    <image:image><image:loc>https://alishams.ir/assets/images/portfolio/hardware-shenas/gallery-07.jpg</image:loc><image:title>تصویر 7 از گالری اپلیکیشن سخت‌افزار شناس</image:title></image:image>
+    <image:image><image:loc>https://alishams.ir/assets/images/portfolio/hardware-shenas/gallery-08.jpg</image:loc><image:title>تصویر 8 از گالری اپلیکیشن سخت‌افزار شناس</image:title></image:image>
+    <image:image><image:loc>https://alishams.ir/assets/images/portfolio/hardware-shenas/gallery-09.jpg</image:loc><image:title>تصویر 9 از گالری اپلیکیشن سخت‌افزار شناس</image:title></image:image>
+    <image:image><image:loc>https://alishams.ir/assets/images/portfolio/hardware-shenas/gallery-10.jpg</image:loc><image:title>تصویر 10 از گالری اپلیکیشن سخت‌افزار شناس</image:title></image:image>
   </url>
   <url>
     <loc>https://alishams.ir/case-studies/midwifery-document.html</loc>
