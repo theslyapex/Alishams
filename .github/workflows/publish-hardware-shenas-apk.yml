@@ -20,31 +20,33 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Find latest successful Android build
-        id: artifact
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          RUN_ID=$(curl -fsSL -H "Accept: application/vnd.github+json" https://api.github.com/repos/theslyapex/sakhtafzar-shenas/actions/runs?branch=main\&status=completed\&per_page=50 | jq -r '.workflow_runs[] | select(.conclusion == "success" and .event != "pull_request") | .id' | head -n 1)
-          test -n "$RUN_ID"
-          ARTIFACT_ID=$(curl -fsSL -H "Accept: application/vnd.github+json" "https://api.github.com/repos/theslyapex/sakhtafzar-shenas/actions/runs/$RUN_ID/artifacts" | jq -r '.artifacts[] | select(.name == "hardware-shenas-debug" and .expired == false) | .id' | head -n 1)
-          test -n "$ARTIFACT_ID"
-          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
-          echo "artifact_id=$ARTIFACT_ID" >> "$GITHUB_OUTPUT"
+      - name: Checkout Hardware Shenas source
+        uses: actions/checkout@v4
+        with:
+          repository: theslyapex/sakhtafzar-shenas
+          ref: main
+          path: hardware-shenas-source
 
-      - name: Download APK artifact
-        env:
-          RUN_ID: ${{ steps.artifact.outputs.run_id }}
-          ARTIFACT_ID: ${{ steps.artifact.outputs.artifact_id }}
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.13"
+
+      - name: Build Android APK
+        working-directory: hardware-shenas-source
+        run: gradle assembleDebug
+
+      - name: Copy APK into website
         run: |
           mkdir -p downloads
-          curl -fL -H "Accept: application/vnd.github+json" "https://api.github.com/repos/theslyapex/sakhtafzar-shenas/actions/artifacts/$ARTIFACT_ID/zip" -o /tmp/hardware-shenas.zip
-          unzip -o /tmp/hardware-shenas.zip -d /tmp/hardware-shenas
-          APK=$(find /tmp/hardware-shenas -type f -name '*.apk' -print -quit)
-          test -n "$APK"
-          cp "$APK" downloads/hardware-shenas.apk
+          cp hardware-shenas-source/app/build/outputs/apk/debug/*.apk downloads/hardware-shenas.apk
           test -s downloads/hardware-shenas.apk
-          echo "Downloaded APK from Android CI run $RUN_ID"
           ls -lh downloads/hardware-shenas.apk
 
       - name: Publish APK to website repository
