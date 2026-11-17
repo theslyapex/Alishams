@@ -216,4 +216,11 @@
     <image:image><image:loc>https://alishams.ir/assets/images/midwifery-document-preview.svg</image:loc><image:title>پیش‌نمایش پروژه طراحی سند تخصصی مامایی</image:title></image:image>
   </url>
 
+  <url>
+    <loc>https://alishams.ir/tools.html</loc>
+    <image:image>
+      <image:loc>https://alishams.ir/assets/images/alishams-studio-logo.png</image:loc>
+      <image:title>لوگوی استودیو دیجیتال علی شمس در آزمایشگاه ابزارهای آنلاین</image:title>
+    </image:image>
+  </url>
 </urlset>
