@@ -202,7 +202,7 @@ function result(html){const el=$('#toolResult');if(el){el.innerHTML=html;el.clas
 function num(id){return Number($(id).value)}
 function setupUnits(){
  const sets={length:[['mm','میلی‌متر',.001],['cm','سانتی‌متر',.01],['m','متر',1],['km','کیلومتر',1000],['in','اینچ',.0254],['ft','فوت',.3048],['mi','مایل',1609.344]],weight:[['mg','میلی‌گرم',.000001],['g','گرم',.001],['kg','کیلوگرم',1],['ton','تن',1000],['lb','پوند',.45359237],['oz','اونس',.0283495]],temp:[['c','سلسیوس'],['f','فارنهایت'],['k','کلوین']]};
- function fill(){let list=sets[$('#unitType').value];$('#unitFrom').innerHTML=list.map(x=>'<option value="'+x[0]+'">'+x[1]+'</option>').join('');$('#unitTo').innerHTML=list.map(x=>'<option value="'+x[0]+'">'+x[1]+'</option>').join('');if($('#unitTo').options.length>1)$('#unitTo').selectedIndex=1}
+ function fill(){let list=sets[$('#unitType').value];$('#unitFrom').innerHTML=list.map(x=>'<option value="'+x[0]+'">'+x[1]+'</option>').join('');$('#unitTo').innerHTML=list.map(x=>'<option value="'+x[0]+'">'+x[1]+'</option>').join('');if($('#unitTo').options.length>1)$('#unitTo').selectedIndex=1;refreshProSelect($('#unitFrom'));refreshProSelect($('#unitTo'))}
  $('#unitType').addEventListener('change',fill);fill();
  $('#convertUnit').onclick=()=>{let v=num('#unitValue');if(!Number.isFinite(v)){notify('یک مقدار معتبر وارد کن.');return}let type=$('#unitType').value,a=$('#unitFrom').value,b=$('#unitTo').value,out;if(type==='temp'){let c=a==='f'?(v-32)*5/9:a==='k'?v-273.15:v;out=b==='f'?c*9/5+32:b==='k'?c+273.15:c}else{let list=sets[type],fa=list.find(x=>x[0]===a)[2],fb=list.find(x=>x[0]===b)[2];out=v*fa/fb}result('<strong>'+fmt(out)+'</strong><small>نتیجه تبدیل واحد</small>')}
 }
