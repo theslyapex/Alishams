@@ -1160,6 +1160,19 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 @media(max-width:760px){.mobile-apps-heading{display:block}.mobile-apps-heading p{margin-top:10px}.mobile-apps-grid{grid-template-columns:1fr;gap:15px}.mobile-app-card-body{padding:17px}.mobile-app-card h3{font-size:20px}.mobile-app-card-media>.mobile-app-card-icon{width:58px;height:58px;right:15px;bottom:12px;border-radius:15px}}
 @media(prefers-reduced-motion:reduce){.mobile-app-card,.mobile-app-card-media>img,.mobile-app-card-link b{transition:none!important}}
 </style>
+
+<style id="hardware-shenas-home-card">
+.hs-home-cover{position:relative;display:grid;place-items:center;isolation:isolate;background:radial-gradient(ellipse at 50% 48%,#0b8fa333,transparent 48%),linear-gradient(145deg,#07151b,#0b1119 58%,#101020);overflow:hidden}
+.hs-home-grid{position:absolute;inset:0;opacity:.22;background-image:linear-gradient(#2ce5e522 1px,transparent 1px),linear-gradient(90deg,#2ce5e522 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(to bottom,#000,transparent 90%)}
+.hs-home-orbit{position:absolute;width:230px;height:230px;border:1px solid #37d9e433;border-radius:50%;box-shadow:0 0 0 22px #37d9e40a,0 0 0 48px #37d9e407}
+.hs-home-chip{position:relative;z-index:2;width:92px;height:92px;padding:8px;border:1px solid #5ee8ef88;border-radius:25px;background:#07151de8;box-shadow:0 0 42px #16b9c755,0 18px 45px #0009;transform:translateY(-8px)}
+.hs-home-chip img{width:100%;height:100%;object-fit:contain;border-radius:17px}
+.hs-home-readout{position:absolute;right:7%;top:14%;display:grid;gap:3px;padding:9px 12px;border:1px solid #4be0e344;border-radius:11px;background:#07131ddd;color:#c8faff;font:700 8px Manrope;letter-spacing:1px}
+.hs-home-readout span{color:#61dce5;font-size:8px}.hs-home-readout b{font-size:9px}
+.hs-home-readout i{width:100%;height:3px;border-radius:9px;background:linear-gradient(90deg,#32dbe3 72%,#32dbe322 72%)}
+.hs-home-readout-two{right:auto;left:7%;top:auto;bottom:14%}
+@media(prefers-reduced-motion:reduce){.hs-home-cover *{animation:none!important}}
+</style>
 </head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="علی شمس"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی">
@@ -1554,7 +1567,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
  <div class="wrap">
   <div class="mobile-apps-heading">
    <div><span class="eyebrow">MOBILE APPLICATIONS · PRODUCT EXPERIENCE</span><h2 id="mobileAppsShowcaseTitle">تجربه‌های دیجیتال، <span style="color:var(--lav)">در دستان شما.</span></h2></div>
-   <p>از ایده تا تجربه‌ای که روی موبایل زندگی می‌کند؛ نگاهی به دو پروژه اپلیکیشن موبایل طراحی و توسعه‌یافته در استودیو دیجیتال علی شمس.</p>
+   <p>از ایده تا تجربه‌ای که روی موبایل زندگی می‌کند؛ نگاهی به سه پروژه اپلیکیشن موبایل طراحی و توسعه‌یافته در استودیو دیجیتال علی شمس.</p>
   </div>
   <div class="mobile-apps-grid">
    <article class="mobile-app-card">
@@ -1567,6 +1580,17 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
     <a href="case-studies/studio-ordering.html" aria-label="مطالعه موردی اپلیکیشن سفارش‌گیری استودیو">
      <div class="mobile-app-card-media"><img src="/assets/images/mobile-apps/studio-ordering/cover.jpg" alt="پیش‌نمایش اپلیکیشن سفارش‌گیری استودیو دیجیتال علی شمس" loading="lazy" decoding="async"><img class="mobile-app-card-icon" src="/assets/images/mobile-apps/studio-ordering/AlishamsDigitalStudio_app_icon.png" alt="" loading="lazy" decoding="async"></div>
      <div class="mobile-app-card-body"><span class="mobile-app-card-kicker">BUSINESS APP · ANDROID</span><h3>اپلیکیشن سفارش‌گیری استودیو دیجیتال</h3><p>راهکاری موبایلی برای آشنایی با خدمات استودیو و ساده‌تر کردن مسیر ثبت و پیگیری درخواست‌ها.</p><div class="mobile-app-card-foot"><span class="mobile-app-card-tags"><span>اپلیکیشن اختصاصی</span><span>خدمات دیجیتال</span></span><span class="mobile-app-card-link">مطالعه موردی <b>↗</b></span></div></div>
+    </a>
+   </article>
+   <article class="mobile-app-card">
+    <a href="case-studies/hardware-shenas.html" aria-label="مطالعه موردی اپلیکیشن سخت‌افزار شناس">
+     <div class="mobile-app-card-media hs-home-cover" role="img" aria-label="نمای گرافیکی اپلیکیشن سخت‌افزار شناس">
+      <div class="hs-home-grid"></div><div class="hs-home-orbit"></div>
+      <div class="hs-home-chip"><img src="https://raw.githubusercontent.com/theslyapex/sakhtafzar-shenas/main/app/src/main/res/drawable-nodpi/ic_launcher.png" alt="" loading="lazy" decoding="async"></div>
+      <div class="hs-home-readout"><span>CPU</span><b>DEVICE ANALYSIS</b><i></i></div>
+      <div class="hs-home-readout hs-home-readout-two"><span>GPU · RAM · BATTERY</span><b>HARDWARE MONITOR</b></div>
+     </div>
+     <div class="mobile-app-card-body"><span class="mobile-app-card-kicker">HARDWARE DIAGNOSTICS · ANDROID</span><h3>سخت‌افزار شناس | Hardware Shenas</h3><p>ابزار تشخیص و پایش سخت‌افزار موبایل، از پردازنده و حافظه تا باتری، سنسورها، نمایشگر، دوربین و ارتباطات.</p><div class="mobile-app-card-foot"><span class="mobile-app-card-tags"><span>تشخیص سخت‌افزار</span><span>پایش دستگاه</span></span><span class="mobile-app-card-link">مطالعه موردی <b>↗</b></span></div></div>
     </a>
    </article>
   </div>
