@@ -45,6 +45,9 @@
 .nav-dropdown-menu a{display:block;padding:10px 12px;border-radius:9px;white-space:nowrap}
 .nav-dropdown-menu a:hover{background:rgba(217,255,114,.08)}
 .nav-dropdown-toggle:focus-visible,.nav-dropdown-menu a:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+.nav-dropdown-menu{max-height:min(72vh,620px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.nav-dropdown-heading{display:block;padding:10px 12px 5px;margin-top:4px;border-top:1px solid #ffffff14;color:var(--lav,#b6a0ff);font-size:10px;font-weight:900;white-space:nowrap}
+@media(max-width:760px){.navlinks{max-height:calc(100dvh - 88px);overflow-y:auto;overscroll-behavior:contain}.navlinks .nav-dropdown{display:block}.navlinks .nav-dropdown-toggle{width:100%;justify-content:space-between;padding:11px 8px}.navlinks .nav-dropdown-menu{position:static;min-width:0;width:100%;max-height:48vh;margin:0 0 8px;padding:6px 8px;border-radius:12px;background:#0c0e13;box-shadow:none;backdrop-filter:none}.navlinks .nav-dropdown-menu a{white-space:normal;padding:10px 12px}}
 @media(min-width:1001px){.nav{gap:22px}.navlinks{gap:clamp(12px,1.45vw,23px);font-size:12px;white-space:nowrap}.nav-dropdown-menu{top:calc(100% + 8px)}}
 .nav-cta,.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line);border-radius:999px;padding:12px 19px;font-weight:700;font-size:13px;transition:transform .25s var(--ease),background .25s,border-color .25s;cursor:pointer}.nav-cta:hover,.btn:hover{transform:translateY(-3px)}.nav-cta{background:var(--lime);color:#11120d;border-color:var(--lime)}.account-cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:9px 15px;border:1px solid #d9ff7255;border-radius:999px;background:linear-gradient(135deg,#d9ff7214,#b6a0ff0b);color:var(--lime);font-size:12px;font-weight:800;white-space:nowrap;transition:transform .25s,border-color .25s,background .25s}.account-cta:hover{transform:translateY(-2px);border-color:var(--lime);background:#d9ff7218}.account-cta svg{width:20px;height:20px;flex:0 0 20px}.account-cta-label{display:inline}.account-cta-status{display:none;font-size:10px;line-height:1.3;font-weight:600;color:#c8e88b}.account-plus-mark{display:inline-flex;align-items:center;justify-content:center;gap:2px;min-width:0;width:auto;height:15px;margin:0 2px;padding:1px 5px;border-radius:5px;background:linear-gradient(135deg,#c4b5fd,#7c3aed);color:#fff;font-size:7px;font-weight:800;line-height:1;white-space:nowrap;box-shadow:0 0 8px #8b5cf633;vertical-align:middle}.account-plus-mark b{font-size:9px;line-height:1;font-weight:900}.account-plus-mark[hidden]{display:none!important}.account-plus-mark[hidden]{display:none!important}.account-status-row{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:16px}.account-cta.is-authenticated .account-status-row{display:inline-flex}.account-cta.is-authenticated{flex-direction:column;gap:3px;min-height:66px;padding:7px 12px;border-radius:16px}.account-cta.is-authenticated .account-cta-label{display:inline}.account-cta.is-authenticated .account-cta-status{display:block}.nav-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto;direction:ltr}.menu-toggle{display:none;background:none;border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:20px}
 /* HERO */
@@ -1168,16 +1171,31 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="علی شمس"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی">
 <a href="#services">خدمات</a>
-<a href="portfolio.html">نمونه‌کارها</a>
-<a href="videos.html">ویدئوها</a>
-<a href="/avangaar.html">آوانگار</a>
+<div class="nav-dropdown">
+<button class="nav-dropdown-toggle" type="button" aria-expanded="false">نمونه‌کارها <span aria-hidden="true">⌄</span></button>
+<div class="nav-dropdown-menu portfolio-nav-menu">
+<a href="portfolio.html">همه نمونه‌کارها</a>
+<a href="ad-image-portfolio.html">نمونه‌کارهای تصاویر تبلیغاتی</a>
+<a href="videos.html">نمونه‌کارهای ویدئویی</a>
+<a href="logo-portfolio.html">نمونه‌کارهای لوگو</a>
+<span class="nav-dropdown-heading">نمونه‌کارهای وب‌سایت</span>
+<a href="case-studies/iran-ma.html">ایران‌ما</a>
+<a href="case-studies/apex.html">اپکس، فشرده‌ساز ویدئو</a>
+<a href="case-studies/nova.html">نوا، آزمایشگاه تصویر</a>
+<a href="case-studies/abzarino.html">ابزارینو</a>
+<a href="case-studies/shirazeh.html">شیرازه</a>
+<span class="nav-dropdown-heading">نمونه‌کارهای اپلیکیشن اندروید</span>
+<a href="case-studies/homagram.html">هماگرام</a>
+<a href="case-studies/studio-ordering.html">اپلیکیشن سفارش‌گیری</a>
+<a href="case-studies/hardware-shenas.html">سخت‌افزار شناس</a>
+</div></div>
 <a href="#alishamsLeague">رقابت برای رتبه برتر</a>
-
 <a href="about.html">درباره من</a>
 
 <div class="nav-dropdown">
 <button class="nav-dropdown-toggle" type="button" aria-expanded="false">همکاری <span aria-hidden="true">⌄</span></button>
 <div class="nav-dropdown-menu">
+<a href="/avangaar.html">آوانگار</a>
 <a href="pricing.html">قیمت‌گذاری</a>
 <a href="terms.html">شرایط و قوانین سفارش</a>
 <a href="plus.html">عضویت پلاس+</a>
