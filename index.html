@@ -1743,6 +1743,79 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
   </div>
  </div>
 </section>
+
+<section class="section free-tools-home" id="free-tools-home" aria-labelledby="freeToolsHomeTitle">
+ <style>
+ .free-tools-home{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 8% 45%,#b6a0ff12,transparent 36%),radial-gradient(ellipse at 94% 12%,#d9ff7210,transparent 34%)}
+ .free-tools-home:before{content:"";position:absolute;z-index:-1;width:520px;height:520px;left:-260px;top:8%;border:1px solid #b6a0ff18;border-radius:50%;box-shadow:0 0 0 36px #b6a0ff08,0 0 0 76px #b6a0ff05}
+ .free-tools-shell{position:relative;padding:clamp(22px,4vw,48px);border:1px solid #d9ff7230;border-radius:30px;background:linear-gradient(130deg,#171a19f2,#111319f5 58%,#191622f2);box-shadow:0 32px 90px #0005;overflow:hidden}
+ .free-tools-shell:after{content:"";position:absolute;right:-95px;top:-145px;width:310px;height:310px;border:1px solid #d9ff7220;border-radius:50%;box-shadow:0 0 0 25px #d9ff7207,0 0 0 55px #d9ff7205;pointer-events:none}
+ .free-tools-head{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;gap:28px;margin-bottom:32px}
+ .free-tools-copy{max-width:690px}
+ .free-tools-copy h2{font-size:clamp(30px,4.1vw,48px);line-height:1.4;letter-spacing:-1.2px;margin:15px 0 12px;color:#f5f4ef}
+ .free-tools-copy h2 span{color:#d9ff72}
+ .free-tools-copy p{max-width:620px;margin:0;color:#a9aab2;line-height:2.1;font-size:14px}
+ .free-tools-stamp{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:11px 15px;border:1px solid #d9ff7240;border-radius:999px;color:#d9ff72;background:#d9ff720a;font:800 10px Manrope,Estedad,sans-serif;letter-spacing:1px}
+ .free-tools-stamp i{width:7px;height:7px;border-radius:50%;background:#d9ff72;box-shadow:0 0 14px #d9ff72}
+ .free-tools-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+ .free-tool-tile{position:relative;display:flex;min-height:205px;flex-direction:column;align-items:flex-start;padding:21px 19px 18px;border:1px solid #ffffff13;border-radius:21px;background:linear-gradient(145deg,#ffffff0b,#ffffff03);transition:transform .3s,border-color .3s,background .3s;overflow:hidden}
+ .free-tool-tile:before{content:"";position:absolute;inset:auto -28px -65px auto;width:130px;height:130px;border-radius:50%;background:var(--tool-glow);filter:blur(48px);opacity:.16;transition:opacity .3s}
+ .free-tool-tile:hover{transform:translateY(-6px);border-color:color-mix(in srgb,var(--tool-glow) 55%,transparent);background:linear-gradient(145deg,#ffffff12,#ffffff05)}
+ .free-tool-tile:hover:before{opacity:.32}
+ .free-tool-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;color:var(--tool-glow);background:color-mix(in srgb,var(--tool-glow) 12%,transparent);border:1px solid color-mix(in srgb,var(--tool-glow) 27%,transparent);margin-bottom:17px}
+ .free-tool-icon svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+ .free-tool-tile h3{font-size:15px;color:#f2f1ed;margin:0 0 8px}
+ .free-tool-tile p{font-size:11px;line-height:1.9;color:#a2a3ac;margin:0}
+ .free-tool-link{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;padding-top:18px;width:100%;font-size:11px;font-weight:700;color:#d9ff72}
+ .free-tool-link span{font-size:17px;transition:transform .25s}
+ .free-tool-tile:hover .free-tool-link span{transform:translateX(-4px)}
+ .free-tools-foot{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:22px;padding-top:20px;border-top:1px solid #ffffff12;color:#a6a7ae;font-size:12px}
+ .free-tools-foot strong{color:#f1f0eb}
+ .free-tools-all{display:inline-flex;align-items:center;gap:12px;padding:12px 18px;border-radius:13px;background:#d9ff72;color:#11130c;font-weight:800;white-space:nowrap;transition:transform .25s,box-shadow .25s}
+ .free-tools-all:hover{transform:translateY(-3px);box-shadow:0 10px 30px #d9ff7228}
+ @media(max-width:900px){.free-tools-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+ @media(max-width:620px){.free-tools-home{padding:66px 0}.free-tools-shell{padding:21px 16px;border-radius:24px}.free-tools-head{align-items:flex-start;flex-direction:column;gap:18px;margin-bottom:23px}.free-tools-copy h2{font-size:29px}.free-tools-copy p{font-size:12px}.free-tools-grid{gap:9px}.free-tool-tile{min-height:190px;padding:16px 13px;border-radius:17px}.free-tool-icon{width:42px;height:42px;margin-bottom:13px}.free-tool-icon svg{width:22px;height:22px}.free-tool-tile h3{font-size:13px}.free-tool-tile p{font-size:10px}.free-tool-link{font-size:10px;padding-top:14px}.free-tools-foot{align-items:stretch;flex-direction:column;font-size:11px}.free-tools-all{justify-content:center}}
+ @media(prefers-reduced-motion:reduce){.free-tool-tile,.free-tools-all,.free-tool-link span{transition:none!important}}
+ </style>
+ <div class="wrap">
+  <div class="free-tools-shell reveal">
+   <div class="free-tools-head">
+    <div class="free-tools-copy">
+     <span class="eyebrow">ALISHAMS · FREE DIGITAL TOOLS</span>
+     <h2 id="freeToolsHomeTitle">ابزارهای کاربردی،<br><span>همیشه در دسترس تو.</span></h2>
+     <p>برای محاسبه، تبدیل، ساخت و بهینه‌سازی، لازم نیست برنامه‌ای نصب کنی یا حساب کاربری بسازی. ابزارهای آنلاین را مستقیم در مرورگر اجرا کن و سریع به نتیجه برس.</p>
+    </div>
+    <span class="free-tools-stamp"><i></i> رایگان · آنلاین · بدون ثبت‌نام</span>
+   </div>
+   <div class="free-tools-grid">
+    <a class="free-tool-tile" href="/tools.html" style="--tool-glow:#d9ff72">
+     <span class="free-tool-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2.8" width="14" height="18.4" rx="2.4"/><path d="M8 6.5h8M8 11h1M12 11h1M16 11h.01M8 15h1M12 15h1M16 15h.01M8 18.5h8"/></svg></span>
+     <h3>محاسبه‌گرهای سریع</h3><p>درصد، تخفیف و شاخص توده بدنی را در چند ثانیه محاسبه کن.</p>
+     <span class="free-tool-link">ورود به ابزارها <span>←</span></span>
+    </a>
+    <a class="free-tool-tile" href="/tools.html" style="--tool-glow:#b6a0ff">
+     <span class="free-tool-icon"><svg viewBox="0 0 24 24"><path d="M4 7h13M13 3l4 4-4 4M20 17H7M11 13l-4 4 4 4"/></svg></span>
+     <h3>مبدل واحدها</h3><p>واحدهای طول، وزن و دما را با تبدیل فوری و دقیق جابه‌جا کن.</p>
+     <span class="free-tool-link">ورود به ابزارها <span>←</span></span>
+    </a>
+    <a class="free-tool-tile" href="/tools.html" style="--tool-glow:#7de7e0">
+     <span class="free-tool-icon"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 14h2v6h-6v-2"/></svg></span>
+     <h3>ساخت QR Code</h3><p>لینک یا متن دلخواهت را به کد QR قابل دریافت تبدیل کن.</p>
+     <span class="free-tool-link">ورود به ابزارها <span>←</span></span>
+    </a>
+    <a class="free-tool-tile" href="/tools.html" style="--tool-glow:#ff9db5">
+     <span class="free-tool-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 20"/></svg></span>
+     <h3>فشرده‌ساز تصویر</h3><p>حجم تصاویر را کاهش بده و برای انتشار در وب آماده‌شان کن.</p>
+     <span class="free-tool-link">ورود به ابزارها <span>←</span></span>
+    </a>
+   </div>
+   <div class="free-tools-foot">
+    <span><strong>ابزارهای بیشتر در راه‌اند.</strong> یک جعبه‌ابزار دیجیتال که مرتب کامل‌تر می‌شود.</span>
+    <a class="free-tools-all" href="/tools.html">مشاهده همه ابزارهای رایگان <span>↗</span></a>
+   </div>
+  </div>
+ </div>
+</section>
 <section class="route-wordmark" aria-label="دسترسی به معرفی و روند همکاری"><div class="wrap route-wordmark-inner"><span class="route-wordmark-kicker">GET TO KNOW THE PROCESS</span><a href="/about.html"><small>01 / ABOUT</small><strong>درباره من</strong><i>↗</i></a><a href="#process"><small>02 / PROCESS</small><strong>روند همکاری</strong><i>↗</i></a><a href="/feedback.html"><small>03 / FEEDBACK</small><strong>دیدگاه مشتریان</strong><i>↗</i></a></div></section>
 <section class="section" id="about"><div class="wrap about-grid"><div class="portrait reveal"><img class="portrait-photo" src="https://raw.githubusercontent.com/theslyapex/Alishams/main/assets/images/ali-shams-portrait.jpg" alt="تصویر صاحب استودیو" loading="lazy" decoding="async"><div class="portrait-label"><span>علی شمس · طراح و سازنده دیجیتال</span><span>ABOUT THE CREATOR</span></div></div><div class="about-copy reveal delay-1"><span class="eyebrow">A LITTLE ABOUT ME</span><h2>پشت هر پروژه،<br>یک فکر دقیق قرار دارد.</h2><p>من روی پیوند ایده، طراحی و اجرا تمرکز می‌کنم؛ از محتوایی که باید در چند ثانیه توجه مخاطب را جلب کند تا صفحه‌ای که باید حس اعتماد بسازد. برای من، نتیجه خوب از شنیدن درست نیاز پروژه و توجه به جزئیات شروع می‌شود.</p><div class="stats"><div class="stat"><strong>با چند قدم ساده</strong><span>ایده تا اجرا</span></div><div class="stat"><strong>100%</strong><span>توجه به جزئیات</span></div><div class="stat"><strong>∞</strong><span>کنجکاوی خلاق</span></div></div><p style="margin-top:22px"><a class="btn btn-quiet" href="about.html">آشنایی بیشتر با من ↗︎</a></p></div></div></section>
 <section class="section reviews-section" id="reviews"><div class="wrap principles-wrap">
