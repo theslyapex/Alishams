@@ -1,0 +1,60 @@
+name: Publish Hardware Shenas APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "case-studies/hardware-shenas.html"
+      - ".github/workflows/publish-hardware-shenas-apk.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout website
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Find latest successful Android build
+        id: artifact
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RUN_ID=$(curl -fsSL -H "Accept: application/vnd.github+json" https://api.github.com/repos/theslyapex/sakhtafzar-shenas/actions/runs?branch=main\&status=completed\&per_page=50 | jq -r '.workflow_runs[] | select(.conclusion == "success" and .event != "pull_request") | .id' | head -n 1)
+          test -n "$RUN_ID"
+          ARTIFACT_ID=$(curl -fsSL -H "Accept: application/vnd.github+json" "https://api.github.com/repos/theslyapex/sakhtafzar-shenas/actions/runs/$RUN_ID/artifacts" | jq -r '.artifacts[] | select(.name == "hardware-shenas-debug" and .expired == false) | .id' | head -n 1)
+          test -n "$ARTIFACT_ID"
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+          echo "artifact_id=$ARTIFACT_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Download APK artifact
+        env:
+          RUN_ID: ${{ steps.artifact.outputs.run_id }}
+          ARTIFACT_ID: ${{ steps.artifact.outputs.artifact_id }}
+        run: |
+          mkdir -p downloads
+          curl -fL -H "Accept: application/vnd.github+json" "https://api.github.com/repos/theslyapex/sakhtafzar-shenas/actions/artifacts/$ARTIFACT_ID/zip" -o /tmp/hardware-shenas.zip
+          unzip -o /tmp/hardware-shenas.zip -d /tmp/hardware-shenas
+          APK=$(find /tmp/hardware-shenas -type f -name '*.apk' -print -quit)
+          test -n "$APK"
+          cp "$APK" downloads/hardware-shenas.apk
+          test -s downloads/hardware-shenas.apk
+          echo "Downloaded APK from Android CI run $RUN_ID"
+          ls -lh downloads/hardware-shenas.apk
+
+      - name: Publish APK to website repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add downloads/hardware-shenas.apk
+          if git diff --cached --quiet; then
+            echo "APK is already up to date."
+            exit 0
+          fi
+          git commit -m "Publish latest Hardware Shenas APK"
+          git push
