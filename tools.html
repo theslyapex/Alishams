@@ -374,7 +374,7 @@ function parseJalali(value){
  const jy=Number(m[1]),jm=Number(m[2]),jd=Number(m[3]);
  if(jy<1200||jy>1600||jm<1||jm>12||jd<1||jd>31)throw new Error('مقادیر تاریخ شمسی خارج از محدوده معتبر هستند.');
  const start=Date.UTC(jy+621,0,1);
- for(let k=0;k<380;k++){const d=new Date(start+k*86400000),p=persianParts(d);if(p.year===jy&&p.month===jm&&p.day===jd)return d}
+ for(let k=0;k<450;k++){const d=new Date(start+k*86400000),p=persianParts(d);if(p.year===jy&&p.month===jm&&p.day===jd)return d}
  throw new Error('این تاریخ در تقویم شمسی معتبر نیست.');
 }
 function jalaliString(date){const p=persianParts(date);return String(p.year).padStart(4,'0')+'/'+String(p.month).padStart(2,'0')+'/'+String(p.day).padStart(2,'0')}
