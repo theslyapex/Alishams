@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#090a0d">
 <title>ابزارهای آنلاین رایگان | محاسبه‌گر، تبدیل واحد، QR و فشرده‌سازی تصویر | علی شمس</title>
-<meta name="description" content="۸ ابزار آنلاین رایگان فارسی در آزمایشگاه علی شمس؛ محاسبه BMI، درصد و تخفیف، تبدیل واحد، تولید رمز عبور، ساخت QR کد، فشرده‌سازی تصویر و تحلیل متن. بدون نصب برنامه و ثبت‌نام.">
+<meta name="description" content="۱۴ ابزار آنلاین رایگان فارسی در آزمایشگاه علی شمس؛ محاسبه BMI، درصد و تخفیف، تبدیل واحد، تولید رمز عبور، ساخت QR کد، فشرده‌سازی تصویر و تحلیل متن. بدون نصب برنامه و ثبت‌نام.">
 <link rel="canonical" href="https://alishams.ir/tools.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ابزارهای آنلاین رایگان | آزمایشگاه دیجیتال علی شمس">
@@ -14,7 +14,7 @@
 <meta property="og:image" content="https://alishams.ir/assets/images/alishams-studio-logo.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ابزارهای آنلاین رایگان | آزمایشگاه دیجیتال علی شمس">
-<meta name="twitter:description" content="۸ ابزار کاربردی فارسی برای محاسبه، تبدیل، ساخت QR، فشرده‌سازی تصویر و تحلیل متن. رایگان و بدون ثبت‌نام.">
+<meta name="twitter:description" content="۱۴ ابزار کاربردی فارسی برای محاسبه، تبدیل، ساخت QR، فشرده‌سازی تصویر و تحلیل متن. رایگان و بدون ثبت‌نام.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Estedad:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -101,7 +101,7 @@ a{color:inherit;text-decoration:none}button,input,select{font:inherit}button,a{-
   "@type": "WebApplication",
   "name": "آزمایشگاه ابزارهای آنلاین علی شمس",
   "url": "https://alishams.ir/tools.html",
-  "description": "مجموعه‌ای از ابزارهای آنلاین رایگان فارسی برای محاسبه، تبدیل واحد، تولید رمز عبور، ساخت QR کد، فشرده‌سازی تصویر و تحلیل متن.",
+  "description": "مجموعه‌ای از ۱۴ ابزار آنلاین رایگان فارسی برای محاسبه، تبدیل واحد، تولید رمز عبور، ساخت QR کد، فشرده‌سازی تصویر و تحلیل متن.",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Any",
   "browserRequirements": "مرورگر مدرن با پشتیبانی از JavaScript",
@@ -201,7 +201,7 @@ function openModal(key){
 
  if(key==='text'){title='تحلیل‌گر متن';subtitle='آمار و جزئیات متن را در لحظه ببین';icon='fa-font';html='<div class="tool-form"><div class="field"><label for="textInput">متن موردنظر</label><textarea id="textInput" rows="6" placeholder="متنت رو اینجا وارد کن..." style="width:100%;padding:12px;border:1px solid #ffffff1b;border-radius:12px;background:#0b0e14;color:var(--ink);font:12px/2 Estedad;outline:none;resize:vertical;user-select:text"></textarea></div><div class="field-grid"><div class="result show" id="textWords">کلمات: ۰</div><div class="result show" id="textChars">کاراکترها: ۰</div><div class="result show" id="textSentences">جمله‌ها: ۰</div><div class="result show" id="textRead">زمان مطالعه: ۰ دقیقه</div></div></div>'}
  $('#modalTitle').textContent=title;$('#modalSubtitle').textContent=subtitle;$('#modalIcon').innerHTML='<i class="fa-solid '+icon+'"></i>';content.innerHTML=html;modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
- if(key==='units')setupUnits();if(key==='password')setupPassword();if(key==='image')setupImage();if(key==='text')setupText();
+ if(key==='metaCheck')setupMetaCheck();if(key==='units')setupUnits();if(key==='password')setupPassword();if(key==='image')setupImage();if(key==='text')setupText();
  enhanceSelects();
  setTimeout(()=>{const f=content.querySelector('input:not([type=checkbox]):not([type=range]):not([type=file]),textarea');if(f)f.focus()},120)
 }
@@ -316,6 +316,16 @@ function setupImage(){
  $('#imageFile').onchange=e=>{file=e.target.files[0];if(file){if(file.size>12*1024*1024){notify('حجم فایل بیشتر از ۱۲ مگابایت است.');file=null;return}$('#imageDrop strong').textContent=file.name;$('#imageDrop span').textContent=(file.size/1024).toFixed(1)+' KB · آماده پردازش'}};
  $('#compressImage').onclick=()=>{if(!file){notify('ابتدا یک تصویر انتخاب کن.');return}let img=new Image(),url=URL.createObjectURL(file);img.onload=()=>{let canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;canvas.getContext('2d').drawImage(img,0,0);let type=$('#imageFormat').value;canvas.toBlob(b=>{URL.revokeObjectURL(url);if(!b){notify('پردازش تصویر انجام نشد.');return}blob=b;$('#downloadImage').disabled=false;let saved=(1-b.size/file.size)*100;result('<strong>'+fmt((b.size/1024).toFixed(1))+' KB</strong><small>حجم اولیه: '+fmt((file.size/1024).toFixed(1))+' KB · '+(saved>0?'کاهش حجم '+fmt(saved.toFixed(1))+'٪':'حجم خروجی نسبت به فایل اولیه بیشتر شده است')+'</small>')},type,Number($('#imageQuality').value)/100)};img.onerror=()=>{URL.revokeObjectURL(url);notify('خواندن تصویر ممکن نشد.')};img.src=url};
  $('#downloadImage').onclick=()=>{if(!blob)return;let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='alishams-optimized.'+($('#imageFormat').value==='image/jpeg'?'jpg':$('#imageFormat').value==='image/png'?'png':'webp');a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+}
+function setupMetaCheck(){
+ const title=$('#mcTitle'),desc=$('#mcDesc');
+ function update(){
+  const t=title.value.trim(),d=desc.value.trim();
+  $('#mcStats').textContent='عنوان: '+fmt(t.length)+' کاراکتر · توضیحات: '+fmt(d.length)+' کاراکتر';
+  $('#mcPreviewTitle').textContent=t||'عنوان صفحه در این قسمت نمایش داده می‌شود';
+  $('#mcPreviewDesc').textContent=d||'توضیحات متا در این قسمت نمایش داده می‌شود.';
+ }
+ title.addEventListener('input',update);desc.addEventListener('input',update);update();
 }
 function setupText(){
  const input=$('#textInput');function update(){let s=input.value.trim(),words=s?s.split(/\s+/u).length:0,chars=input.value.length,sent=s?s.split(/[.!؟?؛]+/u).filter(x=>x.trim()).length:0,mins=words?Math.max(1,Math.ceil(words/200)):0;$('#textWords').textContent='کلمات: '+fmt(words);$('#textChars').textContent='کاراکترها: '+fmt(chars);$('#textSentences').textContent='جمله‌ها: '+fmt(sent);$('#textRead').textContent='زمان مطالعه: '+fmt(mins)+' دقیقه'}input.addEventListener('input',update);update()
