@@ -231,7 +231,7 @@ function renderPreviewPageMenu(){
  const label=previewPage==="خانه"?"صفحه اصلی":previewPage;
  $("previewPageLabel").textContent=label;
  menu.innerHTML=state.pages.map(p=>'<button type="button" class="select-option '+(p===previewPage?"selected":"")+'" data-preview-page="'+esc(p)+'"><span>'+esc(p)+'</span><span>✓</span></button>').join("");
- menu.querySelectorAll("[data-preview-page]").forEach(b=>b.onclick=()=>{previewPage=b.dataset.previewPage;host.classList.remove("open");renderPreview()});
+ menu.querySelectorAll("[data-preview-page]").forEach(b=>b.onclick=()=>{previewPage=b.dataset.previewPage;state.structurePage=previewPage;state.contentPage=previewPage;host.classList.remove("open");if(step===2||step===3)renderStep();renderPreview()});
  host.querySelector(".select-trigger").onclick=()=>host.classList.toggle("open");
 }
 function renderPreview(){const frame=$("previewFrame");renderPreviewPageMenu();frame.onload=()=>{try{const d=frame.contentDocument;d.documentElement.style.userSelect="none";d.documentElement.style.webkitUserSelect="none";d.addEventListener("contextmenu",e=>e.preventDefault());d.addEventListener("selectstart",e=>e.preventDefault());d.addEventListener("copy",e=>e.preventDefault());d.addEventListener("cut",e=>e.preventDefault());d.addEventListener("dragstart",e=>e.preventDefault())}catch(e){}setPreviewDevice(device)};frame.srcdoc=generatedHTML(heroImagePreview,pageSectionsFor(previewPage),false);setPreviewDevice(device)}
