@@ -194,7 +194,7 @@ function sectionsHTML(imageSrc=heroImagePreview,sectionIds=state.sections,pageLa
  };return m[id]||"";
 }).join("");state=baseState;return html}
 function pageFileName(label){const fixed={"خانه":"index.html","درباره ما":"about.html","خدمات":"services.html","نمونه‌کارها":"gallery.html","وبلاگ":"blog.html","تماس با ما":"contact.html"};return fixed[label]||"page-"+(Math.max(1,state.pages.indexOf(label)+1))+".html"}
-function pageSectionsFor(label){const custom=state.pageContent?.[label]?.sections;if(custom)return custom.filter(id=>sectionTypes.some(x=>x[0]===id));const map={"درباره ما":["about","stats","testimonials"],"خدمات":["services","products","pricing","features","faq"],"نمونه‌کارها":["gallery","products","testimonials"],"وبلاگ":["blog","newsletter"],"تماس با ما":["contact","faq"]};return label==="خانه"?state.sections:(map[label]||state.sections).filter(id=>state.sections.includes(id))}
+function pageSectionsFor(label){const custom=state.pageContent?.[label]?.sections;if(custom)return custom.filter(id=>sectionTypes.some(x=>x[0]===id));const map={"درباره ما":["about","stats","testimonials"],"خدمات":["services","products","pricing","features","faq"],"نمونه‌کارها":["gallery","products","testimonials"],"وبلاگ":["blog","newsletter"],"تماس با ما":["contact","faq"]};const fallback=/تعرفه|قیمت|پلن/.test(label)?["hero","pricing","faq","contact"]:/سوال|سؤال|پرسش/.test(label)?["hero","faq","contact"]:["hero","about","contact"];return label==="خانه"?state.sections:(map[label]||fallback).filter(id=>state.sections.includes(id))}
 function pageFieldGroupsFor(label){
  const groups=[
  ["hero","بنر اصلی",[["heroEyebrow","متن بالای تیتر"],["heroTitle","تیتر اصلی"],["heroSubtitle","توضیح بنر","textarea"],["cta","متن دکمه"],["ctaLink","لینک دکمه"]]],
