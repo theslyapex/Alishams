@@ -193,7 +193,7 @@ function applySectionDesign(markup,id,pageLabel){
   if(!cfg.textColor)styles.push("color:#ffffff");
  }
  if(!styles.length)return markup;
- return markup.replace(/^<section\\b/, '<section style="'+esc(styles.join(";"))+'"');
+ return markup.replace(/^<section\b/, '<section style="'+esc(styles.join(";"))+'"');
 }
 function sectionsHTML(imageSrc=heroImagePreview,sectionIds=state.sections,pageLabel=null){const baseState=state,activeLabel=pageLabel||(typeof previewPage!=="undefined"?previewPage:"خانه");state={...baseState,...(baseState.pageContent?.[activeLabel]?.settings||{}),...(baseState.pageContent?.[activeLabel]?.fields||{})};const contactTarget=sectionIds.includes("contact")?"#contact":"#top",heroCtaHref=state.ctaLink==="#contact"?contactTarget:(state.ctaLink||contactTarget);const html=sectionIds.map(id=>{
  const m={
