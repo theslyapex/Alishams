@@ -240,6 +240,7 @@ async function exportImage(){if(!state.heroImagePath)return null;let {data,error
 function blobToDataURL(blob){return new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(blob)})}
 async function downloadHTML(){
  let previousGallery=galleryPreview;
+ notice("در حال آماده‌سازی HTML مستقل صفحه اصلی...");
  try{
   const heroBlob=await exportImage(),heroSrc=heroBlob?await blobToDataURL(heroBlob):null,embeddedGallery=[];
   for(const item of (state.galleryItems||[])){const {data:blob,error}=await sb.storage.from("site-builder-assets").download(item.path);if(error)throw error;embeddedGallery.push(await blobToDataURL(blob))}
@@ -253,6 +254,7 @@ async function downloadHTML(){
 async function downloadZIP(){
  if(!window.JSZip){notice("کتابخانه ZIP بارگذاری نشده است.","error");return}
  const oldGalleryPreview=galleryPreview;
+ notice("در حال ساخت بسته چندصفحه‌ای و آماده‌سازی فایل‌های هر صفحه...");
  try{
   let z=new JSZip(),image=await exportImage(),src=null;let galleryFiles=[];for(let i=0;i<(state.galleryItems||[]).length;i++){const item=state.galleryItems[i],{data:blob,error}=await sb.storage.from("site-builder-assets").download(item.path);if(error)throw error;const ext=(item.path.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,""),local="assets/gallery-"+(i+1)+"."+ext;z.file(local,blob);galleryFiles.push(local)}
   if(image){let ext=(state.heroImagePath.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"");src="assets/hero-image."+ext;z.file(src,image)}
@@ -269,7 +271,7 @@ async function downloadZIP(){
   galleryPreview=oldGalleryPreview;
   z.file("assets/js/script.js",'document.documentElement.classList.add("js-ready");document.querySelectorAll(".nav a").forEach(a=>a.addEventListener("click",()=>{const href=a.getAttribute("href");if(href&&href.startsWith("#")){const target=document.querySelector(href);if(target)target.scrollIntoView({behavior:"smooth"});}}));');
   z.file("README.txt","وب‌سایت چندصفحه‌ای ساخته‌شده با Alishams Site Builder\nصفحه اصلی: index.html\nهر صفحه فایل CSS مستقل خود را در assets/css دارد. فایل‌های تصاویر در پوشه assets قرار گرفته‌اند.\nتمام فایل‌ها و پوشه‌ها را با حفظ ساختار روی هاست بارگذاری کنید.\n");
-  let blob=await z.generateAsync({type:"blob"});downloadBlob(blob,"alishams-website.zip","application/zip");
+  let blob=await z.generateAsync({type:"blob"});downloadBlob(blob,"alishams-website.zip","application/zip");notice("بسته کامل وب‌سایت آماده شد.","success");
  }catch(e){galleryPreview=oldGalleryPreview;notice("ساخت بسته ZIP انجام نشد: "+e.message,"error")}
 }
 async function requireUser(){if(!sb)throw Error("اتصال حساب کاربری در دسترس نیست.");let {data,error}=await sb.auth.getSession();if(error)throw error;user=data.session?.user||null;return user}
