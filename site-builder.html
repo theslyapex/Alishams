@@ -88,7 +88,7 @@ function renderStep(){
 function bindEvents(){
  $("editorBody").querySelectorAll("[data-category]").forEach(b=>b.onclick=()=>change(s=>s.category=b.dataset.category));
  $("editorBody").querySelectorAll("[data-style]").forEach(b=>b.onclick=()=>change(s=>s.style=b.dataset.style));
- $("editorBody").querySelectorAll("[data-page]").forEach(b=>b.onchange=()=>change(s=>{let p=b.dataset.page;if(b.checked&&!s.pages.includes(p))s.pages.push(p);if(!b.checked)s.pages=s.pages.filter(x=>x!==p);if(p==="وبلاگ"&&b.checked&&!s.sections.includes("blog"))s.sections.push("blog")}));
+ $("editorBody").querySelectorAll("[data-page]").forEach(b=>b.onchange=()=>change(s=>{let p=b.dataset.page;if(b.checked&&!s.pages.includes(p))s.pages.push(p);if(!b.checked)s.pages=s.pages.filter(x=>x!==p);let required={"درباره ما":"about","خدمات":"services","نمونه‌کارها":"gallery","وبلاگ":"blog","تماس با ما":"contact"}[p];if(b.checked&&required&&!s.sections.includes(required))s.sections.push(required)}));
  $("editorBody").querySelectorAll("[data-move]").forEach(b=>b.onclick=()=>change(s=>{let i=+b.dataset.move,j=i+(+b.dataset.dir);if(j<0||j>=s.sections.length)return;[s.sections[i],s.sections[j]]=[s.sections[j],s.sections[i]]}));
  $("editorBody").querySelectorAll("[data-remove]").forEach(b=>b.onclick=()=>change(s=>s.sections=s.sections.filter(x=>x!==b.dataset.remove)));
  $("editorBody").querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>change(s=>s.sections.push(b.dataset.add)));
@@ -137,7 +137,7 @@ async function downloadZIP(){
   for(const [label,file,ids] of pages){if(state.pages.includes(label))files.push([file,ids.filter(id=>state.sections.includes(id)||id==="blog")])}
   for(const [file,ids] of files){let pageHtml=generatedHTML(src,ids,true).replace(/<style>[\\s\\S]*?<\\/style>/i,'<link rel="stylesheet" href="assets/css/style.css">').replace("</body>",'<script src="assets/js/script.js" defer><\\/script></body>');z.file(file,pageHtml)}
   z.file("assets/css/style.css",css);
-  z.file("assets/js/script.js",'document.documentElement.classList.add("js-ready");document.querySelectorAll(".nav a").forEach(a=>a.addEventListener("click",()=>{const target=document.querySelector(a.getAttribute("href"));if(target)target.scrollIntoView({behavior:"smooth"});}));');
+  z.file("assets/js/script.js",'document.documentElement.classList.add("js-ready");document.querySelectorAll(".nav a").forEach(a=>a.addEventListener("click",()=>{const href=a.getAttribute("href");if(href&&href.startsWith("#")){const target=document.querySelector(href);if(target)target.scrollIntoView({behavior:"smooth"});}}));');
   z.file("README.txt","وب‌سایت ساخته‌شده با Alishams Site Builder\\nفایل‌های HTML و پوشه assets را با هم روی هاست بارگذاری کنید. صفحه اصلی index.html است.\\n");
   let blob=await z.generateAsync({type:"blob"});downloadBlob(blob,"alishams-website.zip","application/zip");
  }catch(e){notice("ساخت بسته ZIP انجام نشد: "+e.message,"error")}
@@ -159,7 +159,7 @@ async function loadVersionList(){
  const {data,error}=await sb.from("site_builder_project_versions").select("id,version_number,change_summary,created_at").eq("project_id",projectId).eq("user_id",user.id).order("version_number",{ascending:false}).limit(30);
  if(error){host.innerHTML='<div class="empty">'+esc(error.message)+'</div>';return}
  host.innerHTML=data?.length?data.map(v=>'<article class="project-item"><b>نسخه '+v.version_number+'</b><small>'+esc(v.change_summary||"نسخه ذخیره‌شده")+' · '+new Date(v.created_at).toLocaleString("fa-IR")+'</small><button class="btn" data-restore-version="'+v.id+'">بازیابی این نسخه</button></article>').join(""):'<div class="empty">هنوز نسخه‌ای ذخیره نشده است.</div>';
- host.querySelectorAll("[data-restore-version]").forEach(b=>b.onclick=()=>restoreVersion(b.dataset.restoreVersion));
+ host.querySelectorAll("[data-restore-version]").forEach(b=>b.onclick=()=>restoreVersion(b.dataset.restoreVersion).catch(e=>notice(e.message,"error")));
 }
 async function restoreVersion(id){
  const {data,error}=await sb.from("site_builder_project_versions").select("schema,version_number").eq("id",id).eq("project_id",projectId).eq("user_id",user.id).single();
