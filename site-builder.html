@@ -256,15 +256,19 @@ async function downloadZIP(){
  try{
   let z=new JSZip(),image=await exportImage(),src=null;let galleryFiles=[];for(let i=0;i<(state.galleryItems||[]).length;i++){const item=state.galleryItems[i],{data:blob,error}=await sb.storage.from("site-builder-assets").download(item.path);if(error)throw error;const ext=(item.path.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,""),local="assets/gallery-"+(i+1)+"."+ext;z.file(local,blob);galleryFiles.push(local)}
   if(image){let ext=(state.heroImagePath.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"");src="assets/hero-image."+ext;z.file(src,image)}
-  galleryPreview=galleryFiles;let standalone=generatedHTML(src,state.sections,true,"خانه"),css=(standalone.match(/<style>([\s\S]*?)<\/style>/i)||[])[1]||"";
-  if(!css)throw Error("فایل CSS تولید نشد.");
+  galleryPreview=galleryFiles;
   const files=[["index.html",state.sections]];
   for(const label of state.pages.filter(x=>x!=="خانه")){files.push([pageFileName(label),pageSectionsFor(label)])}
-  for(const [file,ids] of files){const label=file==="index.html"?"خانه":state.pages.find(p=>pageFileName(p)===file);let pageHtml=generatedHTML(src,ids,true,label).replace(/<style>[\s\S]*?<\/style>/i,'<link rel="stylesheet" href="assets/css/style.css">').replace("</body>",'<script src="assets/js/script.js" defer><\/script></body>');z.file(file,pageHtml)}
+  for(const [file,ids] of files){
+   const label=file==="index.html"?"خانه":state.pages.find(p=>pageFileName(p)===file),generated=generatedHTML(src,ids,true,label),css=(generated.match(/<style>([\s\S]*?)<\/style>/i)||[])[1]||"";
+   if(!css)throw Error("فایل CSS صفحه "+label+" تولید نشد.");
+   const cssPath="assets/css/"+file.replace(/\.html$/,"")+".css";
+   const pageHtml=generated.replace(/<style>[\s\S]*?<\/style>/i,'<link rel="stylesheet" href="'+cssPath+'">').replace("</body>",'<script src="assets/js/script.js" defer><\/script></body>');
+   z.file(file,pageHtml);z.file(cssPath,css);
+  }
   galleryPreview=oldGalleryPreview;
-  z.file("assets/css/style.css",css);
   z.file("assets/js/script.js",'document.documentElement.classList.add("js-ready");document.querySelectorAll(".nav a").forEach(a=>a.addEventListener("click",()=>{const href=a.getAttribute("href");if(href&&href.startsWith("#")){const target=document.querySelector(href);if(target)target.scrollIntoView({behavior:"smooth"});}}));');
-  z.file("README.txt","وب‌سایت ساخته‌شده با Alishams Site Builder\nفایل‌های HTML و پوشه assets را با هم روی هاست بارگذاری کنید. صفحه اصلی index.html است.\n");
+  z.file("README.txt","وب‌سایت چندصفحه‌ای ساخته‌شده با Alishams Site Builder\nصفحه اصلی: index.html\nهر صفحه فایل CSS مستقل خود را در assets/css دارد. فایل‌های تصاویر در پوشه assets قرار گرفته‌اند.\nتمام فایل‌ها و پوشه‌ها را با حفظ ساختار روی هاست بارگذاری کنید.\n");
   let blob=await z.generateAsync({type:"blob"});downloadBlob(blob,"alishams-website.zip","application/zip");
  }catch(e){galleryPreview=oldGalleryPreview;notice("ساخت بسته ZIP انجام نشد: "+e.message,"error")}
 }
