@@ -189,7 +189,7 @@ function applySectionDesign(markup,id,pageLabel){
  if(cfg.align)styles.push("text-align:"+cfg.align);
  if(cfg.radius!==undefined&&cfg.radius!=="")styles.push("border-radius:"+cfg.radius+"px;overflow:hidden");
  if(cfg.minHeight)styles.push("min-height:"+cfg.minHeight+"px");
- if(image&&/^https?:\/\/[^\s"'<>]+$/i.test(image)){
+ if(image&&/^(https?:\/\/|assets\/|data:image\/)/i.test(image)&&!/[<>"\r\n]/.test(image)){
   const url=image.replace(/["\\\n\r]/g,"");
   styles.push('background-image:linear-gradient(rgba(0,0,0,'+(Number(cfg.overlay)||0)+'),rgba(0,0,0,'+(Number(cfg.overlay)||0)+')),url("'+url+'")');
   styles.push("background-size:cover;background-position:center;background-repeat:no-repeat");
@@ -264,26 +264,27 @@ function downloadBlob(data,name,type){let blob=new Blob([data],{type}),url=URL.c
 async function exportImage(){if(!state.heroImagePath)return null;let {data,error}=await sb.storage.from("site-builder-assets").download(state.heroImagePath);if(error)throw error;return data}
 function blobToDataURL(blob){return new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(blob)})}
 async function downloadHTML(){
- let previousGallery=galleryPreview;
+ let previousGallery=galleryPreview,previousSectionImages={...sectionImagePreview};
  notice("در حال آماده‌سازی HTML مستقل صفحه اصلی...");
  try{
   const heroBlob=await exportImage(),heroSrc=heroBlob?await blobToDataURL(heroBlob):null,embeddedGallery=[];
   for(const item of (state.galleryItems||[])){const {data:blob,error}=await sb.storage.from("site-builder-assets").download(item.path);if(error)throw error;embeddedGallery.push(await blobToDataURL(blob))}
-  galleryPreview=embeddedGallery;
+  galleryPreview=embeddedGallery;for(const [page,data] of Object.entries(state.pageContent||{})){if(page==="خانه")for(const [id,cfg] of Object.entries(data.sectionSettings||{})){if(cfg.backgroundImagePath){const {data:blob,error}=await sb.storage.from("site-builder-assets").download(cfg.backgroundImagePath);if(error)throw error;sectionImagePreview[page+"::"+id]=await blobToDataURL(blob)}}}
   const html=generatedHTML(heroSrc,state.sections,false,"خانه");
   downloadBlob(html,"index.html","text/html;charset=utf-8");
   notice("فایل مستقل صفحه اصلی آماده شد. تصاویر درون خود فایل قرار گرفته‌اند.","success");
  }catch(e){notice("ساخت فایل HTML انجام نشد: "+e.message,"error")}
- finally{galleryPreview=previousGallery}
+ finally{galleryPreview=previousGallery;sectionImagePreview=previousSectionImages}
 }
 async function downloadZIP(){
  if(!window.JSZip){notice("کتابخانه ZIP بارگذاری نشده است.","error");return}
- const oldGalleryPreview=galleryPreview;
+ const oldGalleryPreview=galleryPreview,oldSectionImagePreview={...sectionImagePreview};
  notice("در حال ساخت بسته چندصفحه‌ای و آماده‌سازی فایل‌های هر صفحه...");
  try{
   let z=new JSZip(),image=await exportImage(),src=null;let galleryFiles=[];for(let i=0;i<(state.galleryItems||[]).length;i++){const item=state.galleryItems[i],{data:blob,error}=await sb.storage.from("site-builder-assets").download(item.path);if(error)throw error;const ext=(item.path.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,""),local="assets/gallery-"+(i+1)+"."+ext;z.file(local,blob);galleryFiles.push(local)}
   if(image){let ext=(state.heroImagePath.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"");src="assets/hero-image."+ext;z.file(src,image)}
-  galleryPreview=galleryFiles;
+  galleryPreview=galleryFiles;sectionImagePreview={};
+  for(const [page,data] of Object.entries(state.pageContent||{})){for(const [id,cfg] of Object.entries(data.sectionSettings||{})){if(cfg.backgroundImagePath){const {data:blob,error}=await sb.storage.from("site-builder-assets").download(cfg.backgroundImagePath);if(error)throw error;const ext=(cfg.backgroundImagePath.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,""),local="assets/sections/"+encodeURIComponent(page)+"-"+id+"."+ext;z.file(local,blob);sectionImagePreview[page+"::"+id]=local}}}
   const files=[["index.html",state.sections]];
   for(const label of state.pages.filter(x=>x!=="خانه")){files.push([pageFileName(label),pageSectionsFor(label)])}
   for(const [file,ids] of files){
@@ -293,11 +294,11 @@ async function downloadZIP(){
    const pageHtml=generated.replace(/<style>[\s\S]*?<\/style>/i,'<link rel="stylesheet" href="'+cssPath+'">').replace("</body>",'<script src="assets/js/script.js" defer><\/script></body>');
    z.file(file,pageHtml);z.file(cssPath,css);
   }
-  galleryPreview=oldGalleryPreview;
+  galleryPreview=oldGalleryPreview;sectionImagePreview=oldSectionImagePreview;
   z.file("assets/js/script.js",'document.documentElement.classList.add("js-ready");document.querySelectorAll(".nav a").forEach(a=>a.addEventListener("click",()=>{const href=a.getAttribute("href");if(href&&href.startsWith("#")){const target=document.querySelector(href);if(target)target.scrollIntoView({behavior:"smooth"});}}));');
   z.file("README.txt","وب‌سایت چندصفحه‌ای ساخته‌شده با Alishams Site Builder\nصفحه اصلی: index.html\nهر صفحه فایل CSS مستقل خود را در assets/css دارد. فایل‌های تصاویر در پوشه assets قرار گرفته‌اند.\nتمام فایل‌ها و پوشه‌ها را با حفظ ساختار روی هاست بارگذاری کنید.\n");
   let blob=await z.generateAsync({type:"blob"});downloadBlob(blob,"alishams-website.zip","application/zip");notice("بسته کامل وب‌سایت آماده شد.","success");
- }catch(e){galleryPreview=oldGalleryPreview;notice("ساخت بسته ZIP انجام نشد: "+e.message,"error")}
+ }catch(e){galleryPreview=oldGalleryPreview;sectionImagePreview=oldSectionImagePreview;notice("ساخت بسته ZIP انجام نشد: "+e.message,"error")}
 }
 async function requireUser(){if(!sb)throw Error("اتصال حساب کاربری در دسترس نیست.");let {data,error}=await sb.auth.getSession();if(error)throw error;user=data.session?.user||null;return user}
 async function saveProject(versioned=false){
