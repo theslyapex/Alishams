@@ -185,19 +185,19 @@ function applySectionDesign(markup,id,pageLabel){
  if(cfg.background&&/^#[0-9a-f]{6}$/i.test(cfg.background))styles.push("background-color:"+cfg.background);
  if(cfg.textColor&&/^#[0-9a-f]{6}$/i.test(cfg.textColor)){styles.push("color:"+cfg.textColor);rules.push(selector+' :is(h1,h2,h3,p,b,span,small,summary,figcaption):not(.eyebrow):not(.price):not(.cta){color:'+cfg.textColor+'!important}')}
  if(cfg.accentColor&&/^#[0-9a-f]{6}$/i.test(cfg.accentColor))rules.push(selector+' :is(.eyebrow,.price,.process-number,.stats b){color:'+cfg.accentColor+'!important}'+selector+' .cta{background:'+cfg.accentColor+'!important}');
- if(cfg.titleSize)rules.push(selector+' :is(h1,h2){font-size:'+Number(cfg.titleSize)+'px!important}');
- if(cfg.bodySize)rules.push(selector+' :is(p,.lead){font-size:'+Number(cfg.bodySize)+'px!important}');
- if(cfg.columns)rules.push(selector+' .cards{grid-template-columns:repeat('+Number(cfg.columns)+',minmax(0,1fr))!important}');
- if(cfg.cardGap)rules.push(selector+' .cards{gap:'+Number(cfg.cardGap)+'px!important}');
+ if([24,28,32,36,42,48,56,64].includes(Number(cfg.titleSize)))rules.push(selector+' :is(h1,h2){font-size:'+Number(cfg.titleSize)+'px!important}');
+ if([12,13,14,15,16,18,20,22].includes(Number(cfg.bodySize)))rules.push(selector+' :is(p,.lead){font-size:'+Number(cfg.bodySize)+'px!important}');
+ if([1,2,3,4].includes(Number(cfg.columns)))rules.push(selector+' .cards{grid-template-columns:repeat('+Number(cfg.columns)+',minmax(0,1fr))!important}');
+ if([8,12,16,20,24,32,40].includes(Number(cfg.cardGap)))rules.push(selector+' .cards{gap:'+Number(cfg.cardGap)+'px!important}');
  if(cfg.columns)rules.push('@media(max-width:700px){'+selector+' .cards{grid-template-columns:1fr!important}}');
- if(cfg.padding)styles.push("padding-block:"+cfg.padding+"px");
+ if([24,36,48,64,80,100,120].includes(Number(cfg.padding)))styles.push("padding-block:"+Number(cfg.padding)+"px");
  if(cfg.width){const widths={full:"100%",narrow:"900px",standard:"1080px",wide:"1280px"};styles.push("max-width:"+widths[cfg.width]+";margin-inline:auto")}
- if(cfg.align)styles.push("text-align:"+cfg.align);
- if(cfg.radius!==undefined&&cfg.radius!=="")styles.push("border-radius:"+cfg.radius+"px;overflow:hidden");
- if(cfg.minHeight)styles.push("min-height:"+cfg.minHeight+"px");
+ if(["right","center","left"].includes(cfg.align))styles.push("text-align:"+cfg.align);
+ if([0,8,16,24,36].includes(Number(cfg.radius)))styles.push("border-radius:"+Number(cfg.radius)+"px;overflow:hidden");
+ if([240,320,420,520,640].includes(Number(cfg.minHeight)))styles.push("min-height:"+Number(cfg.minHeight)+"px");
  if(image&&/^(https?:\/\/|assets\/|data:image\/)/i.test(image)&&!/[<>"\r\n]/.test(image)){
   const url=image.replace(/["\\\n\r]/g,"");
-  styles.push('background-image:linear-gradient(rgba(0,0,0,'+(Number(cfg.overlay)||0)+'),rgba(0,0,0,'+(Number(cfg.overlay)||0)+')),url("'+url+'")');
+  const overlay=[0,0.15,0.3,0.45,0.6,0.75].includes(Number(cfg.overlay))?Number(cfg.overlay):0;styles.push('background-image:linear-gradient(rgba(0,0,0,'+overlay+'),rgba(0,0,0,'+overlay+')),url("'+url+'")');
   styles.push("background-size:cover;background-position:center;background-repeat:no-repeat");
   if(!cfg.textColor)styles.push("color:#ffffff");
  }
