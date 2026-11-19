@@ -157,6 +157,7 @@ function sectionsHTML(imageSrc=heroImagePreview,sectionIds=state.sections){retur
  };return m[id]||"";
 }).join("")}
 function pageFileName(label){const fixed={"خانه":"index.html","درباره ما":"about.html","خدمات":"services.html","نمونه‌کارها":"gallery.html","وبلاگ":"blog.html","تماس با ما":"contact.html"};return fixed[label]||"page-"+(Math.max(1,state.pages.indexOf(label)+1))+".html"}
+function pageSectionsFor(label){const map={"درباره ما":["about","stats","testimonials"],"خدمات":["services","products","pricing","features","faq"],"نمونه‌کارها":["gallery","products","testimonials"],"وبلاگ":["blog","newsletter"],"تماس با ما":["contact","faq"]};return label==="خانه"?state.sections:(map[label]||state.sections).filter(id=>state.sections.includes(id))}
 function generatedHTML(imageSrc=heroImagePreview,sectionIds=state.sections,multiPage=false){
  let style=state.style,p=state.primary,s=state.secondary,font=state.font,themes={modern:{bg:"#f5f7fb",fg:"#182033",panel:"#ffffff"},minimal:{bg:"#ffffff",fg:"#222222",panel:"#f7f7f5"},editorial:{bg:"#f4efe7",fg:"#2b2520",panel:"#fffaf2"},tech:{bg:"#07111f",fg:"#edf5ff",panel:"#101f33"},brutalist:{bg:"#f5f1e8",fg:"#111111",panel:"#ffffff"},organic:{bg:"#f1f0e7",fg:"#263c30",panel:"#faf9f2"},luxury:{bg:"#101012",fg:"#f2eadb",panel:"#1b1b1e"},swiss:{bg:"#f8f8f6",fg:"#161616",panel:"#ffffff"}},theme=themes[style]||themes.modern,bg=theme.bg,fg=theme.fg,panel=theme.panel,contentMax=state.contentWidth==="narrow"?"900px":"1180px";
  let fontQuery=fonts.find(x=>x[0]===font)?.[2]||"",fontCss=fontQuery?'<link href="https://fonts.googleapis.com/css2?family='+fontQuery+'&display=swap" rel="stylesheet">':"";
@@ -171,7 +172,7 @@ function renderPreviewPageMenu(){
  menu.querySelectorAll("[data-preview-page]").forEach(b=>b.onclick=()=>{previewPage=b.dataset.previewPage;host.classList.remove("open");renderPreview()});
  host.querySelector(".select-trigger").onclick=()=>host.classList.toggle("open");
 }
-function renderPreview(){const frame=$("previewFrame");renderPreviewPageMenu();const targetMap={"خانه":"top","درباره ما":"about","خدمات":"services","نمونه‌کارها":"gallery","وبلاگ":"blog","تماس با ما":"contact"},targetId=targetMap[previewPage]||"top";frame.onload=()=>{try{const d=frame.contentDocument;d.documentElement.style.userSelect="none";d.documentElement.style.webkitUserSelect="none";d.addEventListener("contextmenu",e=>e.preventDefault());d.addEventListener("selectstart",e=>e.preventDefault());d.addEventListener("copy",e=>e.preventDefault());d.addEventListener("cut",e=>e.preventDefault());d.addEventListener("dragstart",e=>e.preventDefault());if(targetId!=="top")d.getElementById(targetId)?.scrollIntoView({block:"start"})}catch(e){}};frame.srcdoc=generatedHTML()}
+function renderPreview(){const frame=$("previewFrame");renderPreviewPageMenu();frame.onload=()=>{try{const d=frame.contentDocument;d.documentElement.style.userSelect="none";d.documentElement.style.webkitUserSelect="none";d.addEventListener("contextmenu",e=>e.preventDefault());d.addEventListener("selectstart",e=>e.preventDefault());d.addEventListener("copy",e=>e.preventDefault());d.addEventListener("cut",e=>e.preventDefault());d.addEventListener("dragstart",e=>e.preventDefault())}catch(e){}};frame.srcdoc=generatedHTML(heroImagePreview,pageSectionsFor(previewPage),false)}
 function downloadBlob(data,name,type){let blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
 async function exportImage(){if(!state.heroImagePath)return null;let {data,error}=await sb.storage.from("site-builder-assets").download(state.heroImagePath);if(error)throw error;return data}
 function blobToDataURL(blob){return new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(blob)})}
@@ -183,8 +184,8 @@ async function downloadZIP(){
   if(image){let ext=(state.heroImagePath.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"");src="assets/hero-image."+ext;z.file(src,image)}
   let standalone=generatedHTML(src,state.sections,true),css=(standalone.match(/<style>([\s\S]*?)<\/style>/i)||[])[1]||"";
   if(!css)throw Error("فایل CSS تولید نشد.");
-  const files=[["index.html",state.sections]],pageSectionMap={"درباره ما":["about","stats","testimonials"],"خدمات":["services","products","pricing","features","faq"],"نمونه‌کارها":["gallery","products","testimonials"],"وبلاگ":["blog","newsletter"],"تماس با ما":["contact","faq"]};
-  for(const label of state.pages.filter(x=>x!=="خانه")){const ids=pageSectionMap[label]||state.sections;files.push([pageFileName(label),ids])}
+  const files=[["index.html",state.sections]];
+  for(const label of state.pages.filter(x=>x!=="خانه")){files.push([pageFileName(label),pageSectionsFor(label)])}
   for(const [file,ids] of files){let pageHtml=generatedHTML(src,ids,true).replace(/<style>[\s\S]*?<\/style>/i,'<link rel="stylesheet" href="assets/css/style.css">').replace("</body>",'<script src="assets/js/script.js" defer><\/script></body>');z.file(file,pageHtml)}
   z.file("assets/css/style.css",css);
   z.file("assets/js/script.js",'document.documentElement.classList.add("js-ready");document.querySelectorAll(".nav a").forEach(a=>a.addEventListener("click",()=>{const href=a.getAttribute("href");if(href&&href.startsWith("#")){const target=document.querySelector(href);if(target)target.scrollIntoView({behavior:"smooth"});}}));');
