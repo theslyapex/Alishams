@@ -186,7 +186,7 @@ function applySectionDesign(markup,id,pageLabel){
  if(cfg.align)styles.push("text-align:"+cfg.align);
  if(cfg.radius!==undefined&&cfg.radius!=="")styles.push("border-radius:"+cfg.radius+"px;overflow:hidden");
  if(cfg.minHeight)styles.push("min-height:"+cfg.minHeight+"px");
- if(cfg.backgroundImage&&/^https?:\/\/[^\\s"'<>]+$/i.test(cfg.backgroundImage)){
+ if(cfg.backgroundImage&&/^https?:\/\/[^\s"'<>]+$/i.test(cfg.backgroundImage)){
   const url=cfg.backgroundImage.replace(/["\\\n\r]/g,"");
   styles.push('background-image:linear-gradient(rgba(0,0,0,'+(Number(cfg.overlay)||0)+'),rgba(0,0,0,'+(Number(cfg.overlay)||0)+')),url("'+url+'")');
   styles.push("background-size:cover;background-position:center;background-repeat:no-repeat");
