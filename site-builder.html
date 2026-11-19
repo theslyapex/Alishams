@@ -130,12 +130,12 @@ async function downloadZIP(){
  try{
   let z=new JSZip(),image=await exportImage(),src=null;
   if(image){let ext=(state.heroImagePath.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"");src="assets/hero-image."+ext;z.file(src,image)}
-  let standalone=generatedHTML(src,state.sections,true),css=(standalone.match(/<style>([\s\\S]*?)<\/style>/i)||[])[1]||"";
+  let standalone=generatedHTML(src,state.sections,true),css=(standalone.match(/<style>([\s\S]*?)<\/style>/i)||[])[1]||"";
   if(!css)throw Error("فایل CSS تولید نشد.");
   const files=[["index.html",state.sections]];
   const pages=[["درباره ما","about.html",["about","stats","testimonials"]],["خدمات","services.html",["services","features","faq"]],["نمونه‌کارها","gallery.html",["gallery","testimonials"]],["وبلاگ","blog.html",["blog"]],["تماس با ما","contact.html",["contact","faq"]]];
   for(const [label,file,ids] of pages){if(state.pages.includes(label))files.push([file,ids.filter(id=>state.sections.includes(id)||id==="blog")])}
-  for(const [file,ids] of files){let pageHtml=generatedHTML(src,ids,true).replace(/<style>[\s\\S]*?<\/style>/i,'<link rel="stylesheet" href="assets/css/style.css">').replace("</body>",'<script src="assets/js/script.js" defer><\/script></body>');z.file(file,pageHtml)}
+  for(const [file,ids] of files){let pageHtml=generatedHTML(src,ids,true).replace(/<style>[\s\S]*?<\/style>/i,'<link rel="stylesheet" href="assets/css/style.css">').replace("</body>",'<script src="assets/js/script.js" defer><\/script></body>');z.file(file,pageHtml)}
   z.file("assets/css/style.css",css);
   z.file("assets/js/script.js",'document.documentElement.classList.add("js-ready");document.querySelectorAll(".nav a").forEach(a=>a.addEventListener("click",()=>{const href=a.getAttribute("href");if(href&&href.startsWith("#")){const target=document.querySelector(href);if(target)target.scrollIntoView({behavior:"smooth"});}}));');
   z.file("README.txt","وب‌سایت ساخته‌شده با Alishams Site Builder\nفایل‌های HTML و پوشه assets را با هم روی هاست بارگذاری کنید. صفحه اصلی index.html است.\n");
