@@ -55,11 +55,35 @@
 .faq-list{max-width:900px}.faq-item{border-bottom:1px solid var(--line)}.faq-item details{padding:19px 0}.faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:13px;font-weight:700}.faq-item summary::-webkit-details-marker{display:none}.faq-item summary:after{content:"+";width:27px;height:27px;min-width:27px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--lime);font:500 18px Manrope,sans-serif;transition:transform .2s}.faq-item details[open] summary:after{content:"−";transform:rotate(180deg)}.faq-item details p{max-width:780px;color:var(--muted);font-size:12px;margin:12px 0 0;line-height:2.2}
 .related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.related{padding:20px;border:1px solid var(--line);border-radius:16px;background:#ffffff03}.related h3{font-size:13px;margin:0 0 5px}.related p{font-size:11px;color:var(--muted);margin:0}.related a{color:var(--lime);font-size:11px;display:inline-block;margin-top:12px}
 .final-cta{position:relative;overflow:hidden;padding:clamp(28px,5vw,54px);border:1px solid rgba(217,255,114,.3);border-radius:27px;background:radial-gradient(circle at 10% 100%,rgba(184,164,255,.11),transparent 34%),radial-gradient(circle at 90% 0%,rgba(217,255,114,.12),transparent 36%),#111719;display:flex;align-items:center;justify-content:space-between;gap:25px}.final-cta h2{font-size:clamp(24px,3.4vw,39px);line-height:1.5;margin:10px 0}.final-cta p{font-size:12px;color:var(--muted);margin:0}.final-actions{display:flex;flex-wrap:wrap;gap:10px;flex:none}
-.site-footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);font-size:11px}.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}.site-footer a:hover{color:var(--lime)}
+.site-footer{position:relative;border-top:1px solid rgba(217,255,114,.16);padding:58px 0 22px;color:var(--muted);font-size:11px;background:linear-gradient(180deg,rgba(17,22,26,.82),rgba(7,9,11,.98))}
+.footer-main{display:grid;grid-template-columns:1.35fr repeat(3,minmax(0,1fr));gap:34px;padding-bottom:38px}
+.footer-brand{display:inline-flex;align-items:center;gap:12px;color:var(--ink)}
+.footer-brand-mark{width:46px;height:46px;display:grid;place-items:center;overflow:hidden}
+.footer-brand-mark img{width:100%;height:100%;object-fit:contain}
+.footer-brand strong{display:block;font-size:17px;font-weight:850}
+.footer-brand small{display:block;margin-top:3px;color:#8c9991;font:600 9px/1.5 Manrope,sans-serif;letter-spacing:1.15px}
+.footer-brand-col>p{max-width:250px;margin:17px 0;color:#aab5ad;font-size:12px;line-height:2.1}
+.footer-contact-link{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid rgba(217,255,114,.28);border-radius:11px;color:var(--lime);font-size:11px;font-weight:750}
+.footer-col{display:flex;flex-direction:column;align-items:flex-start;gap:11px}
+.footer-col h2{margin:5px 0 8px;color:#f0f4ed;font-size:13px;font-weight:800}
+.footer-col a{color:#aab4ad;font-size:11px;line-height:1.9;transition:color .2s,transform .2s}
+.footer-col a:hover{color:var(--lime);transform:translateX(-3px)}
+.footer-trust-row{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 22px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(110deg,rgba(217,255,114,.055),rgba(184,164,255,.045))}
+.footer-trust-copy{display:grid;gap:5px}
+.footer-trust-copy strong{color:#eaf0e7;font-size:12px}
+.footer-trust-copy span{color:#9ba69f;font-size:10px}
+.footer-trust-copy a{width:max-content;color:var(--lime);font-size:10px;font-weight:700}
+.footer-enamad{display:grid;place-items:center;min-width:74px;min-height:78px;padding:7px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#fff}
+.footer-enamad img{display:block;width:58px;height:auto;max-height:66px;object-fit:contain}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:22px;padding-top:17px;border-top:1px solid var(--line);color:#78847c;font-size:10px}
+.footer-bottom a{color:#aeb9b0}
+.site-footer a:hover{color:var(--lime)}
+
 .mobile-order{display:none}
 @keyframes orbit{to{transform:rotate(360deg)}}@keyframes browserFloat{0%,100%{transform:perspective(1100px) rotateY(7deg) rotateX(2deg) translateY(0)}50%{transform:perspective(1100px) rotateY(4deg) rotateX(0) translateY(-9px)}}@keyframes chipFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @media(max-width:900px){.hero-grid{gap:25px}.hero-art{min-height:360px}.orbit{width:290px;height:290px}.feature-grid{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr;gap:25px}.sticky-copy{position:static}.portfolio-grid{grid-template-columns:repeat(2,1fr)}.process-grid{grid-template-columns:repeat(2,1fr)}.price-panel{grid-template-columns:1fr}.price-value{min-width:0;max-width:420px}.header-links{gap:14px}}
-@media(max-width:650px){.wrap{width:min(var(--max),calc(100% - 30px))}.site-header{height:68px}.header-links>a:not(.header-cta){display:none}.brand-mark{width:37px;height:37px}.hero{padding:35px 0 46px}.crumb{margin-bottom:22px}.hero-grid{grid-template-columns:1fr;gap:12px}.hero-art{grid-row:1;min-height:285px;margin:0 -5px}.browser{width:min(88%,390px);transform:none;animation:none}.browser-screen{min-height:245px;padding:14px}.mock-hero{margin-top:23px}.mock-copy strong{font-size:16px}.orbit{width:240px;height:240px}.chip-one{top:15px;right:0}.chip-two{bottom:25px;left:0}.chip-three{display:none}.hero h1{font-size:clamp(34px,9vw,48px);margin-top:14px}.hero-copy{font-size:13px}.hero-actions .btn{flex:1 1 100%}.hero-note{align-items:flex-start}.proof-inner{grid-template-columns:repeat(2,1fr);gap:14px 7px;padding:17px 0}.proof-item{justify-content:flex-start;font-size:10px}.section{padding:62px 0}.section-head{margin-bottom:24px}.feature-grid{grid-template-columns:1fr}.feature{min-height:0;padding:21px}.feature .icon-box{margin-bottom:13px}.price-panel{padding:23px}.price-value{width:100%}.process-grid{grid-template-columns:1fr 1fr;gap:9px}.process-card{padding:17px 14px}.process-card:before{margin-bottom:14px}.portfolio-grid{grid-template-columns:1fr 1fr;gap:10px}.project-visual{height:120px}.project-body{padding:12px}.project-body h3{font-size:12px}.project-body p{font-size:10px}.strategy-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr}.final-cta{align-items:flex-start;flex-direction:column}.final-actions{width:100%}.final-actions .btn{flex:1}.mobile-order{display:block;position:fixed;z-index:20;bottom:12px;right:12px;left:12px;padding:7px;border:1px solid rgba(217,255,114,.35);border-radius:16px;background:rgba(10,14,14,.9);backdrop-filter:blur(16px);box-shadow:0 12px 35px #0008}.mobile-order a{width:100%;min-height:44px;border-radius:11px;background:var(--lime);color:#11150b;display:grid;place-items:center;font-size:12px;font-weight:800}.site-footer{padding-bottom:88px}}
+@media(max-width:650px){.wrap{width:min(var(--max),calc(100% - 30px))}.site-header{height:68px}.header-links>a:not(.header-cta){display:none}.brand-mark{width:37px;height:37px}.hero{padding:35px 0 46px}.crumb{margin-bottom:22px}.hero-grid{grid-template-columns:1fr;gap:12px}.hero-art{grid-row:1;min-height:285px;margin:0 -5px}.browser{width:min(88%,390px);transform:none;animation:none}.browser-screen{min-height:245px;padding:14px}.mock-hero{margin-top:23px}.mock-copy strong{font-size:16px}.orbit{width:240px;height:240px}.chip-one{top:15px;right:0}.chip-two{bottom:25px;left:0}.chip-three{display:none}.hero h1{font-size:clamp(34px,9vw,48px);margin-top:14px}.hero-copy{font-size:13px}.hero-actions .btn{flex:1 1 100%}.hero-note{align-items:flex-start}.proof-inner{grid-template-columns:repeat(2,1fr);gap:14px 7px;padding:17px 0}.proof-item{justify-content:flex-start;font-size:10px}.section{padding:62px 0}.section-head{margin-bottom:24px}.feature-grid{grid-template-columns:1fr}.feature{min-height:0;padding:21px}.feature .icon-box{margin-bottom:13px}.price-panel{padding:23px}.price-value{width:100%}.process-grid{grid-template-columns:1fr 1fr;gap:9px}.process-card{padding:17px 14px}.process-card:before{margin-bottom:14px}.portfolio-grid{grid-template-columns:1fr 1fr;gap:10px}.project-visual{height:120px}.project-body{padding:12px}.project-body h3{font-size:12px}.project-body p{font-size:10px}.strategy-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr}.final-cta{align-items:flex-start;flex-direction:column}.final-actions{width:100%}.final-actions .btn{flex:1}.mobile-order{display:block;position:fixed;z-index:20;bottom:12px;right:12px;left:12px;padding:7px;border:1px solid rgba(217,255,114,.35);border-radius:16px;background:rgba(10,14,14,.9);backdrop-filter:blur(16px);box-shadow:0 12px 35px #0008}.mobile-order a{width:100%;min-height:44px;border-radius:11px;background:var(--lime);color:#11150b;display:grid;place-items:center;font-size:12px;font-weight:800}.site-footer{padding-bottom:160px}.footer-main{grid-template-columns:repeat(2,minmax(0,1fr));gap:27px 18px}.footer-brand-col{grid-column:1/-1}.footer-trust-row{align-items:flex-start;padding:15px}.footer-bottom{gap:9px}}
+@media(max-width:650px){#alishamsShareRoot{bottom:calc(88px + env(safe-area-inset-bottom))!important;left:12px!important}.footer-main{grid-template-columns:repeat(2,minmax(0,1fr))}.footer-col h2{font-size:12px}.footer-col a{font-size:10.5px}.footer-trust-row{gap:12px}.footer-trust-copy span{line-height:1.9}.footer-bottom{flex-direction:column;align-items:flex-start}.site-footer{padding-top:42px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
 </style>
 <script src="/site-protection.js" defer></script>
@@ -179,7 +203,49 @@
 <div class="final-actions"><a class="btn btn-primary" href="../index.html?service=%D8%B7%D8%B1%D8%A7%D8%AD%DB%8C%20%D9%88%D8%A8%D8%B3%D8%A7%DB%8C%D8%AA#contact">ثبت درخواست پروژه ↗</a><a class="btn btn-quiet" href="../videos.html">ویدئوها و نمونه‌های اجرایی</a></div>
 </div></div></section>
 </main>
-<footer class="site-footer"><div class="wrap footer-inner"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><a href="../index.html">بازگشت به صفحه اصلی ↑</a><a href="../index.html#services">مشاهده همه خدمات</a></div></footer>
+<footer class="site-footer" aria-label="پاورقی وب‌سایت">
+ <div class="wrap">
+  <div class="footer-main">
+   <div class="footer-brand-col">
+    <a class="footer-brand" href="../index.html" aria-label="علی شمس، صفحه اصلی">
+     <span class="footer-brand-mark"><img src="/assets/images/alishams-studio-logo.png" alt="نشان Alishams Digital Studio" loading="lazy" decoding="async"></span>
+     <span><strong>علی شمس</strong><small>ALISHAMS DIGITAL STUDIO</small></span>
+    </a>
+    <p>ایده‌پردازی، طراحی و اجرا؛ با دقت در جزئیات.</p>
+    <a class="footer-contact-link" href="../index.html#contact">برای شروع همکاری و ثبت درخواست <span aria-hidden="true">↗</span></a>
+   </div>
+   <nav class="footer-col" aria-label="خدمات استودیو">
+    <h2>خدمات استودیو</h2>
+    <a href="website-design.html" aria-current="page">طراحی سایت اختصاصی</a>
+    <a href="blog-template-design.html">طراحی قالب وبلاگ</a>
+    <a href="custom-logo-design.html">طراحی لوگو</a>
+    <a href="website-articles.html">نگارش مقاله وب‌سایت</a>
+    <a href="../index.html#services">مشاهده تمام خدمات</a>
+   </nav>
+   <nav class="footer-col" aria-label="کاوش در وب‌سایت">
+    <h2>کاوش در وب‌سایت</h2>
+    <a href="../portfolio.html">نمونه‌کارها</a>
+    <a href="../videos.html">ویدئوها</a>
+    <a href="../articles/">مقالات و راهنماها</a>
+    <a href="../about.html">درباره علی شمس</a>
+    <a href="../index.html">صفحه اصلی</a>
+   </nav>
+   <nav class="footer-col" aria-label="پشتیبانی و پیگیری">
+    <h2>پشتیبانی و پیگیری</h2>
+    <a href="../order-tracking.html">پیگیری سفارش</a>
+    <a href="../project-tracking.html">پیگیری پروژه</a>
+    <a href="../terms.html">شرایط و قوانین همکاری</a>
+    <a href="../index.html#contact">ارتباط و ثبت درخواست</a>
+    <a href="https://t.me/theslyapex" target="_blank" rel="noopener noreferrer">تلگرام استودیو ↗</a>
+   </nav>
+  </div>
+  <div class="footer-trust-row">
+   <div class="footer-trust-copy"><strong>اعتماد، شفافیت و پاسخ‌گویی</strong><span>جزئیات همکاری و شرایط ارائه خدمات را پیش از ثبت سفارش مطالعه کنید.</span><a href="../terms.html">مطالعه شرایط و قوانین ↗</a></div>
+   <a class="footer-enamad" referrerpolicy="origin" target="_blank" rel="noopener noreferrer" href="https://trustseal.enamad.ir/?id=8351537&amp;Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG" aria-label="مشاهده نماد اعتماد الکترونیکی علی شمس"><img referrerpolicy="origin" src="https://trustseal.enamad.ir/logo.aspx?id=8351537&amp;Code=i249fenOsdRVKRmBs8hLEgsCrTirXrSG" alt="نماد اعتماد الکترونیکی" loading="lazy"></a>
+  </div>
+  <div class="footer-bottom"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><span>Alishams Digital Studio</span><a href="#top">بازگشت به بالای صفحه ↑</a></div>
+ </div>
+</footer>
 <div class="mobile-order"><a href="../index.html?service=%D8%B7%D8%B1%D8%A7%D8%AD%DB%8C%20%D9%88%D8%A8%D8%B3%D8%A7%DB%8C%D8%AA#contact">ثبت سفارش طراحی سایت ↗</a></div>
 <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 <script type="module" src="/comments.js?v=4"></script>
