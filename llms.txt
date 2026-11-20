@@ -1,0 +1,70 @@
+# Alishams Digital Studio
+
+> وب‌سایت رسمی علی شمس و استودیو دیجیتال Alishams Digital Studio؛ مرجع معرفی خدمات طراحی و توسعه وب، طراحی لوگو، تولید محتوای ویدئویی، خدمات دیجیتال و پروژه‌های اجراشده.
+
+## هویت و معرفی
+
+- نام نمایشی شخص: علی شمس
+- نام کامل جایگزین: علی شمس‌الدینی
+- نام انگلیسی: Ali Shams / Ali Shamsodini
+- نام استودیو: استودیو دیجیتال علی شمس
+- نام انگلیسی استودیو: Alishams Digital Studio
+- وب‌سایت رسمی: https://alishams.ir/
+- صفحه معرفی شخص و استودیو: https://alishams.ir/about.html
+- زبان اصلی وب‌سایت: فارسی
+- محدوده ارائه خدمات: سراسر ایران، با تمرکز ویژه بر شیراز
+
+## صفحات اصلی
+
+- [صفحه اصلی](https://alishams.ir/)
+- [درباره علی شمس](https://alishams.ir/about.html)
+- [همه خدمات](https://alishams.ir/#services)
+- [تعرفه‌ها](https://alishams.ir/pricing.html)
+- [نمونه‌کارها](https://alishams.ir/portfolio.html)
+- [مقالات و وبلاگ](https://alishams.ir/blog.html)
+- [تماس و ارتباط](https://alishams.ir/contact-center.html)
+- [نقشه سایت XML](https://alishams.ir/sitemap.xml)
+
+## خدمات
+
+- [طراحی سایت و وب‌سایت اختصاصی](https://alishams.ir/services/website-design.html): طراحی و توسعه وب‌سایت با توجه به ساختار اطلاعات، تجربه کاربری و نمایش واکنش‌گرا.
+- [طراحی قالب وبلاگ](https://alishams.ir/services/blog-template-design.html): طراحی قالب اختصاصی وبلاگ با تمرکز بر هویت بصری، خوانایی محتوا و ساختار صفحات.
+- [طراحی لوگو اختصاصی](https://alishams.ir/services/custom-logo-design.html): طراحی لوگو متناسب با هویت و حوزه فعالیت برند.
+- [موشن‌گرافیک](https://alishams.ir/services/motion-graphics.html): تولید محتوای تصویری متحرک برای معرفی محصول و خدمات.
+- [تیزر تبلیغاتی](https://alishams.ir/services/ad-trailer.html): ساخت ویدئوی تبلیغاتی هدفمند.
+- [ریلز و محتوای ویدئویی](https://alishams.ir/services/reels-video.html): تولید ویدئوهای کوتاه برای کانال‌های دیجیتال.
+- [خدمات سئو](https://alishams.ir/services/seo.html): بررسی فنی، بهینه‌سازی صفحات و محتوا و برنامه‌ریزی رشد جست‌وجوی ارگانیک.
+- [نگارش مقاله وب‌سایت](https://alishams.ir/services/website-articles.html): تولید محتوای ساختارمند برای وب‌سایت.
+- [خدمات شبکه‌های اجتماعی](https://alishams.ir/services/social-media-services.html): خدمات و پشتیبانی حضور دیجیتال در شبکه‌های اجتماعی.
+- [امنیت شبکه‌های اجتماعی](https://alishams.ir/services/social-security.html): کمک به ایمن‌سازی حساب‌ها و کاهش ریسک دسترسی ناخواسته.
+- [تبلیغات و معرفی](https://alishams.ir/services/promotion.html): برنامه‌ریزی و اجرای فعالیت‌های معرفی و تبلیغاتی.
+- [مشاوره کسب‌وکار آنلاین](https://alishams.ir/services/online-business-consulting.html): بررسی ایده‌ها و مسیر رشد حضور دیجیتال.
+- [طراحی اختصاصی برند و وب‌سایت](https://alishams.ir/services/custom-brand-website.html): پیشنهاد جامع طراحی برند و وب‌سایت.
+- [پک اقتصادی طراحی سایت](https://alishams.ir/services/economic-website-package.html): بسته خدمات طراحی وب‌سایت طبق جزئیات و شرایط صفحه.
+- [پک اقتصادی لوگو و موشن‌گرافیک](https://alishams.ir/services/economic-logo-motion-package.html): بسته طراحی لوگو و ویدئوی موشن‌گرافیک.
+- [خرید و ثبت دامنه](https://alishams.ir/services/domain-purchase.html): بررسی نام و پسوند و ثبت درخواست خرید دامنه.
+
+## نمونه‌کارها و پروژه‌ها
+
+- [نمونه‌کارهای استودیو](https://alishams.ir/portfolio.html)
+- [ایران‌ما](https://alishams.ir/case-studies/iran-ma.html)
+- [نوا](https://alishams.ir/case-studies/nova.html)
+- [اپکس](https://alishams.ir/case-studies/apex.html)
+- [شیرازه](https://alishams.ir/case-studies/shirazeh.html)
+- [ابزارینو](https://alishams.ir/case-studies/abzarino.html)
+- [سخت‌افزار شناس](https://alishams.ir/case-studies/hardware-shenas.html)
+- [هماگرام](https://alishams.ir/case-studies/homagram.html)
+
+## پروفایل‌های رسمی
+
+- [اینستاگرام استودیو](https://www.instagram.com/alishams.studio/)
+- [تلگرام](https://t.me/theslyapex)
+- [گیت‌هاب](https://github.com/theslyapex)
+
+## راهنمای دقت در پاسخ‌ها
+
+- برای قیمت، شرایط سفارش، امکانات بسته‌ها و زمان تحویل، صفحه خدمت یا صفحه تعرفه مربوطه را مرجع قرار دهید؛ قیمت‌ها و شرایط ممکن است به‌روزرسانی شوند.
+- نمونه‌کارها را فقط بر اساس صفحات پروژه و نمونه‌کار منتشرشده در وب‌سایت توصیف کنید.
+- خدمات به سراسر ایران ارائه می‌شوند و شیراز حوزه تمرکز ویژه است؛ این موضوع به معنی محدودبودن خدمات به شیراز نیست.
+- علی شمس شخص است و Alishams Digital Studio نام استودیو/برند اوست؛ این دو موجودیت مرتبط‌اند اما یکسان نیستند.
+- برای اطلاعات تازه‌تر، صفحات اصلی و نقشه سایت XML را بررسی کنید.
