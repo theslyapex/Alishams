@@ -325,7 +325,7 @@ async function downloadHTML(){
  }catch(e){notice("ساخت فایل HTML انجام نشد: "+e.message,"error")}
  finally{galleryPreview=previousGallery;sectionImagePreview=previousSectionImages}
 }
-async function downloadZIP(){
+async function downloadZIP(returnBlob=false){
  if(!window.JSZip){notice("کتابخانه ZIP بارگذاری نشده است.","error");return}
  const oldGalleryPreview=galleryPreview,oldSectionImagePreview={...sectionImagePreview};
  notice("در حال ساخت بسته چندصفحه‌ای و آماده‌سازی فایل‌های هر صفحه...");
@@ -346,8 +346,8 @@ async function downloadZIP(){
   galleryPreview=oldGalleryPreview;sectionImagePreview=oldSectionImagePreview;
   z.file("assets/js/script.js",'document.documentElement.classList.add("js-ready");document.querySelectorAll(".nav a").forEach(a=>a.addEventListener("click",()=>{const href=a.getAttribute("href");if(href&&href.startsWith("#")){const target=document.querySelector(href);if(target)target.scrollIntoView({behavior:"smooth"});}}));');
   z.file("README.txt","وب‌سایت چندصفحه‌ای ساخته‌شده با Alishams Site Builder\nصفحه اصلی: index.html\nهر صفحه فایل CSS مستقل خود را در assets/css دارد. فایل‌های تصاویر در پوشه assets قرار گرفته‌اند.\nتمام فایل‌ها و پوشه‌ها را با حفظ ساختار روی هاست بارگذاری کنید.\n");
-  let blob=await z.generateAsync({type:"blob"});downloadBlob(blob,"alishams-website.zip","application/zip");notice("بسته کامل وب‌سایت آماده شد.","success");
- }catch(e){galleryPreview=oldGalleryPreview;sectionImagePreview=oldSectionImagePreview;notice("ساخت بسته ZIP انجام نشد: "+e.message,"error")}
+  let blob=await z.generateAsync({type:"blob"});if(returnBlob){galleryPreview=oldGalleryPreview;sectionImagePreview=oldSectionImagePreview;return blob}downloadBlob(blob,"alishams-website.zip","application/zip");notice("بسته کامل وب‌سایت آماده شد.","success");
+ }catch(e){galleryPreview=oldGalleryPreview;sectionImagePreview=oldSectionImagePreview;if(returnBlob)throw e;notice("ساخت بسته ZIP انجام نشد: "+e.message,"error")}
 }
 async function requireUser(){if(!sb)throw Error("اتصال حساب کاربری در دسترس نیست.");let {data,error}=await sb.auth.getSession();if(error)throw error;user=data.session?.user||null;return user}
 async function saveProject(versioned=false){
@@ -384,9 +384,18 @@ async function submitRequest(){
   if(!last||JSON.stringify(last.schema)!==snap()){versionNumber=(last?.version_number||versionNumber)+1;let {data:v,error:ve}=await sb.from("site_builder_project_versions").insert({project_id:projectId,user_id:user.id,version_number:versionNumber,schema:JSON.parse(snap()),change_summary:"نسخه ارسال‌شده برای بررسی استودیو"}).select("id").single();if(ve)throw ve;versionId=v.id;latestVersionId=v.id;await sb.from("site_builder_projects").update({current_version:versionNumber}).eq("id",projectId)}
   let brief=$("requestBrief").value.trim();
   const {data:sessionData,error:sessionError}=await sb.auth.getSession();if(sessionError||!sessionData.session)throw Error("نشست کاربری منقضی شده است؛ دوباره وارد شو.");
-  const {data:result,error:submitError}=await sb.functions.invoke("site-builder-submit",{body:{project_id:projectId,project_version_id:versionId,brief}});
+  let zipPath=null;
+  try{
+   const zipBlob=await downloadZIP(true);
+   if(zipBlob&&zipBlob.size<=26214400){
+    zipPath=user.id+"/"+projectId+"/orders/"+versionId+".zip";
+    const {error:zipUploadError}=await sb.storage.from("site-builder-assets").upload(zipPath,zipBlob,{upsert:true,contentType:"application/zip"});
+    if(zipUploadError){console.warn("Site Builder ZIP upload failed",zipUploadError);zipPath=null}
+   }else if(zipBlob){console.warn("Site Builder ZIP exceeds 25 MB storage limit")}
+  }catch(zipError){console.warn("Site Builder ZIP generation failed",zipError);zipPath=null}
+  const {data:result,error:submitError}=await sb.functions.invoke("site-builder-submit",{body:{project_id:projectId,project_version_id:versionId,brief,zip_path:zipPath}});
   if(submitError)throw submitError;if(!result?.ok)throw Error(result?.error||"ثبت درخواست انجام نشد.");
-  n.className="notice success";n.textContent="درخواست همکاری ثبت شد و پرونده کامل طراحی برای استودیو ارسال شد. شناسه درخواست: "+result.request_id+(result.telegram_sent?" · اعلان تلگرام ارسال شد.":" · ثبت درخواست موفق بود؛ وضعیت اعلان تلگرام باید بررسی شود.");
+  n.className="notice success";n.textContent="درخواست همکاری ثبت شد و پرونده کامل طراحی برای استودیو ارسال شد. شناسه درخواست: "+result.request_id+(result.telegram_sent?" · اعلان تلگرام ارسال شد.":" · ثبت درخواست موفق بود؛ وضعیت اعلان تلگرام باید بررسی شود.")+(result.telegram_zip_sent?" · فایل ZIP هم به تلگرام پیوست شد.":zipPath?" · فایل ZIP در پرونده مدیریتی ذخیره شد.":" · فایل ساختار طراحی به تلگرام پیوست شد.");
   notice("درخواست همکاری ثبت شد.","success");await loadProjects()
  }catch(e){n.className="notice error";n.textContent=e.message||"ثبت درخواست انجام نشد."}finally{btn.disabled=false}
 }
