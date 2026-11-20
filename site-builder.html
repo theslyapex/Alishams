@@ -320,7 +320,7 @@ function applySectionDesign(markup,id,pageLabel){
  }
  if(styles.length)markup=markup.replace(/^<section\b/, '<section data-section-design="'+id+'" style="'+esc(styles.join(";"))+'"');
  else if(rules.length)markup=markup.replace(/^<section\b/, '<section data-section-design="'+id+'"');
- if(!markup.includes("data-section-design="))markup=markup.replace(/^<section\b/,'<section data-section-design="'+id+'"');return applySectionComponents(rules.length?'<style>'+rules.join("")+'</style>'+markup:markup,id,pageLabel);
+ if(!markup.includes("data-section-design="))markup=markup.replace(/^<section\b/,'<section data-section-design="'+id+'"');if(Array.isArray(cfg.customBlocks)&&cfg.customBlocks.length){const customMarkup=renderCustomBlocks(cfg);if(customMarkup)markup=markup.replace(new RegExp("</section>\\s*$","i"),customMarkup+"</section>")}return applySectionComponents(rules.length?'<style>'+rules.join("")+'</style>'+markup:markup,id,pageLabel);
 }
 function sectionsHTML(imageSrc=heroImagePreview,sectionIds=state.sections,pageLabel=null){const baseState=state,activeLabel=pageLabel||(typeof previewPage!=="undefined"?previewPage:"خانه");state={...baseState,...(baseState.pageContent?.[activeLabel]?.settings||{}),...(baseState.pageContent?.[activeLabel]?.fields||{})};const contactTarget=sectionIds.includes("contact")?"#contact":"#top",heroCtaHref=state.ctaLink==="#contact"?contactTarget:(state.ctaLink||contactTarget);const html=sectionIds.map(id=>{
  const m={
