@@ -364,9 +364,12 @@ async function submitRequest(){
  try{if(!await requireUser()){$("requestDialog").close();$("loginDialog").showModal();throw Error("ابتدا وارد حساب کاربری شو.")}await saveProject(false);
   let {data:last}=await sb.from("site_builder_project_versions").select("id,version_number,schema").eq("project_id",projectId).eq("user_id",user.id).order("version_number",{ascending:false}).limit(1).maybeSingle(),versionId=last?.id;
   if(!last||JSON.stringify(last.schema)!==snap()){versionNumber=(last?.version_number||versionNumber)+1;let {data:v,error:ve}=await sb.from("site_builder_project_versions").insert({project_id:projectId,user_id:user.id,version_number:versionNumber,schema:JSON.parse(snap()),change_summary:"نسخه ارسال‌شده برای بررسی استودیو"}).select("id").single();if(ve)throw ve;versionId=v.id;latestVersionId=v.id;await sb.from("site_builder_projects").update({current_version:versionNumber}).eq("id",projectId)}
-  let brief=$("requestBrief").value.trim(),{data:r,error}=await sb.from("site_builder_service_requests").insert({project_id:projectId,user_id:user.id,project_version_id:versionId,project_title:state.title||"وب‌سایت جدید",category:state.category,status:"new",brief,snapshot:JSON.parse(snap()),customer_name:user.user_metadata?.full_name||user.user_metadata?.name||null,customer_email:user.email}).select("id").single();if(error)throw error;
-  let {error:me}=await sb.from("site_builder_request_messages").insert({request_id:r.id,user_id:user.id,sender_type:"customer",sender_user_id:user.id,message_body:brief||"درخواست بررسی و تکمیل وب‌سایت طراحی‌شده توسط Alishams Digital Studio را دارم."});if(me)throw me;
-  n.className="notice success";n.textContent="درخواست همکاری ثبت شد. پرونده طراحی و نسخه فعلی برای بررسی به استودیو ارسال شد. شناسه درخواست: "+r.id;notice("درخواست همکاری ثبت شد.","success");await loadProjects()
+  let brief=$("requestBrief").value.trim();
+  const {data:sessionData,error:sessionError}=await sb.auth.getSession();if(sessionError||!sessionData.session)throw Error("نشست کاربری منقضی شده است؛ دوباره وارد شو.");
+  const {data:result,error:submitError}=await sb.functions.invoke("site-builder-submit",{body:{project_id:projectId,project_version_id:versionId,brief}});
+  if(submitError)throw submitError;if(!result?.ok)throw Error(result?.error||"ثبت درخواست انجام نشد.");
+  n.className="notice success";n.textContent="درخواست همکاری ثبت شد و پرونده کامل طراحی برای استودیو ارسال شد. شناسه درخواست: "+result.request_id+(result.telegram_sent?" · اعلان تلگرام ارسال شد.":" · ثبت درخواست موفق بود؛ وضعیت اعلان تلگرام باید بررسی شود.");
+  notice("درخواست همکاری ثبت شد.","success");await loadProjects()
  }catch(e){n.className="notice error";n.textContent=e.message||"ثبت درخواست انجام نشد."}finally{btn.disabled=false}
 }
 async function init(){let u=await requireUser();if(!u){$("authGate").hidden=false;return}await loadProjects().catch(e=>notice(e.message,"error"));let id=new URLSearchParams(location.search).get("project");if(id)await loadProject(id);pushHistory();renderStep();renderPreview()}
