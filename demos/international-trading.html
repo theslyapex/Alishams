@@ -32,6 +32,23 @@
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""><style>
 /* Interactive global routes map */
+/* Custom city search and origin/destination planner */
+.city-planner{border:1px solid #ffffff24;background:#132638;padding:14px;display:grid;gap:10px}
+.city-planner-title{font-size:11px;font-weight:800;color:#fff}
+.city-planner label{display:block;color:#9fb0bb;font-size:9px;margin-bottom:4px}
+.city-planner input,.city-planner select{width:100%;min-width:0;background:#1a3042;color:#fff;border:1px solid #ffffff30;border-radius:2px;padding:9px 10px;font:10px Estedad;outline:0}
+.city-planner input:focus,.city-planner select:focus{border-color:var(--lime);box-shadow:0 0 0 3px #d4f36a17}
+.city-search-results{display:grid;gap:5px;max-height:150px;overflow:auto}
+.city-search-results:empty{display:none}
+.city-result{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:right;background:#1a3042;color:#fff;border:1px solid #ffffff18;padding:7px 9px;font:10px Estedad;cursor:pointer}
+.city-result:hover{border-color:var(--lime)}
+.city-result small{color:#9fb0bb;font-size:8px}
+.city-endpoints{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.city-plan-btn{width:100%;border:0;background:var(--lime);color:var(--ink);padding:10px;font:800 10px Estedad;cursor:pointer;transition:.2s}
+.city-plan-btn:hover{transform:translateY(-2px);filter:brightness(1.04)}
+.city-plan-status{font-size:9px;color:#b8c5cc;line-height:2;min-height:18px}
+@media(max-width:600px){.city-endpoints{grid-template-columns:1fr 1fr}}
+
 .trade-map-section{background:#101d2b;color:#fff;position:relative;overflow:hidden}
 .trade-map-section:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 12% 15%,#25425680,transparent 42%);pointer-events:none}
 .trade-map-section .kicker{color:var(--lime)}.trade-map-section .section-head p{color:#aebdc7}.trade-map-section .head-aside{color:#9cabb6}
@@ -79,6 +96,16 @@
 <div class="trade-map-shell reveal">
 <div><div class="trade-map-frame"><div id="nexoraMap" role="application" aria-label="نقشه تعاملی مسیرهای تجاری جهان"></div></div><div class="map-legend"><span><i style="background:#d4f36a"></i> مسیر دریایی</span><span><i style="background:#e8794f"></i> مسیر زمینی</span><span><i style="background:#b8d6ed"></i> مسیر هوایی</span></div></div>
 <aside class="map-side"><div class="map-side-head"><small>NEXORA / ROUTE SELECTOR</small><h3>یک مسیر را انتخاب کنید</h3><p>برای مشاهده جزئیات هر کریدور، یکی از مسیرهای نمونه را انتخاب کنید یا نشانگر یک شهر را روی نقشه لمس کنید.</p></div>
+
+<div class="city-planner" aria-label="ابزار ساخت مسیر دلخواه">
+<div class="city-planner-title">طراحی مسیر دلخواه</div>
+<div><label for="citySearch">جست‌وجوی شهر یا کشور</label><input id="citySearch" type="search" placeholder="مثلاً تهران، سنگاپور، هلند..." autocomplete="off"><div class="city-search-results" id="citySearchResults" role="listbox"></div></div>
+<div><label for="cityTarget">شهر انتخاب‌شده را به کدام نقطه اضافه کنیم؟</label><select id="cityTarget"><option value="origin">مبدأ</option><option value="destination">مقصد</option></select></div>
+<div class="city-endpoints"><div><label for="customOrigin">مبدأ</label><select id="customOrigin"></select></div><div><label for="customDestination">مقصد</label><select id="customDestination"></select></div></div>
+<button class="city-plan-btn" id="buildCustomRoute" type="button">نمایش مسیر انتخابی روی نقشه ↗</button>
+<div class="city-plan-status" id="cityPlanStatus" aria-live="polite">شهرها را جست‌وجو کنید یا مستقیماً از فهرست مبدأ و مقصد انتخاب کنید.</div>
+</div>
+
 <div class="route-options" id="routeOptions">
 <button class="route-choice active" type="button" data-route="asia"><span><b>شرق آسیا به خلیج فارس</b><small>شانگهای ← جبل‌علی</small></span><em>SEA</em></button>
 <button class="route-choice" type="button" data-route="europe"><span><b>اروپا به خاورمیانه</b><small>روتردام ← جبل‌علی</small></span><em>SEA</em></button>
@@ -86,7 +113,7 @@
 <button class="route-choice" type="button" data-route="air"><span><b>اتصال هوایی بین‌المللی</b><small>فرانکفورت ← دبی</small></span><em>AIR</em></button>
 </div>
 <div class="route-details" id="routeDetails" aria-live="polite"><span class="detail-label">SELECTED TRADE CORRIDOR</span><h4>شرق آسیا به خلیج فارس</h4><p>مسیر دریایی نمونه از بندر شانگهای به بندر جبل‌علی، با عبور از آبراه‌های جنوب و غرب آسیا.</p><div class="route-meta"><div><small>MODE</small><b>SEA FREIGHT</b></div><div><small>WAYPOINTS</small><b>03 NODES</b></div></div></div>
-<p class="map-disclaimer">این نقشه برای نمایش قابلیت طراحی شده است. خطوط، مسیرهای شماتیک و نقاط تجاری نمونه‌اند و داده زنده کشتی، پرواز، زمان ترانزیت یا برنامه حمل را نمایش نمی‌دهند.</p>
+<p class="map-disclaimer">این نقشه برای نمایش قابلیت طراحی شده است. مسیرهای آماده شماتیک و نقاط تجاری نمونه‌اند. مسیر دلخواه فقط اتصال مستقیم جغرافیایی دو شهر و فاصله خط مستقیم را نشان می‌دهد، نه مسیر واقعی حمل، جاده، کشتیرانی، پرواز یا زمان ترانزیت.</p>
 </aside></div></div></section>
 \n<section class="section dark" id="process"><div class="wrap"><div class="section-head reveal"><div class="intro"><span class="kicker">04 / THE WORKFLOW</span><h2>چهار مرحله، از درخواست تا تحویل</h2><p>ساختار همکاری از ابتدا مشخص است تا مشتری بداند چه اطلاعاتی نیاز است و در هر گام چه خروجی دریافت می‌کند.</p></div><span class="head-aside">A CLEARER WAY TO TRADE</span></div><div class="process"><article class="process-item reveal"><span class="num">01</span><h3>شناخت نیاز</h3><p>ثبت مشخصات کالا، مقدار، مقصد و زمان‌بندی مورد انتظار.</p></article><article class="process-item reveal"><span class="num">02</span><h3>بررسی و پیشنهاد</h3><p>ارزیابی منابع، گزینه‌های تأمین و برآورد اولیه هزینه و زمان.</p></article><article class="process-item reveal"><span class="num">03</span><h3>اجرا و هماهنگی</h3><p>هماهنگی سفارش، تأمین‌کننده، اسناد و مسیر حمل.</p></article><article class="process-item reveal"><span class="num">04</span><h3>تحویل و پیگیری</h3><p>پیگیری وضعیت محموله و جمع‌بندی مراحل تحویل.</p></article></div></div></section>
 <section class="contact" id="contact"><div class="wrap contact-grid"><div class="contact-copy reveal"><span class="eyebrow">05 / START A PROJECT</span><h2>اولین قدم برای تجارت بعدی‌تان را بردارید.</h2><p>نوع درخواست و مقصد را مشخص کنید. در این نسخه نمایشی، فرم اطلاعات را جمع‌بندی می‌کند تا بتوانید پیش‌نویس درخواست را مشاهده و کپی کنید. اطلاعات به سرور ارسال نمی‌شود.</p><span class="contact-stamp">LET'S MOVE BUSINESS FORWARD</span></div>
@@ -126,6 +153,38 @@
  const markers={};
  Object.keys(cities).forEach(id=>{const city=cities[id];const marker=L.marker(city.coords,{icon:markerIcon}).addTo(map);marker.bindPopup('<b>'+city.name+'</b><br>'+city.country+'<br>'+city.role);marker.on('click',()=>{const matching=Object.keys(routes).find(key=>routes[key].nodes.includes(id));if(matching)selectRoute(matching,false)});markers[id]=marker});
  let routeLine=null,routeNodes=null,active='asia';
+ const citySearch=document.getElementById('citySearch'),cityResults=document.getElementById('citySearchResults');
+ const originSelect=document.getElementById('customOrigin'),destinationSelect=document.getElementById('customDestination');
+ const cityTarget=document.getElementById('cityTarget'),cityStatus=document.getElementById('cityPlanStatus');
+ const cityIds=Object.keys(cities);
+ cityIds.forEach(id=>{const city=cities[id];[originSelect,destinationSelect].forEach(select=>{const option=document.createElement('option');option.value=id;option.textContent=city.name+'، '+city.country;select.appendChild(option)})});
+ originSelect.value='shanghai';destinationSelect.value='dubai';
+ function renderCitySearch(){
+  const q=citySearch.value.trim().toLocaleLowerCase('fa');
+  cityResults.innerHTML='';
+  if(!q)return;
+  const matches=cityIds.filter(id=>{const city=cities[id];return (city.name+' '+city.country+' '+id).toLocaleLowerCase('fa').includes(q)}).slice(0,8);
+  if(!matches.length){cityResults.innerHTML='<span class="city-plan-status">شهری با این نام در فهرست فعلی پیدا نشد.</span>';return}
+  matches.forEach(id=>{const city=cities[id],button=document.createElement('button');button.type='button';button.className='city-result';button.innerHTML='<span>'+city.name+'</span><small>'+city.country+'</small>';button.addEventListener('click',()=>{(cityTarget.value==='origin'?originSelect:destinationSelect).value=id;citySearch.value=city.name;cityResults.innerHTML='';cityStatus.textContent=city.name+' به‌عنوان '+(cityTarget.value==='origin'?'مبدأ':'مقصد')+' انتخاب شد.';markers[id].openPopup();map.panTo(city.coords)});cityResults.appendChild(button)});
+ }
+ citySearch.addEventListener('input',renderCitySearch);
+ citySearch.addEventListener('keydown',e=>{if(e.key==='Escape')cityResults.innerHTML='';if(e.key==='Enter'){const first=cityResults.querySelector('button');if(first){e.preventDefault();first.click()}}});
+ function haversine(a,b){const rad=x=>x*Math.PI/180,R=6371,dLat=rad(b[0]-a[0]),dLon=rad(b[1]-a[1]),lat1=rad(a[0]),lat2=rad(b[0]);const h=Math.sin(dLat/2)**2+Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
+ document.getElementById('buildCustomRoute').addEventListener('click',()=>{
+  const from=originSelect.value,to=destinationSelect.value;
+  if(!from||!to||from===to){cityStatus.textContent='برای ساخت مسیر، دو شهر متفاوت به‌عنوان مبدأ و مقصد انتخاب کنید.';return}
+  const a=cities[from],b=cities[to],distance=Math.round(haversine(a.coords,b.coords));
+  document.querySelectorAll('.route-choice').forEach(btn=>btn.classList.remove('active'));
+  if(routeLine)map.removeLayer(routeLine);if(routeNodes)map.removeLayer(routeNodes);
+  const color='#d4f36a',latlngs=[a.coords,b.coords];
+  routeLine=L.polyline(latlngs,{color,weight:4,opacity:.95,dashArray:'8 7',lineCap:'round'}).addTo(map);
+  routeNodes=L.layerGroup([from,to].map(id=>L.circleMarker(cities[id].coords,{radius:7,color:'#101d2b',weight:2,fillColor:color,fillOpacity:1}).bindPopup('<b>'+cities[id].name+'</b><br>'+cities[id].country))).addTo(map);
+  map.fitBounds(L.latLngBounds(latlngs),{padding:[48,48],maxZoom:5,animate:true});
+  const details=document.getElementById('routeDetails');
+  details.innerHTML='<span class="detail-label">CUSTOM ROUTE / USER DEFINED</span><h4>'+a.name+' ← '+b.name+'</h4><p>مسیر مستقیم میان '+a.name+'، '+a.country+' و '+b.name+'، '+b.country+' بر اساس مختصات جغرافیایی شهرها.</p><div class="route-meta"><div><small>STRAIGHT-LINE DISTANCE</small><b>'+distance.toLocaleString('en-US')+' KM</b></div><div><small>SELECTED CITIES</small><b>02 NODES</b></div></div>';
+  cityStatus.textContent='مسیر دلخواه روی نقشه نمایش داده شد. فاصله، خط مستقیم جغرافیایی است.';
+ });
+
  function selectRoute(id,move=true){
   const route=routes[id];if(!route)return;active=id;
   document.querySelectorAll('.route-choice').forEach(btn=>btn.classList.toggle('active',btn.dataset.route===id));
