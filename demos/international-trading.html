@@ -245,7 +245,7 @@
   savedRoutes.forEach(route=>{
    const row=document.createElement('div');row.className='saved-route-item';
    const check=document.createElement('input');check.type='checkbox';check.checked=selectedSavedIds.includes(route.id);check.setAttribute('aria-label','انتخاب مسیر برای مقایسه');
-   check.addEventListener('change',()=>{selectedSavedIds=check.checked?[...selectedSavedIds,route.id]:selectedSavedIds.filter(id=>id!==route.id);updateCompareControls()});
+   check.addEventListener('change',()=>{selectedSavedIds=check.checked?[...selectedSavedIds,route.id]:selectedSavedIds.filter(id=>id!==route.id);updateCompareControls();renderComparisonTable()});
    const info=document.createElement('div'),title=document.createElement('b'),sub=document.createElement('small');
    title.textContent=cities[route.from].name+' ← '+cities[route.to].name;sub.textContent=cities[route.from].country+' به '+cities[route.to].country;
    info.append(title,sub);
