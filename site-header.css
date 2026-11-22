@@ -1,5 +1,5 @@
 /* Shared Alishams header — aligned with the homepage */
-.site-shared-header.topbar{position:sticky!important;top:0!important;z-index:999!important;width:100%;border-bottom:1px solid rgba(255,255,255,.07)!important;background:rgba(9,10,13,.88)!important;backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important;color:#f5f3ee!important;direction:rtl!important;font-family:Estedad,Tahoma,sans-serif!important}
+.site-shared-header.topbar{position:sticky!important;top:0!important;z-index:10000!important;width:100%;border-bottom:1px solid rgba(255,255,255,.07)!important;background:rgba(9,10,13,.88)!important;backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important;color:#f5f3ee!important;direction:rtl!important;font-family:Estedad,Tahoma,sans-serif!important}
 .site-shared-header .site-shared-nav{width:min(1200px,calc(100% - 48px))!important;min-height:78px;height:auto!important;margin:0 auto!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:22px!important;padding:10px 0!important}
 .site-shared-header .brand{display:flex!important;align-items:center!important;gap:12px!important;flex:0 0 auto!important;color:#f5f3ee!important;font-weight:800!important;text-decoration:none!important;white-space:nowrap!important}
 .site-shared-header .brand-mark{width:39px!important;height:39px!important;min-width:39px!important;display:grid!important;place-items:center!important;border-radius:13px!important;overflow:hidden!important;background:#d9ff72!important;transform:rotate(-5deg)!important;padding:2px!important}
@@ -64,3 +64,12 @@
 .account-plus-mark{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:2px!important;min-width:0!important;width:auto!important;height:15px!important;margin:0 2px!important;padding:1px 5px!important;border-radius:5px!important;background:linear-gradient(135deg,#c4b5fd,#7c3aed)!important;color:#fff!important;font-size:7px!important;font-weight:800!important;line-height:1!important;white-space:nowrap!important;box-shadow:0 0 8px #8b5cf633!important;vertical-align:middle!important}.account-plus-mark b{font-size:9px!important;line-height:1!important;font-weight:900!important}.account-plus-mark[hidden]{display:none!important}.account-plus-mark[hidden]{display:none!important}
 
 .account-status-row{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:16px}.account-cta.is-authenticated .account-status-row{display:inline-flex}
+
+/* Keep mobile navigation above floating contact/order launchers. */
+@media(max-width:760px){
+  .site-shared-header .navlinks{z-index:10001!important;}
+  body.site-menu-open #site-chat-launcher,
+  body.site-menu-open #website-order-launcher,
+  body.site-menu-open .site-floating-chat,
+  body.site-menu-open .site-floating-order{visibility:hidden!important;opacity:0!important;pointer-events:none!important;transform:translateY(12px) scale(.94)!important;}
+}
