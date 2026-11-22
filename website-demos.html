@@ -85,6 +85,22 @@
 @media(max-width:580px){.site-footer{margin-top:52px;padding:43px 0 18px}.footer-container{width:calc(100% - 30px)}.footer-top{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 15px;padding-bottom:25px}.footer-brand-block{grid-column:1/-1}.footer-brand-block .footer-description{max-width:none;font-size:10.5px}.footer-column{gap:9px}.footer-column h3{font-size:11px;margin-bottom:4px}.footer-column a{font-size:10px;line-height:2}.footer-cta{align-items:stretch;flex-direction:column;padding:16px;gap:13px}.footer-cta>a{width:100%;box-sizing:border-box}.site-footer .footer-trust-section{margin-top:17px;padding:16px 12px}.footer-bottom{align-items:flex-start;flex-direction:column;gap:10px;line-height:2}.footer-bottom>div{gap:13px 16px}.footer-brand strong{font-size:18px}}
 @media(prefers-reduced-motion:reduce){.site-footer *{transition:none!important}}
 
+
+/* ALISHAMS_FOOTER_SOCIAL_ICON_UPGRADE */
+.footer-socials{gap:10px}
+.footer-socials .footer-social-link{position:relative;min-height:43px;display:inline-flex;align-items:center;gap:9px;padding:6px 11px 6px 9px;border:1px solid #ffffff18;border-radius:13px;background:linear-gradient(135deg,#ffffff08,#ffffff02);color:#e6e8e3;overflow:hidden;transition:transform .22s,border-color .22s,background .22s,box-shadow .22s}
+.footer-socials .footer-social-link:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 50%,#d9ff7215,transparent 55%);opacity:0;transition:opacity .22s}
+.footer-socials .footer-social-link:hover{transform:translateY(-3px);border-color:#d9ff7265;background:#d9ff720c;box-shadow:0 9px 24px #0005,0 0 18px #d9ff720b;color:#f4ffd9}
+.footer-socials .footer-social-link:hover:before{opacity:1}
+.footer-socials .footer-social-icon{position:relative;z-index:1;width:34px;height:34px;display:grid;place-items:center;flex:none;border-radius:10px;border:1px solid #ffffff16;background:linear-gradient(145deg,#ffffff12,#ffffff04);box-shadow:inset 0 1px #ffffff0b}
+.footer-socials .footer-social-icon img{display:block;width:29px;height:29px;object-fit:contain;filter:drop-shadow(0 3px 5px #0005);transition:transform .22s}
+.footer-socials .footer-social-link:hover .footer-social-icon img{transform:scale(1.12) rotate(-4deg)}
+.footer-socials .footer-social-label{position:relative;z-index:1;font-size:10px;font-weight:700;white-space:nowrap}
+.footer-socials .footer-social-arrow{position:relative;z-index:1;margin-inline-start:2px;color:#aeb3bd;font:600 11px Manrope,sans-serif;transition:transform .22s,color .22s}
+.footer-socials .footer-social-link:hover .footer-social-arrow{transform:translate(2px,-2px);color:#d9ff72}
+@media(max-width:580px){.footer-socials{gap:8px}.footer-socials .footer-social-link{min-height:42px;padding:5px 10px 5px 7px}.footer-socials .footer-social-icon{width:32px;height:32px}.footer-socials .footer-social-icon img{width:27px;height:27px}}
+@media(prefers-reduced-motion:reduce){.footer-socials .footer-social-link,.footer-socials .footer-social-icon img,.footer-socials .footer-social-arrow{transition:none}}
+
 </style>
 <style id="alishams-demo-protection">html,body,body *{-webkit-user-select:none!important;user-select:none!important;-webkit-user-drag:none!important}img,svg,video{-webkit-user-drag:none!important;user-drag:none!important}</style><script id="alishams-demo-protection-script">(()=>{const stop=e=>e.preventDefault();["contextmenu","dragstart","selectstart","copy","cut"].forEach(t=>document.addEventListener(t,stop,{capture:true}));document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&["c","x","a"].includes(e.key.toLowerCase()))e.preventDefault()},{capture:true});document.querySelectorAll("img").forEach(x=>x.draggable=false)})();</script><meta property="og:image" content="https://alishams.ir/assets/images/alishams-studio-logo.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="گالری دموهای طراحی سایت | ۲۵ طرح قابل سفارش علی شمس"><meta name="twitter:description" content="۲۵ دموی طراحی سایت شرکتی، فروشگاهی، شخصی، خبری، آموزشی و سامانه‌های آنلاین را بررسی کنید و طرح مناسب کسب‌وکارتان را سفارش دهید."><meta name="twitter:image" content="https://alishams.ir/assets/images/alishams-studio-logo.png"></head>
 <body>
@@ -114,8 +130,8 @@
     <p>ایده‌پردازی، طراحی و اجرا؛ با دقت در جزئیات.</p>
     <p class="footer-description">طراحی وب‌سایت شرکتی و فروشگاهی، توسعه سامانه‌های اختصاصی، طراحی لوگو و هویت بصری، موشن‌گرافیک و راهکارهای دیجیتال برای کسب‌وکارها.</p>
     <div class="footer-socials" aria-label="شبکه‌های اجتماعی">
-     <a href="https://t.me/theslyapex" target="_blank" rel="noopener noreferrer" aria-label="تلگرام"><span>tg</span> تلگرام</a>
-     <a href="https://alishams.ir/contact-center.html" aria-label="ارتباط با استودیو"><span>↗</span> ارتباط با ما</a>
+     <a class="footer-social-link telegram-link" href="https://t.me/theslyapex" target="_blank" rel="noopener noreferrer" aria-label="ارتباط در تلگرام"><span class="footer-social-icon"><img src="https://img.icons8.com/fluency/48/telegram-app.png" alt="" width="30" height="30" loading="lazy"></span><span class="footer-social-label">تلگرام</span><span class="footer-social-arrow" aria-hidden="true">↗</span></a>
+     <a class="footer-social-link contact-link" href="https://alishams.ir/contact-center.html" aria-label="مرکز ارتباط با علی شمس"><span class="footer-social-icon"><img src="https://img.icons8.com/fluency/48/online-support.png" alt="" width="30" height="30" loading="lazy"></span><span class="footer-social-label">ارتباط با ما</span><span class="footer-social-arrow" aria-hidden="true">↗</span></a>
     </div>
    </div>
    <div class="footer-column"><h3>دسترسی سریع</h3>
