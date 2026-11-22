@@ -139,6 +139,11 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text!important;user-
   .footer-bottom{justify-content:center!important;align-items:center!important;text-align:center!important}
   .footer-bottom span{text-align:center!important}
 }
+
+.demo-gallery-promo{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:30px;align-items:center;margin-top:26px;margin-bottom:22px;padding:30px 34px;border:1px solid #d9ff7235;border-radius:25px;background:radial-gradient(ellipse at 85% 50%,#b6a0ff18,transparent 42%),linear-gradient(115deg,#d9ff7210,#ffffff05 55%,#b6a0ff0c);overflow:hidden}
+.demo-gallery-copy{position:relative;z-index:1}.demo-gallery-kicker{color:var(--lime);font:800 9px Manrope;letter-spacing:1.5px}.demo-gallery-copy h2{font-size:clamp(20px,3vw,29px);line-height:1.6;margin:8px 0}.demo-gallery-copy h2 em{font-style:normal;color:var(--lime)}.demo-gallery-copy p{max-width:620px;margin:0;color:#b5b7c0;font-size:12px;line-height:2.1}.demo-gallery-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;margin-top:17px;min-height:43px;padding:9px 17px;border-radius:12px;background:var(--lime);color:#111;font-size:11px;font-weight:900;transition:transform .2s,box-shadow .2s}.demo-gallery-button:hover{transform:translateY(-2px);box-shadow:0 9px 28px #d9ff7225}.demo-gallery-button svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transform:rotate(180deg)}
+.demo-gallery-visual{position:relative;min-height:190px;display:grid;place-items:center}.demo-gallery-orbit{position:absolute;width:180px;height:180px;border:1px solid #d9ff7228;border-radius:50%}.orbit-two{width:225px;height:225px;border-color:#b6a0ff20}.demo-gallery-window{position:relative;z-index:1;width:min(100%,260px);padding:9px;border:1px solid #ffffff35;border-radius:15px;background:#171a20;box-shadow:0 20px 45px #0008;transform:rotate(-3deg)}.demo-gallery-windowbar{height:16px;display:flex;align-items:center;gap:4px;color:#8d9099;font:7px Manrope}.demo-gallery-windowbar i{width:5px;height:5px;border-radius:50%;background:#d9ff72}.demo-gallery-windowbar span{margin-right:auto}.demo-gallery-windowbody{height:88px;padding:12px;border-radius:8px;background:linear-gradient(130deg,#e8e9e2,#cfd6ca);display:flex;justify-content:space-between;align-items:center}.demo-gallery-lines{display:grid;gap:7px;width:48%}.demo-gallery-lines b{width:90%;height:9px;border-radius:4px;background:#394c3e}.demo-gallery-lines i{height:4px;width:85%;border-radius:4px;background:#9da99b}.demo-gallery-lines span{height:12px;width:45%;border-radius:4px;background:#738c69}.demo-gallery-tiles{display:grid;grid-template-columns:repeat(2,32px);gap:5px}.demo-gallery-tiles i{height:27px;border-radius:5px;background:#a8b6a1}.demo-gallery-tiles i:nth-child(2){background:#b9a9d7}.demo-gallery-tiles i:nth-child(3){grid-column:span 2;height:16px;background:#d2d9ce}.demo-gallery-window>strong{display:block;text-align:center;color:var(--lime);font:800 22px Manrope;line-height:1.3;padding-top:7px}.demo-gallery-window>strong small{font:500 9px Estedad;color:#c5c7ce;margin-right:5px}.demo-gallery-float{position:absolute;z-index:2;padding:5px 9px;border:1px solid #ffffff25;border-radius:8px;background:#11151bdc;color:#e5e6e1;font-size:9px;box-shadow:0 8px 20px #0005}.float-top{top:12px;right:4px}.float-bottom{bottom:8px;left:0;color:var(--lime)}
+@media(max-width:700px){.demo-gallery-promo{grid-template-columns:1fr;gap:10px;margin-top:15px;margin-bottom:13px;padding:22px 18px;border-radius:19px}.demo-gallery-copy h2{font-size:21px}.demo-gallery-copy p{font-size:11px}.demo-gallery-visual{min-height:175px}.demo-gallery-window{width:245px}.demo-gallery-orbit{width:155px;height:155px}.orbit-two{width:195px;height:195px}.float-top{right:8%}.float-bottom{left:8%}}
 </style><style id="web-order-nav-scroll-fix">
 @media(max-width:850px){
   #navlinks.open{
@@ -164,12 +169,36 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text!important;user-
 </style>
 </head><body><header class="topbar"><div class="wrap nav">
 <a class="brand" href="/" aria-label="علی شمس"><span class="brand-mark"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a>
-<nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی"><a href="/#services">خدمات</a><a href="/portfolio.html">نمونه‌کارها</a><a href="/videos.html">ویدئوها</a><a href="/#alishamsLeague">رقابت برای رتبه برتر</a><a href="/about.html">درباره من</a>
+<nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی"><a href="/#services">خدمات</a><a href="/website-demos.html">گالری دموها</a><a href="/portfolio.html">نمونه‌کارها</a><a href="/videos.html">ویدئوها</a><a href="/#alishamsLeague">رقابت برای رتبه برتر</a><a href="/about.html">درباره من</a>
 <div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false">همکاری ⌄</button><div class="nav-dropdown-menu"><a href="/pricing.html">قیمت‌گذاری</a><a href="/terms.html">شرایط و قوانین سفارش</a><a href="/plus.html">عضویت پلاس+</a><a href="/support.html">حمایت مالی</a><a href="/packages.html">پکیج‌های فروشگاهی</a><a href="/domain-lab.html">آزمایشگاه دامنه</a><a href="/services/economic-website-package.html">پک اقتصادی طراحی سایت</a><a href="/services/economic-logo-motion-package.html">پک اقتصادی لوگو و موشن</a><a href="/#reviews">رویکرد کاری</a><a href="/#trust">شفافیت همکاری</a></div></div>
 <div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false">پیگیری ⌄</button><div class="nav-dropdown-menu"><a href="/project-tracking.html">پیگیری پروژه</a><a href="/order-tracking.html">پیگیری سفارش</a><a href="/account.html">حساب کاربری</a></div></div>
 <div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false">پرسش و گفت‌وگو ⌄</button><div class="nav-dropdown-menu"><a href="/#faq">پرسش‌های متداول</a><a href="/#conversation">گفت‌وگو</a><a href="/community-chat.html">گفت‌وگوی عمومی</a><a href="/feedback.html">ثبت بازخورد</a></div></div></nav>
 <div class="nav-actions"><button class="menu-toggle" id="menuToggle" type="button" aria-label="باز کردن منو" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a class="account-cta" id="accountLink" href="/login.html?next=%2Fweb-design-order.html" aria-label="حساب کاربری"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-1.5a4.5 4.5 0 0 0-4.5-4.5h-7A4.5 4.5 0 0 0 4 19.5V21"/><circle cx="12" cy="7.5" r="4"/></svg><span class="account-state" hidden></span></a></div></div></header>
 <section class="wrap hero"><div class="eyebrow">ALISHAMS DIGITAL STUDIO · WEB DESIGN</div><h1>ایده‌ات را به یک <em>وب‌سایت ماندگار</em> تبدیل کنیم</h1><p>در چند مرحله نیازهایت را مشخص کن؛ پس از بررسی تخصصی، پیشنهاد قیمت و زمان‌بندی متناسب با پروژه‌ات را دریافت می‌کنی.</p><div class="hero-badges"><span><i class="hero-icon" data-icon="lock"></i>اطلاعات محرمانه</span><span><i class="hero-icon" data-icon="time"></i>بررسی تخصصی</span><span><i class="hero-icon" data-icon="handshake"></i>بدون تعهد خرید</span></div></section>
+<section class="wrap demo-gallery-promo" aria-labelledby="demoGalleryTitle">
+  <div class="demo-gallery-copy">
+    <span class="demo-gallery-kicker">WEBSITE DEMO GALLERY · 25 DESIGNS</span>
+    <h2 id="demoGalleryTitle">قبل از سفارش، <em>دموی مناسب خودت</em> را انتخاب کن</h2>
+    <p>از میان ۲۵ نمونه طراحی‌شده در سبک‌های شرکتی، فروشگاهی، شخصی، خبری، آموزشی و سامانه‌های آنلاین دیدن کن. هر دمو را به‌صورت زنده بررسی کن و بعد برای ثبت سفارش برگرد.</p>
+    <a class="demo-gallery-button" href="/website-demos.html">
+      <span>مشاهده گالری کامل دموها</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+  <div class="demo-gallery-visual" aria-hidden="true">
+    <div class="demo-gallery-orbit orbit-one"></div><div class="demo-gallery-orbit orbit-two"></div>
+    <div class="demo-gallery-window">
+      <div class="demo-gallery-windowbar"><i></i><i></i><i></i><span>ALISHAMS · DEMOS</span></div>
+      <div class="demo-gallery-windowbody">
+        <div class="demo-gallery-lines"><b></b><i></i><i></i><span></span></div>
+        <div class="demo-gallery-tiles"><i></i><i></i><i></i></div>
+      </div>
+      <strong>۲۵ <small>دموی آماده بررسی</small></strong>
+    </div>
+    <span class="demo-gallery-float float-top">طراحی متنوع</span>
+    <span class="demo-gallery-float float-bottom">پیش‌نمایش زنده</span>
+  </div>
+</section>
 <main class="wrap shell"><aside class="side glass"><div class="side-head"><h3>مسیر ثبت سفارش</h3><span>۶ مرحله</span></div><div class="stepnav" id="stepnav"></div><div class="side-note"><strong><i class="side-icon" data-icon="shield"></i>شفافیت در همکاری</strong>اطلاعاتت فقط برای بررسی درخواست و ارتباط درباره همین پروژه استفاده می‌شود. مبلغ نهایی بعد از بررسی اعلام خواهد شد.</div></aside>
 <section class="formbox glass"><div class="progressHead"><strong id="stepLabel">مرحله ۱ از ۶</strong><span id="percent">۱۷٪ تکمیل‌شده</span></div><div class="bar"><i id="progress"></i></div><form id="orderForm" novalidate>
 <section class="panel active" data-title="اطلاعات تماس"><h2>راه ارتباطی‌ات را وارد کن</h2><p class="hint">درخواست به حساب کاربری خودت متصل می‌شود تا بتوانی وضعیت آن را پیگیری کنی.</p><div class="two"><div class="field"><label for="clientName">نام و نام خانوادگی</label><input id="clientName" maxlength="120" required autocomplete="name" placeholder="نام کامل"></div><div class="field"><label for="phone">شماره تماس</label><input id="phone" maxlength="40" required inputmode="tel" autocomplete="tel" placeholder="09xxxxxxxxx"></div></div><div class="field"><label for="email">ایمیل حساب کاربری</label><input id="email" readonly placeholder="پس از ورود نمایش داده می‌شود"></div></section>
