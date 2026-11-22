@@ -227,7 +227,7 @@
  compareButton.addEventListener('click',()=>{
   const chosen=savedRoutes.filter(r=>selectedSavedIds.includes(r.id));
   if(chosen.length<2){cityStatus.textContent='برای مقایسه، دست‌کم دو مسیر را انتخاب کنید.';return}
-  if(routeLine)map.removeLayer(routeLine);if(routeNodes)map.removeLayer(routeNodes);
+  if(routeLine){map.removeLayer(routeLine);routeLine=null}if(routeNodes){map.removeLayer(routeNodes);routeNodes=null}
   compareLayer.clearLayers();compareLegend.innerHTML='';
   const allPoints=[];
   chosen.forEach((route,index)=>{
