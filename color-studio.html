@@ -26,6 +26,58 @@
 @media(max-width:900px){.navlinks{gap:13px}.hero-grid{gap:20px}.studio-grid{grid-template-columns:1fr}.footer-top{grid-template-columns:1.3fr 1fr 1fr}.footer-top .footer-brand{grid-column:1/-1}.preview-grid{grid-template-columns:1fr}.hero-art{min-height:320px}.orb{width:290px;height:290px}}
 @media(max-width:700px){.wrap{width:min(calc(100% - 28px),var(--max))}.nav{min-height:70px}.brand-logo{width:42px;height:42px}.navlinks{display:none;position:absolute;top:70px;right:14px;left:14px;padding:15px;background:#11141b;border:1px solid var(--line);border-radius:17px;box-shadow:0 20px 55px #000b;flex-direction:column;align-items:stretch;gap:0}.navlinks.open{display:flex}.navlinks a{padding:10px 7px;border-bottom:1px solid #ffffff0c}.navlinks a:last-child{border:0}.nav-cta{display:none}.menu-toggle{display:block}.hero{padding:48px 0 30px}.hero-grid{grid-template-columns:1fr;gap:5px}.hero-copy p{font-size:14px}.hero-art{min-height:270px}.orb{width:230px;height:230px}.float-a{top:12px;right:0}.float-b{bottom:10px;left:0}.section{padding:25px 0 52px}.section-head{display:block}.section-head p{margin-top:8px}.panel{padding:16px;border-radius:20px}.picker-layout{grid-template-columns:105px 1fr;gap:13px}.color-well{width:105px;height:125px}.hex-input{font-size:15px;padding:10px}.copy-code{flex-basis:42px;height:43px}.swatches{gap:6px}.swatch-color{height:65px}.swatch-info{padding:7px 3px}.swatch-name{font-size:9px}.swatch-code{font-size:9px}.swatch-copy{font-size:9px;padding:4px 5px}.palette-list{grid-template-columns:repeat(3,minmax(0,1fr))}.palette-item .block{height:65px}.preview-links{gap:7px}.preview-hero h4{font-size:19px}.footer-top{grid-template-columns:1fr 1fr;gap:20px}.footer-top .footer-brand{grid-column:1/-1}.footer-bottom{align-items:flex-start;flex-direction:column}.hero-actions .btn{width:100%}}
 @media(max-width:390px){.picker-layout{grid-template-columns:1fr}.color-well{width:100%;height:100px}.swatches{grid-template-columns:repeat(5,minmax(0,1fr))}.swatch-color{height:55px}.panel-head{align-items:flex-start}}
+
+/* Mobile refinement and reliable icon fallbacks */
+.panel-icon{flex:0 0 43px;display:grid;place-items:center}
+.panel-icon img,.panel-icon svg{display:block;width:27px;height:27px;object-fit:contain}
+.panel-icon.icon-fallback:after{font-family:Arial,sans-serif;font-size:27px;font-weight:900;line-height:1;background:linear-gradient(135deg,#d9ff72,#b6a0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.panel-icon.icon-wheel.icon-fallback:after{content:"◉"}
+.panel-icon.icon-palette.icon-fallback:after{content:"▦"}
+.btn,.small-btn,.harmony-tab,.copy-code,.swatch-copy{white-space:nowrap;word-break:keep-all}
+.harmony-tabs{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;padding:2px 1px 9px;scrollbar-width:thin;scrollbar-color:#d9ff7250 transparent;-webkit-overflow-scrolling:touch}
+.harmony-tab{flex:0 0 auto;min-width:max-content}
+@media(max-width:700px){
+ .wrap{width:calc(100% - 24px)}
+ .hero-actions{display:grid;grid-template-columns:1fr;gap:9px}
+ .hero-actions .btn{width:100%;min-height:46px;padding:11px 8px;font-size:12px;white-space:nowrap}
+ .section-head h2{font-size:24px}.section-head p{font-size:12px;line-height:1.9}
+ .panel{padding:13px;border-radius:17px}.panel-head{gap:8px;margin-bottom:15px}
+ .panel-title{gap:8px;min-width:0}.panel-title h3{font-size:14px;white-space:nowrap}.panel-title p{font-size:8px;letter-spacing:.2px}
+ .panel-icon{width:37px;height:37px;flex-basis:37px;border-radius:11px}.panel-icon img{width:24px;height:24px}
+ .live-tag{font-size:8px;padding:5px 7px;white-space:nowrap}
+ .picker-layout{grid-template-columns:86px minmax(0,1fr);gap:10px}
+ .color-well{width:86px;height:112px;border-radius:15px}
+ .field-label{font-size:10px}.hex-row{gap:5px}.hex-input{min-width:0;width:100%;font-size:14px;padding:9px 5px}
+ .copy-code{flex:0 0 38px;width:38px;height:40px}.color-native{height:37px}
+ .color-meta{gap:5px;margin-top:12px}.meta-chip{font-size:10px;padding:6px 8px}
+ .add-row{align-items:flex-start;flex-wrap:wrap}.add-row p{font-size:10px;flex:1 1 100%}
+ .small-btn{font-size:10px;padding:8px 10px}
+ .swatches{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+ .swatch{border-radius:10px}.swatch-color{height:56px}.swatch-info{padding:6px 2px}
+ .swatch-name{font-size:8px}.swatch-code{font-size:8px;letter-spacing:-.3px}
+ .swatch-copy{font-size:8px;padding:4px 3px;margin-top:6px}
+ .contrast-result{padding:10px;gap:8px}.contrast-result strong{font-size:15px}
+ .contrast-result small{font-size:9px}.contrast-badge{font-size:9px;padding:5px 7px;white-space:nowrap}
+ .palette-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .palette-item{padding:5px}.palette-item .block{height:58px}
+ .preview-grid{gap:12px}.preview-links{gap:6px}.preview-links span{font-size:8px}
+ .preview-nav{padding:11px}.preview-hero{padding:19px 13px}.preview-hero h4{font-size:17px}
+ .preview-cards{gap:5px;padding:9px}.preview-card{padding:8px 4px}
+ .preview-card b{font-size:8px}.preview-card span{font-size:7px}
+ .send-actions{display:grid;grid-template-columns:1fr}.send-actions .btn{width:100%;font-size:11px;padding:11px 8px;min-height:44px}
+ .footer-top{grid-template-columns:1fr 1fr}.footer-col a{font-size:10px}
+}
+@media(max-width:390px){
+ .picker-layout{grid-template-columns:76px minmax(0,1fr);gap:8px}.color-well{width:76px;height:105px}
+ .panel-title h3{font-size:13px}.panel-title p{font-size:7px}
+ .live-tag{font-size:7px;padding:4px 6px}.swatches{gap:4px}
+ .swatch-color{height:49px}.swatch-name,.swatch-code,.swatch-copy{font-size:7px}
+}
+@media(max-width:340px){
+ .picker-layout{grid-template-columns:1fr}.color-well{width:100%;height:75px}
+ .swatches{grid-template-columns:repeat(3,minmax(0,1fr))}.swatch-color{height:60px}
+ .panel-title p{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"استودیو رنگ علی شمس","url":"https://alishams.ir/color-studio.html","applicationCategory":"DesignApplication","operatingSystem":"Any","inLanguage":"fa-IR","description":"ابزار انتخاب رنگ، نمایش نام و کد HEX، ساخت ترکیب‌های مکمل و پیش‌نمایش پالت برای طراحی وب‌سایت."}</script></head>
 <body id="top">
@@ -34,13 +86,13 @@
 <main><section class="hero"><div class="wrap hero-grid"><div class="hero-copy"><span class="eyebrow">ALISHAMS · COLOR STUDIO / 01</span><h1>رنگ برندت رو<br><span class="gradient">با سلیقه خودت بساز.</span></h1><p>رنگ موردعلاقه‌ات را انتخاب کن، نام و کد دقیقش را ببین، ترکیب‌های مکمل و هماهنگ را بررسی کن و در پایان یک پالت رنگ آماده برای طراحی وب‌سایتت بساز و برای علی شمس بفرست.</p><div class="hero-actions"><a class="btn primary" href="#studio">شروع انتخاب رنگ ↓</a><a class="btn ghost" href="#preview">دیدن پیش‌نمایش سایت</a></div></div><div class="hero-art"><div class="orb"></div><div class="hero-float float-a"><strong>HEX / RGB / HSL</strong><small>شناخت دقیق رنگ‌ها</small></div><div class="hero-float float-b"><strong>COLOR HARMONY</strong><small>مکمل · مشابه · سه‌گانه</small></div><div class="hero-float float-c"><img src="https://img.icons8.com/fluency/48/color-palette.png" alt="" width="38" height="38"></div></div></div></section>
 <section class="section" id="studio"><div class="wrap"><div class="section-head"><div><span class="kicker">01 / COLOR EXPLORER</span><h2>رنگ موردعلاقه‌ات رو <span class="gradient">انتخاب کن.</span></h2></div><p>از انتخاب‌گر رنگ استفاده کن یا کد HEX دلخواهت را وارد کن. نام تقریبی رنگ و مقادیر فنی آن به‌صورت زنده به‌روزرسانی می‌شوند.</p></div>
 <div class="studio-grid">
-<section class="panel"><div class="panel-head"><div class="panel-title"><span class="panel-icon"><img src="https://img.icons8.com/fluency/48/color-wheel.png" alt=""></span><div><h3>انتخاب‌گر رنگ</h3><p>COLOR PICKER · HEX / RGB / HSL</p></div></div><span class="live-tag">LIVE COLOR</span></div>
+<section class="panel"><div class="panel-head"><div class="panel-title"><span class="panel-icon icon-wheel"><img src="https://img.icons8.com/fluency/48/color-wheel.png" alt="" onerror="this.style.display='none';this.parentElement.classList.add('icon-fallback')"></span><div><h3>انتخاب‌گر رنگ</h3><p>COLOR PICKER · HEX / RGB / HSL</p></div></div><span class="live-tag">LIVE COLOR</span></div>
 <div class="picker-layout"><div class="color-well" id="colorWell"></div><div class="picker-fields"><div><label class="field-label" for="hexInput">کد رنگ HEX</label><div class="hex-row"><input class="hex-input" id="hexInput" value="#6C63FF" maxlength="7" spellcheck="false" aria-label="کد HEX رنگ"><button class="copy-code" id="copyMainHex" type="button" aria-label="کپی کد رنگ" title="کپی کد HEX">⧉</button></div></div><div><label class="field-label" for="nativePicker">انتخاب آزاد رنگ</label><input class="color-native" id="nativePicker" type="color" value="#6c63ff"></div></div></div>
 <div class="color-meta"><span class="meta-chip">نام رنگ <b id="colorName">آبی بنفش</b></span><span class="meta-chip">RGB <b id="rgbValue">108, 99, 255</b></span><span class="meta-chip">HSL <b id="hslValue">243°, 100%, 69%</b></span></div><div class="add-row"><p>رنگ اصلی را به پالت شخصی‌ات اضافه کن.</p><button class="small-btn" id="addColor" type="button">＋ افزودن به پالت</button></div></section>
 <section class="panel"><div class="panel-head"><div class="panel-title"><span class="panel-icon"><img src="https://img.icons8.com/fluency/48/paint-palette.png" alt=""></span><div><h3>ترکیب‌های هماهنگ</h3><p>COLOR HARMONY · SMART PALETTE</p></div></div><span class="live-tag">AUTO GENERATED</span></div>
 <div class="harmony-tabs" role="tablist" aria-label="نوع ترکیب رنگ"><button class="harmony-tab active" data-harmony="complement" type="button">مکمل</button><button class="harmony-tab" data-harmony="analogous" type="button">مشابه</button><button class="harmony-tab" data-harmony="triadic" type="button">سه‌گانه</button><button class="harmony-tab" data-harmony="split" type="button">مکمل شکسته</button><button class="harmony-tab" data-harmony="tetradic" type="button">چهارگانه</button><button class="harmony-tab" data-harmony="mono" type="button">تک‌رنگ</button></div><div class="swatches" id="harmonySwatches"></div>
 <div class="contrast-result"><div><strong id="contrastRatio">—</strong><small>کنتراست رنگ اصلی با متن سفید</small></div><span class="contrast-badge" id="contrastLabel">در حال بررسی</span></div></section></div>
-<section class="panel palette-panel"><div class="panel-head"><div class="panel-title"><span class="panel-icon"><img src="https://img.icons8.com/fluency/48/color-swatch.png" alt=""></span><div><h3>پالت اختصاصی تو</h3><p>YOUR WEBSITE COLOR PALETTE · MAX 6 COLORS</p></div></div><button class="small-btn" id="clearPalette" type="button">پاک‌کردن پالت</button></div><div class="palette-list" id="paletteList"><div class="meta-chip">هنوز رنگی اضافه نکرده‌ای.</div></div></section>
+<section class="panel palette-panel"><div class="panel-head"><div class="panel-title"><span class="panel-icon icon-palette"><img src="https://img.icons8.com/fluency/48/color-palette.png" alt="" onerror="this.style.display='none';this.parentElement.classList.add('icon-fallback')"></span><div><h3>پالت اختصاصی تو</h3><p>YOUR WEBSITE COLOR PALETTE · MAX 6 COLORS</p></div></div><button class="small-btn" id="clearPalette" type="button">پاک‌کردن پالت</button></div><div class="palette-list" id="paletteList"><div class="meta-chip">هنوز رنگی اضافه نکرده‌ای.</div></div></section>
 <section class="preview-grid" id="preview"><section class="panel preview-panel"><div class="panel-head"><div class="panel-title"><span class="panel-icon"><img src="https://img.icons8.com/fluency/48/web-design.png" alt=""></span><div><h3>پیش‌نمایش زنده وب‌سایت</h3><p>LIVE WEBSITE COLOR PREVIEW</p></div></div><span class="live-tag">REAL TIME</span></div>
 <div class="preview-site" id="previewSite"><div class="preview-nav"><strong>برند شما</strong><div class="preview-links"><span>خانه</span><span>درباره ما</span><span>خدمات</span></div><span>☰</span></div><div class="preview-hero"><small>یک تجربه متفاوت برای برند شما</small><h4>ایده‌هایت را به تجربه‌ای ماندگار تبدیل کن.</h4><p>رنگ‌ها فقط ظاهر را نمی‌سازند؛ آن‌ها حس و شخصیت برند را به مخاطب منتقل می‌کنند.</p><span class="preview-cta">شروع تجربه ↗</span></div><div class="preview-cards"><div class="preview-card"><i></i><b>طراحی هدفمند</b><span>هماهنگ با هویت برند</span></div><div class="preview-card"><i></i><b>تجربه کاربری</b><span>ساده و دلنشین</span></div><div class="preview-card"><i></i><b>رشد کسب‌وکار</b><span>متناسب با مخاطب</span></div></div></div><p class="preview-caption">این پیش‌نمایش نمونه‌ای از کاربرد رنگ‌ها در اجزای یک وب‌سایت است؛ رنگ نهایی بر اساس پالت انتخابی تو تغییر می‌کند.</p></section>
 <section class="panel"><div class="panel-head"><div class="panel-title"><span class="panel-icon"><img src="https://img.icons8.com/fluency/48/contrast.png" alt=""></span><div><h3>راهنمای خوانایی رنگ</h3><p>ACCESSIBILITY · CONTRAST CHECK</p></div></div></div><p style="color:var(--muted);font-size:12px;margin:0">ترکیب رنگ زیبا باید خوانا هم باشد. نسبت کنتراست کمک می‌کند بفهمی متن سفید روی رنگ اصلی چقدر واضح دیده می‌شود.</p><div class="contrast-result" style="margin-top:18px"><div><strong id="contrastLarge">—</strong><small>نسبت کنتراست WCAG</small></div><span class="contrast-badge" id="contrastWCAG">—</span></div><div id="contrastDemo" style="border-radius:14px;padding:18px;margin-top:12px;background:#6c63ff;color:#fff"><strong>نمونه متن روی رنگ انتخابی</strong><div style="font-size:11px;opacity:.9">خوانایی متن را در این قسمت بررسی کن.</div></div></section></section>
