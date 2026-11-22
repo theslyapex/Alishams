@@ -186,6 +186,39 @@ html body *::before,html body *::after{font-family:'Estedad',Tahoma,sans-serif!i
 @media(max-width:700px){.type-icon{width:54px;height:54px;min-width:54px}.type-icon img{width:35px;height:35px}}
 
 
+
+/* Demo gallery and customer color direction */
+.service-featured{padding:78px 0;border-top:1px solid rgba(255,255,255,.08)}
+.feature-intro{max-width:760px;margin:0 auto 30px;text-align:center}
+.feature-intro h2,.color-studio-copy h2{font-size:clamp(25px,4vw,40px);line-height:1.65;margin:10px 0}
+.feature-intro p,.color-studio-copy>p{color:var(--muted);line-height:2.1;font-size:14px}
+.demo-preview-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.demo-preview-card{display:block;overflow:hidden;border:1px solid rgba(255,255,255,.11);border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.018));color:inherit;text-decoration:none;transition:.25s}
+.demo-preview-card:hover{transform:translateY(-5px);border-color:rgba(217,255,114,.45)}
+.demo-preview-screen{height:190px;overflow:hidden;position:relative;background:#10131a;border-bottom:1px solid rgba(255,255,255,.08)}
+.demo-preview-screen iframe{position:absolute;inset:0 auto auto 0;width:312.5%;height:312.5%;border:0;transform:scale(.32);transform-origin:top left;pointer-events:none}
+.demo-preview-copy{padding:17px}.demo-preview-copy>span{font-size:10px;color:var(--lime);letter-spacing:.4px}
+.demo-preview-copy h3{font-size:16px;margin:8px 0}.demo-preview-copy p{font-size:11px;line-height:1.9;color:var(--muted);margin:0}
+.feature-bottom-link{margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 20px;border:1px solid rgba(217,255,114,.2);border-radius:17px;background:rgba(217,255,114,.045)}
+.feature-bottom-link p{font-size:12px;color:var(--muted);margin:0}.feature-bottom-link .btn{white-space:nowrap}
+.color-studio-feature{background:radial-gradient(ellipse at 12% 50%,rgba(182,160,255,.10),transparent 45%),radial-gradient(ellipse at 90% 40%,rgba(217,255,114,.08),transparent 45%)}
+.color-studio-layout{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:45px}
+.color-studio-points{list-style:none;padding:0;margin:22px 0;display:grid;gap:12px}
+.color-studio-points li{display:flex;align-items:center;gap:11px;color:#e7e9e1;font-size:13px}
+.color-studio-points img{width:30px;height:30px;object-fit:contain}
+.color-studio-visual{padding:28px;border:1px solid rgba(255,255,255,.1);border-radius:26px;background:rgba(15,18,25,.8);box-shadow:0 25px 80px rgba(0,0,0,.25)}
+.palette-window{overflow:hidden;border-radius:17px;background:#11151d;border:1px solid rgba(255,255,255,.1)}
+.palette-window-top{height:42px;display:flex;align-items:center;gap:6px;padding:0 13px;border-bottom:1px solid rgba(255,255,255,.08)}
+.palette-window-top i{width:7px;height:7px;border-radius:50%;background:#b6a0ff}.palette-window-top i:first-child{background:#d9ff72}.palette-window-top i:nth-child(2){background:#ffb86b}
+.palette-window-top span{margin-right:auto;font-size:9px;letter-spacing:1px;color:#a9afbd}
+.palette-swatches{display:grid;grid-template-columns:repeat(4,1fr);height:155px}
+.palette-swatches span{background:var(--sw);display:flex;align-items:flex-end;justify-content:center;padding:10px 2px;color:#111;font:700 9px monospace}
+.palette-preview{padding:22px;background:linear-gradient(120deg,#1a2230,#10151c);color:#f4f5ef}
+.palette-preview b{display:block;font-size:19px}.palette-preview small{display:block;color:#aeb5c1;margin-top:6px}
+.palette-preview>div{display:flex;gap:8px;margin-top:22px}.palette-preview i{height:9px;width:54px;border-radius:20px;background:#d9ff72}.palette-preview i:nth-child(2){background:#b6a0ff}.palette-preview i:nth-child(3){background:#f4f5ef}
+@media(max-width:850px){.demo-preview-grid{grid-template-columns:1fr 1fr}.demo-preview-card:last-child{display:none}.color-studio-layout{gap:25px}}
+@media(max-width:650px){.service-featured{padding:48px 0}.demo-preview-grid{grid-template-columns:1fr}.demo-preview-card:last-child{display:block}.demo-preview-screen{height:180px}.feature-bottom-link{align-items:stretch;flex-direction:column}.feature-bottom-link .btn{text-align:center}.color-studio-layout{grid-template-columns:1fr;gap:24px}.color-studio-visual{padding:14px}.palette-swatches{height:115px}.color-studio-copy h2{font-size:27px}}
+
 </style>
 <script src="/site-protection.js" defer></script>
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -224,6 +257,9 @@ html body *::before,html body *::after{font-family:'Estedad',Tahoma,sans-serif!i
 <div class="floating-chip chip-three"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 2.6 5.3L20 11l-5.4 2.7L12 19l-2.6-5.3L4 11l5.4-2.7L12 3Z"/></svg> جزئیات اختصاصی</div>
 </div>
 </div></div></section>
+<section class="service-featured" id="demo-library-feature"><div class="wrap"><div class="feature-intro"><span class="eyebrow">LIVE WEBSITE DEMOS</span><h2>قبل از سفارش، <span class="accent">نمونه طراحی سایت را از نزدیک ببینید.</span></h2><p>برای انتخاب راحت‌تر، مجموعه‌ای از دموهای طراحی‌شده را بررسی کنید. ساختار صفحات، تجربه کاربری و ظاهر هر نمونه را مستقیماً ببینید و سبک مناسب کسب‌وکارتان را انتخاب کنید.</p></div><div class="demo-preview-grid"><a class="demo-preview-card" href="../website-demos.html"><div class="demo-preview-screen"><iframe src="../demos/orbita-business-dashboard.html" title="پیش‌نمایش دموی داشبورد ORBITA" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div><div class="demo-preview-copy"><span>داشبورد و سامانه</span><h3>ORBITA، مدیریت کسب‌وکار</h3><p>نمونه‌ای برای مشاهده چیدمان پنل‌ها، کارت‌های آماری و رابط مدیریتی</p></div></a><a class="demo-preview-card" href="../website-demos.html"><div class="demo-preview-screen"><iframe src="../demos/campus-one-student-portal.html" title="پیش‌نمایش دموی سامانه CAMPUS ONE" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div><div class="demo-preview-copy"><span>آموزشی و سازمانی</span><h3>CAMPUS ONE، پنل دانشجو</h3><p>نمونه‌ای از داشبورد کاربری، بخش‌بندی اطلاعات و تجربه کاربری منظم</p></div></a><a class="demo-preview-card" href="../website-demos.html"><div class="demo-preview-screen"><iframe src="../demos/servio-online-services.html" title="پیش‌نمایش دموی پلتفرم SERVIO" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div><div class="demo-preview-copy"><span>پلتفرم خدماتی</span><h3>SERVIO، خدمات آنلاین</h3><p>نمونه‌ای برای آشنایی با جست‌وجو، دسته‌بندی و کارت‌های خدمات</p></div></a></div><div class="feature-bottom-link"><p>این‌ها فقط سه نمونه از مجموعه طرح‌ها هستند؛ در گالری می‌توانید تمام دموها را بررسی کنید.</p><a class="btn primary" href="../website-demos.html">مشاهده گالری دموهای طراحی سایت ↗</a></div></div></section>
+<section class="service-featured color-studio-feature" id="color-studio-feature"><div class="wrap color-studio-layout"><div class="color-studio-copy"><span class="eyebrow">COLOR DIRECTION · BRAND MOOD</span><h2>رنگ‌های وب‌سایتت را <span class="accent">خودت انتخاب کن.</span></h2><p>اگر برای ظاهر سایت رنگ خاصی در ذهن داری، وارد استودیو رنگ شو. رنگ‌های موردعلاقه‌ات را انتخاب کن، ترکیب‌های مکمل را ببین و کد رنگ‌ها را برای ما بفرست تا طراحی را با سلیقه بصری برندت هماهنگ کنیم.</p><ul class="color-studio-points"><li><img src="https://img.icons8.com/fluency/48/color-wheel.png" alt="" loading="lazy"> کشف رنگ و کد HEX</li><li><img src="https://img.icons8.com/fluency/48/color-palette.png" alt="" loading="lazy"> ساخت پالت و ترکیب مکمل</li><li><img src="https://img.icons8.com/fluency/48/share.png" alt="" loading="lazy"> ارسال پالت انتخابی برای طراحی</li></ul><a class="btn primary" href="../color-studio.html">ورود به استودیو انتخاب رنگ ↗</a></div><div class="color-studio-visual" aria-label="پیش‌نمایش پالت رنگی"><div class="palette-window"><div class="palette-window-top"><i></i><i></i><i></i><span>YOUR BRAND PALETTE</span></div><div class="palette-swatches"><span style="--sw:#d9ff72">#D9FF72</span><span style="--sw:#b6a0ff">#B6A0FF</span><span style="--sw:#18202a">#18202A</span><span style="--sw:#f4f5ef">#F4F5EF</span></div><div class="palette-preview"><b>هویت بصری منسجم</b><small>رنگ، تجربه و شخصیت برند</small><div><i></i><i></i><i></i></div></div></div></div></div></section>
+
 <section class="proof-strip" aria-label="ویژگی‌های خدمت"><div class="wrap proof-inner">
 <div class="proof-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></svg> طراحی برای موبایل و دسکتاپ</div>
 <div class="proof-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h16v14H4zM4 9h16M8 7h.01"/></svg> ساختار متناسب با برند</div>
