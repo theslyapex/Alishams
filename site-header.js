@@ -22,8 +22,8 @@ function install(){
  if(existing)existing.replaceWith(header);else if(document.body)document.body.insertBefore(header,document.body.firstChild);
  const nav=document.getElementById('alishamsSharedNav'),menu=document.getElementById('alishamsSharedMenuToggle'),account=document.getElementById('alishamsSharedAccount');
  if(!nav||!menu||!account)return;
- const closeMenu=()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');const icon=menu.querySelector('.header-control-icon');if(icon)icon.textContent='☰';};
- menu.addEventListener('click',()=>{const opened=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(opened));const icon=menu.querySelector('.header-control-icon');if(icon)icon.textContent=opened?'×':'☰';});
+ const closeMenu=()=>{nav.classList.remove('open');document.body.classList.remove('site-menu-open');menu.setAttribute('aria-expanded','false');const icon=menu.querySelector('.header-control-icon');if(icon)icon.textContent='☰';};
+ menu.addEventListener('click',()=>{const opened=nav.classList.toggle('open');document.body.classList.toggle('site-menu-open',opened);menu.setAttribute('aria-expanded',String(opened));const icon=menu.querySelector('.header-control-icon');if(icon)icon.textContent=opened?'×':'☰';});
  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
  const dropdowns=[...nav.querySelectorAll('.nav-dropdown')];
  dropdowns.forEach(drop=>{const toggle=drop.querySelector('.nav-dropdown-toggle');toggle.addEventListener('click',e=>{e.stopPropagation();const opening=!drop.classList.contains('open');dropdowns.forEach(other=>{other.classList.remove('open');other.querySelector('.nav-dropdown-toggle').setAttribute('aria-expanded','false');});drop.classList.toggle('open',opening);toggle.setAttribute('aria-expanded',String(opening));});});
