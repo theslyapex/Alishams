@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090a0d">
+<title>سفارش طراحی سایت بر اساس دمو | علی شمس</title>
+<meta name="description" content="ثبت درخواست طراحی وب‌سایت بر اساس یکی از طرح‌های گالری دموهای علی شمس. سفارش شما مستقیماً وارد سامانه مدیریت سفارش استودیو می‌شود.">
+<link rel="canonical" href="https://alishams.ir/demo-order.html">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Estedad:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<style>
+:root{color-scheme:dark;--bg:#090a0d;--panel:#12151b;--panel2:#191d25;--ink:#f4f4ef;--muted:#a0a4ae;--line:#ffffff19;--lime:#d9ff72;--lav:#b6a0ff;--rust:#ff9c7d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 8% 0%,#b6a0ff18,transparent 32%),radial-gradient(ellipse at 92% 22%,#d9ff7210,transparent 30%),var(--bg);color:var(--ink);font:14px/2 Estedad,Tahoma,sans-serif;overflow-x:hidden}a{color:inherit;text-decoration:none}button,input,textarea,select{font:inherit}.wrap{width:min(1120px,calc(100% - 36px));margin:auto}
+.top{height:76px;border-bottom:1px solid var(--line);background:#090a0ddf;backdrop-filter:blur(18px);position:sticky;top:0;z-index:20}.nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{display:flex;align-items:center;gap:11px;font-weight:800}.brand img{width:42px;height:42px;object-fit:contain}.brand small{display:block;color:var(--muted);font:9px Manrope;letter-spacing:1px}.back{font-size:11px;color:var(--lime);border:1px solid #d9ff7240;border-radius:99px;padding:8px 14px}
+.hero{padding:62px 0 32px}.eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--lime);font:800 10px Manrope;letter-spacing:1.8px}.eyebrow:before{content:"";width:24px;height:1px;background:var(--lime)}h1{font-size:clamp(30px,5vw,52px);line-height:1.45;margin:13px 0 9px;font-weight:900}.hero p{max-width:720px;color:#aeb1ba;font-size:13px;line-height:2.2;margin:0}.hero strong{color:var(--lime)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start;margin:18px auto 80px}.panel{border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#171a21f2,#101217f2);box-shadow:0 24px 75px #0005;padding:clamp(18px,3vw,30px);min-width:0}.panel h2{font-size:19px;margin:0 0 4px}.hint{font-size:11px;color:var(--muted);margin:0 0 22px;line-height:2}
+.selected{position:sticky;top:95px;overflow:hidden}.selected:before{content:"";position:absolute;width:210px;height:210px;border:1px solid #d9ff7220;border-radius:50%;top:-120px;left:-80px;pointer-events:none}.selected-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.selected-top small{font:9px Manrope;color:var(--lime);letter-spacing:1.4px}.status{font-size:9px;border:1px solid #d9ff7240;color:var(--lime);background:#d9ff7210;border-radius:99px;padding:4px 9px}.demo-name{font-size:22px;line-height:1.7;margin:13px 0 6px}.demo-category{color:#a7aab2;font-size:11px}.preview{display:block;margin-top:20px;border:1px solid #ffffff20;border-radius:13px;padding:12px;text-align:center;color:var(--lime);font-size:11px;background:#ffffff06}.preview[hidden]{display:none}.side-note{border-top:1px solid var(--line);margin-top:20px;padding-top:15px;color:#a5a8b1;font-size:10px;line-height:2.1}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:grid;gap:6px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:11px;color:#e6e7e3;font-weight:700}.field input,.field select,.field textarea{width:100%;min-width:0;background:#090b10;border:1px solid #ffffff20;border-radius:11px;color:white;padding:12px 13px;outline:none;font-size:12px;transition:.2s}.field input:focus,.field select:focus,.field textarea:focus{border-color:#d9ff7280;box-shadow:0 0 0 3px #d9ff7210}.field input::placeholder,.field textarea::placeholder{color:#6f737e}.field textarea{min-height:115px;resize:vertical;line-height:2}.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23d9ff72' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center}
+.email-lock{background:#ffffff08!important;color:#b9c0a4!important;direction:ltr;text-align:left}.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.option{display:flex;align-items:center;gap:9px;border:1px solid #ffffff17;border-radius:10px;padding:9px 10px;background:#ffffff05;font-size:10px;color:#cfd0d4}.option input{accent-color:var(--lime);width:15px;height:15px;flex:none}.terms{display:flex;align-items:flex-start;gap:9px;margin-top:20px;color:#b4b6be;font-size:10px;line-height:2}.terms input{accent-color:var(--lime);margin-top:6px;flex:none}.terms a{color:var(--lime);text-decoration:underline}
+.submit-row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:23px;padding-top:18px;border-top:1px solid var(--line)}.submit{border:0;border-radius:11px;background:linear-gradient(110deg,#e8ffa7,var(--lime));color:#11140b;font-weight:900;padding:12px 23px;cursor:pointer;min-width:190px;box-shadow:0 10px 26px #d9ff7218}.submit:disabled{opacity:.5;cursor:wait}.secure{font-size:9px;color:#858a95}
+.notice{display:none;margin-top:15px;padding:12px 14px;border-radius:11px;font-size:11px;line-height:2}.notice.show{display:block}.notice.error{display:block;background:#3b1b22;color:#ffb8b0;border:1px solid #7b3b45}.notice.success{display:block;background:#172c1c;color:#d9f4a5;border:1px solid #52733a}
+.auth{display:none;padding:18px;border:1px solid #d9ff7240;background:#d9ff7209;border-radius:14px;margin-bottom:17px}.auth.show{display:block}.auth strong{display:block;color:var(--lime);font-size:13px}.auth p{font-size:11px;color:#b8bbc3;margin:5px 0 12px}.auth a{display:inline-flex;border-radius:9px;background:var(--lime);color:#10120b;padding:8px 13px;font-size:10px;font-weight:800}
+.success-card{display:none;border:1px solid #d9ff7250;background:linear-gradient(145deg,#182018,#101510);border-radius:16px;padding:20px;margin-top:18px}.success-card.show{display:block}.success-card h3{margin:0 0 5px;color:var(--lime);font-size:18px}.success-card p{color:#c5c9bd;font-size:11px}.credential{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;border:1px solid #ffffff1b;border-radius:9px;padding:9px 11px;margin-top:8px;background:#080b09}.credential span{direction:ltr;text-align:left;font:12px Manrope;overflow-wrap:anywhere}.credential button{border:1px solid #ffffff20;background:#ffffff09;color:var(--lime);border-radius:7px;padding:5px 9px;font-size:9px}
+footer{border-top:1px solid var(--line);padding:22px 0;color:#818590;font-size:10px;text-align:center}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.selected{position:relative;top:auto;order:-1}.selected .side-note{display:none}.selected{padding:17px}.demo-name{font-size:19px;margin:6px 0}.preview{margin-top:9px;padding:7px}}
+@media(max-width:580px){.wrap{width:calc(100% - 24px)}.top{height:65px}.brand img{width:35px;height:35px}.brand{font-size:12px}.brand small{font-size:8px}.back{font-size:9px;padding:7px 10px}.hero{padding:40px 0 19px}.hero h1{font-size:30px}.hero p{font-size:11px}.layout{margin-top:10px;margin-bottom:55px;gap:11px}.panel{padding:17px 13px;border-radius:17px}.fields{grid-template-columns:1fr;gap:11px}.field.full{grid-column:auto}.options{grid-template-columns:1fr 1fr;gap:7px}.option{font-size:9px;padding:8px}.submit-row{display:grid}.submit{width:100%}.secure{text-align:center}.demo-name{font-size:17px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+</style></head>
+<body>
+<header class="top"><div class="wrap nav"><a class="brand" href="/"><img src="/assets/images/alishams-studio-logo.png" alt=""><span>علی شمس<small>ALISHAMS DIGITAL STUDIO</small></span></a><a class="back" href="/website-demos.html">بازگشت به گالری دموها ↗</a></div></header>
+<main class="wrap">
+<section class="hero"><span class="eyebrow">CUSTOM WEBSITE REQUEST / ALISHAMS</span><h1>این دمو را به <strong style="color:var(--lime)">وب‌سایت اختصاصی خودت</strong> تبدیل کن.</h1><p>درخواستت مستقیماً در سامانه سفارش‌های استودیو ثبت می‌شود. پس از بررسی، پیشنهاد قیمت و زمان اجرا در پنل مشتری و پنل مدیریت پیگیری خواهد شد. ثبت این فرم به‌معنای شروع خودکار پروژه یا پرداخت نیست.</p></section>
+<div class="auth" id="authBox"><strong id="authTitle">برای ثبت درخواست وارد حساب کاربری شو.</strong><p id="authText">ثبت سفارش از طریق حساب تأییدشده انجام می‌شود تا کد پیگیری و سوابق سفارش به حساب خودت متصل شوند.</p><a id="authLink" href="/login.html">ورود به حساب کاربری</a></div>
+<div class="layout">
+<section class="panel">
+<h2>فرم سفارش اختصاصی</h2><p class="hint">اطلاعات تماس، محدوده پروژه و امکانات موردنیازت را ثبت کن. فیلدهای ستاره‌دار ضروری‌اند.</p>
+<form id="demoForm">
+<div class="fields">
+<div class="field"><label for="clientName">نام و نام خانوادگی *</label><input id="clientName" maxlength="120" required placeholder="نام کامل"></div>
+<div class="field"><label for="phone">شماره تماس *</label><input id="phone" type="tel" inputmode="tel" maxlength="40" minlength="7" required placeholder="09xxxxxxxxx"></div>
+<div class="field full"><label for="email">ایمیل حساب کاربری</label><input id="email" class="email-lock" readonly placeholder="پس از ورود نمایش داده می‌شود"></div>
+<div class="field"><label for="brandName">نام برند یا کسب‌وکار *</label><input id="brandName" maxlength="160" required placeholder="نام مجموعه یا برند"></div>
+<div class="field"><label for="siteType">نوع وب‌سایت *</label><select id="siteType" required><option value="">انتخاب کن</option><option>شرکتی و خدماتی</option><option>فروشگاهی</option><option>شخصی و رزومه</option><option>خبری و مجله‌ای</option><option>رستوران و کافه</option><option>سامانه و وب‌اپلیکیشن</option><option>سایر / نیازمند مشاوره</option></select></div>
+<div class="field"><label for="pages">محدوده صفحات</label><select id="pages"><option>۵ صفحه یا کمتر</option><option selected>۶ تا ۱۰ صفحه</option><option>۱۱ تا ۲۰ صفحه</option><option>بیش از ۲۰ صفحه</option><option>نیاز به پیشنهاد شما دارم</option></select></div>
+<div class="field"><label for="timeline">زمان‌بندی موردنظر</label><select id="timeline"><option>عجله‌ای ندارم، کیفیت اولویت دارد</option><option>۲ تا ۴ هفته</option><option>۱ تا ۲ هفته</option><option>زمان‌بندی پیشنهادی شما</option></select></div>
+<div class="field"><label for="budget">بودجه تقریبی</label><select id="budget"><option>نیازمند برآورد و مشاوره</option><option>کمتر از ۱۰ میلیون تومان</option><option>۱۰ تا ۲۰ میلیون تومان</option><option>۲۰ تا ۴۰ میلیون تومان</option><option>بیش از ۴۰ میلیون تومان</option></select></div>
+<div class="field full"><label>امکانات موردنیاز</label><div class="options">
+<label class="option"><input type="checkbox" value="پنل مدیریت">پنل مدیریت اختصاصی</label>
+<label class="option"><input type="checkbox" value="فروشگاه و پرداخت آنلاین">فروشگاه و پرداخت آنلاین</label>
+<label class="option"><input type="checkbox" value="وبلاگ و مدیریت محتوا">وبلاگ و مدیریت محتوا</label>
+<label class="option"><input type="checkbox" value="سئو و ساختار فنی">سئو و ساختار فنی</label>
+<label class="option"><input type="checkbox" value="چندزبانه">چندزبانه</label>
+<label class="option"><input type="checkbox" value="رزرو و نوبت‌دهی">رزرو و نوبت‌دهی</label>
+<label class="option"><input type="checkbox" value="اتصال پیامک و اعلان">پیامک و اعلان</label>
+<label class="option"><input type="checkbox" value="اتصال API و سرویس‌های دیگر">اتصال API و سرویس‌ها</label>
+</div></div>
+<div class="field full"><label for="brief">توضیحات پروژه و تغییراتی که در این دمو می‌خواهی *</label><textarea id="brief" minlength="30" maxlength="6000" required placeholder="چه بخش‌هایی باید حفظ یا تغییر کنند؟ وب‌سایت برای چه مخاطبی است؟ چه امکانات یا ظاهر متفاوتی می‌خواهی؟ (حداقل ۳۰ نویسه)"></textarea></div>
+<div class="field full"><label for="references">لینک نمونه‌ها یا وب‌سایت‌های موردعلاقه (اختیاری)</label><textarea id="references" maxlength="1500" style="min-height:72px" placeholder="هر لینک را در یک خط وارد کن."></textarea></div>
+</div>
+<label class="terms"><input id="terms" type="checkbox" required><span>با <a href="/terms.html" target="_blank" rel="noopener">شرایط و قوانین سفارش و همکاری</a> موافقم. می‌دانم این فرم فقط درخواست بررسی و اعلام پیشنهاد است و اجرای پروژه پس از توافق و تأیید نهایی انجام می‌شود.</span></label>
+<div class="submit-row"><button class="submit" id="submitBtn" type="submit">ثبت درخواست این دمو <span aria-hidden="true">↗</span></button><span class="secure">ثبت امن از طریق حساب کاربری تأییدشده · بدون پرداخت آنلاین در این مرحله</span></div>
+<div id="notice" class="notice" role="status" aria-live="polite"></div>
+</form>
+<div class="success-card" id="successCard"><h3>درخواستت با موفقیت ثبت شد.</h3><p>سفارش در سامانه مدیریت استودیو قرار گرفت. کد و کلید خصوصی پیگیری را ذخیره کن. وضعیت بررسی و پیشنهاد نهایی از طریق حساب مشتری قابل پیگیری است.</p><div class="credential"><span id="trackingCode"></span><button type="button" data-copy="trackingCode">کپی کد</button></div><div class="credential"><span id="privateKey"></span><button type="button" data-copy="privateKey">کپی کلید</button></div><p><a href="/account.html" style="color:var(--lime)">رفتن به حساب کاربری ↗</a>　<a href="/order-tracking.html" style="color:var(--lime)">پیگیری سفارش ↗</a></p></div>
+</section>
+<aside class="panel selected"><div class="selected-top"><small>SELECTED DEMO / GALLERY</small><span class="status" id="demoStatus">انتخاب‌شده</span></div><h2 class="demo-name" id="demoName">در حال دریافت دمو…</h2><div class="demo-category" id="demoCategory"></div><a id="previewLink" class="preview" href="#" target="_blank" rel="noopener" hidden>مشاهده پیش‌نمایش دمو ↗</a><div class="side-note">این درخواست با برچسب «سفارش از گالری دموها» در پنل مدیریت ثبت می‌شود. مدیر می‌تواند درخواست را بررسی کند، قیمت و زمان اجرا را اعلام کند و پس از تأیید، آن را به پروژه قابل پیگیری تبدیل کند.</div></aside>
+</div>
+</main>
+<footer><div class="wrap">© <span id="year"></span> علی شمس · Alishams Digital Studio</div></footer>
+<script>
+(()=> {
+const SUPABASE_URL="https://srfldjfrzmtnlabusssq.supabase.co";
+const API_KEY="sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB";
+const sb=window.supabase.createClient(SUPABASE_URL,API_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const demos=[{"name":"شرکت صنعتی و مهندسی","category":"corporate","status":"دموی فعال","preview":"/demos/industrial-company.html"},{"name":"شرکت بازرگانی بین‌المللی","category":"corporate","status":"دموی فعال","preview":"/demos/international-trading.html"},{"name":"استودیوی طراحی داخلی لوکس","category":"corporate","status":"دموی فعال","preview":"/demos/luxury-interior.html"},{"name":"شرکت ساختمانی و معماری","category":"corporate","status":"در حال طراحی","preview":""},{"name":"شرکت خدماتی و پشتیبانی","category":"corporate","status":"در حال طراحی","preview":""},{"name":"فروشگاه پوشاک و مد","category":"shop","status":"در حال طراحی","preview":""},{"name":"فروشگاه کالای دیجیتال","category":"shop","status":"در حال طراحی","preview":""},{"name":"فروشگاه آرایشی و بهداشتی","category":"shop","status":"در حال طراحی","preview":""},{"name":"فروشگاه دکوراسیون و خانه","category":"shop","status":"در حال طراحی","preview":""},{"name":"رزومه و پرتفولیوی حرفه‌ای","category":"personal","status":"در حال طراحی","preview":""},{"name":"وب‌سایت هنرمند و عکاس","category":"personal","status":"در حال طراحی","preview":""},{"name":"وب‌سایت مشاور و متخصص","category":"personal","status":"در حال طراحی","preview":""},{"name":"مجله آنلاین و سبک زندگی","category":"content","status":"در حال طراحی","preview":""},{"name":"پایگاه خبری","category":"content","status":"در حال طراحی","preview":""},{"name":"وب‌سایت آموزشی","category":"content","status":"در حال طراحی","preview":""},{"name":"وب‌سایت رستوران","category":"food","status":"در حال طراحی","preview":""},{"name":"وب‌سایت کافه و قنادی","category":"food","status":"در حال طراحی","preview":""},{"name":"سامانه رزرو و نوبت‌دهی","category":"app","status":"در حال طراحی","preview":""},{"name":"داشبورد مدیریت کسب‌وکار","category":"app","status":"در حال طراحی","preview":""},{"name":"سامانه آموزشی و پنل دانشجو","category":"app","status":"در حال طراحی","preview":""},{"name":"پلتفرم خدمات آنلاین","category":"app","status":"در حال طراحی","preview":""},{"name":"هتل پنج‌ستاره و رزرو آنلاین","category":"food","status":"دموی فعال","preview":"/demos/aurelia-hotel.html"},{"name":"برند خودروهای الکتریکی لوکس","category":"corporate","status":"دموی فعال","preview":"/demos/voltura-electric.html"},{"name":"پلتفرم هوشمند SYNTRA","category":"corporate","status":"دموی فعال","preview":"/demos/syntra-ai.html"},{"name":"بوتیک لوکس VELORA","category":"shop","status":"دموی فعال","preview":"/demos/velora-store.html"}];
+const params=new URLSearchParams(location.search);
+const chosenName=params.get("demo")||"";
+const demo=demos.find(x=>x.name===chosenName)||demos[0];
+const $=id=>document.getElementById(id);
+$("year").textContent=new Date().getFullYear();
+$("demoName").textContent=demo.name||"دموی انتخاب‌شده";
+const categoryNames={corporate:"شرکتی و صنعتی",shop:"فروشگاهی",personal:"شخصی و رزومه",content:"خبری و آموزشی",food:"رستوران و هتلداری",app:"سامانه و وب‌اپلیکیشن"};
+$("demoCategory").textContent=categoryNames[demo.category]||"طراحی وب‌سایت";
+$("demoStatus").textContent=demo.status||"در حال طراحی";
+if(demo.preview){$("previewLink").href=demo.preview;$("previewLink").hidden=false}
+let session=null;
+function showNotice(message,type=""){const n=$("notice");n.textContent=message;n.className="notice show "+type}
+function setAuthState(s){session=s;$("authBox").classList.toggle("show",!s);$("email").value=s?.user?.email||"";if(s){const meta=s.user.user_metadata||{};if(!$("clientName").value)$("clientName").value=meta.full_name||meta.name||"";if(!$("phone").value)$("phone").value=meta.phone||"";if(!s.user.email_confirmed_at){$("authTitle").textContent="ایمیل حساب کاربری هنوز تأیید نشده است.";$("authText").textContent="برای ثبت سفارش، ابتدا ایمیل حساب را تأیید کن.";$("authLink").textContent="رفتن به حساب کاربری";$("authLink").href="/account.html"}else{$("authTitle").textContent="حساب کاربری متصل است.";$("authText").textContent="درخواست پس از ثبت به سوابق سفارش همین حساب متصل می‌شود.";$("authLink").textContent="مشاهده حساب کاربری";$("authLink").href="/account.html"}}else{const next="/demo-order.html"+location.search;$("authTitle").textContent="برای ثبت درخواست وارد حساب کاربری شو.";$("authText").textContent="ثبت سفارش از طریق حساب تأییدشده انجام می‌شود تا کد پیگیری و سوابق سفارش به حساب خودت متصل شوند.";$("authLink").textContent="ورود به حساب کاربری";$("authLink").href="/login.html?next="+encodeURIComponent(next)}}
+async function refreshSession(){const {data,error}=await sb.auth.getSession();if(error)throw error;setAuthState(data.session)}
+refreshSession().catch(()=>setAuthState(null));
+sb.auth.onAuthStateChange((_event,s)=>setAuthState(s));
+$("demoForm").addEventListener("submit",async e=>{
+e.preventDefault();
+if(!session){showNotice("برای ثبت درخواست ابتدا وارد حساب کاربری شو.","error");return}
+if(!session.user.email_confirmed_at){showNotice("ابتدا ایمیل حساب کاربری را تأیید کن.","error");return}
+if(!$("terms").checked){showNotice("تأیید شرایط سفارش الزامی است.","error");return}
+const btn=$("submitBtn");btn.disabled=true;btn.textContent="در حال ثبت امن درخواست…";
+const features=[...document.querySelectorAll(".options input:checked")].map(x=>x.value);
+const refs=$("references").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean).slice(0,8);
+const details=[
+"نوع درخواست: سفارش از گالری دموهای طراحی سایت",
+"دموی انتخاب‌شده: "+demo.name,
+"دسته‌بندی دمو: "+($("demoCategory").textContent||""),
+"وضعیت دمو هنگام ثبت: "+(demo.status||""),
+"نشانی پیش‌نمایش: "+(demo.preview?location.origin+demo.preview:"دمو هنوز منتشر نشده"),
+"نام برند یا کسب‌وکار: "+$("brandName").value.trim(),
+"نوع وب‌سایت: "+$("siteType").value,
+"محدوده صفحات: "+$("pages").value,
+"زمان‌بندی: "+$("timeline").value,
+"بودجه اعلام‌شده: "+$("budget").value,
+"امکانات موردنیاز: "+(features.join("، ")||"نیازمند مشاوره"),
+"لینک‌های مرجع: "+(refs.join(" | ")||"ثبت نشده"),
+"توضیحات مشتری: "+$("brief").value.trim(),
+"تأیید شرایط سفارش: بله · نسخه demo-order-v1"
+].join("\n");
+const payload={demo_request:true,terms_accepted:true,terms_version:"demo-order-v1",client_name:$("clientName").value.trim(),client_email:session.user.email,contact_info:$("phone").value.trim(),services:["طراحی وبسایت و قالب وبلاگ"],title:"سفارش طراحی سایت بر اساس دمو · "+demo.name,details,budget:$("budget").value};
+try{
+const r=await fetch(SUPABASE_URL+"/functions/v1/order-submit",{method:"POST",headers:{"Content-Type":"application/json","apikey":API_KEY,"Authorization":"Bearer "+session.access_token},body:JSON.stringify(payload)});
+const data=await r.json().catch(()=>({}));
+if(!r.ok||!data.ok)throw new Error(data.error||"ثبت سفارش انجام نشد.");
+$("demoForm").style.display="none";$("successCard").classList.add("show");$("trackingCode").textContent=data.tracking_code||"—";$("privateKey").textContent=data.access_token||"—";$("successCard").scrollIntoView({behavior:"smooth",block:"center"});
+}catch(err){showNotice(err.message||"ثبت درخواست ناموفق بود. دوباره تلاش کن.","error")}
+finally{btn.disabled=false;btn.textContent="ثبت درخواست این دمو ↗"}
+});
+document.querySelectorAll("[data-copy]").forEach(btn=>btn.addEventListener("click",async()=>{const value=$(btn.dataset.copy).textContent;try{await navigator.clipboard.writeText(value);btn.textContent="کپی شد";setTimeout(()=>btn.textContent="کپی",1300)}catch{showNotice("کپی خودکار در دسترس نیست؛ مقدار را دستی انتخاب کن.","error")}}));
+})();
+</script>
+</body></html>
