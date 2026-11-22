@@ -1217,6 +1217,20 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <style id="mobile-apps-three-column">
 @media(min-width:1001px){.mobile-apps-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
+
+<style id="homepage-mobile-menu-floating-actions-fix">
+@media(max-width:760px){
+  body.home-mobile-nav-open #site-chat-launcher,
+  body.home-mobile-nav-open #website-order-launcher{
+    display:none!important;
+    visibility:hidden!important;
+    opacity:0!important;
+    pointer-events:none!important;
+  }
+  body.home-mobile-nav-open .topbar{z-index:10020!important}
+  body.home-mobile-nav-open .topbar .navlinks{z-index:10021!important}
+}
+</style>
 </head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="علی شمس"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی">
@@ -2512,8 +2526,8 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <script>
 document.documentElement.classList.add('js');
 const menu=document.getElementById('menuToggle'), nav=document.getElementById('navlinks');
-menu.addEventListener('click',()=>{const opened=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(opened));const icon=menu.querySelector('.header-control-icon');if(icon)icon.textContent=opened?'×':'☰';});
-nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');const icon=menu.querySelector('.header-control-icon');if(icon)icon.textContent='☰'}));
+menu.addEventListener('click',()=>{const opened=nav.classList.toggle('open');document.body.classList.toggle('home-mobile-nav-open',opened);menu.setAttribute('aria-expanded',String(opened));const icon=menu.querySelector('.header-control-icon');if(icon)icon.textContent=opened?'×':'☰';});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');document.body.classList.remove('home-mobile-nav-open');menu.setAttribute('aria-expanded','false');const icon=menu.querySelector('.header-control-icon');if(icon)icon.textContent='☰'}));
 const navDropdowns=[...nav.querySelectorAll('.nav-dropdown')];
 navDropdowns.forEach(drop=>{
  const toggle=drop.querySelector('.nav-dropdown-toggle');
