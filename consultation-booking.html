@@ -51,7 +51,7 @@
 <div class="calendar-top"><div class="month-title" id="monthTitle">در حال بارگذاری تقویم…</div><div class="month-nav"><button class="icon-btn" id="prevMonth" type="button" aria-label="ماه قبل">‹</button><button class="icon-btn" id="nextMonth" type="button" aria-label="ماه بعد">›</button></div></div>
 <div class="weekdays"><span>شنبه</span><span>یکشنبه</span><span>دوشنبه</span><span>سه‌شنبه</span><span>چهارشنبه</span><span>پنجشنبه</span><span>جمعه</span></div>
 <div class="days-grid" id="daysGrid"></div>
-<div class="calendar-legend"><span><i class="legend-dot"></i> روزهای قابل رزرو</span><span><i class="legend-dot purple"></i> امروز</span><span>فقط جمعه تا دوشنبه</span></div>
+<div class="calendar-legend"><span><i class="legend-dot"></i> روزهای قابل رزرو</span><span><i class="legend-dot purple"></i> امروز</span><span>فقط جمعه تا دوشنبه · تا ۶۰ روز آینده</span></div>
 <div class="selection-summary"><img src="https://img.icons8.com/fluency/96/calendar.png" alt=""><div><b id="selectedDateLabel">ابتدا یک تاریخ را انتخاب کن</b><small id="selectedDateHint">روزهای سه‌شنبه تا پنجشنبه غیرفعال هستند.</small></div></div>
 </div>
 <div class="slot-section"><div class="section-minihead"><h3>مدت جلسه را انتخاب کن</h3><div class="duration-switch"><button type="button" data-duration="90" class="active">۹۰ دقیقه</button><button type="button" data-duration="120">۱۲۰ دقیقه</button></div></div><div class="section-minihead"><h3>ساعت‌های آزاد</h3><span class="step-label" id="slotStatus">SELECT A DATE</span></div><div class="slots" id="slots"><div class="slots-empty">برای دیدن ساعت‌های آزاد، ابتدا تاریخ را انتخاب کن.</div></div><p class="availability-note">تمام جلسه‌ها باید حداکثر تا ساعت ۱۸ به پایان برسند. ساعت‌های نمایش‌داده‌شده با توجه به مدت جلسه و رزروهای قبلی محاسبه می‌شوند.</p></div>
@@ -146,12 +146,12 @@ function renderSlots(){
  list.forEach(time=>{
   const start=localISO(date,time),end=localISO(date,slotEnd(time,duration));
   const conflict=busy.some(x=>overlap(Date.parse(start),Date.parse(end),Date.parse(x.start_at),Date.parse(x.end_at)));
-  if(!conflict)available.push({time:time,start:start,end:end});
+  const tooSoon=Date.parse(start)<Date.now()+15*60000;if(!conflict&&!tooSoon)available.push({time:time,start:start,end:end});
  });
  $("slotStatus").textContent=available.length+" AVAILABLE";
  if(!available.length){root.innerHTML='<div class="slots-empty">برای این تاریخ و مدت جلسه، ساعت آزادی باقی نمانده است. تاریخ دیگری را انتخاب کن.</div>';return}
  available.forEach(slot=>{
-  const b=document.createElement("button");b.type="button";b.className="slot";b.innerHTML="<b>"+slot.time+"</b><small>"+slotEnd(slot.time,duration)+" پایان</small>";
+  const b=document.createElement("button");b.type="button";b.className="slot";b.innerHTML="<b>"+faNum(slot.time)+"</b><small>"+faNum(slotEnd(slot.time,duration))+" پایان</small>";
   b.addEventListener("click",()=>{root.querySelectorAll(".slot").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");selectedSlot=slot});
   root.append(b);
  });
@@ -171,7 +171,7 @@ $("bookingForm").addEventListener("submit",async e=>{
  const btn=$("submitBtn");btn.disabled=true;btn.textContent="در حال ثبت درخواست…";
  try{
   const d=await call(body),b=d.booking;
-  $("successCode").textContent=b.booking_code;$("successDate").textContent=selectedJalali();$("successTime").textContent=selectedSlot.time+" تا "+slotEnd(selectedSlot.time,duration);$("successDuration").textContent=faNum(duration)+" دقیقه";
+  $("successCode").textContent=b.booking_code;$("successDate").textContent=selectedJalali();$("successTime").textContent=faNum(selectedSlot.time)+" تا "+faNum(slotEnd(selectedSlot.time,duration));$("successDuration").textContent=faNum(duration)+" دقیقه";
   $("successOverlay").classList.add("show");form.reset();$("typeWebsite").checked=true;selectedSlot=null;await loadBusy();
  }catch(err){showMessage(err.message,"error");await loadBusy()}
  finally{btn.disabled=false;btn.innerHTML='<img src="https://img.icons8.com/fluency/96/checkmark.png" alt="">ثبت درخواست رزرو جلسه <span>↗</span>'}
