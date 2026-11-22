@@ -93,6 +93,10 @@ Deno.serve(async (req: Request) => {
         return reply({error:"زمان پایان جلسه باید حداکثر تا ساعت ۱۸ باشد."},400,origin);
       if (startAt.getTime() < Date.now()+15*60000 || startAt.getTime() > Date.now()+60*86400000)
         return reply({error:"تاریخ رزرو باید در ۶۰ روز آینده و حداقل ۱۵ دقیقه بعد باشد."},400,origin);
+      const since=new Date(Date.now()-24*60*60*1000).toISOString();
+      const {count:recentCount,error:rateError}=await db.from("consultation_bookings").select("id",{count:"exact",head:true}).eq("email",email).gte("created_at",since).in("status",["pending","confirmed"]);
+      if(rateError)throw rateError;
+      if((recentCount||0)>=3)return reply({error:"برای هر ایمیل حداکثر سه درخواست رزرو در ۲۴ ساعت قابل ثبت است."},429,origin);
       const localJalali=jalaliDate(startAt);
       const bookingCode=code();
       const {data,error}=await db.from("consultation_bookings").insert({
