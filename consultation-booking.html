@@ -138,7 +138,7 @@ async function loadBusy(){
  $("slotStatus").textContent="LOADING";$("slots").innerHTML='<div class="slots-empty">در حال بررسی ظرفیت جلسه‌ها…</div>';
  try{const d=await call({action:"availability",from:from,to:to});if(request!==monthRequest)return;busy=d.busy||[];renderSlots()}catch(e){if(request!==monthRequest)return;$("slots").innerHTML='<div class="slots-empty">دریافت ساعت‌های آزاد ممکن نشد. دوباره ماه را انتخاب کن.</div>';$("slotStatus").textContent="ERROR"}
 }
-function chooseDate(item){selected=item;selectedSlot=null;renderCalendar();$("selectedDateLabel").textContent=selectedJalali()+" · "+["یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه","جمعه","شنبه"][gregDow(...Object.values(toGregorian(item.jy,item.jm,item.jd)))];$("selectedDateHint").textContent="روز انتخاب‌شده به وقت تهران";renderSlots()}
+function chooseDate(item){selected=item;selectedSlot=null;renderCalendar();const g=toGregorian(item.jy,item.jm,item.jd);const weekday=["یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه","جمعه","شنبه"][gregDow(g.gy,g.gm,g.gd)];$("selectedDateLabel").textContent=selectedJalali()+" · "+weekday;$("selectedDateHint").textContent="روز انتخاب‌شده به وقت تهران";renderSlots()}
 function renderSlots(){
  const root=$("slots");root.replaceChildren();selectedSlot=null;
  if(!selected){root.innerHTML='<div class="slots-empty">برای دیدن ساعت‌های آزاد، ابتدا تاریخ را انتخاب کن.</div>';$("slotStatus").textContent="SELECT A DATE";return}
