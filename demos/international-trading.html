@@ -33,6 +33,26 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""><style>
 /* Interactive global routes map */
 /* Custom city search and origin/destination planner */
+/* Saved routes and side-by-side map comparison */
+.saved-routes{border-top:1px solid #ffffff24;padding-top:14px;display:grid;gap:9px}
+.saved-routes-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.saved-routes-head b{font-size:11px}.saved-routes-head small{font:800 8px Manrope;color:#9eafba;letter-spacing:1px}
+.saved-route-list{display:grid;gap:6px;max-height:190px;overflow:auto}
+.saved-route-empty{font-size:9px;color:#91a4b0;line-height:2}
+.saved-route-item{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;background:#132638;border:1px solid #ffffff1c;padding:8px}
+.saved-route-item input{accent-color:#d4f36a;width:15px;height:15px}
+.saved-route-item b{display:block;font-size:9px;color:#fff}.saved-route-item small{display:block;color:#9fb0bb;font-size:8px}
+.saved-route-remove{border:0;background:transparent;color:#e8794f;font-size:16px;cursor:pointer;padding:2px 5px}
+.saved-route-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.saved-route-actions button{border:1px solid #d4f36a80;background:transparent;color:var(--lime);padding:9px 6px;font:800 9px Estedad;cursor:pointer}
+.saved-route-actions button.primary-compare{background:var(--lime);color:var(--ink);border-color:var(--lime)}
+.saved-route-actions button:disabled{opacity:.35;cursor:not-allowed}
+.save-current-route{width:100%;border:1px solid #d4f36a80;background:transparent;color:var(--lime);padding:9px;font:800 9px Estedad;cursor:pointer}
+.save-current-route:hover,.saved-route-actions button:hover{filter:brightness(1.15)}
+.compare-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.compare-legend span{display:flex;align-items:center;gap:5px;font-size:8px;color:#c1cbd1}
+.compare-legend i{width:14px;height:3px;border-radius:4px;display:inline-block}
+
 .city-planner{border:1px solid #ffffff24;background:#132638;padding:14px;display:grid;gap:10px}
 .city-planner-title{font-size:11px;font-weight:800;color:#fff}
 .city-planner label{display:block;color:#9fb0bb;font-size:9px;margin-bottom:4px}
@@ -103,6 +123,14 @@
 <div><label for="cityTarget">شهر انتخاب‌شده را به کدام نقطه اضافه کنیم؟</label><select id="cityTarget"><option value="origin">مبدأ</option><option value="destination">مقصد</option></select></div>
 <div class="city-endpoints"><div><label for="customOrigin">مبدأ</label><select id="customOrigin"></select></div><div><label for="customDestination">مقصد</label><select id="customDestination"></select></div></div>
 <button class="city-plan-btn" id="buildCustomRoute" type="button">نمایش مسیر انتخابی روی نقشه ↗</button>
+<button class="save-current-route" id="saveCurrentRoute" type="button">ذخیره این مسیر در فهرست من +</button>
+<div class="saved-routes">
+ <div class="saved-routes-head"><b>مسیرهای ذخیره‌شده</b><small id="savedRouteCount">۰ مسیر</small></div>
+ <div class="saved-route-list" id="savedRouteList"><div class="saved-route-empty">هنوز مسیری ذخیره نکرده‌اید.</div></div>
+ <div class="saved-route-actions"><button class="primary-compare" id="compareSavedRoutes" type="button" disabled>مقایسه روی نقشه</button><button id="clearSavedRoutes" type="button" disabled>پاک‌کردن فهرست</button></div>
+ <div class="compare-legend" id="compareLegend" aria-live="polite"></div>
+</div>
+
 <div class="city-plan-status" id="cityPlanStatus" aria-live="polite">شهرها را جست‌وجو کنید یا مستقیماً از فهرست مبدأ و مقصد انتخاب کنید.</div>
 </div>
 
@@ -153,12 +181,67 @@
  const markers={};
  Object.keys(cities).forEach(id=>{const city=cities[id];const marker=L.marker(city.coords,{icon:markerIcon}).addTo(map);marker.bindPopup('<b>'+city.name+'</b><br>'+city.country+'<br>'+city.role);marker.on('click',()=>{const matching=Object.keys(routes).find(key=>routes[key].nodes.includes(id));if(matching)selectRoute(matching,false)});markers[id]=marker});
  let routeLine=null,routeNodes=null,active='asia';
+ const compareLayer=L.layerGroup().addTo(map),compareColors=['#d4f36a','#e8794f','#b8d6ed','#f4c66a','#c6a4f4'];
  const citySearch=document.getElementById('citySearch'),cityResults=document.getElementById('citySearchResults');
  const originSelect=document.getElementById('customOrigin'),destinationSelect=document.getElementById('customDestination');
  const cityTarget=document.getElementById('cityTarget'),cityStatus=document.getElementById('cityPlanStatus');
  const cityIds=Object.keys(cities);
  cityIds.forEach(id=>{const city=cities[id];[originSelect,destinationSelect].forEach(select=>{const option=document.createElement('option');option.value=id;option.textContent=city.name+'، '+city.country;select.appendChild(option)})});
  originSelect.value='shanghai';destinationSelect.value='dubai';
+
+ const savedRouteList=document.getElementById('savedRouteList'),savedRouteCount=document.getElementById('savedRouteCount');
+ const compareButton=document.getElementById('compareSavedRoutes'),clearSavedButton=document.getElementById('clearSavedRoutes'),compareLegend=document.getElementById('compareLegend');
+ const STORAGE_KEY='nexora-saved-trade-routes-v1';let savedRoutes=[],currentCustomRoute=null;
+ try{const parsed=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');if(Array.isArray(parsed))savedRoutes=parsed.filter(r=>r&&cityIds.includes(r.from)&&cityIds.includes(r.to)&&r.from!==r.to).slice(0,20)}catch(_){savedRoutes=[]}
+ let selectedSavedIds=[];
+ const persianDigits=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+ function persistSavedRoutes(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(savedRoutes));return true}catch(_){cityStatus.textContent='ذخیره‌سازی مرورگر در دسترس نیست؛ تنظیمات حریم خصوصی مرورگر را بررسی کنید.';return false}}
+ function renderSavedRoutes(){
+  savedRouteCount.textContent=persianDigits(savedRoutes.length)+' مسیر';
+  savedRouteList.innerHTML='';
+  if(!savedRoutes.length)savedRouteList.innerHTML='<div class="saved-route-empty">هنوز مسیری ذخیره نکرده‌اید. پس از انتخاب مبدأ و مقصد، مسیر را ذخیره کنید.</div>';
+  savedRoutes.forEach(route=>{
+   const row=document.createElement('div');row.className='saved-route-item';
+   const check=document.createElement('input');check.type='checkbox';check.checked=selectedSavedIds.includes(route.id);check.setAttribute('aria-label','انتخاب مسیر برای مقایسه');
+   check.addEventListener('change',()=>{selectedSavedIds=check.checked?[...selectedSavedIds,route.id]:selectedSavedIds.filter(id=>id!==route.id);updateCompareControls()});
+   const info=document.createElement('div'),title=document.createElement('b'),sub=document.createElement('small');
+   title.textContent=cities[route.from].name+' ← '+cities[route.to].name;sub.textContent=cities[route.from].country+' به '+cities[route.to].country;
+   info.append(title,sub);
+   const remove=document.createElement('button');remove.type='button';remove.className='saved-route-remove';remove.textContent='×';remove.setAttribute('aria-label','حذف مسیر ذخیره‌شده');
+   remove.addEventListener('click',()=>{savedRoutes=savedRoutes.filter(r=>r.id!==route.id);selectedSavedIds=selectedSavedIds.filter(id=>id!==route.id);persistSavedRoutes();renderSavedRoutes();compareLegend.innerHTML='';compareLayer.clearLayers()});
+   row.append(check,info,remove);savedRouteList.appendChild(row);
+  });
+  updateCompareControls();
+ }
+ function updateCompareControls(){const count=selectedSavedIds.filter(id=>savedRoutes.some(r=>r.id===id)).length;compareButton.disabled=count<2;clearSavedButton.disabled=!savedRoutes.length;compareButton.textContent=count>0?'مقایسه '+persianDigits(count)+' مسیر روی نقشه':'مقایسه روی نقشه'}
+ function saveCurrentRoute(){
+  if(!currentCustomRoute){cityStatus.textContent='ابتدا یک مسیر دلخواه بسازید، سپس آن را ذخیره کنید.';return}
+  if(savedRoutes.some(r=>r.from===currentCustomRoute.from&&r.to===currentCustomRoute.to)){cityStatus.textContent='این مسیر قبلاً در فهرست شما ذخیره شده است.';return}
+  if(savedRoutes.length>=20){cityStatus.textContent='حداکثر ۲۰ مسیر قابل ذخیره است. ابتدا یک مسیر قدیمی را حذف کنید.';return}
+  const route={id:'r'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),from:currentCustomRoute.from,to:currentCustomRoute.to};
+  savedRoutes.push(route);selectedSavedIds.push(route.id);persistSavedRoutes();renderSavedRoutes();
+  cityStatus.textContent='مسیر '+cities[route.from].name+' به '+cities[route.to].name+' ذخیره شد.';
+ }
+ document.getElementById('saveCurrentRoute').addEventListener('click',saveCurrentRoute);
+ clearSavedButton.addEventListener('click',()=>{savedRoutes=[];selectedSavedIds=[];persistSavedRoutes();renderSavedRoutes();compareLayer.clearLayers();compareLegend.innerHTML='';cityStatus.textContent='فهرست مسیرهای ذخیره‌شده پاک شد.'});
+ compareButton.addEventListener('click',()=>{
+  const chosen=savedRoutes.filter(r=>selectedSavedIds.includes(r.id));
+  if(chosen.length<2){cityStatus.textContent='برای مقایسه، دست‌کم دو مسیر را انتخاب کنید.';return}
+  if(routeLine)map.removeLayer(routeLine);if(routeNodes)map.removeLayer(routeNodes);
+  compareLayer.clearLayers();compareLegend.innerHTML='';
+  const allPoints=[];
+  chosen.forEach((route,index)=>{
+   const color=compareColors[index%compareColors.length],a=cities[route.from],b=cities[route.to],points=[a.coords,b.coords];allPoints.push(...points);
+   L.polyline(points,{color,weight:4,opacity:.95,dashArray:'8 6',lineCap:'round'}).addTo(compareLayer);
+   [route.from,route.to].forEach(id=>L.circleMarker(cities[id].coords,{radius:7,color:'#101d2b',weight:2,fillColor:color,fillOpacity:1}).bindPopup('<b>'+cities[id].name+'</b><br>'+cities[id].country).addTo(compareLayer));
+   const legend=document.createElement('span'),swatch=document.createElement('i');swatch.style.background=color;legend.append(swatch,document.createTextNode(a.name+' ← '+b.name));compareLegend.appendChild(legend);
+  });
+  map.fitBounds(L.latLngBounds(allPoints),{padding:[48,48],maxZoom:4,animate:true});
+  const details=document.getElementById('routeDetails');details.innerHTML='<span class="detail-label">MULTI-ROUTE COMPARISON</span><h4>مقایسه '+persianDigits(chosen.length)+' مسیر تجاری</h4><p>مسیرهای انتخاب‌شده به‌صورت هم‌زمان روی نقشه نمایش داده شده‌اند. رنگ هر خط با نام مسیر در راهنمای زیر فهرست مسیرها مشخص شده است.</p><div class="route-meta"><div><small>COMPARED ROUTES</small><b>'+String(chosen.length).padStart(2,'0')+' ROUTES</b></div><div><small>MAP MODE</small><b>OVERLAY</b></div></div>';
+  cityStatus.textContent='مقایسه مسیرها روی نقشه انجام شد. هر مسیر با رنگ جداگانه مشخص شده است.';
+ });
+ renderSavedRoutes();
+
  function renderCitySearch(){
   const q=citySearch.value.trim().toLocaleLowerCase('fa');
   cityResults.innerHTML='';
@@ -174,6 +257,7 @@
   const from=originSelect.value,to=destinationSelect.value;
   if(!from||!to||from===to){cityStatus.textContent='برای ساخت مسیر، دو شهر متفاوت به‌عنوان مبدأ و مقصد انتخاب کنید.';return}
   const a=cities[from],b=cities[to],distance=Math.round(haversine(a.coords,b.coords));
+  currentCustomRoute={from,to};compareLayer.clearLayers();compareLegend.innerHTML='';
   document.querySelectorAll('.route-choice').forEach(btn=>btn.classList.remove('active'));
   if(routeLine)map.removeLayer(routeLine);if(routeNodes)map.removeLayer(routeNodes);
   const color='#d4f36a',latlngs=[a.coords,b.coords];
@@ -186,6 +270,7 @@
  });
 
  function selectRoute(id,move=true){
+  compareLayer.clearLayers();compareLegend.innerHTML='';
   const route=routes[id];if(!route)return;active=id;
   document.querySelectorAll('.route-choice').forEach(btn=>btn.classList.toggle('active',btn.dataset.route===id));
   const details=document.getElementById('routeDetails');
