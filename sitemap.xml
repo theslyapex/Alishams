@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-  <url><loc>https://alishams.ir/</loc><lastmod>2026-11-20</lastmod></url>
+  <url><loc>https://alishams.ir/</loc><lastmod>2026-11-22</lastmod></url>
   <url><loc>https://alishams.ir/site-builder.html</loc><lastmod>2026-11-20</lastmod></url>
   <url><loc>https://alishams.ir/web-design-order.html</loc><lastmod>2026-11-09</lastmod></url>
   <url><loc>https://alishams.ir/packages.html</loc><lastmod>2026-11-07</lastmod></url>
@@ -31,8 +31,8 @@
   <url><loc>https://alishams.ir/tools.html</loc><lastmod>2026-11-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://alishams.ir/portfolio.html</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://alishams.ir/website-demos.html</loc><lastmod>2026-11-22</lastmod><priority>0.9</priority></url>
-  <url><loc>https://alishams.ir/demos/industrial-company.html</loc><lastmod>2026-11-22</lastmod><priority>0.6</priority></url>
-  <url><loc>https://alishams.ir/terms.html</loc><lastmod>2026-11-05</lastmod></url>
+  <url><loc>https://alishams.ir/demos/industrial-company.html</loc><lastmod>2026-11-22</lastmod><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://alishams.ir/terms.html</loc><lastmod>2026-11-22</lastmod></url>
   <url><loc>https://alishams.ir/pricing.html</loc><lastmod>2026-11-08</lastmod></url>
   <url><loc>https://alishams.ir/logo-portfolio.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://alishams.ir/ad-image-portfolio.html</loc><lastmod>2026-10-30</lastmod></url>
@@ -152,14 +152,14 @@
   <url><loc>https://alishams.ir/articles/business-website-without-coding.html</loc><lastmod>2026-11-20</lastmod></url>
   <url><loc>https://alishams.ir/articles/website-builder-cost-comparison.html</loc><lastmod>2026-11-20</lastmod></url>
   <url><loc>https://alishams.ir/demos/international-trading.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://alishams.ir/demos/aurelia-hotel.html</loc><lastmod>2026-11-22</lastmod></url>
+  <url><loc>https://alishams.ir/demos/aurelia-hotel.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://alishams.ir/demos/voltura-electric.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://alishams.ir/demos/syntra-ai.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://alishams.ir/demos/velora-store.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://alishams.ir/demo-order.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://alishams.ir/demos/vantage-architecture.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://alishams.ir/demos/northline-service.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://alishams.ir/demos/maison-elan-fashion.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://alishams.ir/demos/northline-service.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://alishams.ir/demos/maison-elan-fashion.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://alishams.ir/demos/nova-tech-store.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://alishams.ir/demos/rose-rue-beauty.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://alishams.ir/demos/nestora-home.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
@@ -172,8 +172,8 @@
   <url><loc>https://alishams.ir/demos/lingoza-language-school.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://alishams.ir/demos/tavola-restaurant.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://alishams.ir/demos/miette-cafe-patisserie.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://alishams.ir/demos/nobate-booking.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
-  <url><loc>https://alishams.ir/demos/orbita-business-dashboard.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://alishams.ir/demos/nobate-booking.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://alishams.ir/demos/orbita-business-dashboard.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://alishams.ir/demos/campus-one-student-portal.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://alishams.ir/demos/servio-online-services.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
