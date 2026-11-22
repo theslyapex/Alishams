@@ -26,6 +26,43 @@ footer{border-top:1px solid var(--line);padding:22px 0;color:#818590;font-size:1
 @media(max-width:850px){.layout{grid-template-columns:1fr}.selected{position:relative;top:auto;order:-1}.selected .side-note{display:none}.selected{padding:17px}.demo-name{font-size:19px;margin:6px 0}.preview{margin-top:9px;padding:7px}}
 @media(max-width:580px){.wrap{width:calc(100% - 24px)}.top{height:65px}.brand img{width:35px;height:35px}.brand{font-size:12px}.brand small{font-size:8px}.back{font-size:9px;padding:7px 10px}.hero{padding:40px 0 19px}.hero h1{font-size:30px}.hero p{font-size:11px}.layout{margin-top:10px;margin-bottom:55px;gap:11px}.panel{padding:17px 13px;border-radius:17px}.fields{grid-template-columns:1fr;gap:11px}.field.full{grid-column:auto}.options{grid-template-columns:1fr 1fr;gap:7px}.option{font-size:9px;padding:8px}.submit-row{display:grid}.submit{width:100%}.secure{text-align:center}.demo-name{font-size:17px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+/* ALISHAMS_CUSTOM_SELECT_V2 */
+.field select{appearance:none;-webkit-appearance:none;background-image:none!important}
+.field .select-native{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.select-enhanced{position:relative;min-width:0}
+.select-trigger{width:100%;min-height:49px;display:flex;align-items:center;gap:11px;padding:9px 12px;border:1px solid #ffffff20;border-radius:13px;background:linear-gradient(115deg,#151922,#0b0d12);color:#f4f4ef;text-align:right;cursor:pointer;transition:border-color .22s,box-shadow .22s,transform .22s}
+.select-trigger:hover,.select-enhanced.is-open .select-trigger{border-color:#d9ff7280;box-shadow:0 0 0 3px #d9ff7210,0 10px 28px #0005}
+.select-trigger:active{transform:scale(.995)}
+.select-trigger:focus-visible{outline:2px solid #d9ff72;outline-offset:3px}
+.select-trigger .select-icon{width:30px;height:30px;flex:none;display:grid;place-items:center;border:1px solid #d9ff7230;border-radius:9px;background:linear-gradient(145deg,#d9ff7218,#b6a0ff16);overflow:hidden}
+.select-trigger .select-icon img{width:24px;height:24px;object-fit:contain}
+.select-trigger .select-value{flex:1;min-width:0;font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.select-trigger .select-placeholder{color:#818793;font-weight:400}
+.select-trigger .select-chevron{width:17px;height:17px;flex:none;color:var(--lime);transition:transform .22s}
+.select-enhanced.is-open .select-chevron{transform:rotate(180deg)}
+.select-menu{position:absolute;z-index:80;inset-inline:0;top:calc(100% + 8px);display:none;overflow:hidden;border:1px solid #d9ff7240;border-radius:17px;background:linear-gradient(155deg,#1a1e27,#0d1016);box-shadow:0 24px 70px #000b,0 0 0 1px #ffffff08;animation:selectMenuIn .18s ease-out}
+.select-enhanced.is-open .select-menu{display:block}
+@keyframes selectMenuIn{from{opacity:0;transform:translateY(-7px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+.select-menu-head{display:flex;align-items:center;gap:9px;padding:11px 12px;border-bottom:1px solid #ffffff12;background:#ffffff04}
+.select-menu-head img{width:21px;height:21px;object-fit:contain}
+.select-menu-head span{font-size:10px;color:#bfc3cb;font-weight:700}
+.select-search{display:block;width:calc(100% - 20px);margin:10px auto 6px;padding:9px 11px;border:1px solid #ffffff19;border-radius:10px;background:#080a0f;color:white;outline:none;font:11px Estedad}
+.select-search:focus{border-color:#d9ff7280;box-shadow:0 0 0 3px #d9ff7210}
+.select-options{max-height:min(310px,46vh);overflow:auto;padding:6px;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#596044 #11151b}
+.select-option{width:100%;display:flex;align-items:center;gap:11px;padding:10px 11px;border:1px solid transparent;border-radius:11px;background:transparent;color:#e9e9e5;text-align:right;cursor:pointer;font:500 11px Estedad;transition:background .16s,border-color .16s}
+.select-option:hover,.select-option:focus-visible{outline:none;background:#d9ff7210;border-color:#d9ff7230}
+.select-option[aria-selected=true]{background:linear-gradient(100deg,#d9ff7218,#b6a0ff10);border-color:#d9ff7250;color:#eaffb7}
+.select-option .option-icon{width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:10px;background:linear-gradient(145deg,#d9ff7216,#b6a0ff18);border:1px solid #ffffff10}
+.select-option .option-icon img{width:25px;height:25px;object-fit:contain}
+.select-option .option-label{flex:1;line-height:1.8}
+.select-option .option-check{width:18px;height:18px;flex:none;color:var(--lime);opacity:0}
+.select-option[aria-selected=true] .option-check{opacity:1}
+.select-empty{padding:17px;text-align:center;color:#8f95a1;font-size:10px}
+.select-menu-foot{padding:8px 12px;border-top:1px solid #ffffff10;color:#7e8490;font-size:9px;text-align:center}
+@media(max-width:580px){.select-trigger{min-height:51px;padding:9px 11px}.select-options{max-height:43vh}.select-menu{border-radius:15px}}
+@media(prefers-reduced-motion:reduce){.select-menu{animation:none}.select-trigger,.select-chevron,.select-option{transition:none}}
+
 </style></head>
 <body>
 <header class="top"><div class="wrap nav"><a class="brand" href="/"><img src="/assets/images/alishams-studio-logo.png" alt=""><span>علی شمس<small>ALISHAMS DIGITAL STUDIO</small></span></a><a class="back" href="/website-demos.html">بازگشت به گالری دموها ↗</a></div></header>
@@ -126,4 +163,62 @@ finally{btn.disabled=false;btn.textContent="ثبت درخواست این دمو 
 document.querySelectorAll("[data-copy]").forEach(btn=>btn.addEventListener("click",async()=>{const value=$(btn.dataset.copy).textContent;try{await navigator.clipboard.writeText(value);btn.textContent="کپی شد";setTimeout(()=>btn.textContent="کپی",1300)}catch{showNotice("کپی خودکار در دسترس نیست؛ مقدار را دستی انتخاب کن.","error")}}));
 })();
 </script>
+
+<script>
+/* ALISHAMS_CUSTOM_SELECT_V2: accessible themed selects with Icon8 artwork */
+(()=> {
+ const iconBase="https://img.icons8.com/fluency/48/";
+ const iconMap={
+  siteType:["web-design.png","shop.png","resume.png","news.png","restaurant.png","web-application.png","consultation.png"],
+  pages:["document.png","documents.png","multiple-devices.png","books.png","help.png"],
+  timeline:["time.png","calendar.png","calendar-7.png","planner.png"],
+  budget:["estimate.png","low-price.png","money-bag.png","investment-portfolio.png","consultation.png"]
+ };
+ const headIcon={siteType:"web-design.png",pages:"documents.png",timeline:"calendar.png",budget:"money-bag.png"};
+ const titles={siteType:"نوع وب‌سایت را انتخاب کن",pages:"محدوده صفحات",timeline:"زمان‌بندی اجرا",budget:"بودجه تقریبی"};
+ const checkSvg='<svg class="option-check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+ document.querySelectorAll(".field select").forEach(sel=>{
+  const wrap=document.createElement("div");wrap.className="select-enhanced";
+  sel.classList.add("select-native");
+  sel.parentNode.insertBefore(wrap,sel);wrap.appendChild(sel);
+  const key=sel.id, icon=(i)=>iconBase+(iconMap[key]||["check.png"])[Math.min(i,(iconMap[key]||["check.png"]).length-1)];
+  const trigger=document.createElement("button");trigger.type="button";trigger.className="select-trigger";trigger.setAttribute("aria-haspopup","listbox");trigger.setAttribute("aria-expanded","false");trigger.setAttribute("aria-label",titles[key]||"انتخاب گزینه");
+  trigger.innerHTML='<span class="select-icon"><img alt="" src="'+iconBase+(headIcon[key]||"checked.png")+'"></span><span class="select-value"></span><svg class="select-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const menu=document.createElement("div");menu.className="select-menu";
+  menu.innerHTML='<div class="select-menu-head"><img alt="" src="'+iconBase+(headIcon[key]||"checked.png")+'"><span>'+(titles[key]||"یک گزینه را انتخاب کن")+'</span></div>';
+  let search=null;
+  if(sel.options.length>5){search=document.createElement("input");search.className="select-search";search.type="search";search.placeholder="جست‌وجو در گزینه‌ها…";search.setAttribute("aria-label","جست‌وجو در گزینه‌ها");menu.appendChild(search)}
+  const list=document.createElement("div");list.className="select-options";list.setAttribute("role","listbox");menu.appendChild(list);
+  const foot=document.createElement("div");foot.className="select-menu-foot";foot.textContent="برای انتخاب، روی گزینه موردنظر بزن";menu.appendChild(foot);
+  wrap.append(trigger,menu);
+  const valueNode=trigger.querySelector(".select-value");
+  function render(){
+   const opt=sel.options[sel.selectedIndex];const has=opt&&opt.value!=="";
+   valueNode.textContent=has?opt.textContent:(opt?.textContent||"انتخاب کن");
+   valueNode.classList.toggle("select-placeholder",!has);
+   trigger.setAttribute("aria-label",(titles[key]||"انتخاب گزینه")+"، "+valueNode.textContent);
+   list.innerHTML="";
+   [...sel.options].forEach((o,i)=>{
+    const b=document.createElement("button");b.type="button";b.className="select-option";b.setAttribute("role","option");b.setAttribute("aria-selected",String(sel.selectedIndex===i));b.dataset.search=o.textContent.toLocaleLowerCase("fa");
+    const src=icon(i);
+    b.innerHTML='<span class="option-icon"><img alt="" loading="lazy" src="'+src+'"></span><span class="option-label"></span>'+checkSvg;
+    b.querySelector(".option-label").textContent=o.textContent;
+    b.addEventListener("click",()=>{sel.selectedIndex=i;sel.dispatchEvent(new Event("change",{bubbles:true}));render();close();trigger.focus()});
+    list.appendChild(b);
+   });
+  }
+  function open(){document.querySelectorAll(".select-enhanced.is-open").forEach(x=>{if(x!==wrap){x.classList.remove("is-open");x.querySelector(".select-trigger")?.setAttribute("aria-expanded","false")}});wrap.classList.add("is-open");trigger.setAttribute("aria-expanded","true");if(search){search.value="";filter("");setTimeout(()=>search.focus(),30)}}
+  function close(){wrap.classList.remove("is-open");trigger.setAttribute("aria-expanded","false")}
+  function filter(q){let n=0;list.querySelectorAll(".select-option").forEach(b=>{const show=b.dataset.search.includes(q.toLocaleLowerCase("fa"));b.hidden=!show;if(show)n++});let empty=list.querySelector(".select-empty");if(!n){if(!empty){empty=document.createElement("div");empty.className="select-empty";empty.textContent="گزینه‌ای با این عبارت پیدا نشد";list.appendChild(empty)}}else empty?.remove()}
+  trigger.addEventListener("click",()=>wrap.classList.contains("is-open")?close():open());
+  search?.addEventListener("input",()=>filter(search.value.trim()));
+  trigger.addEventListener("keydown",e=>{if(e.key==="ArrowDown"||e.key==="Enter"||e.key===" "){e.preventDefault();open();list.querySelector(".select-option:not([hidden])")?.focus()}});
+  menu.addEventListener("keydown",e=>{const items=[...list.querySelectorAll(".select-option:not([hidden])")];const at=items.indexOf(document.activeElement);if(e.key==="Escape"){close();trigger.focus()}else if(e.key==="ArrowDown"){e.preventDefault();items[Math.min(at+1,items.length-1)]?.focus()}else if(e.key==="ArrowUp"){e.preventDefault();items[Math.max(at-1,0)]?.focus()}});
+  sel.addEventListener("change",render);render();
+ });
+ document.addEventListener("click",e=>{if(!e.target.closest(".select-enhanced"))document.querySelectorAll(".select-enhanced.is-open").forEach(w=>{w.classList.remove("is-open");w.querySelector(".select-trigger")?.setAttribute("aria-expanded","false")})});
+ document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".select-enhanced.is-open").forEach(w=>{w.classList.remove("is-open");w.querySelector(".select-trigger")?.setAttribute("aria-expanded","false")})});
+})();
+</script>
+
 </body></html>
