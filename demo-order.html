@@ -86,7 +86,7 @@ $("demoStatus").textContent=demo.status||"در حال طراحی";
 if(demo.preview){$("previewLink").href=demo.preview;$("previewLink").hidden=false}
 let session=null;
 function showNotice(message,type=""){const n=$("notice");n.textContent=message;n.className="notice show "+type}
-function setAuthState(s){session=s;$("authBox").classList.toggle("show",!s);$("email").value=s?.user?.email||"";if(s){const meta=s.user.user_metadata||{};if(!$("clientName").value)$("clientName").value=meta.full_name||meta.name||"";if(!$("phone").value)$("phone").value=meta.phone||"";if(!s.user.email_confirmed_at){$("authTitle").textContent="ایمیل حساب کاربری هنوز تأیید نشده است.";$("authText").textContent="برای ثبت سفارش، ابتدا ایمیل حساب را تأیید کن.";$("authLink").textContent="رفتن به حساب کاربری";$("authLink").href="/account.html"}else{$("authTitle").textContent="حساب کاربری متصل است.";$("authText").textContent="درخواست پس از ثبت به سوابق سفارش همین حساب متصل می‌شود.";$("authLink").textContent="مشاهده حساب کاربری";$("authLink").href="/account.html"}}else{const next="/demo-order.html"+location.search;$("authTitle").textContent="برای ثبت درخواست وارد حساب کاربری شو.";$("authText").textContent="ثبت سفارش از طریق حساب تأییدشده انجام می‌شود تا کد پیگیری و سوابق سفارش به حساب خودت متصل شوند.";$("authLink").textContent="ورود به حساب کاربری";$("authLink").href="/login.html?next="+encodeURIComponent(next)}}
+function setAuthState(s){session=s;$("authBox").classList.toggle("show",!s || !s.user.email_confirmed_at);$("email").value=s?.user?.email||"";if(s){const meta=s.user.user_metadata||{};if(!$("clientName").value)$("clientName").value=meta.full_name||meta.name||"";if(!$("phone").value)$("phone").value=meta.phone||"";if(!s.user.email_confirmed_at){$("authTitle").textContent="ایمیل حساب کاربری هنوز تأیید نشده است.";$("authText").textContent="برای ثبت سفارش، ابتدا ایمیل حساب را تأیید کن.";$("authLink").textContent="رفتن به حساب کاربری";$("authLink").href="/account.html"}else{$("authTitle").textContent="حساب کاربری متصل است.";$("authText").textContent="درخواست پس از ثبت به سوابق سفارش همین حساب متصل می‌شود.";$("authLink").textContent="مشاهده حساب کاربری";$("authLink").href="/account.html"}}else{const next="/demo-order.html"+location.search;$("authTitle").textContent="برای ثبت درخواست وارد حساب کاربری شو.";$("authText").textContent="ثبت سفارش از طریق حساب تأییدشده انجام می‌شود تا کد پیگیری و سوابق سفارش به حساب خودت متصل شوند.";$("authLink").textContent="ورود به حساب کاربری";$("authLink").href="/login.html?next="+encodeURIComponent(next)}}
 async function refreshSession(){const {data,error}=await sb.auth.getSession();if(error)throw error;setAuthState(data.session)}
 refreshSession().catch(()=>setAuthState(null));
 sb.auth.onAuthStateChange((_event,s)=>setAuthState(s));
@@ -112,9 +112,9 @@ const details=[
 "امکانات موردنیاز: "+(features.join("، ")||"نیازمند مشاوره"),
 "لینک‌های مرجع: "+(refs.join(" | ")||"ثبت نشده"),
 "توضیحات مشتری: "+$("brief").value.trim(),
-"تأیید شرایط سفارش: بله · نسخه demo-order-v1"
+"تأیید مطالعه شرایط سفارش: بله"
 ].join("\n");
-const payload={demo_request:true,terms_accepted:true,terms_version:"demo-order-v1",client_name:$("clientName").value.trim(),client_email:session.user.email,contact_info:$("phone").value.trim(),services:["طراحی وبسایت و قالب وبلاگ"],title:"سفارش طراحی سایت بر اساس دمو · "+demo.name,details,budget:$("budget").value};
+const payload={client_name:$("clientName").value.trim(),client_email:session.user.email,contact_info:$("phone").value.trim(),services:["طراحی وبسایت و قالب وبلاگ"],title:"سفارش طراحی سایت بر اساس دمو · "+demo.name,details,budget:$("budget").value};
 try{
 const r=await fetch(SUPABASE_URL+"/functions/v1/order-submit",{method:"POST",headers:{"Content-Type":"application/json","apikey":API_KEY,"Authorization":"Bearer "+session.access_token},body:JSON.stringify(payload)});
 const data=await r.json().catch(()=>({}));
