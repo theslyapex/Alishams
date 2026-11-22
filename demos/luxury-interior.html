@@ -82,8 +82,8 @@
 $('#year').textContent=new Date().getFullYear();
 const menu=$('#menuToggle'),nav=$('#navLinks');menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.textContent=open?'×':'☰'});$$('.nav-links a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.textContent='☰'}));
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target)}}),{threshold:.12});$$('.reveal').forEach(el=>revealObserver.observe(el));
-$('.project-card img').forEach(img=>img.addEventListener('error',()=>{img.classList.add('image-failed');const fallback=img.parentElement.querySelector('.image-fallback');if(fallback)fallback.classList.add('show')},{once:true}));
-const filterButtons=$('.filter'),projects=$('.project-card');filterButtons.forEach(btn=>btn.addEventListener('click',()=>{filterButtons.forEach(b=>b.classList.toggle('active',b===btn));projects.forEach(card=>card.hidden=btn.dataset.filter!=='all'&&card.dataset.category!==btn.dataset.filter)}));
+$$('.project-card img').forEach(img=>img.addEventListener('error',()=>{img.classList.add('image-failed');const fallback=img.parentElement.querySelector('.image-fallback');if(fallback)fallback.classList.add('show')},{once:true}));
+const filterButtons=$$('.filter'),projects=$$('.project-card');filterButtons.forEach(btn=>btn.addEventListener('click',()=>{filterButtons.forEach(b=>b.classList.toggle('active',b===btn));projects.forEach(card=>card.hidden=btn.dataset.filter!=='all'&&card.dataset.category!==btn.dataset.filter)}));
 const range=$('#baRange'),stage=$('#baStage');function setSplit(){stage.style.setProperty('--split',range.value+'%')}range.addEventListener('input',setSplit);setSplit();
 $('#requestForm').addEventListener('submit',e=>{e.preventDefault();$('#formMessage').textContent='درخواست شما در این دموی نمایشی ثبت نمی‌شود. برای سفارش واقعی از مسیر ثبت سفارش سایت علی شمس استفاده کنید.';});
 })();
