@@ -52,6 +52,19 @@
 .compare-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .compare-legend span{display:flex;align-items:center;gap:5px;font-size:8px;color:#c1cbd1}
 .compare-legend i{width:14px;height:3px;border-radius:4px;display:inline-block}
+.route-comparison{margin-top:12px;border:1px solid #ffffff24;background:#132638;padding:12px;display:grid;gap:9px}
+.route-comparison-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.route-comparison-head b{font-size:10px;color:#fff}.route-comparison-head small{font:800 8px Manrope;color:#9eafba;letter-spacing:1px}
+.route-comparison-scroll{overflow-x:auto;max-width:100%;border:1px solid #ffffff18}
+.route-comparison table{width:100%;min-width:590px;border-collapse:collapse;text-align:right;font-size:9px}
+.route-comparison th{background:#1b3448;color:#b9c9d3;font-weight:700;white-space:nowrap}
+.route-comparison th,.route-comparison td{padding:9px 10px;border-bottom:1px solid #ffffff16}
+.route-comparison td{color:#e8eef1;line-height:1.8}
+.route-comparison tbody tr:last-child td{border-bottom:0}
+.route-comparison td.distance{font:800 10px Manrope;color:var(--lime);direction:ltr;text-align:right;white-space:nowrap}
+.route-comparison td small{display:block;color:#9eafba;font-size:8px}
+.route-comparison-empty{font-size:9px;color:#91a4b0;line-height:2}
+@media(max-width:600px){.route-comparison{padding:9px}.route-comparison-head{align-items:flex-start;flex-direction:column}}
 
 .city-planner{border:1px solid #ffffff24;background:#132638;padding:14px;display:grid;gap:10px}
 .city-planner-title{font-size:11px;font-weight:800;color:#fff}
@@ -129,6 +142,15 @@
  <div class="saved-route-list" id="savedRouteList"><div class="saved-route-empty">هنوز مسیری ذخیره نکرده‌اید.</div></div>
  <div class="saved-route-actions"><button class="primary-compare" id="compareSavedRoutes" type="button" disabled>مقایسه روی نقشه</button><button id="clearSavedRoutes" type="button" disabled>پاک‌کردن فهرست</button></div>
  <div class="compare-legend" id="compareLegend" aria-live="polite"></div>
+ <section class="route-comparison" aria-labelledby="routeComparisonTitle">
+  <div class="route-comparison-head"><b id="routeComparisonTitle">جدول تحلیلی مسیرهای انتخاب‌شده</b><small id="routeComparisonCount">۰ مسیر برای مقایسه</small></div>
+  <div class="route-comparison-scroll">
+   <table>
+    <thead><tr><th scope="col">مسیر</th><th scope="col">مبدأ</th><th scope="col">مقصد</th><th scope="col">فاصله مستقیم</th><th scope="col">نوع مسیر</th></tr></thead>
+    <tbody id="routeComparisonBody"><tr><td colspan="5" class="route-comparison-empty">برای مشاهده مقایسه، حداقل دو مسیر را انتخاب کنید.</td></tr></tbody>
+   </table>
+  </div>
+ </section>
 </div>
 
 <div class="city-plan-status" id="cityPlanStatus" aria-live="polite">شهرها را جست‌وجو کنید یا مستقیماً از فهرست مبدأ و مقصد انتخاب کنید.</div>
@@ -195,6 +217,26 @@
  try{const parsed=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');if(Array.isArray(parsed))savedRoutes=parsed.filter(r=>r&&cityIds.includes(r.from)&&cityIds.includes(r.to)&&r.from!==r.to).slice(0,20)}catch(_){savedRoutes=[]}
  let selectedSavedIds=[];
  const persianDigits=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+ const comparisonBody=document.getElementById('routeComparisonBody'),comparisonCount=document.getElementById('routeComparisonCount');
+ function renderComparisonTable(){
+  const chosen=savedRoutes.filter(route=>selectedSavedIds.includes(route.id));
+  comparisonCount.textContent=persianDigits(chosen.length)+' مسیر انتخاب‌شده';
+  comparisonBody.innerHTML='';
+  if(chosen.length<2){
+   const row=document.createElement('tr'),cell=document.createElement('td');cell.colSpan=5;cell.className='route-comparison-empty';cell.textContent=chosen.length?'برای مقایسه جدولی، یک مسیر دیگر هم انتخاب کنید.':'برای مشاهده مقایسه، حداقل دو مسیر را انتخاب کنید.';row.appendChild(cell);comparisonBody.appendChild(row);return;
+  }
+  chosen.forEach(route=>{
+   const from=cities[route.from],to=cities[route.to],distance=Math.round(haversine(from.coords,to.coords));
+   const row=document.createElement('tr');
+   const routeCell=document.createElement('td'),fromCell=document.createElement('td'),toCell=document.createElement('td'),distanceCell=document.createElement('td'),typeCell=document.createElement('td');
+   routeCell.textContent=from.name+' ← '+to.name;
+   fromCell.textContent=from.name;const fromCountry=document.createElement('small');fromCountry.textContent=from.country;fromCell.appendChild(fromCountry);
+   toCell.textContent=to.name;const toCountry=document.createElement('small');toCountry.textContent=to.country;toCell.appendChild(toCountry);
+   distanceCell.className='distance';distanceCell.textContent=distance.toLocaleString('en-US')+' km';
+   typeCell.textContent='خط مستقیم جغرافیایی';
+   row.append(routeCell,fromCell,toCell,distanceCell,typeCell);comparisonBody.appendChild(row);
+  });
+ }
  function persistSavedRoutes(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(savedRoutes));return true}catch(_){cityStatus.textContent='ذخیره‌سازی مرورگر در دسترس نیست؛ تنظیمات حریم خصوصی مرورگر را بررسی کنید.';return false}}
  function renderSavedRoutes(){
   savedRouteCount.textContent=persianDigits(savedRoutes.length)+' مسیر';
@@ -211,7 +253,7 @@
    remove.addEventListener('click',()=>{savedRoutes=savedRoutes.filter(r=>r.id!==route.id);selectedSavedIds=selectedSavedIds.filter(id=>id!==route.id);persistSavedRoutes();renderSavedRoutes();compareLegend.innerHTML='';compareLayer.clearLayers()});
    row.append(check,info,remove);savedRouteList.appendChild(row);
   });
-  updateCompareControls();
+  updateCompareControls();renderComparisonTable();
  }
  function updateCompareControls(){const count=selectedSavedIds.filter(id=>savedRoutes.some(r=>r.id===id)).length;compareButton.disabled=count<2;clearSavedButton.disabled=!savedRoutes.length;compareButton.textContent=count>0?'مقایسه '+persianDigits(count)+' مسیر روی نقشه':'مقایسه روی نقشه'}
  function saveCurrentRoute(){
