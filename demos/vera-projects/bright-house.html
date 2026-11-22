@@ -22,7 +22,7 @@ document.querySelectorAll('[data-vera-model]').forEach(root=>{
  const stage=root.querySelector('.model-stage'),loading=root.querySelector('.model-loading');
  const scene=new THREE.Scene();scene.background=new THREE.Color(0x292a24);scene.fog=new THREE.Fog(0x292a24,35,110);
  const camera=new THREE.PerspectiveCamera(38,1,.1,300);
- const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
+ let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:false})}catch(error){loading.textContent='مرورگر شما امکان اجرای WebGL را ندارد.';loading.style.padding='24px';loading.style.textAlign='center';return;}
  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
  renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
  renderer.setClearColor(0x292a24,1);stage.appendChild(renderer.domElement);
