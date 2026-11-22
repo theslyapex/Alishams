@@ -58,6 +58,17 @@
 html,body,.hero,.content,.toc,.footer{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none}
 img,svg{-webkit-user-drag:none;user-drag:none}
 @media print{body{background:#fff;color:#111}body:before,.topbar,.toc,.footer,.nav-cta{display:none!important}.hero{padding:20px 0}.hero p,.section p,.section ul,.section ol,.section td{color:#222}.section,.highlight{break-inside:avoid;background:#fff;border:1px solid #ccc;color:#111}.section h2,.section h3,.section strong{color:#111}.layout{display:block;padding:10px 0}.section{box-shadow:none}.highlight span{color:#333}}
+
+/* اصلاح نهایی فاصله آیکون و متن کارت‌های معرفی در تمام عرض‌ها */
+.highlight{box-sizing:border-box;position:relative;display:flex;flex-direction:column;justify-content:flex-start;gap:5px;padding:52px 16px 16px!important;min-height:132px}
+.highlight:before{top:15px!important;right:16px!important;width:25px!important;height:25px!important}
+.highlight b,.highlight span{position:relative;z-index:1;margin:0;line-height:1.85}
+@media(max-width:600px){
+  .highlight{padding:52px 12px 14px!important;min-height:132px}
+  .highlight:before{top:13px!important;right:12px!important;width:24px!important;height:24px!important}
+  .highlight b{font-size:11px;line-height:1.8}
+  .highlight span{font-size:9px;line-height:1.9}
+}
 </style>
 </head>
 <body id="top">
