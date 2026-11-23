@@ -41,7 +41,7 @@ Deno.serve(async (req: Request) => {
         .upsert({ user_id: user.id }, { onConflict: "user_id", ignoreDuplicates: true });
       if (ensureError) throw ensureError;
       const { data: profile, error } = await db.from("baladi_game_profiles")
-        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,created_at")
+        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,created_at,display_name,daily_streak,last_checkin_date")
         .eq("user_id", user.id).single();
       if (error) throw error;
       const { data: sessions, error: sessionError } = await db.from("baladi_game_sessions")
@@ -54,6 +54,48 @@ Deno.serve(async (req: Request) => {
         .order("created_at", { ascending: false }).limit(15);
       if (historyError) throw historyError;
       return out({ ok: true, profile, sessions: sessions || [], coin_history: coinHistory || [] }, 200, origin);
+    }
+
+    if (action === "update_profile") {
+      const displayName = String(body?.display_name || "").trim().normalize("NFC");
+      if (displayName.length < 2 || displayName.length > 24 || /[\\u0000-\\u001f]/.test(displayName)) {
+        return out({ error: "نام نمایشی باید بین ۲ تا ۲۴ نویسه باشد." }, 400, origin);
+      }
+      const { data: profile, error } = await db.from("baladi_game_profiles")
+        .update({ display_name: displayName, updated_at: new Date().toISOString() })
+        .eq("user_id", user.id)
+        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,display_name,daily_streak,last_checkin_date")
+        .single();
+      if (error) throw error;
+      return out({ ok: true, profile }, 200, origin);
+    }
+
+    if (action === "daily_checkin") {
+      const { data, error } = await db.rpc("baladi_daily_checkin", { p_user_id: user.id });
+      if (error) throw error;
+      return out({
+        ok: true,
+        profile: data?.profile || null,
+        reward: Number(data?.reward || 0),
+        already_checked_in: Boolean(data?.already_checked_in)
+      }, 200, origin);
+    }
+
+    if (action === "hint_clue") {
+      const sessionId = body?.session_id;
+      const level = Number(body?.level);
+      const hintType = String(body?.hint_type || "");
+      if (!uuid(sessionId) || !Number.isInteger(level) || level < 1) {
+        return out({ error: "اطلاعات راهنما معتبر نیست." }, 400, origin);
+      }
+      const { data, error } = await db.rpc("baladi_spend_clue", {
+        p_user_id: user.id,
+        p_session_id: sessionId,
+        p_level: level,
+        p_hint_type: hintType
+      });
+      if (error) return out({ error: error.message || "مصرف سکه برای راهنما انجام نشد." }, 409, origin);
+      return out({ ok: true, profile: data?.profile || null, cost: Number(data?.cost || 0), hint_type: hintType }, 200, origin);
     }
 
     if (action === "start_session") {
@@ -69,7 +111,7 @@ Deno.serve(async (req: Request) => {
         });
       }
       const { data: profile, error: profileError } = await db.from("baladi_game_profiles")
-        .select("current_level,coins,sessions_count").eq("user_id", user.id).single();
+        .select("current_level,coins,sessions_count,display_name,daily_streak,last_checkin_date").eq("user_id", user.id).single();
       if (profileError) throw profileError;
       const { data: session, error: insertError } = await db.from("baladi_game_sessions").insert({
         user_id: user.id,
