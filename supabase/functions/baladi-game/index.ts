@@ -91,11 +91,13 @@ Deno.serve(async (req: Request) => {
       if (!uuid(sessionId) || !Number.isInteger(level) || level < 1) {
         return out({ error: "اطلاعات راهنما معتبر نیست." }, 400, origin);
       }
+      const clueKey = String(body?.clue_key || "");
       const { data, error } = await db.rpc("baladi_spend_clue", {
         p_user_id: user.id,
         p_session_id: sessionId,
         p_level: level,
-        p_hint_type: hintType
+        p_hint_type: hintType,
+        p_clue_key: clueKey
       });
       if (error) return out({ error: error.message || "مصرف سکه برای راهنما انجام نشد." }, 409, origin);
       return out({ ok: true, profile: data?.profile || null, cost: Number(data?.cost || 0), hint_type: hintType }, 200, origin);
