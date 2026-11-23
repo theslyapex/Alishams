@@ -154,7 +154,7 @@ Deno.serve(async (req: Request) => {
       const eventKey = level + ":" + word;
       const { error: eventError } = await db.from("baladi_game_events").insert({
         user_id: user.id, session_id: sessionId, event_type: "word_found",
-        event_key: eventKey, level_number: level, metadata: { word, source: "manual" }
+        event_key: eventKey, level_number: level, coin_delta: 3, metadata: { word, source: "manual" }
       });
       if (eventError && eventError.code !== "23505") throw eventError;
       if (!eventError) {
