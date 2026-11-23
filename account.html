@@ -878,6 +878,7 @@ async function loadBaladiGameModule(){
    ["زمان کل بازی",duration(p.total_play_seconds)],
    ["دفعات بازی",fa(p.sessions_count)],
    ["کلمات پیدا‌شده",fa(p.words_found)],
+   ["واژه‌های اضافه",fa(p.bonus_words_found)],
    ["راهنماهای مصرف‌شده",fa(p.hints_used)],
    ["آخرین بازی",p.last_played_at?new Date(p.last_played_at).toLocaleString("fa-IR"):"هنوز بازی نکرده‌ای"]
   ];
