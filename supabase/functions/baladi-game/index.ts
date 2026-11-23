@@ -7,7 +7,7 @@ const SERVICE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
 const ALLOWED = new Set(["https://alishams.ir", "https://www.alishams.ir"]);
 const headers = (origin: string) => ({
   "Access-Control-Allow-Origin": ALLOWED.has(origin) ? origin : "https://alishams.ir",
-  "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info",
+  "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info, x-baladi-monthly-token",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Vary": "Origin",
   "Content-Type": "application/json; charset=utf-8",
@@ -29,7 +29,7 @@ function jalaliMonthWindow(date: Date) {
   const gp = parts(gregorian, date);
   const localMidnightUtc = Date.UTC(Number(gp.year), Number(gp.month) - 1, Number(gp.day)) - 210 * 60 * 1000;
   const start = new Date(localMidnightUtc - (Number(jp.day) - 1) * 86400000);
-  return { key: String(jp.year) + "-" + String(jp.month).padStart(2, "0"), start };
+  return { key: String(jp.year) + "-" + String(jp.month).padStart(2, "0"), day: Number(jp.day), start };
 }
 
 const uuid = (value: unknown) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value || ""));
@@ -41,6 +41,28 @@ Deno.serve(async (req: Request) => {
   if (origin && !ALLOWED.has(origin)) return out({ error: "Origin not allowed" }, 403, origin);
 
   try {
+    const body = await req.json().catch(() => ({}));
+    const action = String(body?.action || "summary");
+
+    if (action === "monthly_cron") {
+      if (!URL || !SERVICE) return out({ error: "Monthly scheduler unavailable." }, 503, origin);
+      const cronToken = req.headers.get("x-baladi-monthly-token") || "";
+      const dbCron = createClient(URL, SERVICE, { auth: { persistSession: false, autoRefreshToken: false } });
+      const verified = await dbCron.rpc("baladi_validate_monthly_cron_token", { p_token: cronToken });
+      if (verified.error || verified.data !== true) return out({ error: "Unauthorized scheduler request." }, 401, origin);
+      const now = new Date();
+      const currentMonth = jalaliMonthWindow(now);
+      if (currentMonth.day !== 1) return out({ ok: true, skipped: true, jalali_day: currentMonth.day }, 200, origin);
+      const previousMonth = jalaliMonthWindow(new Date(currentMonth.start.getTime() - 1));
+      const finalized = await dbCron.rpc("baladi_finalize_monthly_leaderboard", {
+        p_month_key: previousMonth.key,
+        p_start_at: previousMonth.start.toISOString(),
+        p_end_at: currentMonth.start.toISOString()
+      });
+      if (finalized.error) throw finalized.error;
+      return out({ ok: true, month_closed: previousMonth.key, result: finalized.data }, 200, origin);
+    }
+
     const token = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "");
     if (!token || !URL || !ANON || !SERVICE) return out({ error: "نشست کاربری معتبر نیست." }, 401, origin);
 
@@ -50,8 +72,6 @@ Deno.serve(async (req: Request) => {
     if (authError || !user?.id || !user.email) return out({ error: "برای استفاده از بازی وارد حساب کاربری سایت شو." }, 401, origin);
 
     const db = createClient(URL, SERVICE, { auth: { persistSession: false, autoRefreshToken: false } });
-    const body = await req.json().catch(() => ({}));
-    const action = String(body?.action || "summary");
 
     if (action === "summary") {
       const { error: ensureError } = await db.from("baladi_game_profiles")
