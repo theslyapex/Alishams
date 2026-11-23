@@ -72,5 +72,5 @@ begin
   return to_jsonb(v_profile);
 end;
 $$;
-revoke all on function public.baladi_change_display_name(uuid,text) from public, anon;
+revoke all on function public.baladi_change_display_name(uuid,text) from public, anon, authenticated;
 grant execute on function public.baladi_change_display_name(uuid,text) to service_role;
