@@ -41,7 +41,7 @@ Deno.serve(async (req: Request) => {
         .upsert({ user_id: user.id }, { onConflict: "user_id", ignoreDuplicates: true });
       if (ensureError) throw ensureError;
       const { data: profile, error } = await db.from("baladi_game_profiles")
-        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,created_at,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses,chat_unlocked_at")
+        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,created_at,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses,chat_unlocked_at,diamonds,name_change_count")
         .eq("user_id", user.id).single();
       if (error) throw error;
       const { data: sessions, error: sessionError } = await db.from("baladi_game_sessions")
@@ -61,13 +61,54 @@ Deno.serve(async (req: Request) => {
       if (displayName.length < 2 || displayName.length > 24 || /[\\u0000-\\u001f]/.test(displayName)) {
         return out({ error: "نام نمایشی باید بین ۲ تا ۲۴ نویسه باشد." }, 400, origin);
       }
-      const { data: profile, error } = await db.from("baladi_game_profiles")
-        .update({ display_name: displayName, updated_at: new Date().toISOString() })
-        .eq("user_id", user.id)
-        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses,chat_unlocked_at")
-        .single();
-      if (error) throw error;
-      return out({ ok: true, profile }, 200, origin);
+      const { data, error } = await db.rpc("baladi_change_display_name", {
+        p_user_id: user.id, p_display_name: displayName
+      });
+      if (error) return out({ error: error.message || "تغییر نام انجام نشد." }, 409, origin);
+      return out({ ok: true, profile: data?.profile || null, diamonds_spent: Number(data?.diamonds_spent || 0) }, 200, origin);
+    }
+
+    if (action === "delete_account") {
+      if (body?.confirm !== true) return out({ error: "برای حذف اطلاعات بازی باید تأیید کنی." }, 400, origin);
+      const { data: ownedGroups, error: groupsError } = await db.from("baladi_groups")
+        .select("id").eq("leader_id", user.id);
+      if (groupsError) throw groupsError;
+      for (const group of ownedGroups || []) {
+        const { data: successor, error: successorError } = await db.from("baladi_group_members")
+          .select("user_id").eq("group_id", group.id).neq("user_id", user.id)
+          .order("joined_at", { ascending: true }).limit(1).maybeSingle();
+        if (successorError) throw successorError;
+        if (successor?.user_id) {
+          const { error } = await db.from("baladi_groups").update({ leader_id: successor.user_id }).eq("id", group.id);
+          if (error) throw error;
+          const { error: roleError } = await db.from("baladi_group_members").update({ role: "leader" })
+            .eq("group_id", group.id).eq("user_id", successor.user_id);
+          if (roleError) throw roleError;
+        } else {
+          const { error } = await db.from("baladi_groups").delete().eq("id", group.id);
+          if (error) throw error;
+        }
+      }
+      await db.from("baladi_duel_matches").update({ winner_id: null }).eq("winner_id", user.id);
+      await db.from("baladi_group_messages").update({ pinned_by: null }).eq("pinned_by", user.id);
+      const { data: avatarFiles } = await db.storage.from("baladi-avatars").list(user.id, { limit: 100 });
+      if (avatarFiles?.length) {
+        await db.storage.from("baladi-avatars").remove(avatarFiles.map((file: any) => user.id + "/" + file.name));
+      }
+      const deletions = [
+        ["baladi_group_messages", "user_id"], ["baladi_global_chat_messages", "user_id"],
+        ["baladi_group_members", "user_id"], ["baladi_duel_progress", "user_id"],
+        ["baladi_duel_invites", "sender_id"], ["baladi_duel_invites", "recipient_id"],
+        ["baladi_duel_matches", "player_one"], ["baladi_duel_matches", "player_two"],
+        ["baladi_game_hint_usage", "user_id"], ["baladi_game_events", "user_id"],
+        ["baladi_game_sessions", "user_id"], ["baladi_user_cosmetics", "user_id"],
+        ["baladi_game_profiles", "user_id"]
+      ] as const;
+      for (const [table, column] of deletions) {
+        const { error } = await db.from(table).delete().eq(column, user.id);
+        if (error) throw error;
+      }
+      return out({ ok: true, game_account_deleted: true, website_account_retained: true }, 200, origin);
     }
 
     if (action === "daily_checkin") {
@@ -474,7 +515,7 @@ Deno.serve(async (req: Request) => {
         });
       }
       const { data: profile, error: profileError } = await db.from("baladi_game_profiles")
-        .select("current_level,coins,sessions_count,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses").eq("user_id", user.id).single();
+        .select("current_level,coins,diamonds,name_change_count,sessions_count,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses").eq("user_id", user.id).single();
       if (profileError) throw profileError;
       const { data: session, error: insertError } = await db.from("baladi_game_sessions").insert({
         user_id: user.id,
