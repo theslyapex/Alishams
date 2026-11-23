@@ -60,6 +60,14 @@ Deno.serve(async (req: Request) => {
       const { error: ensureError } = await db.from("baladi_game_profiles")
         .upsert({ user_id: user.id }, { onConflict: "user_id", ignoreDuplicates: true });
       if (ensureError) throw ensureError;
+      const { data: staleSessions, error: staleError } = await db.from("baladi_game_sessions")
+        .select("id").eq("user_id", user.id).is("ended_at", null);
+      if (staleError) throw staleError;
+      for (const stale of (staleSessions || [])) {
+        await db.rpc("baladi_touch_session", {
+          p_session_id: stale.id, p_user_id: user.id, p_close: true
+        });
+      }
       const { data: profile, error: profileError } = await db.from("baladi_game_profiles")
         .select("current_level,coins,sessions_count").eq("user_id", user.id).single();
       if (profileError) throw profileError;
