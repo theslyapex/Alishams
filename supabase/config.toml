@@ -5,3 +5,7 @@ verify_jwt = false
 [functions.automation-engine]
 # Scheduler calls are authenticated with a private Vault token; admin actions validate the user's JWT in the function.
 verify_jwt = false
+
+[functions.baladi-game]
+# The function validates each Supabase access token with Auth before processing game data.
+verify_jwt = false
