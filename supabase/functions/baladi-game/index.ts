@@ -70,47 +70,22 @@ Deno.serve(async (req: Request) => {
 
     if (action === "delete_account") {
       if (body?.confirm !== true) return out({ error: "برای حذف اطلاعات بازی باید تأیید کنی." }, 400, origin);
-      const { data: ownedGroups, error: groupsError } = await db.from("baladi_groups")
-        .select("id").eq("leader_id", user.id);
-      if (groupsError) throw groupsError;
-      for (const group of ownedGroups || []) {
-        const { data: successor, error: successorError } = await db.from("baladi_group_members")
-          .select("user_id").eq("group_id", group.id).neq("user_id", user.id)
-          .order("joined_at", { ascending: true }).limit(1).maybeSingle();
-        if (successorError) throw successorError;
-        if (successor?.user_id) {
-          const { error } = await db.from("baladi_groups").update({ leader_id: successor.user_id }).eq("id", group.id);
-          if (error) throw error;
-          const { error: roleError } = await db.from("baladi_group_members").update({ role: "leader" })
-            .eq("group_id", group.id).eq("user_id", successor.user_id);
-          if (roleError) throw roleError;
-        } else {
-          const { error } = await db.from("baladi_groups").delete().eq("id", group.id);
-          if (error) throw error;
-        }
-      }
-      await db.from("baladi_duel_matches").update({ winner_id: null }).eq("winner_id", user.id);
-      await db.from("baladi_group_messages").update({ pinned_by: null }).eq("pinned_by", user.id);
-      const { data: avatarFiles } = await db.storage.from("baladi-avatars").list(user.id, { limit: 100 });
+      const { data: deletion, error: deletionError } = await db.rpc("baladi_delete_game_account", { p_user_id: user.id });
+      if (deletionError) throw deletionError;
+      const { data: avatarFiles, error: listError } = await db.storage.from("baladi-avatars").list(user.id, { limit: 100 });
+      let avatarCleanupPending = Boolean(listError);
       if (avatarFiles?.length) {
-        await db.storage.from("baladi-avatars").remove(avatarFiles.map((file: any) => user.id + "/" + file.name));
+        const { error: removeError } = await db.storage.from("baladi-avatars")
+          .remove(avatarFiles.map((file: any) => user.id + "/" + file.name));
+        avatarCleanupPending = Boolean(removeError);
       }
-      const deletions = [
-        ["baladi_group_messages", "user_id"], ["baladi_global_chat_messages", "user_id"],
-        ["baladi_group_members", "user_id"], ["baladi_duel_progress", "user_id"],
-        ["baladi_duel_invites", "sender_id"], ["baladi_duel_invites", "recipient_id"],
-        ["baladi_duel_matches", "player_one"], ["baladi_duel_matches", "player_two"],
-        ["baladi_game_hint_usage", "user_id"], ["baladi_game_events", "user_id"],
-        ["baladi_game_sessions", "user_id"], ["baladi_user_cosmetics", "user_id"],
-        ["baladi_game_profiles", "user_id"]
-      ] as const;
-      for (const [table, column] of deletions) {
-        const { error } = await db.from(table).delete().eq(column, user.id);
-        if (error) throw error;
-      }
-      return out({ ok: true, game_account_deleted: true, website_account_retained: true }, 200, origin);
+      return out({
+        ok: true, game_account_deleted: true, website_account_retained: true,
+        avatar_cleanup_pending: avatarCleanupPending,
+        groups_transferred: Number(deletion?.groups_transferred || 0),
+        groups_removed: Number(deletion?.groups_removed || 0)
+      }, 200, origin);
     }
-
     if (action === "daily_checkin") {
       const { data, error } = await db.rpc("baladi_daily_checkin", { p_user_id: user.id });
       if (error) throw error;
