@@ -38,9 +38,9 @@ Deno.serve(async (req: Request) => {
     if (!Number.isInteger(coins) || coins < 1000 || coins > 100000 || coins % 1000 !== 0) return out({ error: "تعداد سکه باید مضربی از ۱۰۰۰ باشد." }, 400, origin);
     if (description.length > 1500 || transactionReference.length > 120) return out({ error: "توضیحات یا شناسه تراکنش بیش از حد طولانی است." }, 400, origin);
     if (!["image/jpeg","image/png","image/webp","application/pdf"].includes(mime)) return out({ error: "رسید باید JPG، PNG، WEBP یا PDF باشد." }, 400, origin);
-    if (!base64 || base64.length > 7200000) return out({ error: "فایل رسید خالی یا بزرگ‌تر از ۵ مگابایت است." }, 400, origin);
+    if (!base64 || base64.length > 5600000) return out({ error: "فایل رسید خالی یا بزرگ‌تر از ۵ مگابایت است." }, 400, origin);
     const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
-    if (bytes.byteLength > 5 * 1024 * 1024) return out({ error: "حجم رسید نباید بیشتر از ۵ مگابایت باشد." }, 400, origin);
+    if (bytes.byteLength > 4 * 1024 * 1024) return out({ error: "حجم رسید نباید بیشتر از ۵ مگابایت باشد." }, 400, origin);
     const authHeader = req.headers.get("Authorization") || "";
     let userId: string | null = null;
     if (authHeader.startsWith("Bearer ") && ANON) {
