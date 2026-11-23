@@ -254,6 +254,7 @@
     <div class="stat"><span>وضعیت</span><strong>در حال دریافت…</strong></div>
   </div>
   <div style="margin-top:18px"><h3 style="font-size:14px;margin:0 0 10px">آخرین نشست‌های بازی</h3><div id="baladiGameSessions" class="activity-list"><div class="empty">در حال بارگذاری…</div></div></div>
+  <div style="margin-top:18px"><h3 style="font-size:14px;margin:0 0 10px">گردش سکه‌ها</h3><div id="baladiGameCoinHistory" class="activity-list"><div class="empty">در حال بارگذاری…</div></div></div>
   <p id="baladiGameNotice" class="notice" aria-live="polite" style="margin-top:10px"></p>
 </section>
 <section class="card" style="margin:16px 0"><div class="row"><h2>اعلان‌های حساب</h2><span class="badge" id="notificationCount">۰</span></div><div class="notification-toolbar"><label class="sr-only" for="notificationCategoryFilter">دسته‌بندی اعلان‌ها</label><div class="notification-category-picker" id="notificationCategoryPicker"><select id="notificationCategoryFilter" aria-label="فیلتر اعلان‌ها" tabindex="-1"><option value="all">همه اعلان‌ها</option><option value="orders">سفارش‌ها</option><option value="projects">پروژه‌ها</option><option value="payments">پرداخت‌ها</option><option value="support">پشتیبانی</option><option value="club">باشگاه مشتریان</option><option value="plus">پلاس+</option><option value="referrals">دعوت دوستان</option><option value="account">حساب کاربری</option></select><button type="button" class="notification-category-trigger" id="notificationCategoryTrigger" aria-haspopup="listbox" aria-expanded="false"><span id="notificationCategorySelected">همه اعلان‌ها</span><span class="notification-category-chevron">⌄</span></button><div class="notification-category-menu" id="notificationCategoryMenu" role="listbox" aria-label="فیلتر دسته‌بندی اعلان‌ها"></div></div><span id="notificationFilterCount" class="muted"></span></div><div id="projectNotificationsList"><div class="empty">اعلانی وجود ندارد.</div></div><div class="notification-actions"><button type="button" class="btn" id="markAllNotificationsRead">خواندن همه اعلان‌ها</button><button type="button" class="btn primary" id="enablePhoneNotifications">فعال‌سازی اعلان روی گوشی</button></div><p id="phoneNotificationStatus" class="muted">اعلان فوری نیازمند اجازه مرورگر است؛ ارسال در حالت بسته بودن سایت به Push سرور نیاز دارد.</p></section><div class="tabs"><button class="btn tab active" data-tab="ordersPanel">سفارش‌ها</button><button class="btn tab" data-tab="projectsPanel">پروژه‌ها</button><button class="btn tab" data-tab="siteBuilderPanel">قالب‌های وب‌سایت انتخاب‌شده</button><button class="btn tab" data-tab="documentsPanel">اسناد و مدارک</button><button class="btn tab" data-tab="activityPanel">فعالیت حساب</button><button class="btn tab" data-tab="messagesPanel">پیام‌ها</button><button class="btn tab" data-tab="credentialsPanel">کدها و کلیدها</button><button class="btn tab" data-tab="referralsPanel">دعوت دوستان</button><button class="btn tab" data-tab="plusPanel">پلاس+</button><button class="btn tab" data-tab="clubPanel">باشگاه مشتریان</button><button class="btn tab" data-tab="profilePanel">پروفایل</button></div>
@@ -861,7 +862,7 @@ function render(data){dashboardData=data;renderAccountLevel(data.accountLevel||{
 const recent=[...data.orders.map(o=>({title:o.title,status:o.status,date:o.updated_at||o.created_at,kind:"سفارش"})),...data.projects.map(p=>({title:p.title,status:p.status,date:p.updated_at||p.created_at,kind:"پروژه"}))].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,6);
 $("recentList").innerHTML=recent.length?recent.map(x=>'<article class="item"><div class="row"><h3>'+esc(x.title)+'</h3><span class="badge">'+esc(statusLabel(x.status))+'</span></div><p>'+esc(x.kind)+' · '+esc(date(x.date))+'</p></article>').join(""):'<div class="empty">هنوز فعالیتی ثبت نشده است.</div>';renderActivity(data)}
 async function loadBaladiGameModule(){
- const stats=$("baladiGameStats"),sessions=$("baladiGameSessions"),noticeBox=$("baladiGameNotice");
+ const stats=$("baladiGameStats"),sessions=$("baladiGameSessions"),coinHistory=$("baladiGameCoinHistory"),noticeBox=$("baladiGameNotice");
  if(!stats||!sessions)return;
  try{
   const {data,error}=await sb.functions.invoke("baladi-game",{body:{action:"summary"}});
@@ -888,6 +889,15 @@ async function loadBaladiGameModule(){
    const state=x.ended_at?"پایان‌یافته":"نشست باز";
    return '<article class="item"><div class="row" style="justify-content:space-between;gap:10px"><strong>'+when+'</strong><span class="badge">'+state+'</span></div><p class="muted">'+time+' · مرحله '+fa(x.start_level)+' تا '+fa(x.end_level)+'</p></article>';
   }).join(""):'<div class="empty">هنوز نشستی برای بازی ثبت نشده است. اولین بازی شما اینجا نمایش داده می‌شود.</div>';
+  const events=Array.isArray(data.coin_history)?data.coin_history:[];
+  const eventTitle=e=>e.event_type==="level_completed"?"پاداش تکمیل مرحله":e.event_type==="hint_used"?"مصرف راهنما":e.event_type==="word_found"?"کشف واژه":"تغییر موجودی";
+  coinHistory.innerHTML=events.length?events.map(e=>{
+   const amount=Number(e.coin_delta||0),sign=amount>0?"+":"";
+   const when=e.created_at?new Date(e.created_at).toLocaleString("fa-IR"):"—";
+   const level=e.level_number?" · مرحله "+fa(e.level_number):"";
+   const color=amount>0?"#8ed6a5":"#f08c80";
+   return '<article class="item"><div class="row" style="justify-content:space-between;gap:10px"><strong>'+eventTitle(e)+level+'</strong><strong style="color:'+color+'">'+sign+fa(amount)+' سکه</strong></div><p class="muted">'+when+'</p></article>';
+  }).join(""):'<div class="empty">هنوز تغییری در موجودی سکه ثبت نشده است.</div>';
   if(noticeBox)noticeBox.textContent="";
  }catch(error){
   stats.innerHTML='<div class="empty" style="grid-column:1/-1">آمار بازی فعلاً در دسترس نیست.</div>';
