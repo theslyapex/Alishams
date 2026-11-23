@@ -15,6 +15,23 @@ const headers = (origin: string) => ({
 });
 const out = (body: unknown, status: number, origin: string) =>
   new Response(JSON.stringify(body), { status, headers: headers(origin) });
+
+function jalaliMonthWindow(date: Date) {
+  const persian = new Intl.DateTimeFormat("en-US-u-ca-persian-nu-latn", {
+    timeZone: "Asia/Tehran", year: "numeric", month: "numeric", day: "numeric"
+  });
+  const gregorian = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Tehran", year: "numeric", month: "2-digit", day: "2-digit"
+  });
+  const parts = (formatter: Intl.DateTimeFormat, value: Date) =>
+    Object.fromEntries(formatter.formatToParts(value).filter((part) => part.type !== "literal").map((part) => [part.type, part.value]));
+  const jp = parts(persian, date);
+  const gp = parts(gregorian, date);
+  const localMidnightUtc = Date.UTC(Number(gp.year), Number(gp.month) - 1, Number(gp.day)) - 210 * 60 * 1000;
+  const start = new Date(localMidnightUtc - (Number(jp.day) - 1) * 86400000);
+  return { key: String(jp.year) + "-" + String(jp.month).padStart(2, "0"), start };
+}
+
 const uuid = (value: unknown) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value || ""));
 
 Deno.serve(async (req: Request) => {
@@ -241,6 +258,28 @@ Deno.serve(async (req: Request) => {
     }
 
     if (action === "leaderboard") {
+      const now = new Date();
+      const currentMonth = jalaliMonthWindow(now);
+      const previousMonth = jalaliMonthWindow(new Date(currentMonth.start.getTime() - 1));
+      const finalized = await db.rpc("baladi_finalize_monthly_leaderboard", {
+        p_month_key: previousMonth.key,
+        p_start_at: previousMonth.start.toISOString(),
+        p_end_at: currentMonth.start.toISOString()
+      });
+      if (finalized.error) throw finalized.error;
+
+      const monthly = await db.rpc("baladi_monthly_stats", {
+        p_start_at: currentMonth.start.toISOString(),
+        p_end_at: now.toISOString(),
+        p_limit: 100
+      });
+      if (monthly.error) throw monthly.error;
+
+      const { data: previousWinners, error: winnersError } = await db.from("baladi_monthly_leaderboard")
+        .select("rank,user_id,display_name,valid_words,highest_level,coins_earned,duel_wins,reward_coins")
+        .eq("month_key", previousMonth.key).lte("rank", 3).order("rank", { ascending: true });
+      if (winnersError) throw winnersError;
+
       const { data, error } = await db.from("baladi_game_profiles")
         .select("user_id,display_name,current_level,coins,wins,losses,avatar_path,equipped_frame_id,is_verified")
         .order("current_level", { ascending: false })
@@ -249,7 +288,15 @@ Deno.serve(async (req: Request) => {
         .limit(100);
       if (error) throw error;
       const rows = (data || []).map((item: any, index: number) => ({ rank: index + 1, ...item }));
-      return out({ ok: true, leaderboard: rows }, 200, origin);
+      return out({
+        ok: true,
+        leaderboard: rows,
+        monthly_leaderboard: monthly.data?.leaderboard || [],
+        monthly_month_key: currentMonth.key,
+        previous_month_key: previousMonth.key,
+        previous_month_winners: previousWinners || [],
+        previous_month_finalization: finalized.data || {}
+      }, 200, origin);
     }
 
     if (action === "public_profile") {
