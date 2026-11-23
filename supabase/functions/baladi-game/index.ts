@@ -101,6 +101,44 @@ Deno.serve(async (req: Request) => {
       return out({ ok: true, profile: data?.profile || null, cost: Number(data?.cost || 0), hint_type: hintType }, 200, origin);
     }
 
+    if (action === "unlock_global_chat") {
+      const { data, error } = await db.rpc("baladi_unlock_global_chat", { p_user_id: user.id });
+      if (error) return out({ error: error.message || "بازکردن چت انجام نشد." }, 409, origin);
+      return out({ ok: true, profile: data?.profile || null, cost: Number(data?.cost || 0), already_unlocked: Boolean(data?.already_unlocked) }, 200, origin);
+    }
+
+    if (action === "global_chat_list") {
+      const { data: messages, error } = await db.from("baladi_global_chat_messages")
+        .select("id,user_id,body,sticker_id,created_at")
+        .is("deleted_at", null)
+        .order("created_at", { ascending: false })
+        .limit(50);
+      if (error) throw error;
+      const userIds = [...new Set((messages || []).map((message: any) => message.user_id))];
+      const { data: profiles, error: profilesError } = userIds.length
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id,current_level").in("user_id", userIds)
+        : { data: [], error: null };
+      if (profilesError) throw profilesError;
+      const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
+      const rows = (messages || []).reverse().map((message: any) => ({
+        ...message,
+        player: profileMap.get(message.user_id) || { display_name: "بازیکن" }
+      }));
+      return out({ ok: true, messages: rows }, 200, origin);
+    }
+
+    if (action === "global_chat_send") {
+      const bodyText = body?.sticker_id ? null : String(body?.body || "");
+      const stickerId = body?.sticker_id ? String(body.sticker_id) : null;
+      if (bodyText !== null && (bodyText.trim().length < 1 || bodyText.length > 350))
+        return out({ error: "پیام باید بین ۱ تا ۳۵۰ نویسه باشد." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_send_global_message", {
+        p_user_id: user.id, p_body: bodyText, p_sticker_id: stickerId
+      });
+      if (error) return out({ error: error.message || "ارسال پیام انجام نشد." }, 409, origin);
+      return out({ ok: true, message: data }, 201, origin);
+    }
+
     if (action === "cosmetics_catalog") {
       const { data: catalog, error: catalogError } = await db.from("baladi_cosmetic_catalog")
         .select("id,kind,display_name,price_coins,asset_path,sort_order")
