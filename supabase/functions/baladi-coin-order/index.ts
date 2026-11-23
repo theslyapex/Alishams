@@ -49,6 +49,17 @@ Deno.serve(async (req: Request) => {
       userId = data?.user?.id || null;
     }
     const db = createClient(URL, SERVICE, { auth: { persistSession: false, autoRefreshToken: false } });
+    const isPdf = mime === "application/pdf" && new TextDecoder().decode(bytes.slice(0, 5)) === "%PDF-";
+    const isPng = mime === "image/png" && [137,80,78,71,13,10,26,10].every((v, i) => bytes[i] === v);
+    const isJpeg = mime === "image/jpeg" && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255;
+    const isWebp = mime === "image/webp" && new TextDecoder().decode(bytes.slice(0, 4)) === "RIFF" && new TextDecoder().decode(bytes.slice(8, 12)) === "WEBP";
+    if (!(isPdf || isPng || isJpeg || isWebp)) return out({ error: "محتوای فایل با نوع رسید انتخاب‌شده مطابقت ندارد." }, 400, origin);
+    const { count, error: rateError } = await db.from("baladi_coin_purchase_requests")
+      .select("id", { count: "exact", head: true }).eq("email", email)
+      .gte("created_at", new Date(Date.now() - 60 * 60 * 1000).toISOString())
+      .neq("status", "rejected");
+    if (rateError) throw rateError;
+    if ((count || 0) >= 3) return out({ error: "برای این ایمیل در یک ساعت اخیر سه درخواست ثبت شده است. کمی بعد دوباره تلاش کن." }, 429, origin);
     const ext = mime === "application/pdf" ? "pdf" : mime === "image/png" ? "png" : mime === "image/webp" ? "webp" : "jpg";
     const requestCode = "BAL-" + Date.now().toString(36).toUpperCase() + "-" + crypto.randomUUID().slice(0, 6).toUpperCase();
     const path = new Date().toISOString().slice(0,10) + "/" + requestCode + "." + ext;
