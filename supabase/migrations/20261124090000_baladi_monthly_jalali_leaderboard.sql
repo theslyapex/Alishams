@@ -157,3 +157,39 @@ revoke all on function public.baladi_monthly_stats(timestamptz,timestamptz,integ
 revoke all on function public.baladi_finalize_monthly_leaderboard(text,timestamptz,timestamptz) from public,anon,authenticated;
 grant execute on function public.baladi_monthly_stats(timestamptz,timestamptz,integer) to service_role;
 grant execute on function public.baladi_finalize_monthly_leaderboard(text,timestamptz,timestamptz) to service_role;
+
+-- A separate Vault token lets pg_cron call the public Edge Function without a user session.
+select vault.create_secret(
+  encode(gen_random_bytes(32),'hex'),
+  'baladi_monthly_cron_token',
+  'Authentication token for the Baladi Jalali monthly prize scheduler'
+);
+
+create or replace function public.baladi_validate_monthly_cron_token(p_token text)
+returns boolean language sql stable security definer
+set search_path=public,vault,pg_temp as $$
+  select coalesce(
+    p_token = (select decrypted_secret from vault.decrypted_secrets where name='baladi_monthly_cron_token' limit 1),
+    false
+  )
+$$;
+revoke all on function public.baladi_validate_monthly_cron_token(text) from public,anon,authenticated;
+grant execute on function public.baladi_validate_monthly_cron_token(text) to service_role;
+
+-- 20:40 UTC is 00:10 in Tehran. The Edge Function settles only when the Persian day is 1.
+select cron.schedule(
+  'baladi-monthly-jalali-awards',
+  '40 20 * * *',
+  $job$
+    select net.http_post(
+      url := 'https://srfldjfrzmtnlabusssq.supabase.co/functions/v1/baladi-game',
+      headers := jsonb_build_object(
+        'Content-Type','application/json',
+        'apikey','sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB',
+        'x-baladi-monthly-token',(select decrypted_secret from vault.decrypted_secrets where name='baladi_monthly_cron_token' limit 1)
+      ),
+      body := jsonb_build_object('action','monthly_cron'),
+      timeout_milliseconds := 15000
+    );
+  $job$
+);
