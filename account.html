@@ -878,7 +878,8 @@ async function loadBaladiGameModule(){
    ["زمان کل بازی",duration(p.total_play_seconds)],
    ["دفعات بازی",fa(p.sessions_count)],
    ["کلمات پیدا‌شده",fa(p.words_found)],
-   ["راهنماهای مصرف‌شده",fa(p.hints_used)]
+   ["راهنماهای مصرف‌شده",fa(p.hints_used)],
+   ["آخرین بازی",p.last_played_at?new Date(p.last_played_at).toLocaleString("fa-IR"):"هنوز بازی نکرده‌ای"]
   ];
   stats.innerHTML=cards.map(([label,value])=>'<div class="stat" style="min-width:0"><span>'+label+'</span><strong style="font-size:17px;overflow-wrap:anywhere">'+value+'</strong></div>').join("");
   const rows=Array.isArray(data.sessions)?data.sessions:[];
