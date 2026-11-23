@@ -219,6 +219,153 @@ Deno.serve(async (req: Request) => {
       return out({ ok: true, profile }, 200, origin);
     }
 
+    if (action === "groups_list") {
+      const { data: groups, error } = await db.from("baladi_groups")
+        .select("id,name,description,leader_id,capacity,created_at")
+        .order("created_at", { ascending: false }).limit(100);
+      if (error) throw error;
+      const ids = (groups || []).map((group: any) => group.id);
+      const { data: members, error: memberError } = ids.length
+        ? await db.from("baladi_group_members").select("group_id,user_id,role").in("group_id", ids)
+        : { data: [], error: null };
+      if (memberError) throw memberError;
+      const memberCounts = new Map<string, number>();
+      for (const member of members || []) memberCounts.set(member.group_id, (memberCounts.get(member.group_id) || 0) + 1);
+      const leaderIds = [...new Set((groups || []).map((group: any) => group.leader_id))];
+      const { data: leaders, error: leaderError } = leaderIds.length
+        ? await db.from("baladi_game_profiles").select("user_id,display_name").in("user_id", leaderIds)
+        : { data: [], error: null };
+      if (leaderError) throw leaderError;
+      const leaderMap = new Map((leaders || []).map((profile: any) => [profile.user_id, profile.display_name]));
+      return out({ ok: true, groups: (groups || []).map((group: any) => ({
+        ...group, member_count: memberCounts.get(group.id) || 0,
+        leader_name: leaderMap.get(group.leader_id) || "بازیکن"
+      })) }, 200, origin);
+    }
+
+    if (action === "my_group") {
+      const { data: membership, error } = await db.from("baladi_group_members")
+        .select("group_id,role,joined_at").eq("user_id", user.id).maybeSingle();
+      if (error) throw error;
+      if (!membership) return out({ ok: true, group: null, members: [] }, 200, origin);
+      const { data: group, error: groupError } = await db.from("baladi_groups")
+        .select("id,name,description,leader_id,capacity,created_at").eq("id", membership.group_id).single();
+      if (groupError) throw groupError;
+      const { data: members, error: membersError } = await db.from("baladi_group_members")
+        .select("user_id,role,joined_at").eq("group_id", membership.group_id).order("joined_at", { ascending: true });
+      if (membersError) throw membersError;
+      const ids = (members || []).map((member: any) => member.user_id);
+      const { data: profiles, error: profilesError } = ids.length
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id,wins,losses").in("user_id", ids)
+        : { data: [], error: null };
+      if (profilesError) throw profilesError;
+      const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
+      return out({ ok: true, group: { ...group, my_role: membership.role }, members: (members || []).map((member: any) => ({ ...member, player: profileMap.get(member.user_id) || { display_name: "بازیکن" } })) }, 200, origin);
+    }
+
+    if (action === "create_group") {
+      const name = String(body?.name || "").trim();
+      const description = String(body?.description || "").trim();
+      if (name.length < 3 || name.length > 28) return out({ error: "نام گروه باید بین ۳ تا ۲۸ نویسه باشد." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_create_group", { p_user_id: user.id, p_name: name, p_description: description });
+      if (error) return out({ error: error.message || "ساخت گروه انجام نشد." }, 409, origin);
+      return out({ ok: true, ...data }, 201, origin);
+    }
+
+    if (action === "join_group") {
+      const groupId = String(body?.group_id || "");
+      if (!uuid(groupId)) return out({ error: "شناسه گروه معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_join_group", { p_user_id: user.id, p_group_id: groupId });
+      if (error) return out({ error: error.message || "عضویت در گروه انجام نشد." }, 409, origin);
+      return out({ ok: true, ...data }, 200, origin);
+    }
+
+    if (action === "upgrade_group_capacity") {
+      const groupId = String(body?.group_id || "");
+      const capacity = Number(body?.new_capacity || 0);
+      if (!uuid(groupId) || !Number.isInteger(capacity)) return out({ error: "اطلاعات افزایش ظرفیت معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_upgrade_group_capacity", { p_user_id: user.id, p_group_id: groupId, p_new_capacity: capacity });
+      if (error) return out({ error: error.message || "افزایش ظرفیت انجام نشد." }, 409, origin);
+      return out({ ok: true, ...data }, 200, origin);
+    }
+
+    if (action === "set_group_role") {
+      const groupId = String(body?.group_id || "");
+      const targetId = String(body?.target_user_id || "");
+      const role = String(body?.role || "");
+      if (!uuid(groupId) || !uuid(targetId)) return out({ error: "شناسه بازیکن یا گروه معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_set_group_role", { p_actor_id: user.id, p_group_id: groupId, p_target_id: targetId, p_role: role });
+      if (error) return out({ error: error.message || "تغییر مقام انجام نشد." }, 409, origin);
+      return out({ ok: true, result: data }, 200, origin);
+    }
+
+    if (action === "remove_group_member") {
+      const groupId = String(body?.group_id || "");
+      const targetId = String(body?.target_user_id || "");
+      if (!uuid(groupId) || !uuid(targetId)) return out({ error: "شناسه بازیکن یا گروه معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_remove_group_member", { p_actor_id: user.id, p_group_id: groupId, p_target_id: targetId });
+      if (error) return out({ error: error.message || "حذف عضو انجام نشد." }, 409, origin);
+      return out({ ok: true, result: data }, 200, origin);
+    }
+
+    if (action === "transfer_group_leadership") {
+      const groupId = String(body?.group_id || "");
+      const targetId = String(body?.target_user_id || "");
+      if (!uuid(groupId) || !uuid(targetId)) return out({ error: "شناسه بازیکن یا گروه معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_transfer_group_leadership", { p_user_id: user.id, p_group_id: groupId, p_target_id: targetId });
+      if (error) return out({ error: error.message || "انتقال رهبری انجام نشد." }, 409, origin);
+      return out({ ok: true, result: data }, 200, origin);
+    }
+
+    if (action === "leave_group") {
+      const groupId = String(body?.group_id || "");
+      if (!uuid(groupId)) return out({ error: "شناسه گروه معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_leave_group", { p_user_id: user.id, p_group_id: groupId });
+      if (error) return out({ error: error.message || "خروج از گروه انجام نشد." }, 409, origin);
+      return out({ ok: true, result: data }, 200, origin);
+    }
+
+    if (action === "group_chat_list") {
+      const groupId = String(body?.group_id || "");
+      if (!uuid(groupId)) return out({ error: "شناسه گروه معتبر نیست." }, 400, origin);
+      const { data: membership, error: membershipError } = await db.from("baladi_group_members")
+        .select("role").eq("group_id", groupId).eq("user_id", user.id).maybeSingle();
+      if (membershipError) throw membershipError;
+      if (!membership) return out({ error: "فقط اعضای گروه به گفت‌وگوی آن دسترسی دارند." }, 403, origin);
+      const { data: messages, error } = await db.from("baladi_group_messages")
+        .select("id,group_id,user_id,body,sticker_id,is_pinned,created_at")
+        .eq("group_id", groupId).order("created_at", { ascending: false }).limit(50);
+      if (error) throw error;
+      const rows = (messages || []).reverse();
+      const ids = [...new Set(rows.map((message: any) => message.user_id))];
+      const { data: profiles, error: profilesError } = ids.length
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id").in("user_id", ids)
+        : { data: [], error: null };
+      if (profilesError) throw profilesError;
+      const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
+      return out({ ok: true, messages: rows.map((message: any) => ({ ...message, player: profileMap.get(message.user_id) || { display_name: "بازیکن" } })) }, 200, origin);
+    }
+
+    if (action === "group_chat_send") {
+      const groupId = String(body?.group_id || "");
+      if (!uuid(groupId)) return out({ error: "شناسه گروه معتبر نیست." }, 400, origin);
+      const bodyText = body?.sticker_id ? null : String(body?.body || "");
+      const stickerId = body?.sticker_id ? String(body.sticker_id) : null;
+      const { data, error } = await db.rpc("baladi_send_group_message", { p_user_id: user.id, p_group_id: groupId, p_body: bodyText, p_sticker_id: stickerId });
+      if (error) return out({ error: error.message || "ارسال پیام گروه انجام نشد." }, 409, origin);
+      return out({ ok: true, message: data }, 201, origin);
+    }
+
+    if (action === "pin_group_message") {
+      const groupId = String(body?.group_id || "");
+      const messageId = Number(body?.message_id || 0);
+      const pinned = Boolean(body?.pinned);
+      if (!uuid(groupId) || !Number.isInteger(messageId) || messageId <= 0) return out({ error: "شناسه پیام یا گروه معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_pin_group_message", { p_user_id: user.id, p_group_id: groupId, p_message_id: messageId, p_pinned: pinned });
+      if (error) return out({ error: error.message || "تغییر وضعیت پیام انجام نشد." }, 409, origin);
+      return out({ ok: true, result: data }, 200, origin);
+    }
+
     if (action === "start_session") {
       const { error: ensureError } = await db.from("baladi_game_profiles")
         .upsert({ user_id: user.id }, { onConflict: "user_id", ignoreDuplicates: true });
