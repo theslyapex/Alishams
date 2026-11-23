@@ -1,0 +1,1 @@
+drop function if exists public.baladi_spend_clue(uuid,uuid,integer,text);
