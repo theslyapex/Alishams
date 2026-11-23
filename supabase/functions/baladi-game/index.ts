@@ -72,12 +72,16 @@ Deno.serve(async (req: Request) => {
       if (body?.confirm !== true) return out({ error: "برای حذف اطلاعات بازی باید تأیید کنی." }, 400, origin);
       const { data: deletion, error: deletionError } = await db.rpc("baladi_delete_game_account", { p_user_id: user.id });
       if (deletionError) throw deletionError;
-      const { data: avatarFiles, error: listError } = await db.storage.from("baladi-avatars").list(user.id, { limit: 100 });
-      let avatarCleanupPending = Boolean(listError);
-      if (avatarFiles?.length) {
+      let avatarCleanupPending = false;
+      for (let batch = 0; batch < 20; batch++) {
+        const { data: avatarFiles, error: listError } = await db.storage.from("baladi-avatars")
+          .list(user.id, { limit: 100 });
+        if (listError) { avatarCleanupPending = true; break; }
+        if (!avatarFiles?.length) break;
         const { error: removeError } = await db.storage.from("baladi-avatars")
           .remove(avatarFiles.map((file: any) => user.id + "/" + file.name));
-        avatarCleanupPending = Boolean(removeError);
+        if (removeError) { avatarCleanupPending = true; break; }
+        if (avatarFiles.length < 100) break;
       }
       return out({
         ok: true, game_account_deleted: true, website_account_retained: true,
