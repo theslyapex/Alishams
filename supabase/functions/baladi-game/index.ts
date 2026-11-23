@@ -110,6 +110,10 @@ Deno.serve(async (req: Request) => {
     }
 
     if (action === "global_chat_list") {
+      const { data: chatProfile, error: chatProfileError } = await db.from("baladi_game_profiles")
+        .select("chat_unlocked_at").eq("user_id", user.id).single();
+      if (chatProfileError) throw chatProfileError;
+      if (!chatProfile.chat_unlocked_at) return out({ error: "برای مشاهده چت عمومی، ابتدا آن را با ۱۸۰۰۰ سکه باز کن." }, 403, origin);
       const { data: messages, error } = await db.from("baladi_global_chat_messages")
         .select("id,user_id,body,sticker_id,created_at")
         .is("deleted_at", null)
