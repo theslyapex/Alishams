@@ -41,7 +41,7 @@ Deno.serve(async (req: Request) => {
         .upsert({ user_id: user.id }, { onConflict: "user_id", ignoreDuplicates: true });
       if (ensureError) throw ensureError;
       const { data: profile, error } = await db.from("baladi_game_profiles")
-        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,created_at,display_name,daily_streak,last_checkin_date")
+        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,created_at,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses,chat_unlocked_at")
         .eq("user_id", user.id).single();
       if (error) throw error;
       const { data: sessions, error: sessionError } = await db.from("baladi_game_sessions")
@@ -99,6 +99,62 @@ Deno.serve(async (req: Request) => {
       });
       if (error) return out({ error: error.message || "مصرف سکه برای راهنما انجام نشد." }, 409, origin);
       return out({ ok: true, profile: data?.profile || null, cost: Number(data?.cost || 0), hint_type: hintType }, 200, origin);
+    }
+
+    if (action === "cosmetics_catalog") {
+      const { data: catalog, error: catalogError } = await db.from("baladi_cosmetic_catalog")
+        .select("id,kind,display_name,price_coins,asset_path,sort_order")
+        .eq("is_active", true).order("sort_order", { ascending: true });
+      if (catalogError) throw catalogError;
+      const { data: owned, error: ownedError } = await db.from("baladi_user_cosmetics")
+        .select("cosmetic_id,purchased_at").eq("user_id", user.id);
+      if (ownedError) throw ownedError;
+      return out({ ok: true, catalog: catalog || [], owned: owned || [] }, 200, origin);
+    }
+
+    if (action === "purchase_cosmetic") {
+      const cosmeticId = String(body?.cosmetic_id || "");
+      if (!/^[a-z0-9_]{3,48}$/.test(cosmeticId))
+        return out({ error: "شناسه کالا معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_purchase_cosmetic", {
+        p_user_id: user.id, p_cosmetic_id: cosmeticId
+      });
+      if (error) return out({ error: error.message || "خرید انجام نشد." }, 409, origin);
+      return out({ ok: true, profile: data?.profile || null, item: data?.item || null }, 200, origin);
+    }
+
+    if (action === "equip_frame") {
+      const frameId = String(body?.frame_id || "");
+      if (!/^[a-z0-9_]{3,48}$/.test(frameId))
+        return out({ error: "شناسه قاب معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_equip_frame", {
+        p_user_id: user.id, p_frame_id: frameId
+      });
+      if (error) return out({ error: error.message || "تغییر قاب انجام نشد." }, 409, origin);
+      return out({ ok: true, profile: data }, 200, origin);
+    }
+
+    if (action === "leaderboard") {
+      const { data, error } = await db.from("baladi_game_profiles")
+        .select("user_id,display_name,current_level,coins,wins,losses,avatar_path,equipped_frame_id")
+        .order("current_level", { ascending: false })
+        .order("coins", { ascending: false })
+        .order("wins", { ascending: false })
+        .limit(100);
+      if (error) throw error;
+      const rows = (data || []).map((item: any, index: number) => ({ rank: index + 1, ...item }));
+      return out({ ok: true, leaderboard: rows }, 200, origin);
+    }
+
+    if (action === "public_profile") {
+      const targetId = String(body?.user_id || "");
+      if (!uuid(targetId)) return out({ error: "شناسه بازیکن معتبر نیست." }, 400, origin);
+      const { data: profile, error } = await db.from("baladi_game_profiles")
+        .select("user_id,display_name,current_level,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,wins,losses,avatar_path,equipped_frame_id,created_at")
+        .eq("user_id", targetId).maybeSingle();
+      if (error) throw error;
+      if (!profile) return out({ error: "پروفایل بازیکن پیدا نشد." }, 404, origin);
+      return out({ ok: true, profile }, 200, origin);
     }
 
     if (action === "start_session") {
