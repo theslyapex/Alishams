@@ -48,7 +48,12 @@ Deno.serve(async (req: Request) => {
         .select("id,started_at,ended_at,duration_seconds,start_level,end_level,device_platform")
         .eq("user_id", user.id).order("started_at", { ascending: false }).limit(10);
       if (sessionError) throw sessionError;
-      return out({ ok: true, profile, sessions: sessions || [] }, 200, origin);
+      const { data: coinHistory, error: historyError } = await db.from("baladi_game_events")
+        .select("id,event_type,level_number,coin_delta,created_at,metadata")
+        .eq("user_id", user.id).neq("coin_delta", 0)
+        .order("created_at", { ascending: false }).limit(15);
+      if (historyError) throw historyError;
+      return out({ ok: true, profile, sessions: sessions || [], coin_history: coinHistory || [] }, 200, origin);
     }
 
     if (action === "start_session") {
