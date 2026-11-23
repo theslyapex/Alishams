@@ -134,6 +134,30 @@ Deno.serve(async (req: Request) => {
       return out({ ok: true, profile: data }, 200, origin);
     }
 
+    if (action === "set_avatar_path") {
+      const avatarPath = String(body?.avatar_path || "");
+      const prefix = user.id + "/avatar_";
+      if (!avatarPath.startsWith(prefix) || !/^[0-9a-f-]{36}\/avatar_[A-Za-z0-9_-]{8,64}\.(jpg|jpeg|png|webp)$/i.test(avatarPath))
+        return out({ error: "مسیر تصویر پروفایل معتبر نیست." }, 400, origin);
+      const { data: profileBefore, error: profileBeforeError } = await db.from("baladi_game_profiles")
+        .select("avatar_unlocked").eq("user_id", user.id).single();
+      if (profileBeforeError) throw profileBeforeError;
+      if (!profileBefore.avatar_unlocked) return out({ error: "برای فعال‌سازی تصویر پروفایل ابتدا ۷۰۰۰ سکه پرداخت کن." }, 403, origin);
+      const fileName = avatarPath.split("/").pop() || "";
+      const { data: files, error: storageError } = await db.storage.from("baladi-avatars")
+        .list(user.id, { search: fileName, limit: 10 });
+      if (storageError) throw storageError;
+      if (!(files || []).some((file: any) => file.name === fileName))
+        return out({ error: "تصویر بارگذاری‌شده پیدا نشد." }, 404, origin);
+      const { data: profile, error } = await db.from("baladi_game_profiles")
+        .update({ avatar_path: avatarPath, updated_at: new Date().toISOString() })
+        .eq("user_id", user.id)
+        .select("user_id,display_name,avatar_path,equipped_frame_id,avatar_unlocked,coins")
+        .single();
+      if (error) throw error;
+      return out({ ok: true, profile }, 200, origin);
+    }
+
     if (action === "leaderboard") {
       const { data, error } = await db.from("baladi_game_profiles")
         .select("user_id,display_name,current_level,coins,wins,losses,avatar_path,equipped_frame_id")
