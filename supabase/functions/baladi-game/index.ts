@@ -89,7 +89,9 @@ Deno.serve(async (req: Request) => {
     if (action === "complete_level") {
       const level = Number(body?.level);
       if (!Number.isInteger(level) || level < 1 || level > 10000) return out({ error: "شماره مرحله معتبر نیست." }, 400, origin);
-      const { data, error } = await db.rpc("baladi_complete_level", { p_user_id: user.id, p_level: level });
+      const sessionId = body?.session_id;
+      if (!uuid(sessionId)) return out({ error: "نشست فعال بازی معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_complete_level", { p_user_id: user.id, p_level: level, p_session_id: sessionId });
       if (error) return out({ error: error.message || "ثبت مرحله انجام نشد." }, 409, origin);
       if (uuid(body?.session_id)) {
         await db.from("baladi_game_sessions").update({ end_level: Math.min(10000, level + 1) })
@@ -99,7 +101,14 @@ Deno.serve(async (req: Request) => {
     }
 
     if (action === "use_hint") {
-      const { data, error } = await db.rpc("baladi_spend_hint", { p_user_id: user.id });
+      const sessionId = body?.session_id;
+      const level = Number(body?.level);
+      const word = String(body?.word || "").trim().normalize("NFC");
+      if (!uuid(sessionId) || !Number.isInteger(level) || level < 1 || word.length < 2 || word.length > 24)
+        return out({ error: "اطلاعات راهنما معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_spend_hint", {
+        p_user_id: user.id, p_session_id: sessionId, p_level: level, p_word: word
+      });
       if (error) return out({ error: error.message || "مصرف سکه برای راهنما انجام نشد." }, 409, origin);
       return out({ ok: true, profile: data }, 200, origin);
     }
@@ -114,20 +123,37 @@ Deno.serve(async (req: Request) => {
         .select("id").eq("id", sessionId).eq("user_id", user.id).is("ended_at", null).maybeSingle();
       if (sessionError) throw sessionError;
       if (!activeSession) return out({ error: "نشست بازی فعال نیست." }, 409, origin);
+      const { data: current, error: currentError } = await db.from("baladi_game_profiles")
+        .select("current_level,coins,words_found").eq("user_id", user.id).single();
+      if (currentError) throw currentError;
+      if (Number(current.current_level) !== level)
+        return out({ error: "این مرحله در حساب شما فعال نیست." }, 409, origin);
+      const { data: catalog, error: catalogError } = await db.from("baladi_game_level_catalog")
+        .select("answers").eq("level_number", level).eq("is_active", true).maybeSingle();
+      if (catalogError) throw catalogError;
+      if (!catalog || !(catalog.answers || []).includes(word))
+        return out({ error: "این واژه در فهرست پاسخ‌های معتبر مرحله نیست." }, 400, origin);
       const eventKey = level + ":" + word;
       const { error: eventError } = await db.from("baladi_game_events").insert({
         user_id: user.id, session_id: sessionId, event_type: "word_found",
-        event_key: eventKey, level_number: level, metadata: { word }
+        event_key: eventKey, level_number: level, metadata: { word, source: "manual" }
       });
       if (eventError && eventError.code !== "23505") throw eventError;
       if (!eventError) {
-        const { data: current } = await db.from("baladi_game_profiles").select("words_found").eq("user_id", user.id).single();
-        await db.from("baladi_game_profiles").update({
-          words_found: (Number(current?.words_found) || 0) + 1,
+        const { data: updatedProfile, error: profileUpdateError } = await db.from("baladi_game_profiles").update({
+          words_found: Number(current.words_found || 0) + 1,
+          coins: Number(current.coins || 0) + 3,
           updated_at: new Date().toISOString()
-        }).eq("user_id", user.id);
+        }).eq("user_id", user.id)
+          .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,hints_used,last_played_at")
+          .single();
+        if (profileUpdateError) throw profileUpdateError;
+        return out({ ok: true, profile: updatedProfile }, 200, origin);
       }
-      return out({ ok: true }, 200, origin);
+      const { data: unchangedProfile } = await db.from("baladi_game_profiles")
+        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,hints_used,last_played_at")
+        .eq("user_id", user.id).single();
+      return out({ ok: true, profile: unchangedProfile }, 200, origin);
     }
 
     return out({ error: "عملیات ناشناخته است." }, 400, origin);
