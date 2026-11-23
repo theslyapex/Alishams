@@ -41,7 +41,7 @@ Deno.serve(async (req: Request) => {
         .upsert({ user_id: user.id }, { onConflict: "user_id", ignoreDuplicates: true });
       if (ensureError) throw ensureError;
       const { data: profile, error } = await db.from("baladi_game_profiles")
-        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,hints_used,last_played_at,created_at")
+        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,created_at")
         .eq("user_id", user.id).single();
       if (error) throw error;
       const { data: sessions, error: sessionError } = await db.from("baladi_game_sessions")
@@ -147,7 +147,7 @@ Deno.serve(async (req: Request) => {
       if (sessionError) throw sessionError;
       if (!activeSession) return out({ error: "نشست بازی فعال نیست." }, 409, origin);
       const { data: current, error: currentError } = await db.from("baladi_game_profiles")
-        .select("current_level,coins,words_found").eq("user_id", user.id).single();
+        .select("current_level,coins,words_found,bonus_words_found").eq("user_id", user.id).single();
       if (currentError) throw currentError;
       if (Number(current.current_level) !== level)
         return out({ error: "این مرحله در حساب شما فعال نیست." }, 409, origin);
@@ -175,10 +175,11 @@ Deno.serve(async (req: Request) => {
       if (!eventError) {
         const { data: updatedProfile, error: profileUpdateError } = await db.from("baladi_game_profiles").update({
           words_found: Number(current.words_found || 0) + 1,
+          bonus_words_found: Number(current.bonus_words_found || 0) + (isAnswer ? 0 : 1),
           coins: Number(current.coins || 0) + reward,
           updated_at: new Date().toISOString()
         }).eq("user_id", user.id)
-          .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,hints_used,last_played_at")
+          .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at")
           .single();
         if (profileUpdateError) throw profileUpdateError;
         return out({ ok: true, profile: updatedProfile, word_type: isAnswer ? "answer" : "bonus", coins_awarded: reward }, 200, origin);
