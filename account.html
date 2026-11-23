@@ -892,7 +892,7 @@ async function loadBaladiGameModule(){
    return '<article class="item"><div class="row" style="justify-content:space-between;gap:10px"><strong>'+when+'</strong><span class="badge">'+state+'</span></div><p class="muted">'+time+' · مرحله '+fa(x.start_level)+' تا '+fa(x.end_level)+'</p></article>';
   }).join(""):'<div class="empty">هنوز نشستی برای بازی ثبت نشده است. اولین بازی شما اینجا نمایش داده می‌شود.</div>';
   const events=Array.isArray(data.coin_history)?data.coin_history:[];
-  const eventTitle=e=>e.event_type==="level_completed"?"پاداش تکمیل مرحله":e.event_type==="hint_used"?"مصرف راهنما":e.event_type==="bonus_word_found"?"پاداش واژه اضافه":e.event_type==="word_found"?"کشف واژه":"تغییر موجودی";
+  const eventTitle=e=>e.event_type==="level_completed"?"پاداش تکمیل مرحله":e.event_type==="hint_used"?"مصرف راهنما":e.event_type==="hint_clue_used"?"مصرف راهنمای مرحله":e.event_type==="daily_streak_reward"?"پاداش ۷ روز ورود متوالی":e.event_type==="bonus_word_found"?"پاداش واژه اضافه":e.event_type==="word_found"?"کشف واژه":"تغییر موجودی";
   coinHistory.innerHTML=events.length?events.map(e=>{
    const amount=Number(e.coin_delta||0),sign=amount>0?"+":"";
    const when=e.created_at?new Date(e.created_at).toLocaleString("fa-IR"):"—";
