@@ -23868,3 +23868,7 @@ insert into public.baladi_game_dictionary(word,source) values
 ('یگونه','moein_derived_mit'),
 ('ییلاق','moein_derived_mit')
 on conflict(word) do nothing;
+
+create unique index if not exists baladi_game_bonus_words_unique
+on public.baladi_game_events(user_id,event_key)
+where event_type='bonus_word_found' and event_key is not null;
