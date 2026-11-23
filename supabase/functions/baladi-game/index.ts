@@ -132,7 +132,7 @@ Deno.serve(async (req: Request) => {
     }
 
     if (action === "word_found") {
-      const word = String(body?.word || "").trim().normalize("NFC");
+      const word = String(body?.word || "").trim().normalize("NFC").replace(/[ي]/g, "ی").replace(/[ك]/g, "ک").replace(/[‌ـ]/g, "");
       const sessionId = body?.session_id;
       const level = Number(body?.level);
       if (!uuid(sessionId) || !Number.isInteger(level) || level < 1 || word.length < 2 || word.length > 24)
@@ -149,29 +149,39 @@ Deno.serve(async (req: Request) => {
       const { data: catalog, error: catalogError } = await db.from("baladi_game_level_catalog")
         .select("answers").eq("level_number", level).eq("is_active", true).maybeSingle();
       if (catalogError) throw catalogError;
-      if (!catalog || !(catalog.answers || []).includes(word))
-        return out({ error: "این واژه در فهرست پاسخ‌های معتبر مرحله نیست." }, 400, origin);
+      if (!catalog) return out({ error: "اطلاعات مرحله در سرور موجود نیست." }, 404, origin);
+      const isAnswer = (catalog.answers || []).includes(word);
+      if (!isAnswer) {
+        const { data: dictionaryEntry, error: dictionaryError } = await db.from("baladi_game_dictionary")
+          .select("word").eq("word", word).maybeSingle();
+        if (dictionaryError) throw dictionaryError;
+        if (!dictionaryEntry)
+          return out({ error: "این واژه در واژه‌نامه فارسی تأیید نشده است." }, 400, origin);
+      }
+      const eventType = isAnswer ? "word_found" : "bonus_word_found";
+      const reward = isAnswer ? 3 : 7;
       const eventKey = level + ":" + word;
       const { error: eventError } = await db.from("baladi_game_events").insert({
-        user_id: user.id, session_id: sessionId, event_type: "word_found",
-        event_key: eventKey, level_number: level, coin_delta: 3, metadata: { word, source: "manual" }
+        user_id: user.id, session_id: sessionId, event_type: eventType,
+        event_key: eventKey, level_number: level, coin_delta: reward,
+        metadata: { word, source: isAnswer ? "answer" : "dictionary_bonus" }
       });
       if (eventError && eventError.code !== "23505") throw eventError;
       if (!eventError) {
         const { data: updatedProfile, error: profileUpdateError } = await db.from("baladi_game_profiles").update({
           words_found: Number(current.words_found || 0) + 1,
-          coins: Number(current.coins || 0) + 3,
+          coins: Number(current.coins || 0) + reward,
           updated_at: new Date().toISOString()
         }).eq("user_id", user.id)
           .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,hints_used,last_played_at")
           .single();
         if (profileUpdateError) throw profileUpdateError;
-        return out({ ok: true, profile: updatedProfile }, 200, origin);
+        return out({ ok: true, profile: updatedProfile, word_type: isAnswer ? "answer" : "bonus", coins_awarded: reward }, 200, origin);
       }
       const { data: unchangedProfile } = await db.from("baladi_game_profiles")
         .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,hints_used,last_played_at")
         .eq("user_id", user.id).single();
-      return out({ ok: true, profile: unchangedProfile }, 200, origin);
+      return out({ ok: true, profile: unchangedProfile, word_type: isAnswer ? "answer" : "bonus", coins_awarded: 0, already_found: true }, 200, origin);
     }
 
     return out({ error: "عملیات ناشناخته است." }, 400, origin);
