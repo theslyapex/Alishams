@@ -2,6 +2,8 @@ alter table public.baladi_game_profiles
   add column if not exists diamonds integer not null default 0 check (diamonds >= 0),
   add column if not exists name_change_count integer not null default 0 check (name_change_count >= 0);
 
+update public.baladi_game_profiles set name_change_count=1 where name_change_count=0 and display_name is not null and length(trim(display_name))>0;
+
 create or replace function public.baladi_change_display_name(p_user_id uuid, p_display_name text)
 returns jsonb language plpgsql security definer set search_path = public, pg_temp
 as $$
