@@ -89,7 +89,12 @@ Deno.serve(async (req: Request) => {
         .eq("level_number", profile.current_level);
       if (wordsError) throw wordsError;
       const foundWords = (savedWords || []).map((item: any) => String(item.metadata?.word || "")).filter(Boolean);
-      return out({ ok: true, session, profile, found_words: foundWords }, 201, origin);
+      const { data: savedBonusWords, error: bonusWordsError } = await db.from("baladi_game_events")
+        .select("metadata").eq("user_id", user.id).eq("event_type", "bonus_word_found")
+        .eq("level_number", profile.current_level);
+      if (bonusWordsError) throw bonusWordsError;
+      const foundBonusWords = (savedBonusWords || []).map((item: any) => String(item.metadata?.word || "")).filter(Boolean);
+      return out({ ok: true, session, profile, found_words: foundWords, found_bonus_words: foundBonusWords }, 201, origin);
     }
 
     if (action === "touch_session" || action === "end_session") {
