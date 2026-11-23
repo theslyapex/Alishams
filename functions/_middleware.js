@@ -4,8 +4,17 @@ const SKIP = new Set([
   "/portfolio-admin.html", "/studio-control-7f3c9a.html"
 ]);
 export async function onRequest(context) {
+  const requestUrl = new URL(context.request.url);
+  if (requestUrl.protocol === "http:") {
+    requestUrl.protocol = "https:";
+    return Response.redirect(requestUrl.toString(), 301);
+  }
+  if (requestUrl.pathname === "/index.html") {
+    requestUrl.pathname = "/";
+    return Response.redirect(requestUrl.toString(), 301);
+  }
   const response = await context.next();
-  const url = new URL(context.request.url);
+  const url = requestUrl;
   const type = response.headers.get("content-type") || "";
   if (!type.toLowerCase().includes("text/html") || SKIP.has(url.pathname)) return response;
   return new HTMLRewriter()
