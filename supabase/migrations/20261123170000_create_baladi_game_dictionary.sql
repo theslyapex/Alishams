@@ -1,3 +1,8 @@
+-- Persian bonus-word dictionary for Baladi?
+-- Source: https://github.com/MehdiRaash/persian-words
+-- Source license: MIT, Copyright (c) 2019 Mehdi Raash.
+-- The list is normalized to Persian Yeh/Kaf and filtered to 2-6 character Persian words.
+-- A full copy of the MIT notice is shipped in the Baladi Android project at data/dictionary/LICENSE.txt.
 create table if not exists public.baladi_game_dictionary (
  word text primary key,
  source text not null default 'moein_derived_mit',
