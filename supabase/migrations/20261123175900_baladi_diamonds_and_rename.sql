@@ -10,6 +10,7 @@ as $$
 declare
   v_profile public.baladi_game_profiles%rowtype;
   v_name text := normalize(trim(coalesce(p_display_name,'')), NFC);
+  v_spent integer := 0;
 begin
   if p_user_id is null then raise exception 'حساب کاربری معتبر نیست.'; end if;
   if char_length(v_name) < 2 or char_length(v_name) > 24 or v_name ~ '[[:cntrl:]]' then
@@ -17,8 +18,12 @@ begin
   end if;
   select * into v_profile from public.baladi_game_profiles where user_id = p_user_id for update;
   if not found then raise exception 'پروفایل بازی پیدا نشد.'; end if;
+  if v_profile.display_name is not distinct from v_name then
+    return jsonb_build_object('profile',to_jsonb(v_profile),'diamonds_spent',0);
+  end if;
   if v_profile.name_change_count >= 1 then
     if v_profile.diamonds < 1 then raise exception 'برای تغییر دوباره نام، یک الماس لازم داری.'; end if;
+    v_spent := 1;
     update public.baladi_game_profiles set diamonds = diamonds - 1, display_name = v_name,
       name_change_count = name_change_count + 1, updated_at = now()
       where user_id = p_user_id returning * into v_profile;
@@ -29,9 +34,11 @@ begin
     update public.baladi_game_profiles set display_name = v_name, name_change_count = 1, updated_at = now()
       where user_id = p_user_id returning * into v_profile;
   end if;
-  return jsonb_build_object('profile',to_jsonb(v_profile),'diamonds_spent',case when v_profile.name_change_count > 1 then 1 else 0 end);
+  return jsonb_build_object('profile',to_jsonb(v_profile),'diamonds_spent',v_spent);
 end;
 $$;
+revoke all on function public.baladi_change_display_name(uuid,text) from public, anon, authenticated;
+grant execute on function public.baladi_change_display_name(uuid,text) to service_role;
 
 create or replace function public.baladi_complete_level(p_user_id uuid, p_level integer, p_session_id uuid)
 returns jsonb language plpgsql security definer set search_path = public, pg_temp
