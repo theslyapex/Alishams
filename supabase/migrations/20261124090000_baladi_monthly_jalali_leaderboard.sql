@@ -193,3 +193,7 @@ select cron.schedule(
     );
   $job$
 );
+
+create index if not exists baladi_monthly_leaderboard_user_idx on public.baladi_monthly_leaderboard(user_id);
+create index if not exists baladi_game_events_monthly_stats_idx on public.baladi_game_events(created_at,event_type);
+create index if not exists baladi_duel_matches_monthly_wins_idx on public.baladi_duel_matches(finished_at,winner_id) where status='completed';
