@@ -41,7 +41,7 @@ Deno.serve(async (req: Request) => {
         .upsert({ user_id: user.id }, { onConflict: "user_id", ignoreDuplicates: true });
       if (ensureError) throw ensureError;
       const { data: profile, error } = await db.from("baladi_game_profiles")
-        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,created_at,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses,chat_unlocked_at,diamonds,name_change_count")
+        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,created_at,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses,chat_unlocked_at,diamonds,name_change_count,is_verified")
         .eq("user_id", user.id).single();
       if (error) throw error;
 
@@ -57,7 +57,7 @@ Deno.serve(async (req: Request) => {
         const { data: updatedProfile, error: nameError } = await db.from("baladi_game_profiles")
           .update({ display_name: metadataName, updated_at: new Date().toISOString() })
           .eq("user_id", user.id)
-          .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,created_at,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses,chat_unlocked_at,diamonds,name_change_count")
+          .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,created_at,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses,chat_unlocked_at,diamonds,name_change_count,is_verified")
           .single();
         if (nameError) throw nameError;
         Object.assign(profile, updatedProfile);
@@ -160,7 +160,7 @@ Deno.serve(async (req: Request) => {
       if (error) throw error;
       const userIds = [...new Set((messages || []).map((message: any) => message.user_id))];
       const { data: profiles, error: profilesError } = userIds.length
-        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id,current_level").in("user_id", userIds)
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id,current_level,is_verified").in("user_id", userIds)
         : { data: [], error: null };
       if (profilesError) throw profilesError;
       const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
@@ -242,7 +242,7 @@ Deno.serve(async (req: Request) => {
 
     if (action === "leaderboard") {
       const { data, error } = await db.from("baladi_game_profiles")
-        .select("user_id,display_name,current_level,coins,wins,losses,avatar_path,equipped_frame_id")
+        .select("user_id,display_name,current_level,coins,wins,losses,avatar_path,equipped_frame_id,is_verified")
         .order("current_level", { ascending: false })
         .order("coins", { ascending: false })
         .order("wins", { ascending: false })
@@ -256,7 +256,7 @@ Deno.serve(async (req: Request) => {
       const targetId = String(body?.user_id || "");
       if (!uuid(targetId)) return out({ error: "شناسه بازیکن معتبر نیست." }, 400, origin);
       const { data: profile, error } = await db.from("baladi_game_profiles")
-        .select("user_id,display_name,current_level,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,wins,losses,avatar_path,equipped_frame_id,created_at")
+        .select("user_id,display_name,current_level,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,wins,losses,avatar_path,equipped_frame_id,created_at,is_verified")
         .eq("user_id", targetId).maybeSingle();
       if (error) throw error;
       if (!profile) return out({ error: "پروفایل بازیکن پیدا نشد." }, 404, origin);
@@ -277,13 +277,14 @@ Deno.serve(async (req: Request) => {
       for (const member of members || []) memberCounts.set(member.group_id, (memberCounts.get(member.group_id) || 0) + 1);
       const leaderIds = [...new Set((groups || []).map((group: any) => group.leader_id))];
       const { data: leaders, error: leaderError } = leaderIds.length
-        ? await db.from("baladi_game_profiles").select("user_id,display_name").in("user_id", leaderIds)
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,is_verified").in("user_id", leaderIds)
         : { data: [], error: null };
       if (leaderError) throw leaderError;
-      const leaderMap = new Map((leaders || []).map((profile: any) => [profile.user_id, profile.display_name]));
+      const leaderMap = new Map((leaders || []).map((profile: any) => [profile.user_id, profile]));
       return out({ ok: true, groups: (groups || []).map((group: any) => ({
         ...group, member_count: memberCounts.get(group.id) || 0,
-        leader_name: leaderMap.get(group.leader_id) || "بازیکن"
+        leader_name: leaderMap.get(group.leader_id)?.display_name || "بازیکن",
+        leader_is_verified: Boolean(leaderMap.get(group.leader_id)?.is_verified)
       })) }, 200, origin);
     }
 
@@ -300,7 +301,7 @@ Deno.serve(async (req: Request) => {
       if (membersError) throw membersError;
       const ids = (members || []).map((member: any) => member.user_id);
       const { data: profiles, error: profilesError } = ids.length
-        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id,wins,losses").in("user_id", ids)
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id,wins,losses,is_verified").in("user_id", ids)
         : { data: [], error: null };
       if (profilesError) throw profilesError;
       const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
@@ -383,7 +384,7 @@ Deno.serve(async (req: Request) => {
       const rows = (messages || []).reverse();
       const ids = [...new Set(rows.map((message: any) => message.user_id))];
       const { data: profiles, error: profilesError } = ids.length
-        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id").in("user_id", ids)
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id,is_verified").in("user_id", ids)
         : { data: [], error: null };
       if (profilesError) throw profilesError;
       const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
@@ -432,7 +433,7 @@ Deno.serve(async (req: Request) => {
       if (error) throw error;
       const ids = [...new Set((invites || []).map((invite: any) => invite.sender_id))];
       const { data: profiles, error: profilesError } = ids.length
-        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id").in("user_id", ids)
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id,is_verified").in("user_id", ids)
         : { data: [], error: null };
       if (profilesError) throw profilesError;
       const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
@@ -512,7 +513,7 @@ Deno.serve(async (req: Request) => {
         });
       }
       const { data: profile, error: profileError } = await db.from("baladi_game_profiles")
-        .select("current_level,coins,diamonds,name_change_count,sessions_count,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses").eq("user_id", user.id).single();
+        .select("current_level,coins,diamonds,name_change_count,sessions_count,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses,is_verified").eq("user_id", user.id).single();
       if (profileError) throw profileError;
       const { data: session, error: insertError } = await db.from("baladi_game_sessions").insert({
         user_id: user.id,
