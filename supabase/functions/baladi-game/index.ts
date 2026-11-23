@@ -366,6 +366,73 @@ Deno.serve(async (req: Request) => {
       return out({ ok: true, result: data }, 200, origin);
     }
 
+    if (action === "duel_invites_list") {
+      const { data: invites, error } = await db.from("baladi_duel_invites")
+        .select("id,sender_id,created_at,expires_at,status")
+        .eq("recipient_id", user.id).eq("status", "pending")
+        .gt("expires_at", new Date().toISOString())
+        .order("created_at", { ascending: false }).limit(20);
+      if (error) throw error;
+      const ids = [...new Set((invites || []).map((invite: any) => invite.sender_id))];
+      const { data: profiles, error: profilesError } = ids.length
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id").in("user_id", ids)
+        : { data: [], error: null };
+      if (profilesError) throw profilesError;
+      const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
+      return out({ ok: true, invites: (invites || []).map((invite: any) => ({ ...invite, sender: profileMap.get(invite.sender_id) || { display_name: "بازیکن" } })) }, 200, origin);
+    }
+
+    if (action === "send_duel_invite") {
+      const targetId = String(body?.recipient_id || "");
+      if (!uuid(targetId)) return out({ error: "شناسه بازیکن معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_send_duel_invite", { p_sender_id: user.id, p_recipient_id: targetId });
+      if (error) return out({ error: error.message || "ارسال دعوت انجام نشد." }, 409, origin);
+      return out({ ok: true, invite: data }, 201, origin);
+    }
+
+    if (action === "accept_duel_invite") {
+      const inviteId = String(body?.invite_id || "");
+      if (!uuid(inviteId)) return out({ error: "شناسه درخواست معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_accept_duel_invite", { p_user_id: user.id, p_invite_id: inviteId });
+      if (error) return out({ error: error.message || "پذیرش مسابقه انجام نشد." }, 409, origin);
+      return out({ ok: true, ...data }, 200, origin);
+    }
+
+    if (action === "decline_duel_invite") {
+      const inviteId = String(body?.invite_id || "");
+      if (!uuid(inviteId)) return out({ error: "شناسه درخواست معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_decline_duel_invite", { p_user_id: user.id, p_invite_id: inviteId });
+      if (error) return out({ error: error.message || "رد درخواست انجام نشد." }, 409, origin);
+      return out({ ok: true, result: data }, 200, origin);
+    }
+
+    if (action === "duel_state") {
+      const matchId = String(body?.match_id || "");
+      if (!uuid(matchId)) return out({ error: "شناسه مسابقه معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_duel_state", { p_user_id: user.id, p_match_id: matchId });
+      if (error) return out({ error: error.message || "وضعیت مسابقه دریافت نشد." }, 409, origin);
+      return out({ ok: true, state: data }, 200, origin);
+    }
+
+    if (action === "duel_submit_word") {
+      const matchId = String(body?.match_id || "");
+      const word = String(body?.word || "");
+      if (!uuid(matchId) || word.trim().length < 2 || word.length > 24)
+        return out({ error: "اطلاعات واژه یا مسابقه معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_duel_submit_word", { p_user_id: user.id, p_match_id: matchId, p_word: word });
+      if (error) return out({ error: error.message || "بررسی واژه انجام نشد." }, 409, origin);
+      return out({ ok: true, result: data }, 200, origin);
+    }
+
+    if (action === "duel_spend_hint") {
+      const matchId = String(body?.match_id || "");
+      const hintType = String(body?.hint_type || "");
+      if (!uuid(matchId)) return out({ error: "شناسه مسابقه معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_duel_spend_hint", { p_user_id: user.id, p_match_id: matchId, p_hint_type: hintType });
+      if (error) return out({ error: error.message || "استفاده از راهنمای مسابقه انجام نشد." }, 409, origin);
+      return out({ ok: true, result: data }, 200, origin);
+    }
+
     if (action === "start_session") {
       const { error: ensureError } = await db.from("baladi_game_profiles")
         .upsert({ user_id: user.id }, { onConflict: "user_id", ignoreDuplicates: true });
