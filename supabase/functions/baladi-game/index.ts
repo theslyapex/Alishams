@@ -44,6 +44,24 @@ Deno.serve(async (req: Request) => {
         .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,created_at,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses,chat_unlocked_at,diamonds,name_change_count")
         .eq("user_id", user.id).single();
       if (error) throw error;
+
+      // Backfill an empty game display name from the identity provider metadata.
+      // Never overwrite a name that the player has chosen inside the game.
+      const userMetadata = user.user_metadata || {};
+      const metadataName = String(
+        userMetadata.full_name || userMetadata.name ||
+        userMetadata.nickname || userMetadata.preferred_username || ""
+      ).trim().normalize("NFC");
+      if ((!profile.display_name || !String(profile.display_name).trim()) &&
+          metadataName.length >= 2 && metadataName.length <= 24) {
+        const { data: updatedProfile, error: nameError } = await db.from("baladi_game_profiles")
+          .update({ display_name: metadataName, updated_at: new Date().toISOString() })
+          .eq("user_id", user.id)
+          .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,created_at,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses,chat_unlocked_at,diamonds,name_change_count")
+          .single();
+        if (nameError) throw nameError;
+        Object.assign(profile, updatedProfile);
+      }
       const { data: sessions, error: sessionError } = await db.from("baladi_game_sessions")
         .select("id,started_at,ended_at,duration_seconds,start_level,end_level,device_platform")
         .eq("user_id", user.id).order("started_at", { ascending: false }).limit(10);
