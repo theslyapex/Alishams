@@ -71,7 +71,12 @@ Deno.serve(async (req: Request) => {
         updated_at: new Date().toISOString()
       }).eq("user_id", user.id);
       if (updateError) throw updateError;
-      return out({ ok: true, session, profile }, 201, origin);
+      const { data: savedWords, error: wordsError } = await db.from("baladi_game_events")
+        .select("metadata").eq("user_id", user.id).eq("event_type", "word_found")
+        .eq("level_number", profile.current_level);
+      if (wordsError) throw wordsError;
+      const foundWords = (savedWords || []).map((item: any) => String(item.metadata?.word || "")).filter(Boolean);
+      return out({ ok: true, session, profile, found_words: foundWords }, 201, origin);
     }
 
     if (action === "touch_session" || action === "end_session") {
