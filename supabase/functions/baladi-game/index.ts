@@ -152,9 +152,22 @@ Deno.serve(async (req: Request) => {
       if (Number(current.current_level) !== level)
         return out({ error: "این مرحله در حساب شما فعال نیست." }, 409, origin);
       const { data: catalog, error: catalogError } = await db.from("baladi_game_level_catalog")
-        .select("answers").eq("level_number", level).eq("is_active", true).maybeSingle();
+        .select("answers,letters").eq("level_number", level).eq("is_active", true).maybeSingle();
       if (catalogError) throw catalogError;
       if (!catalog) return out({ error: "اطلاعات مرحله در سرور موجود نیست." }, 404, origin);
+      const availableLetters = new Map<string, number>();
+      for (const letter of (catalog.letters || [])) {
+        const normalizedLetter = String(letter).normalize("NFC").replace(/[ي]/g, "ی").replace(/[ك]/g, "ک");
+        availableLetters.set(normalizedLetter, (availableLetters.get(normalizedLetter) || 0) + 1);
+      }
+      let canBeFormed = true;
+      for (const character of Array.from(word)) {
+        const remaining = availableLetters.get(character) || 0;
+        if (remaining < 1) { canBeFormed = false; break; }
+        availableLetters.set(character, remaining - 1);
+      }
+      if (!canBeFormed)
+        return out({ error: "این واژه با حروف همین مرحله ساخته نمی‌شود." }, 400, origin);
       const isAnswer = (catalog.answers || []).includes(word);
       if (!isAnswer) {
         const { data: dictionaryEntry, error: dictionaryError } = await db.from("baladi_game_dictionary")
