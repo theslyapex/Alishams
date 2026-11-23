@@ -368,6 +368,19 @@ Deno.serve(async (req: Request) => {
       return out({ ok: true, result: data }, 200, origin);
     }
 
+    if (action === "active_duel") {
+      const { data: match, error } = await db.from("baladi_duel_matches")
+        .select("id,status,started_at")
+        .eq("status", "active")
+        .or(`player_one.eq.${user.id},player_two.eq.${user.id}`)
+        .order("started_at", { ascending: false }).limit(1).maybeSingle();
+      if (error) throw error;
+      if (!match) return out({ ok: true, match_id: null, state: null }, 200, origin);
+      const { data: state, error: stateError } = await db.rpc("baladi_duel_state", { p_user_id: user.id, p_match_id: match.id });
+      if (stateError) throw stateError;
+      return out({ ok: true, match_id: match.id, state }, 200, origin);
+    }
+
     if (action === "duel_invites_list") {
       const { data: invites, error } = await db.from("baladi_duel_invites")
         .select("id,sender_id,created_at,expires_at,status")
