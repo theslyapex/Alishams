@@ -64,7 +64,7 @@ Deno.serve(async (req: Request) => {
       const { data: profile, error } = await db.from("baladi_game_profiles")
         .update({ display_name: displayName, updated_at: new Date().toISOString() })
         .eq("user_id", user.id)
-        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,display_name,daily_streak,last_checkin_date")
+        .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses,chat_unlocked_at")
         .single();
       if (error) throw error;
       return out({ ok: true, profile }, 200, origin);
@@ -194,7 +194,7 @@ Deno.serve(async (req: Request) => {
         });
       }
       const { data: profile, error: profileError } = await db.from("baladi_game_profiles")
-        .select("current_level,coins,sessions_count,display_name,daily_streak,last_checkin_date").eq("user_id", user.id).single();
+        .select("current_level,coins,sessions_count,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,wins,losses").eq("user_id", user.id).single();
       if (profileError) throw profileError;
       const { data: session, error: insertError } = await db.from("baladi_game_sessions").insert({
         user_id: user.id,
