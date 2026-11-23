@@ -77,7 +77,10 @@ Deno.serve(async (req: Request) => {
         ok: true,
         profile: data?.profile || null,
         reward: Number(data?.reward || 0),
-        already_checked_in: Boolean(data?.already_checked_in)
+        already_checked_in: Boolean(data?.already_checked_in),
+        streak_day: Number(data?.streak_day || data?.profile?.daily_streak || 0),
+        cycle_day: Number(data?.cycle_day || 0),
+        next_reward: Number(data?.next_reward || 0)
       }, 200, origin);
     }
 
