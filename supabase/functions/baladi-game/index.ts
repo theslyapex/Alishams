@@ -386,6 +386,10 @@ Deno.serve(async (req: Request) => {
       const { data: group, error: groupError } = await db.from("baladi_groups")
         .select("id,name,description,leader_id,capacity,group_level,upgrade_progress,created_at").eq("id", membership.group_id).single();
       if (groupError) throw groupError;
+      const todayTehran = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tehran", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+      const { data: dailyClaim, error: dailyClaimError } = await db.from("baladi_group_daily_claims")
+        .select("reward_coins").eq("group_id", membership.group_id).eq("user_id", user.id).eq("reward_date", todayTehran).maybeSingle();
+      if (dailyClaimError) throw dailyClaimError;
       const { data: members, error: membersError } = await db.from("baladi_group_members")
         .select("user_id,role,joined_at").eq("group_id", membership.group_id).order("joined_at", { ascending: true });
       if (membersError) throw membersError;
@@ -395,7 +399,7 @@ Deno.serve(async (req: Request) => {
         : { data: [], error: null };
       if (profilesError) throw profilesError;
       const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
-      return out({ ok: true, group: { ...group, my_role: membership.role }, members: (members || []).map((member: any) => ({ ...member, player: profileMap.get(member.user_id) || { display_name: "بازیکن" } })) }, 200, origin);
+      return out({ ok: true, group: { ...group, my_role: membership.role, daily_reward_claimed: Boolean(dailyClaim), daily_reward_claimed_amount: Number(dailyClaim?.reward_coins || 0) }, members: (members || []).map((member: any) => ({ ...member, player: profileMap.get(member.user_id) || { display_name: "بازیکن" } })) }, 200, origin);
     }
 
     if (action === "create_group") {
