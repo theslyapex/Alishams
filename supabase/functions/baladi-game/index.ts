@@ -470,6 +470,19 @@ Deno.serve(async (req: Request) => {
       return out({ ok: true, messages: rows.map((message: any) => ({ ...message, player: profileMap.get(message.user_id) || { display_name: "بازیکن" } })) }, 200, origin);
     }
 
+    if (action === "report_group_chat_message") {
+      const groupId = String(body?.group_id || "");
+      const messageId = Number(body?.message_id || 0);
+      const reason = String(body?.reason || "");
+      if (!uuid(groupId) || !Number.isSafeInteger(messageId) || messageId <= 0)
+        return out({ error: "شناسه پیام یا گروه معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_report_group_chat_message", {
+        p_user_id: user.id, p_group_id: groupId, p_message_id: messageId, p_reason: reason
+      });
+      if (error) return out({ error: error.message || "گزارش پیام ثبت نشد." }, 409, origin);
+      return out({ ok: true, result: data }, 201, origin);
+    }
+
     if (action === "group_chat_send") {
       const groupId = String(body?.group_id || "");
       if (!uuid(groupId)) return out({ error: "شناسه گروه معتبر نیست." }, 400, origin);
