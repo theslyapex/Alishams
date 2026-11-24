@@ -26,6 +26,12 @@ begin
 end $$;
 revoke all on function public.baladi_equip_avatar(uuid,text) from public,anon,authenticated;
 grant execute on function public.baladi_equip_avatar(uuid,text) to service_role;
+alter table public.baladi_game_events drop constraint if exists baladi_game_events_event_type_check;
+alter table public.baladi_game_events add constraint baladi_game_events_event_type_check
+ check (event_type = any (array[
+ 'level_completed','hint_used','word_found','bonus_word_found','daily_streak_reward',
+ 'hint_clue_used','monthly_leaderboard_reward','group_contribution','group_daily_reward'
+ ]::text[]));
 create or replace function public.baladi_group_contribute(p_user_id uuid,p_group_id uuid,p_amount integer)
 returns jsonb language plpgsql set search_path=public,pg_temp as $$
 declare v_group public.baladi_groups%rowtype; v_profile public.baladi_game_profiles%rowtype; v_target integer; v_progress integer; v_new_level integer; v_next_target integer;
