@@ -197,7 +197,7 @@ Deno.serve(async (req: Request) => {
       if (error) throw error;
       const userIds = [...new Set((messages || []).map((message: any) => message.user_id))];
       const { data: profiles, error: profilesError } = userIds.length
-        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id,equipped_avatar_id,equipped_avatar_id,current_level,is_verified").in("user_id", userIds)
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id,equipped_avatar_id,current_level,is_verified").in("user_id", userIds)
         : { data: [], error: null };
       if (profilesError) throw profilesError;
       const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
@@ -294,7 +294,7 @@ Deno.serve(async (req: Request) => {
       const { data: profile, error } = await db.from("baladi_game_profiles")
         .update({ avatar_path: avatarPath, updated_at: new Date().toISOString() })
         .eq("user_id", user.id)
-        .select("user_id,display_name,avatar_path,equipped_frame_id,equipped_avatar_id,equipped_avatar_id,avatar_unlocked,coins")
+        .select("user_id,display_name,avatar_path,equipped_frame_id,equipped_avatar_id,avatar_unlocked,coins")
         .single();
       if (error) throw error;
       return out({ ok: true, profile }, 200, origin);
@@ -324,7 +324,7 @@ Deno.serve(async (req: Request) => {
       if (winnersError) throw winnersError;
 
       const { data, error } = await db.from("baladi_game_profiles")
-        .select("user_id,display_name,current_level,coins,wins,losses,avatar_path,equipped_frame_id,equipped_avatar_id,equipped_avatar_id,is_verified")
+        .select("user_id,display_name,current_level,coins,wins,losses,avatar_path,equipped_frame_id,equipped_avatar_id,is_verified")
         .order("current_level", { ascending: false })
         .order("coins", { ascending: false })
         .order("wins", { ascending: false })
@@ -346,7 +346,7 @@ Deno.serve(async (req: Request) => {
       const targetId = String(body?.user_id || "");
       if (!uuid(targetId)) return out({ error: "شناسه بازیکن معتبر نیست." }, 400, origin);
       const { data: profile, error } = await db.from("baladi_game_profiles")
-        .select("user_id,display_name,current_level,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,wins,losses,avatar_path,equipped_frame_id,equipped_avatar_id,equipped_avatar_id,created_at,is_verified")
+        .select("user_id,display_name,current_level,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,wins,losses,avatar_path,equipped_frame_id,equipped_avatar_id,created_at,is_verified")
         .eq("user_id", targetId).maybeSingle();
       if (error) throw error;
       if (!profile) return out({ error: "پروفایل بازیکن پیدا نشد." }, 404, origin);
@@ -391,7 +391,7 @@ Deno.serve(async (req: Request) => {
       if (membersError) throw membersError;
       const ids = (members || []).map((member: any) => member.user_id);
       const { data: profiles, error: profilesError } = ids.length
-        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id,equipped_avatar_id,equipped_avatar_id,wins,losses,is_verified").in("user_id", ids)
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id,equipped_avatar_id,wins,losses,is_verified").in("user_id", ids)
         : { data: [], error: null };
       if (profilesError) throw profilesError;
       const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
@@ -496,7 +496,7 @@ Deno.serve(async (req: Request) => {
       const rows = (messages || []).reverse();
       const ids = [...new Set(rows.map((message: any) => message.user_id))];
       const { data: profiles, error: profilesError } = ids.length
-        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id,equipped_avatar_id,equipped_avatar_id,is_verified").in("user_id", ids)
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id,equipped_avatar_id,is_verified").in("user_id", ids)
         : { data: [], error: null };
       if (profilesError) throw profilesError;
       const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
@@ -558,7 +558,7 @@ Deno.serve(async (req: Request) => {
       if (error) throw error;
       const ids = [...new Set((invites || []).map((invite: any) => invite.sender_id))];
       const { data: profiles, error: profilesError } = ids.length
-        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id,equipped_avatar_id,equipped_avatar_id,is_verified").in("user_id", ids)
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id,equipped_avatar_id,is_verified").in("user_id", ids)
         : { data: [], error: null };
       if (profilesError) throw profilesError;
       const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
