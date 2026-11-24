@@ -188,7 +188,7 @@ Deno.serve(async (req: Request) => {
       const { data: chatProfile, error: chatProfileError } = await db.from("baladi_game_profiles")
         .select("chat_unlocked_at").eq("user_id", user.id).single();
       if (chatProfileError) throw chatProfileError;
-      if (!chatProfile.chat_unlocked_at) return out({ error: "برای مشاهده چت عمومی، ابتدا آن را با ۱۸۰۰۰ سکه باز کن." }, 403, origin);
+      if (!chatProfile.chat_unlocked_at) return out({ error: "برای مشاهده چت عمومی، ابتدا آن را با ۵۰۰۰ سکه باز کن." }, 403, origin);
       const { data: messages, error } = await db.from("baladi_global_chat_messages")
         .select("id,user_id,body,sticker_id,created_at")
         .is("deleted_at", null)
@@ -206,6 +206,18 @@ Deno.serve(async (req: Request) => {
         player: profileMap.get(message.user_id) || { display_name: "بازیکن" }
       }));
       return out({ ok: true, messages: rows }, 200, origin);
+    }
+
+    if (action === "report_global_chat_message") {
+      const messageId = Number(body?.message_id || 0);
+      const reason = String(body?.reason || "");
+      if (!Number.isSafeInteger(messageId) || messageId <= 0)
+        return out({ error: "شناسه پیام معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_report_global_chat_message", {
+        p_user_id: user.id, p_message_id: messageId, p_reason: reason
+      });
+      if (error) return out({ error: error.message || "ثبت گزارش انجام نشد." }, 409, origin);
+      return out({ ok: true, result: data }, 201, origin);
     }
 
     if (action === "global_chat_send") {
