@@ -197,7 +197,7 @@ Deno.serve(async (req: Request) => {
       if (error) throw error;
       const userIds = [...new Set((messages || []).map((message: any) => message.user_id))];
       const { data: profiles, error: profilesError } = userIds.length
-        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id,current_level,is_verified").in("user_id", userIds)
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id,equipped_avatar_id,current_level,is_verified").in("user_id", userIds)
         : { data: [], error: null };
       if (profilesError) throw profilesError;
       const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
@@ -254,6 +254,17 @@ Deno.serve(async (req: Request) => {
       return out({ ok: true, profile: data?.profile || null, item: data?.item || null }, 200, origin);
     }
 
+    if (action === "equip_avatar") {
+      const avatarId = String(body?.avatar_id || "");
+      if (!/^avatar_[a-z0-9_]{2,40}$/.test(avatarId))
+        return out({ error: "شناسه تصویر پروفایل معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_equip_avatar", {
+        p_user_id: user.id, p_avatar_id: avatarId
+      });
+      if (error) return out({ error: error.message || "انتخاب تصویر پروفایل انجام نشد." }, 409, origin);
+      return out({ ok: true, profile: data }, 200, origin);
+    }
+
     if (action === "equip_frame") {
       const frameId = String(body?.frame_id || "");
       if (!/^[a-z0-9_]{3,48}$/.test(frameId))
@@ -283,7 +294,7 @@ Deno.serve(async (req: Request) => {
       const { data: profile, error } = await db.from("baladi_game_profiles")
         .update({ avatar_path: avatarPath, updated_at: new Date().toISOString() })
         .eq("user_id", user.id)
-        .select("user_id,display_name,avatar_path,equipped_frame_id,avatar_unlocked,coins")
+        .select("user_id,display_name,avatar_path,equipped_frame_id,equipped_avatar_id,avatar_unlocked,coins")
         .single();
       if (error) throw error;
       return out({ ok: true, profile }, 200, origin);
@@ -313,7 +324,7 @@ Deno.serve(async (req: Request) => {
       if (winnersError) throw winnersError;
 
       const { data, error } = await db.from("baladi_game_profiles")
-        .select("user_id,display_name,current_level,coins,wins,losses,avatar_path,equipped_frame_id,is_verified")
+        .select("user_id,display_name,current_level,coins,wins,losses,avatar_path,equipped_frame_id,equipped_avatar_id,is_verified")
         .order("current_level", { ascending: false })
         .order("coins", { ascending: false })
         .order("wins", { ascending: false })
@@ -335,7 +346,7 @@ Deno.serve(async (req: Request) => {
       const targetId = String(body?.user_id || "");
       if (!uuid(targetId)) return out({ error: "شناسه بازیکن معتبر نیست." }, 400, origin);
       const { data: profile, error } = await db.from("baladi_game_profiles")
-        .select("user_id,display_name,current_level,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,wins,losses,avatar_path,equipped_frame_id,created_at,is_verified")
+        .select("user_id,display_name,current_level,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,wins,losses,avatar_path,equipped_frame_id,equipped_avatar_id,created_at,is_verified")
         .eq("user_id", targetId).maybeSingle();
       if (error) throw error;
       if (!profile) return out({ error: "پروفایل بازیکن پیدا نشد." }, 404, origin);
@@ -344,7 +355,7 @@ Deno.serve(async (req: Request) => {
 
     if (action === "groups_list") {
       const { data: groups, error } = await db.from("baladi_groups")
-        .select("id,name,description,leader_id,capacity,created_at")
+        .select("id,name,description,leader_id,capacity,group_level,upgrade_progress,created_at")
         .order("created_at", { ascending: false }).limit(100);
       if (error) throw error;
       const ids = (groups || []).map((group: any) => group.id);
@@ -373,14 +384,14 @@ Deno.serve(async (req: Request) => {
       if (error) throw error;
       if (!membership) return out({ ok: true, group: null, members: [] }, 200, origin);
       const { data: group, error: groupError } = await db.from("baladi_groups")
-        .select("id,name,description,leader_id,capacity,created_at").eq("id", membership.group_id).single();
+        .select("id,name,description,leader_id,capacity,group_level,upgrade_progress,created_at").eq("id", membership.group_id).single();
       if (groupError) throw groupError;
       const { data: members, error: membersError } = await db.from("baladi_group_members")
         .select("user_id,role,joined_at").eq("group_id", membership.group_id).order("joined_at", { ascending: true });
       if (membersError) throw membersError;
       const ids = (members || []).map((member: any) => member.user_id);
       const { data: profiles, error: profilesError } = ids.length
-        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id,wins,losses,is_verified").in("user_id", ids)
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id,equipped_avatar_id,wins,losses,is_verified").in("user_id", ids)
         : { data: [], error: null };
       if (profilesError) throw profilesError;
       const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
@@ -401,6 +412,28 @@ Deno.serve(async (req: Request) => {
       if (!uuid(groupId)) return out({ error: "شناسه گروه معتبر نیست." }, 400, origin);
       const { data, error } = await db.rpc("baladi_join_group", { p_user_id: user.id, p_group_id: groupId });
       if (error) return out({ error: error.message || "عضویت در گروه انجام نشد." }, 409, origin);
+      return out({ ok: true, ...data }, 200, origin);
+    }
+
+    if (action === "group_contribute") {
+      const groupId = String(body?.group_id || "");
+      const amount = Number(body?.amount || 0);
+      if (!uuid(groupId) || !Number.isSafeInteger(amount))
+        return out({ error: "مبلغ مشارکت یا شناسه گروه معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_group_contribute", {
+        p_user_id: user.id, p_group_id: groupId, p_amount: amount
+      });
+      if (error) return out({ error: error.message || "مشارکت در ارتقای گروه انجام نشد." }, 409, origin);
+      return out({ ok: true, ...data }, 200, origin);
+    }
+
+    if (action === "claim_group_daily_reward") {
+      const groupId = String(body?.group_id || "");
+      if (!uuid(groupId)) return out({ error: "شناسه گروه معتبر نیست." }, 400, origin);
+      const { data, error } = await db.rpc("baladi_claim_group_daily_reward", {
+        p_user_id: user.id, p_group_id: groupId
+      });
+      if (error) return out({ error: error.message || "دریافت پاداش روزانه انجام نشد." }, 409, origin);
       return out({ ok: true, ...data }, 200, origin);
     }
 
@@ -463,7 +496,7 @@ Deno.serve(async (req: Request) => {
       const rows = (messages || []).reverse();
       const ids = [...new Set(rows.map((message: any) => message.user_id))];
       const { data: profiles, error: profilesError } = ids.length
-        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id,is_verified").in("user_id", ids)
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,avatar_path,equipped_frame_id,equipped_avatar_id,is_verified").in("user_id", ids)
         : { data: [], error: null };
       if (profilesError) throw profilesError;
       const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
@@ -525,7 +558,7 @@ Deno.serve(async (req: Request) => {
       if (error) throw error;
       const ids = [...new Set((invites || []).map((invite: any) => invite.sender_id))];
       const { data: profiles, error: profilesError } = ids.length
-        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id,is_verified").in("user_id", ids)
+        ? await db.from("baladi_game_profiles").select("user_id,display_name,current_level,avatar_path,equipped_frame_id,equipped_avatar_id,is_verified").in("user_id", ids)
         : { data: [], error: null };
       if (profilesError) throw profilesError;
       const profileMap = new Map((profiles || []).map((profile: any) => [profile.user_id, profile]));
