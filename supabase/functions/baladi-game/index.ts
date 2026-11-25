@@ -73,6 +73,29 @@ Deno.serve(async (req: Request) => {
 
     const db = createClient(URL, SERVICE, { auth: { persistSession: false, autoRefreshToken: false } });
 
+    const { data: moderationProfile, error: moderationError } = await db.from("baladi_game_profiles")
+      .select("is_suspended,suspension_reason").eq("user_id", user.id).maybeSingle();
+    if (moderationError) throw moderationError;
+    if (moderationProfile?.is_suspended) {
+      const reason = String(moderationProfile.suspension_reason || "").trim();
+      return out({ error: reason ? "دسترسی حساب بازی شما مسدود شده است: " + reason : "دسترسی حساب بازی شما توسط مدیریت مسدود شده است.", suspended: true }, 403, origin);
+    }
+
+    if (action === "admin_notifications") {
+      const { data: notifications, error: notificationError } = await db.from("account_notifications")
+        .select("id,title,body,created_at").eq("user_id", user.id)
+        .eq("source", "baladi_admin").is("read_at", null)
+        .order("created_at", { ascending: true }).limit(5);
+      if (notificationError) throw notificationError;
+      const ids = (notifications || []).map((item: any) => item.id);
+      if (ids.length) {
+        const { error: markError } = await db.from("account_notifications")
+          .update({ read_at: new Date().toISOString() }).in("id", ids).eq("user_id", user.id);
+        if (markError) throw markError;
+      }
+      return out({ ok: true, notifications: notifications || [] }, 200, origin);
+    }
+
     if (action === "summary") {
       const { error: ensureError } = await db.from("baladi_game_profiles")
         .upsert({ user_id: user.id }, { onConflict: "user_id", ignoreDuplicates: true });
