@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b211f">
+<title>بلدی؟ | بازی واژه‌سازی فارسی برای اندروید | مطالعه موردی | علی شمس</title>
+<meta name="description" content="مطالعه موردی بلدی؟، بازی مرحله‌ای واژه‌سازی فارسی برای اندروید؛ کشف واژه‌ها با ترکیب حروف، بیش از ۲۰۰ مرحله، سکه و راهنما، سیستم XP، رقابت دونفره و گروه‌های بازیکنان.">
+<link rel="canonical" href="https://alishams.ir/case-studies/baladi.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="بلدی؟ | بازی واژه‌سازی فارسی | علی شمس">
+<meta property="og:description" content="از ترکیب چند حرف تا کشف واژه‌های پنهان؛ نگاهی به طراحی و توسعه بازی فارسی بلدی؟">
+<meta property="og:url" content="https://alishams.ir/case-studies/baladi.html">
+<meta property="og:image" content="https://raw.githubusercontent.com/theslyapex/Baladi/main/assets/backgrounds/wordlands-cinematic.jpg">
+<meta property="og:locale" content="fa_IR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="بلدی؟ | بازی واژه‌سازی فارسی">
+<meta name="twitter:description" content="بازی مرحله‌ای واژه‌سازی فارسی با مسیر پیشرفت، پاداش و رقابت آنلاین.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/theslyapex/Baladi/main/assets/backgrounds/wordlands-cinematic.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Estedad:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#081714;--surface:#10241f;--surface2:#16352d;--line:#ffffff1c;--ink:#f7f4e9;--muted:#b0c4b9;--accent:#edc879;--accent2:#55c6b5;--max:1160px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Estedad,Tahoma,sans-serif;line-height:1.9;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse at 8% 2%,#55c6b51a,transparent 36%),radial-gradient(ellipse at 95% 35%,#edc87912,transparent 32%),#081714}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%;-webkit-user-drag:none}
+button,a{-webkit-tap-highlight-color:transparent}
+.wrap{width:min(var(--max),calc(100% - 48px));margin-inline:auto}
+.topbar{position:sticky;top:0;z-index:50;border-bottom:1px solid #ffffff12;background:#081714df;backdrop-filter:blur(18px)}
+.nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;white-space:nowrap}
+.brand img{width:39px;height:39px;border-radius:12px}
+.brand small{display:block;color:var(--muted);font:500 9px Manrope,sans-serif;letter-spacing:.8px}
+.navlinks{display:flex;align-items:center;gap:clamp(12px,2vw,24px);font-size:11px;color:#d4ded8}
+.navlinks a:hover,.crumb a:hover{color:var(--accent)}
+.nav-cta,.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:10px 15px;font-size:11px;font-weight:800;white-space:nowrap;transition:transform .2s,border-color .2s,background .2s}
+.nav-cta{border-color:#edc87966;background:#edc87912;color:var(--accent)}
+.btn-primary{background:var(--accent);color:#172019;border-color:var(--accent)}
+.btn:hover,.nav-cta:hover{transform:translateY(-2px);border-color:var(--accent)}
+.crumb{padding:24px 0 0;color:var(--muted);font-size:11px}
+.crumb a{color:var(--accent)}
+.hero{padding:32px 0 78px}
+.hero-grid{display:grid;grid-template-columns:.94fr 1.06fr;gap:44px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--accent);font:800 10px Manrope,sans-serif;letter-spacing:1.3px}
+.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent)}
+.hero h1{font-size:clamp(37px,5.1vw,64px);line-height:1.42;letter-spacing:-1.4px;margin:14px 0 12px}
+.hero h1 span{color:var(--accent)}
+.lead{font-size:14px;line-height:2.35;color:#c2d1c8;max-width:590px;margin:0 0 22px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 25px}
+.pills span{font-size:10px;color:#e3e9df;border:1px solid var(--line);border-radius:999px;padding:5px 10px;background:#ffffff08}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+.hero-art{position:relative;min-height:440px;overflow:hidden;border:1px solid #edc87942;border-radius:28px;background:#10251f;box-shadow:0 28px 80px #0008}
+.hero-art:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#07171325 0%,#07171320 45%,#071713e8 100%),url("https://raw.githubusercontent.com/theslyapex/Baladi/main/assets/backgrounds/wordlands-cinematic.jpg") center/cover}
+.hero-art:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 42%,#edc87926,transparent 42%)}
+.baladi-orbit{position:absolute;z-index:1;width:310px;height:310px;left:50%;top:45%;transform:translate(-50%,-50%);border:1px solid #edc87975;border-radius:50%;box-shadow:0 0 0 24px #edc8790a,0 0 0 52px #55c6b50a}
+.baladi-logo{position:absolute;z-index:2;width:126px;height:126px;left:50%;top:43%;transform:translate(-50%,-50%);border:2px solid #edc879aa;border-radius:31px;box-shadow:0 18px 60px #000b}
+.baladi-logo img{width:100%;height:100%;border-radius:29px}
+.letter-tile{position:absolute;z-index:3;display:grid;place-items:center;width:54px;height:58px;border:1px solid #f6d995a6;border-radius:14px;background:linear-gradient(145deg,#f1d38f,#b88642);color:#17332a;font-size:27px;font-weight:900;box-shadow:0 12px 28px #0008}
+.tile-one{top:18%;right:15%;transform:rotate(9deg)}.tile-two{top:29%;left:12%;transform:rotate(-10deg)}.tile-three{bottom:28%;right:18%;transform:rotate(-7deg)}.tile-four{bottom:26%;left:16%;transform:rotate(8deg)}
+.game-hud{position:absolute;z-index:4;right:20px;left:20px;bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid #ffffff28;border-radius:15px;background:#071713c9;backdrop-filter:blur(12px)}
+.game-hud b{display:block;font-size:12px;color:#fff3d4}.game-hud small{display:block;color:#b7c9bf;font:700 8px Manrope;letter-spacing:1px}
+.game-hud .hud-level{color:var(--accent);font:800 18px Manrope}
+.art-caption{position:absolute;z-index:4;top:18px;right:20px;left:20px;display:flex;justify-content:space-between;gap:12px;color:#e5e8d8;font:800 9px Manrope;letter-spacing:1.1px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:25px}
+.stat{min-width:0;padding:13px 10px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(145deg,#ffffff09,#ffffff02);text-align:center}
+.stat b{display:block;color:var(--accent);font:900 19px Estedad,sans-serif;line-height:1.5}
+.stat small{display:block;color:var(--muted);font-size:9px;line-height:1.7}
+.section{padding:76px 0;border-top:1px solid #ffffff10}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:26px;margin-bottom:28px}
+.section-head h2{font-size:clamp(25px,3.7vw,39px);line-height:1.5;margin:8px 0 0}
+.section-head p{max-width:510px;color:var(--muted);font-size:12px;line-height:2.1;margin:0}
+.intro-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+.story-panel,.quote-panel,.module,.step,.tech-card,.gallery figure,.status-card{border:1px solid var(--line);border-radius:21px;background:linear-gradient(145deg,#ffffff09,#ffffff02);padding:23px}
+.story-panel p,.quote-panel p{font-size:12px;color:#c1d1c8;line-height:2.25;margin:0 0 12px}
+.story-panel p:last-child{margin-bottom:0}
+.quote-panel{background:linear-gradient(145deg,#edc87918,#10251f)}
+.quote-mark{font:800 38px/1 Manrope;color:var(--accent)}
+.quote-panel h3{font-size:17px;margin:8px 0}
+.quote-panel p{margin:0}
+.modules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.module{padding:20px;min-height:188px;transition:transform .25s,border-color .25s}
+.module:hover{transform:translateY(-4px);border-color:#edc87988}
+.module-index{font:800 10px Manrope;letter-spacing:1px;color:var(--accent)}
+.module-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;margin:12px 0;background:#edc87916;color:var(--accent);font:900 14px Manrope}
+.module h3{font-size:14px;margin:0 0 7px}
+.module p{font-size:11px;color:var(--muted);line-height:2.05;margin:0}
+.feature-band{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.feature-card{position:relative;overflow:hidden;padding:22px;border:1px solid #55c6b548;border-radius:19px;background:linear-gradient(145deg,#55c6b512,#10251f)}
+.feature-card:after{content:"";position:absolute;width:130px;height:130px;left:-58px;bottom:-80px;border:1px solid #55c6b533;border-radius:50%;box-shadow:0 0 0 20px #55c6b509}
+.feature-card .number{font:900 11px Manrope;color:var(--accent2);letter-spacing:1px}
+.feature-card h3{font-size:15px;margin:8px 0}
+.feature-card p{font-size:11px;line-height:2.1;color:var(--muted);margin:0}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;counter-reset:flow}
+.step{padding:18px;min-height:150px}
+.step:before{counter-increment:flow;content:"0" counter(flow);font:900 19px Manrope;color:var(--accent)}
+.step h3{font-size:13px;margin:8px 0 5px}
+.step p{font-size:10px;color:var(--muted);line-height:2;margin:0}
+.tech-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tech-card{padding:18px}
+.tech-card b{display:block;color:var(--accent);font:800 11px Manrope;letter-spacing:.5px}
+.tech-card span{display:block;margin-top:7px;font-size:11px;color:var(--muted);line-height:1.9}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.gallery figure{margin:0;padding:0;overflow:hidden;background:#10251f}
+.gallery img{width:100%;aspect-ratio:16/10;object-fit:cover;transition:transform .4s}
+.gallery figure:hover img{transform:scale(1.035)}
+.gallery figcaption{padding:10px 13px;color:var(--muted);font-size:10px}
+.note{margin-top:16px;padding:17px 19px;border:1px solid #edc87945;border-radius:16px;background:#edc8790b;color:#c5d1c8;font-size:11px;line-height:2.1}
+.note strong{color:var(--accent)}
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.status-card{padding:21px}
+.status-card .status-label{display:inline-flex;padding:4px 9px;border-radius:999px;background:#55c6b51a;color:#7ee0d0;font-size:9px;font-weight:900;margin-bottom:10px}
+.status-card h3{font-size:14px;margin:0 0 8px}
+.status-card p{font-size:11px;color:var(--muted);line-height:2.1;margin:0}
+.next{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:28px;border:1px solid #edc87945;border-radius:23px;background:linear-gradient(115deg,#edc87914,#10251f)}
+.next h2{font-size:clamp(21px,3vw,30px);margin:0 0 5px}
+.next p{font-size:11px;color:var(--muted);margin:0}
+.footer{display:flex;justify-content:space-between;gap:16px;padding:25px 0 32px;color:var(--muted);font-size:10px}
+.footer a:hover{color:var(--accent)}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:28px}.hero-copy{order:1}.hero-art{order:2}.modules{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(2,1fr)}.tech-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.wrap{width:calc(100% - 30px)}.nav{height:58px}.navlinks{gap:9px;font-size:9px}.nav-cta{padding:7px 9px;font-size:9px}.hero{padding:22px 0 55px}.hero h1{font-size:37px}.lead{font-size:12px}.hero-art{min-height:330px}.baladi-orbit{width:235px;height:235px}.baladi-logo{width:96px;height:96px;border-radius:24px}.letter-tile{width:44px;height:47px;font-size:22px}.game-hud{right:12px;left:12px;bottom:12px;padding:9px 10px}.art-caption{right:13px;left:13px;top:13px;font-size:7px}.stats{gap:6px}.stat{padding:9px 4px}.stat b{font-size:15px}.stat small{font-size:8px}.section{padding:52px 0}.section-head{display:block}.section-head p{margin-top:8px}.intro-grid,.status-grid{grid-template-columns:1fr}.modules,.feature-band,.gallery{grid-template-columns:1fr}.module{min-height:0}.flow{gap:8px}.step{padding:14px;min-height:140px}.tech-grid{grid-template-columns:1fr 1fr}.next,.footer{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"بلدی؟","alternateName":"Baladi","applicationCategory":"GameApplication","operatingSystem":"Android","description":"بازی مرحله‌ای واژه‌سازی فارسی برای کشف واژه‌ها با ترکیب حروف، همراه با مراحل، سکه، راهنما و رقابت آنلاین.","url":"https://alishams.ir/case-studies/baladi.html","author":{"@type":"Person","name":"علی شمس"}}
+</script>
+</head>
+<body>
+<header class="topbar"><div class="wrap nav">
+<a class="brand" href="../" aria-label="علی شمس"><img src="https://raw.githubusercontent.com/theslyapex/Alishams/main/assets/images/alishams-studio-logo.png" alt=""><span>علی شمس<small>ALISHAMS DIGITAL STUDIO</small></span></a>
+<nav class="navlinks" aria-label="ناوبری اصلی"><a href="../">صفحه اصلی</a><a href="../portfolio.html">نمونه‌کارها</a><a href="../#services">خدمات</a><a href="../about.html">درباره من</a></nav>
+<a class="nav-cta" href="../#contact">شروع یک پروژه ↗</a>
+</div></header>
+<main>
+<div class="wrap"><div class="crumb"><a href="../">صفحه اصلی</a> / <a href="../portfolio.html">نمونه‌کارها</a> / بلدی؟ | بازی واژه‌سازی فارسی</div>
+<section class="hero"><div class="hero-grid">
+<div class="hero-copy">
+<span class="eyebrow">PERSIAN WORD PUZZLE · GODOT · ANDROID</span>
+<h1>بلدی؟؛<br><span>هر حرف، سرنخی برای کشف یک واژه.</span></h1>
+<p class="lead">بلدی؟ یک بازی مرحله‌ای واژه‌سازی فارسی است. حروف در اختیار بازیکن قرار می‌گیرند و او باید با ترکیب درست آن‌ها، واژه‌های پنهان را پیدا کند و خانه‌های جدول هر مرحله را کامل کند. هر مرحله، فرصتی تازه برای فکر کردن، کشف کردن و پیش رفتن در مسیر بازی است.</p>
+<div class="pills"><span>Android</span><span>Godot 4.7</span><span>Persian Word Puzzle</span><span>Online Competition</span></div>
+<div class="hero-actions"><a class="btn btn-primary" href="#overview">آشنایی با بازی <b>↓</b></a><a class="btn" href="https://github.com/theslyapex/Baladi" target="_blank" rel="noopener noreferrer">مخزن پروژه در GitHub ↗</a></div>
+<div class="stats"><div class="stat"><b>۲۰۰</b><small>مرحله طراحی‌شده</small></div><div class="stat"><b>XP</b><small>سیستم تجربه و پیشرفت</small></div><div class="stat"><b>۱×۱</b><small>رقابت دونفره آنلاین</small></div></div>
+</div>
+<div class="hero-art" role="img" aria-label="هویت بصری بازی بلدی، با نقشه جهان واژه‌ها و حروف فارسی">
+<div class="art-caption"><span>BALADI · WORD ADVENTURE</span><span>ANDROID GAME · CASE STUDY</span></div>
+<div class="baladi-orbit"></div>
+<div class="baladi-logo"><img src="https://raw.githubusercontent.com/theslyapex/Baladi/main/assets/icons/app_icon.svg" alt="آیکون بازی بلدی؟"></div>
+<span class="letter-tile tile-one">ب</span><span class="letter-tile tile-two">ل</span><span class="letter-tile tile-three">د</span><span class="letter-tile tile-four">ی</span>
+<div class="game-hud"><div><b>مسیر کشف واژه‌ها</b><small>THINK · CONNECT · DISCOVER</small></div><span class="hud-level">LEVEL 01</span></div>
+</div>
+</div></section></div>
+<section class="section" id="overview"><div class="wrap"><div class="section-head"><div><span class="eyebrow">GAME CONCEPT</span><h2>از چند حرف تا کشف واژه‌های پنهان</h2></div><p>هسته بازی ساده و قابل فهم است، اما پیدا کردن همه واژه‌ها به دقت، واژگان و کمی خلاقیت نیاز دارد.</p></div>
+<div class="intro-grid"><article class="story-panel"><p>در هر مرحله، مجموعه‌ای از حروف در اختیار بازیکن قرار می‌گیرد. بازیکن با انتخاب یا اتصال حروف، واژه می‌سازد و پاسخ درست را در جدول ثبت می‌کند. وقتی واژه‌های موردنیاز پیدا شوند، مرحله تکمیل می‌شود و مسیر برای چالش بعدی باز خواهد شد.</p><p>مراحل بازی به‌صورت داده‌محور نگهداری می‌شوند تا محتوای مرحله‌ها از منطق اصلی بازی جدا باشد. این ساختار امکان گسترش مسیر بازی، بازبینی پاسخ‌ها و کنترل کیفیت واژه‌ها را فراهم می‌کند.</p></article><aside class="quote-panel"><span class="quote-mark">“</span><h3>بازی با زبان، نه حفظ کردن جواب‌ها</h3><p>بلدی؟ به‌جای پرسش چهارگزینه‌ای، بازیکن را وارد فرایند واقعی ساخت واژه می‌کند؛ حروف را می‌بیند، ترکیب می‌کند و پاسخ را کشف می‌کند.</p></aside></div></div></section>
+<section class="section"><div class="wrap"><div class="section-head"><div><span class="eyebrow">CORE GAMEPLAY</span><h2>اجزای اصلی تجربه بازی</h2></div><p>از حل جدول تا پاداش و پیشرفت، اجزای بازی در یک چرخه مشخص به هم متصل شده‌اند.</p></div>
+<div class="modules">
+<article class="module"><span class="module-index">GAMEPLAY / 01</span><div class="module-icon">حرف</div><h3>ساخت واژه با حروف</h3><p>بازیکن حروف هر مرحله را کنار هم قرار می‌دهد و با ساخت واژه‌های معتبر، پاسخ‌های جدول را پیدا می‌کند.</p></article>
+<article class="module"><span class="module-index">GAMEPLAY / 02</span><div class="module-icon">جدول</div><h3>مراحل و جدول واژه‌ها</h3><p>هر مرحله مجموعه‌ای از پاسخ‌های هدف دارد. تکمیل جدول، پیشرفت بازیکن را ثبت می‌کند و راه مرحله بعد را باز می‌سازد.</p></article>
+<article class="module"><span class="module-index">GAMEPLAY / 03</span><div class="module-icon">★</div><h3>واژه‌های جایزه</h3><p>فراتر از پاسخ‌های اصلی جدول، بازیکن می‌تواند واژه‌های اضافه را کشف کند و برای دقت بیشتر پاداش بگیرد.</p></article>
+<article class="module"><span class="module-index">PROGRESSION / 04</span><div class="module-icon">XP</div><h3>تجربه و سطح بازیکن</h3><p>با پیشروی در بازی، امتیاز تجربه جمع می‌شود و سطح بازیکن رشد می‌کند؛ مسیر پیشرفت، جدا از شماره مرحله قابل دنبال‌کردن است.</p></article>
+<article class="module"><span class="module-index">REWARDS / 05</span><div class="module-icon">سکه</div><h3>سکه و راهنما</h3><p>اقتصاد درون‌بازی با سکه و راهنماها به بازیکن کمک می‌کند هنگام دشواری، از ابزارهای کمکی استفاده کند و مسیر حل را ادامه دهد.</p></article>
+<article class="module"><span class="module-index">COLLECTION / 06</span><div class="module-icon">نشان</div><h3>پروفایل و شخصی‌سازی</h3><p>پروفایل بازیکن، آمار برد و باخت، تصویرهای آواتار و قاب‌های قابل انتخاب، هویت شخصی‌تری به حساب کاربر می‌دهند.</p></article>
+</div></div></section>
+<section class="section"><div class="wrap"><div class="section-head"><div><span class="eyebrow">PLAY TOGETHER</span><h2>واژه‌سازی، با چاشنی رقابت و اجتماع</h2></div><p>بلدی؟ فقط به حل مرحله‌های انفرادی محدود نمی‌شود؛ بخش آنلاین بازی، ارتباط و رقابت میان بازیکنان را هم در نظر می‌گیرد.</p></div>
+<div class="feature-band">
+<article class="feature-card"><span class="number">01 · HEAD TO HEAD</span><h3>مسابقه دونفره</h3><p>دعوت مستقیم بازیکن، پذیرش دعوت و سیستم جست‌وجوی حریف برای ورود به رقابت واژه‌سازی رودررو.</p></article>
+<article class="feature-card"><span class="number">02 · PLAYER GROUPS</span><h3>گروه‌های بازیکنان</h3><p>ساخت و عضویت در گروه، نقش‌های مدیریتی و گفت‌وگوی گروهی برای شکل‌دادن به یک اجتماع کوچک از بازیکنان.</p></article>
+<article class="feature-card"><span class="number">03 · LIVE ACTIVITY</span><h3>رتبه‌بندی و اعلان‌ها</h3><p>پروفایل عمومی، جدول رتبه‌بندی و زیرساخت اعلان‌های دستگاه برای آگاه‌ماندن از رویدادها و تعاملات بازی.</p></article>
+</div>
+<div class="note"><strong>شفافیت قابلیت‌ها:</strong> این معرفی بر اساس ساختار فعلی پروژه و توابع متصل بازی نوشته شده است. دسترس‌پذیری هر قابلیت آنلاین در نسخه نهایی به وضعیت سرویس‌های بک‌اند، اتصال شبکه و پیکربندی انتشار وابسته است.</div>
+</div></section>
+<section class="section"><div class="wrap"><div class="section-head"><div><span class="eyebrow">PLAYER JOURNEY</span><h2>مسیر بازیکن در بلدی؟</h2></div><p>از شروع ساده تا رقابت با دیگران، جریان اصلی استفاده از بازی در چند قدم قابل فهم طراحی شده است.</p></div>
+<div class="flow">
+<article class="step"><h3>ورود به بازی</h3><p>بازیکن می‌تواند تجربه را آغاز کند و در صورت تمایل، با حساب کاربری وارد امکانات آنلاین شود.</p></article>
+<article class="step"><h3>حل مرحله</h3><p>حروف را ترکیب می‌کند، واژه‌ها را می‌سازد و جدول مرحله را به پایان می‌رساند.</p></article>
+<article class="step"><h3>دریافت پاداش</h3><p>پیشرفت، تجربه و سکه ثبت می‌شوند؛ بازیکن می‌تواند برای ادامه مسیر از راهنماها کمک بگیرد.</p></article>
+<article class="step"><h3>ادامه و رقابت</h3><p>سطح خود را بالا می‌برد، مراحل بعدی را باز می‌کند و در بخش آنلاین با دیگر بازیکنان تعامل می‌کند.</p></article>
+</div></div></section>
+<section class="section"><div class="wrap"><div class="section-head"><div><span class="eyebrow">TECHNOLOGY STACK</span><h2>زیرساخت فنی و معماری محصول</h2></div><p>بازی با تمرکز بر اجرای اندرویدی، منطق مرحله‌ای و اتصال سرویس‌های آنلاین ساخته شده است.</p></div>
+<div class="tech-grid">
+<article class="tech-card"><b>GODOT 4.7</b><span>موتور اصلی بازی و مدیریت صحنه‌ها و رابط کاربری.</span></article>
+<article class="tech-card"><b>GDSCRIPT</b><span>منطق ساخت واژه، بررسی پاسخ، مدیریت مرحله و چرخه بازی.</span></article>
+<article class="tech-card"><b>SUPABASE</b><span>احراز هویت، پروفایل، پیشرفت ابری، رقابت‌ها، گروه‌ها و داده‌های آنلاین.</span></article>
+<article class="tech-card"><b>FIREBASE CLOUD MESSAGING</b><span>ثبت توکن دستگاه و آماده‌سازی مسیر اعلان‌های پوش برای کاربران.</span></article>
+</div></div></section>
+<section class="section"><div class="wrap"><div class="section-head"><div><span class="eyebrow">ART DIRECTION · GAME ASSETS</span><h2>جهان بصری و دارایی‌های بازی</h2></div><p>هویت بصری بلدی؟ با ترکیب سبز عمیق، طلایی، تصویرسازی فانتزی و نشانه‌های برگرفته از فرهنگ ایرانی شکل گرفته است.</p></div>
+<div class="gallery">
+<figure><img src="https://raw.githubusercontent.com/theslyapex/Baladi/main/assets/backgrounds/wordlands-cinematic.jpg" alt="تصویرسازی جهان واژه‌ها در بازی بلدی؟" loading="lazy"><figcaption>جهان واژه‌ها · تصویر اصلی مسیر بازی</figcaption></figure>
+<figure><img src="https://raw.githubusercontent.com/theslyapex/Baladi/main/assets/characters/mascot.svg" alt="شخصیت راهنمای بازی بلدی؟" loading="lazy"><figcaption>شخصیت همراه و راهنمای بازی</figcaption></figure>
+<figure><img src="https://raw.githubusercontent.com/theslyapex/Baladi/main/assets/backgrounds/letter-wheel.svg" alt="صفحه و چرخ حروف بازی بلدی؟" loading="lazy"><figcaption>دارایی بصری چرخ حروف</figcaption></figure>
+<figure><img src="https://raw.githubusercontent.com/theslyapex/Baladi/main/assets/backgrounds/chapter-bazaar.svg" alt="فضای مرحله بازار در بازی بلدی؟" loading="lazy"><figcaption>محیط مرحله · بازار</figcaption></figure>
+<figure><img src="https://raw.githubusercontent.com/theslyapex/Baladi/main/assets/backgrounds/chapter-garden.svg" alt="فضای مرحله باغ در بازی بلدی؟" loading="lazy"><figcaption>محیط مرحله · باغ</figcaption></figure>
+<figure><img src="https://raw.githubusercontent.com/theslyapex/Baladi/main/assets/avatars/hero.jpg" alt="آواتار قهرمان در بازی بلدی؟" loading="lazy"><figcaption>مجموعه آواتارهای بازیکنان</figcaption></figure>
+</div>
+</div></section>
+<section class="section"><div class="wrap"><div class="section-head"><div><span class="eyebrow">PROJECT STATUS</span><h2>وضعیت توسعه و انتشار</h2></div><p>بلدی؟ از مرحله ساخت هسته بازی عبور کرده و برای عرضه عمومی در مسیر آماده‌سازی و بررسی قرار دارد.</p></div>
+<div class="status-grid">
+<article class="status-card"><span class="status-label">پیاده‌سازی‌شده در پروژه</span><h3>هسته بازی و مسیر پیشرفت</h3><p>ساخت واژه، جدول مرحله، محتوای مرحله‌ای، سکه، راهنما، تجربه، پروفایل و بخش‌های اصلی رقابت و گروه‌ها در ساختار فعلی پروژه پیاده‌سازی شده‌اند.</p></article>
+<article class="status-card"><span class="status-label">در مسیر انتشار</span><h3>آماده‌سازی نسخه عمومی</h3><p>ثبت و تکمیل فرایندهای انتشار و بررسی فروشگاه در حال انجام است. لینک دریافت عمومی پس از انتشار رسمی به این صفحه اضافه خواهد شد.</p></article>
+</div>
+<div class="note"><strong>شناسه بسته اندروید:</strong> <span dir="ltr">ir.alishams.baladi</span> · لینک دریافت از فروشگاه تا زمان انتشار رسمی نمایش داده نمی‌شود.</div>
+</div></section>
+<section class="section"><div class="wrap"><div class="next"><div><h2>بلدی؟؛ یک بازی فارسی برای کشف واژه‌ها.</h2><p>برای دنبال‌کردن توسعه بازی و مشاهده کد پروژه، به مخزن رسمی آن سر بزن.</p></div><div class="hero-actions"><a class="btn btn-primary" href="https://github.com/theslyapex/Baladi" target="_blank" rel="noopener noreferrer">مشاهده مخزن بازی ↗</a><a class="btn" href="../portfolio.html">مشاهده همه نمونه‌کارها</a></div></div></div></section>
+</main>
+<footer class="wrap footer"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><span><a href="../">صفحه اصلی</a> · <a href="../portfolio.html">نمونه‌کارها</a></span></footer>
+<script>document.getElementById("year").textContent=new Date().getFullYear();</script>
+</body></html>
