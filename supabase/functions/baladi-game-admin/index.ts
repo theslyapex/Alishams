@@ -25,7 +25,7 @@ Deno.serve(async (req: Request) => {
   if (origin && !ALLOWED.has(origin)) return out({ error: "Origin not allowed" }, 403, origin);
   try {
     if (!URL || !ANON || !SERVICE) return out({ error: "سرویس مدیریت بازی در دسترس نیست." }, 503, origin);
-    const token = (req.headers.get("Authorization") || "").replace(/^Bearer\\s+/i, "");
+    const token = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "");
     if (!token) return out({ error: "ورود مدیر الزامی است." }, 401, origin);
     const auth = createClient(URL, ANON, { auth: { persistSession: false, autoRefreshToken: false } });
     const { data: authData, error: authError } = await auth.auth.getUser(token);
