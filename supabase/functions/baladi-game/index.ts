@@ -773,7 +773,7 @@ Deno.serve(async (req: Request) => {
       if (sessionError) throw sessionError;
       if (!activeSession) return out({ error: "نشست بازی فعال نیست." }, 409, origin);
       const { data: current, error: currentError } = await db.from("baladi_game_profiles")
-        .select("current_level,coins,words_found,bonus_words_found").eq("user_id", user.id).single();
+        .select("current_level,coins,words_found,bonus_words_found,xp_total,experience_level").eq("user_id", user.id).single();
       if (currentError) throw currentError;
       if (Number(current.current_level) !== level)
         return out({ error: "این مرحله در حساب شما فعال نیست." }, 409, origin);
@@ -808,7 +808,7 @@ Deno.serve(async (req: Request) => {
       const { error: eventError } = await db.from("baladi_game_events").insert({
         user_id: user.id, session_id: sessionId, event_type: eventType,
         event_key: eventKey, level_number: level, coin_delta: reward,
-        metadata: { word, source: isAnswer ? "answer" : "dictionary_bonus" }
+        metadata: { word, source: isAnswer ? "answer" : "dictionary_bonus", xp_awarded: 5 }
       });
       if (eventError && eventError.code !== "23505") throw eventError;
       if (!eventError) {
@@ -816,17 +816,19 @@ Deno.serve(async (req: Request) => {
           words_found: Number(current.words_found || 0) + 1,
           bonus_words_found: Number(current.bonus_words_found || 0) + (isAnswer ? 0 : 1),
           coins: Number(current.coins || 0) + reward,
+          xp_total: Number(current.xp_total || 0) + 5,
+          experience_level: Math.min(500, Math.floor((Number(current.xp_total || 0) + 5) / 1000) + 1),
           updated_at: new Date().toISOString()
         }).eq("user_id", user.id)
-          .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at")
+          .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at,xp_total,experience_level")
           .single();
         if (profileUpdateError) throw profileUpdateError;
-        return out({ ok: true, profile: updatedProfile, word_type: isAnswer ? "answer" : "bonus", coins_awarded: reward }, 200, origin);
+        return out({ ok: true, profile: updatedProfile, word_type: isAnswer ? "answer" : "bonus", coins_awarded: reward, xp_awarded: 5 }, 200, origin);
       }
       const { data: unchangedProfile } = await db.from("baladi_game_profiles")
         .select("coins,current_level,completed_levels,levels_completed,total_play_seconds,sessions_count,words_found,bonus_words_found,hints_used,last_played_at")
         .eq("user_id", user.id).single();
-      return out({ ok: true, profile: unchangedProfile, word_type: isAnswer ? "answer" : "bonus", coins_awarded: 0, already_found: true }, 200, origin);
+      return out({ ok: true, profile: unchangedProfile, word_type: isAnswer ? "answer" : "bonus", coins_awarded: 0, xp_awarded: 0, already_found: true }, 200, origin);
     }
 
     return out({ error: "عملیات ناشناخته است." }, 400, origin);
