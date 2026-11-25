@@ -695,7 +695,7 @@ Deno.serve(async (req: Request) => {
         });
       }
       const { data: profile, error: profileError } = await db.from("baladi_game_profiles")
-        .select("current_level,coins,diamonds,name_change_count,sessions_count,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,equipped_avatar_id,wins,losses,is_verified").eq("user_id", user.id).single();
+        .select("current_level,coins,diamonds,name_change_count,sessions_count,display_name,daily_streak,last_checkin_date,avatar_path,avatar_unlocked,equipped_frame_id,equipped_avatar_id,wins,losses,is_verified,xp_total,experience_level").eq("user_id", user.id).single();
       if (profileError) throw profileError;
       const { data: session, error: insertError } = await db.from("baladi_game_sessions").insert({
         user_id: user.id,
