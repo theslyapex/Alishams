@@ -740,13 +740,17 @@ Deno.serve(async (req: Request) => {
       if (!Number.isInteger(level) || level < 1 || level > 10000) return out({ error: "شماره مرحله معتبر نیست." }, 400, origin);
       const sessionId = body?.session_id;
       if (!uuid(sessionId)) return out({ error: "نشست فعال بازی معتبر نیست." }, 400, origin);
+      const { data: xpBefore, error: xpBeforeError } = await db.from("baladi_game_profiles")
+        .select("xp_total").eq("user_id", user.id).single();
+      if (xpBeforeError) throw xpBeforeError;
       const { data, error } = await db.rpc("baladi_complete_level", { p_user_id: user.id, p_level: level, p_session_id: sessionId });
       if (error) return out({ error: error.message || "ثبت مرحله انجام نشد." }, 409, origin);
+      const xpAwarded = Math.max(0, Number(data?.xp_total || 0) - Number(xpBefore?.xp_total || 0));
       if (uuid(body?.session_id)) {
         await db.from("baladi_game_sessions").update({ end_level: Math.min(10000, level + 1) })
           .eq("id", body.session_id).eq("user_id", user.id).is("ended_at", null);
       }
-      return out({ ok: true, profile: data }, 200, origin);
+      return out({ ok: true, profile: data, xp_awarded: xpAwarded }, 200, origin);
     }
 
     if (action === "use_hint") {
