@@ -180,6 +180,10 @@
     <image:image><image:loc>https://alishams.ir/assets/images/mobile-apps/social-network/gallery-06.jpg</image:loc><image:title>تصویر 6 از گالری اپلیکیشن هماگرام</image:title></image:image>
     <image:image><image:loc>https://alishams.ir/assets/images/mobile-apps/social-network/gallery-07.jpg</image:loc><image:title>تصویر 7 از گالری اپلیکیشن هماگرام</image:title></image:image>
     <image:image><image:loc>https://alishams.ir/assets/images/mobile-apps/social-network/gallery-08.jpg</image:loc><image:title>تصویر 8 از گالری اپلیکیشن هماگرام</image:title></image:image>
+    <image:image>
+      <image:loc>https://alishams.ir/assets/images/mobile-apps/social-network/homagram_app_icon.png</image:loc>
+      <image:title>آیکون اپلیکیشن هومگرام</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://alishams.ir/case-studies/studio-ordering.html</loc>
@@ -197,6 +201,10 @@
     <image:image><image:loc>https://alishams.ir/assets/images/mobile-apps/studio-ordering/gallery-11.jpg</image:loc><image:title>تصویر 11 از گالری اپلیکیشن سفارش‌گیری استودیو علی شمس</image:title></image:image>
     <image:image><image:loc>https://alishams.ir/assets/images/mobile-apps/studio-ordering/gallery-12.jpg</image:loc><image:title>تصویر 12 از گالری اپلیکیشن سفارش‌گیری استودیو علی شمس</image:title></image:image>
     <image:image><image:loc>https://alishams.ir/assets/images/bazaar-badge.jpg</image:loc><image:title>نشان دریافت اپلیکیشن سفارش‌گیری از کافه‌بازار</image:title></image:image>
+    <image:image>
+      <image:loc>https://alishams.ir/assets/images/mobile-apps/studio-ordering/AlishamsDigitalStudio_app_icon.png</image:loc>
+      <image:title>آیکون اپلیکیشن سفارش استودیو دیجیتال علی شمس</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://alishams.ir/case-studies/hardware-shenas.html</loc>
@@ -303,6 +311,64 @@
     <image:image>
       <image:loc>https://alishams.ir/assets/images/mobile-apps/baladi/cover.jpg</image:loc>
       <image:title>تصویر معرفی بازی بلدی؟ در صفحه خرید سکه</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://alishams.ir/logo-portfolio.html</loc>
+    <image:image>
+      <image:loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/portfolio-images/logo/1794077178089-e1e951fe-75fb-4dd4-b331-dc2800a5db70.png</image:loc>
+      <image:title>لوگو کارشناس مامایی</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/portfolio-images/logo/1794154063252-f08cc789-452c-4a5f-ad97-4073de409686.png</image:loc>
+      <image:title>لوگو کارشناس مامایی</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/portfolio-images/logo/1793277549043-f1bd2874-4ec7-4e2e-a9d5-e0fb66128533.jpg</image:loc>
+      <image:title>ایرما ریلز</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/portfolio-images/logo/1793277173618-2f96ab28-513d-467d-87fa-b6efcb69ad11.jpg</image:loc>
+      <image:title>رزومه ساز آنلاین شیرازه</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/portfolio-images/logo/1793143823693-41964e72-9c5c-4d2f-aa6c-d3a88d60d6d3.jpg</image:loc>
+      <image:title>ایران ما</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/portfolio-images/logo/1793143728816-296e7f75-357c-4abe-a1a7-9195e8aac88b.png</image:loc>
+      <image:title>استودیو دیجیتال علی شمس</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/portfolio-images/logo/1793143686181-2428b13d-8518-4baf-bc09-9d78c749d2bd.jpg</image:loc>
+      <image:title>ابزارینو</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/portfolio-images/logo/1793142875195-3aa8d573-0f13-468f-91ca-30ccc3621c41.png</image:loc>
+      <image:title>املاک ارژنگ</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://alishams.ir/ad-image-portfolio.html</loc>
+    <image:image>
+      <image:loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/portfolio-images/ad-image/1794082285620-46d5a258-fb13-4c19-aa54-f631e0b53898.jpg</image:loc>
+      <image:title>تیزر تبلیغاتی کارشناس</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/portfolio-images/ad-image/1793489243033-75be8731-87be-44c9-a7ce-43667476725c.jpg</image:loc>
+      <image:title>استودیو دیجیتال علی شمس</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/portfolio-images/ad-image/1793489205255-5a554740-c13a-41b8-bce6-4bbb02a6ab3e.jpg</image:loc>
+      <image:title>طراحی موشن گرافیک</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/portfolio-images/ad-image/1793489087734-4abeecb2-48eb-4b1b-b580-c79436204a16.jpg</image:loc>
+      <image:title>پکیج اقتصادی طراحی وبسایت</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://srfldjfrzmtnlabusssq.supabase.co/storage/v1/object/public/portfolio-images/ad-image/1793143425337-47453fde-6282-4727-a9c1-a88cfa5e3aa1.jpg</image:loc>
+      <image:title>املاک ارژنگ</image:title>
     </image:image>
   </url>
 </urlset>
