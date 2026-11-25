@@ -96,6 +96,36 @@ Deno.serve(async (req: Request) => {
       return out({ ok: true, notifications: notifications || [], unread_count: (notifications || []).length }, 200, origin);
     }
 
+    if (action === "register_push_token") {
+      const fcmToken = String(body?.fcm_token || "").trim();
+      const platform = String(body?.platform || "android").trim().toLowerCase();
+      const deviceLabel = String(body?.device_label || "").trim().slice(0, 80);
+      if (fcmToken.length < 40 || fcmToken.length > 4096) {
+        return out({ error: "شناسه دستگاه برای اعلان معتبر نیست." }, 400, origin);
+      }
+      if (platform !== "android") return out({ error: "این نسخه فقط اعلان اندروید را پشتیبانی می‌کند." }, 400, origin);
+      const { error: tokenError } = await db.from("baladi_device_tokens").upsert({
+        user_id: user.id,
+        fcm_token: fcmToken,
+        platform,
+        device_label: deviceLabel,
+        enabled: true,
+        last_seen_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }, { onConflict: "fcm_token" });
+      if (tokenError) throw tokenError;
+      return out({ ok: true, registered: true }, 200, origin);
+    }
+
+    if (action === "unregister_push_token") {
+      const fcmToken = String(body?.fcm_token || "").trim();
+      if (!fcmToken || fcmToken.length > 4096) return out({ error: "شناسه دستگاه معتبر نیست." }, 400, origin);
+      const { error: tokenError } = await db.from("baladi_device_tokens")
+        .delete().eq("user_id", user.id).eq("fcm_token", fcmToken);
+      if (tokenError) throw tokenError;
+      return out({ ok: true, unregistered: true }, 200, origin);
+    }
+
     if (action === "summary") {
       const { error: ensureError } = await db.from("baladi_game_profiles")
         .upsert({ user_id: user.id }, { onConflict: "user_id", ignoreDuplicates: true });
