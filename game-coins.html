@@ -151,6 +151,11 @@ img,svg,a,button{-webkit-user-drag:none!important;user-drag:none!important}
 .game-discovery-link:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(243,201,110,.22)}
 @media(max-width:680px){.game-discovery{grid-template-columns:94px 1fr;gap:13px;margin:44px 0 4px;padding:13px;border-radius:19px}.game-discovery-media{height:106px}.game-discovery h2{font-size:15px;line-height:1.6}.game-discovery p{font-size:10px}.game-discovery-link{grid-column:1/-1;width:100%;padding:11px}}
 
+.site-footer{position:relative;margin-top:82px;padding:36px 0 18px;border-top:1px solid var(--line);color:var(--muted)}.footer-top{display:grid;grid-template-columns:1.45fr repeat(3,1fr);gap:28px;padding-bottom:32px}.footer-logo{display:inline-flex;align-items:center;gap:11px;color:var(--gold2)}.footer-logo-mark{width:45px;height:45px;display:grid;place-items:center;border:1px solid rgba(243,201,110,.25);border-radius:15px;background:linear-gradient(145deg,rgba(243,201,110,.12),rgba(100,223,189,.07))}.footer-logo-mark img{width:29px;height:29px;object-fit:contain}.footer-logo strong,.footer-logo small{display:block}.footer-logo strong{font-size:16px}.footer-logo small{font-size:10px;color:var(--muted);font-weight:500}.footer-brand p{max-width:250px;margin:14px 0;font-size:11px;line-height:2;color:#c2cec5}.footer-status{display:inline-flex;align-items:center;gap:8px;font-size:10px;color:var(--mint)}.footer-status i{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 4px rgba(100,223,189,.1)}.footer-column{display:flex;flex-direction:column;align-items:flex-start;gap:9px}.footer-column h3{margin:2px 0 8px;color:#e8efe9;font-size:12px;font-weight:850}.footer-column a{font-size:10px;color:var(--muted);transition:color .2s,transform .2s}.footer-column a:hover,.footer-bottom a:hover{color:var(--mint);transform:translateX(-2px)}.footer-directory{border:1px solid var(--line);border-radius:19px;background:linear-gradient(120deg,rgba(100,223,189,.045),rgba(255,255,255,.018));overflow:hidden}.footer-directory details>summary{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:17px 20px;cursor:pointer;list-style:none}.footer-directory summary::-webkit-details-marker{display:none}.footer-directory summary b,.footer-directory summary small{display:block}.footer-directory summary b{font-size:12px;color:#eaf1eb}.footer-directory summary small{font-size:10px;color:var(--muted);margin-top:3px}.footer-directory-icon{width:30px;height:30px;display:grid;place-items:center;border:1px solid rgba(100,223,189,.25);border-radius:10px;color:var(--mint);font-size:18px;transition:transform .2s}.footer-directory details[open] .footer-directory-icon{transform:rotate(45deg)}.footer-directory-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;padding:4px 20px 22px;border-top:1px solid var(--line)}.footer-directory-group h4{display:flex;align-items:center;gap:8px;margin:17px 0 10px;color:var(--gold2);font-size:11px}.footer-directory-group h4 small{display:grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:7px;background:rgba(243,201,110,.1);color:var(--gold);font-size:9px}.footer-directory-group nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px}.footer-directory-group a{font-size:10px;color:var(--muted);line-height:1.8;overflow-wrap:anywhere;transition:color .2s}.footer-directory-group a:hover{color:var(--mint)}.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding-top:19px;margin-top:18px;border-top:1px solid var(--line);font-size:9px}.footer-bottom a{color:var(--muted);transition:color .2s}
+.coin-picker-trigger{width:100%;min-height:68px;display:flex;align-items:center;gap:11px;padding:10px 12px;border:1px solid rgba(100,223,189,.3);border-radius:15px;background:linear-gradient(105deg,rgba(100,223,189,.08),rgba(243,201,110,.045));color:var(--ink);text-align:right;cursor:pointer;transition:border-color .2s,box-shadow .2s}.coin-picker-trigger:hover,.coin-picker-trigger[aria-expanded="true"]{border-color:var(--mint);box-shadow:0 0 0 3px rgba(100,223,189,.09)}.coin-picker-leading{width:43px;height:43px;display:grid;place-items:center;flex:none;border:1px solid rgba(243,201,110,.22);border-radius:13px;background:rgba(243,201,110,.09)}.coin-picker-leading img{width:31px;height:31px;object-fit:contain}.coin-picker-current{display:flex;flex:1;min-width:0;flex-direction:column;line-height:1.7}.coin-picker-current b{font-size:12px;color:#f5f7f2}.coin-picker-current small{font-size:9px;color:var(--muted)}.coin-picker-price{font-size:11px;font-weight:850;color:var(--mint);white-space:nowrap}.coin-picker-chevron{color:var(--gold);font-size:22px;margin-right:2px}.coin-native-select{position:absolute!important;width:1px!important;height:1px!important;min-height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;opacity:0!important}.coin-picker-backdrop{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:18px;background:rgba(2,8,6,.78);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px);opacity:0;transition:opacity .22s}.coin-picker-backdrop[hidden]{display:none}.coin-picker-backdrop.is-visible{opacity:1}.coin-picker-dialog{width:min(100%,480px);max-height:min(90dvh,680px);overflow:auto;padding:23px;border:1px solid rgba(100,223,189,.23);border-radius:25px;background:radial-gradient(ellipse at 100% 0,rgba(100,223,189,.12),transparent 42%),radial-gradient(ellipse at 0 100%,rgba(243,201,110,.08),transparent 40%),#101a17;box-shadow:0 28px 100px #000a;transform:translateY(15px) scale(.98);transition:transform .22s}.coin-picker-backdrop.is-visible .coin-picker-dialog{transform:translateY(0) scale(1)}.coin-picker-head{display:flex;align-items:center;gap:13px;margin-bottom:20px}.coin-picker-head-icon{width:52px;height:52px;display:grid;place-items:center;flex:none;border:1px solid rgba(243,201,110,.25);border-radius:16px;background:rgba(243,201,110,.1)}.coin-picker-head-icon img{width:38px;height:38px;object-fit:contain}.coin-picker-head>div{flex:1;min-width:0}.coin-picker-head .kicker{font-size:9px;letter-spacing:1px}.coin-picker-head h3{margin:2px 0;font-size:17px;color:var(--gold2);font-weight:850}.coin-picker-head p{margin:0;font-size:10px;color:var(--muted);line-height:1.8}.coin-picker-close{width:34px;height:34px;flex:none;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.035);color:#dce6de;font-size:22px;line-height:1;cursor:pointer}.coin-picker-options{display:grid;gap:10px}.coin-option{width:100%;display:flex;align-items:center;gap:12px;min-height:72px;padding:11px 13px;border:1px solid rgba(213,238,224,.12);border-radius:16px;background:rgba(255,255,255,.025);color:var(--ink);text-align:right;cursor:pointer;transition:border-color .2s,background .2s,transform .2s}.coin-option:hover{transform:translateY(-2px);border-color:rgba(100,223,189,.48);background:rgba(100,223,189,.06)}.coin-option.is-selected{border-color:var(--mint);background:linear-gradient(100deg,rgba(100,223,189,.12),rgba(243,201,110,.055));box-shadow:inset 0 0 0 1px rgba(100,223,189,.1)}.coin-option.is-featured{border-color:rgba(243,201,110,.4)}.coin-option-icon{width:45px;height:45px;display:grid;place-items:center;flex:none;border-radius:13px;background:rgba(243,201,110,.09)}.coin-option-icon img{width:34px;height:34px;object-fit:contain}.coin-option-copy{display:flex;flex:1;min-width:0;flex-direction:column;line-height:1.8}.coin-option-copy b{font-size:12px}.coin-option-copy small{font-size:9px;color:var(--muted)}.coin-option>strong{font-size:12px;color:var(--mint);white-space:nowrap}.coin-option>strong small{font-size:9px;color:var(--muted);font-weight:500}.coin-option-check{width:22px;height:22px;display:grid;place-items:center;flex:none;border:1px solid rgba(213,238,224,.2);border-radius:50%;font-style:normal;font-size:11px;color:transparent}.coin-option.is-selected .coin-option-check{border-color:var(--mint);background:var(--mint);color:#092019}.coin-picker-foot{display:flex;align-items:center;gap:9px;margin-top:16px;padding:11px 13px;border-radius:12px;background:rgba(100,223,189,.055);color:var(--muted);font-size:9px}.coin-picker-foot img{width:20px;height:20px;object-fit:contain}body.coin-picker-open{overflow:hidden}
+@media(max-width:680px){.footer-top{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 15px}.footer-brand{grid-column:1/-1}.footer-directory-groups{grid-template-columns:1fr;padding-inline:15px}.footer-directory-group nav{grid-template-columns:repeat(2,minmax(0,1fr))}.footer-bottom{display:grid;grid-template-columns:1fr 1fr}.footer-bottom span{grid-column:1/-1}}
+@media(max-width:480px){.coin-picker-dialog{padding:18px;border-radius:21px}.coin-picker-head h3{font-size:15px}.coin-option{gap:9px;padding:10px}.coin-option-icon{width:40px;height:40px}.coin-option-icon img{width:30px;height:30px}.coin-option>strong{font-size:10px}.coin-picker-price{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.coin-picker-backdrop,.coin-picker-dialog,.coin-picker-trigger,.coin-option{transition:none!important}}
 </style>
 <script type="application/ld+json">
 {
@@ -217,7 +222,12 @@ img,svg,a,button{-webkit-user-drag:none!important;user-drag:none!important}
     <label class="field"><span>نام و نام خانوادگی *</span><input name="full_name" minlength="2" maxlength="80" required autocomplete="name" placeholder="نام کامل"></label>
     <label class="field"><span>ایمیل حساب بازی *</span><input name="email" type="email" required autocomplete="email" placeholder="ایمیلی که با آن وارد بازی می‌شوی"></label>
     <label class="field"><span>شماره تماس *</span><input name="phone" type="tel" minlength="8" maxlength="20" required autocomplete="tel" placeholder="شماره تماس در دسترس"></label>
-    <label class="field"><span>تعداد سکه *</span><select name="coins" id="coins"><option value="1000">۱٬۰۰۰ سکه</option><option value="3000">۳٬۰۰۰ سکه</option><option value="5000">۵٬۰۰۰ سکه</option><option value="10000">۱۰٬۰۰۰ سکه</option></select></label>
+    <label class="field coin-picker-field"><span>تعداد سکه *</span><button class="coin-picker-trigger" id="coinPickerTrigger" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="coinPickerDialog"><span class="coin-picker-leading"><img src="https://img.icons8.com/fluency/96/stack-of-coins.png" alt="" loading="lazy"></span><span class="coin-picker-current"><b id="coinPickerValue">۱٬۰۰۰ سکه</b><small id="coinPickerHint">بسته شروع ماجراجویی</small></span><span class="coin-picker-price" id="coinPickerPrice">۸٬۹۰۰ تومان</span><span class="coin-picker-chevron" aria-hidden="true">⌄</span></button><select name="coins" id="coins" class="coin-native-select" tabindex="-1" aria-hidden="true"><option value="1000">۱٬۰۰۰ سکه</option><option value="3000">۳٬۰۰۰ سکه</option><option value="5000">۵٬۰۰۰ سکه</option><option value="10000">۱۰٬۰۰۰ سکه</option></select></label>
+<div class="coin-picker-backdrop" id="coinPickerBackdrop" hidden><section class="coin-picker-dialog" id="coinPickerDialog" role="dialog" aria-modal="true" aria-labelledby="coinPickerTitle" tabindex="-1"><div class="coin-picker-head"><span class="coin-picker-head-icon"><img src="https://img.icons8.com/fluency/96/coins.png" alt="" loading="lazy"></span><div><span class="kicker">BALADI COIN STORE</span><h3 id="coinPickerTitle">بسته سکه‌ات رو انتخاب کن</h3><p>هر بسته را انتخاب کنی، مبلغ سفارش هم به‌روزرسانی می‌شود.</p></div><button type="button" class="coin-picker-close" id="coinPickerClose" aria-label="بستن پنجره">×</button></div><div class="coin-picker-options">
+<button type="button" class="coin-option" data-coin-option="1000"><span class="coin-option-icon"><img src="https://img.icons8.com/fluency/96/coins.png" alt="" loading="lazy"></span><span class="coin-option-copy"><b>۱٬۰۰۰ سکه</b><small>شروع ماجراجویی</small></span><strong>۸٬۹۰۰ <small>تومان</small></strong><i class="coin-option-check">✓</i></button>
+<button type="button" class="coin-option" data-coin-option="3000"><span class="coin-option-icon"><img src="https://img.icons8.com/fluency/96/stack-of-coins.png" alt="" loading="lazy"></span><span class="coin-option-copy"><b>۳٬۰۰۰ سکه</b><small>یک قدم جلوتر</small></span><strong>۲۶٬۷۰۰ <small>تومان</small></strong><i class="coin-option-check">✓</i></button>
+<button type="button" class="coin-option is-featured" data-coin-option="5000"><span class="coin-option-icon"><img src="https://img.icons8.com/fluency/96/coins.png" alt="" loading="lazy"></span><span class="coin-option-copy"><b>۵٬۰۰۰ سکه</b><small>پیشنهاد ویژه</small></span><strong>۴۴٬۵۰۰ <small>تومان</small></strong><i class="coin-option-check">✓</i></button>
+<button type="button" class="coin-option" data-coin-option="10000"><span class="coin-option-icon"><img src="https://img.icons8.com/fluency/96/money-bag.png" alt="" loading="lazy"></span><span class="coin-option-copy"><b>۱۰٬۰۰۰ سکه</b><small>بسته پرقدرت</small></span><strong>۸۹٬۰۰۰ <small>تومان</small></strong><i class="coin-option-check">✓</i></button></div><div class="coin-picker-foot"><img src="https://img.icons8.com/fluency/48/verified-badge.png" alt="" loading="lazy"><span>انتخاب بسته در هر زمان قابل تغییر است.</span></div></section></div>
     <div class="amount"><span>مبلغ قابل پرداخت</span><strong id="amount">۸٬۹۰۰ تومان</strong></div>
     <label class="field"><span>شماره پیگیری یا شناسه تراکنش (در صورت وجود)</span><input name="transaction_reference" maxlength="120" placeholder="شناسه تراکنش"></label>
     <label class="field"><span>توضیحات تکمیلی</span><textarea name="description" maxlength="1500" placeholder="اگر نکته‌ای درباره پرداخت یا حساب بازی وجود دارد بنویس"></textarea></label>
@@ -262,12 +272,199 @@ img,svg,a,button{-webkit-user-drag:none!important;user-drag:none!important}
 </section>
 
 </main>
-<footer class="wrap footer"><span>© استودیو دیجیتال علی شمس</span><span>ایده‌پردازی، طراحی و اجرا؛ با دقت در جزئیات.</span><span class="icon-credit">Icons by <a href="https://icons8.com/" target="_blank" rel="noopener noreferrer">Icons8</a></span></footer>
+<footer class="site-footer"><div class="footer-top">
+<div class="footer-brand"><a class="footer-logo" href="https://alishams.ir/" aria-label="استودیو دیجیتال علی شمس"><span class="footer-logo-mark"><img src="https://img.icons8.com/fluency/96/diamond.png" alt="" loading="lazy"></span><span><strong>علی شمس</strong><small>استودیو دیجیتال</small></span></a><p>ایده‌پردازی، طراحی و اجرا؛ با دقت در جزئیات.</p><span class="footer-status"><i></i> همراه ایده‌ها، از شروع تا اجرا</span></div>
+<div class="footer-column"><h3>دسترسی سریع</h3><a href="https://alishams.ir/">صفحه اصلی</a><a href="https://alishams.ir/about.html">درباره استودیو</a><a href="https://alishams.ir/services/website-design.html">طراحی وب‌سایت</a><a href="https://alishams.ir/portfolio.html">نمونه‌کارها</a><a href="https://alishams.ir/blog.html">وبلاگ و مقالات</a></div>
+<div class="footer-column"><h3>خدمات و پشتیبانی</h3><a href="https://alishams.ir/services/motion-graphics.html">موشن گرافیک</a><a href="https://alishams.ir/contact-center.html">مرکز ارتباط</a><a href="https://alishams.ir/support.html">پشتیبانی</a><a href="https://alishams.ir/terms.html">شرایط و قوانین</a><a href="https://alishams.ir/feedback.html">ثبت بازخورد</a></div>
+<div class="footer-column"><h3>پروژه‌های منتخب</h3><a href="https://alishams.ir/case-studies/baladi.html">بازی بلدی؟</a><a href="https://alishams.ir/case-studies/hardware-shenas.html">سخت‌افزارشناس</a><a href="https://alishams.ir/case-studies/iran-ma.html">ایران‌ما</a><a href="https://alishams.ir/case-studies/shirazeh.html">شیرازه</a><a href="https://alishams.ir/game-coins.html">خرید سکه بلدی؟</a></div></div>
+<section class="footer-directory" aria-label="فهرست کامل صفحات سایت"><details><summary><span><b>فهرست کامل صفحات سایت</b><small>دسترسی مستقیم به تمام 178 صفحه ثبت‌شده در نقشه سایت</small></span><span class="footer-directory-icon" aria-hidden="true">＋</span></summary><div class="footer-directory-groups"><section class="footer-directory-group"><h4>صفحات اصلی <small>25</small></h4><nav aria-label="صفحات اصلی"><a href="https://alishams.ir/site-builder.html">Site Builder</a>
+<a href="https://alishams.ir/packages.html">Packages</a>
+<a href="https://alishams.ir/domain-lab.html">Domain Lab</a>
+<a href="https://alishams.ir/about.html">About</a>
+<a href="https://alishams.ir/contact-center.html">Contact Center</a>
+<a href="https://alishams.ir/feedback.html">Feedback</a>
+<a href="https://alishams.ir/community-chat.html">Community Chat</a>
+<a href="https://alishams.ir/avangaar.html">Avangaar</a>
+<a href="https://alishams.ir/support.html">Support</a>
+<a href="https://alishams.ir/persian-fonts.html">Persian Fonts</a>
+<a href="https://alishams.ir/tools.html">Tools</a>
+<a href="https://alishams.ir/portfolio.html">Portfolio</a>
+<a href="https://alishams.ir/website-demos.html">Website Demos</a>
+<a href="https://alishams.ir/game-coins.html">Game Coins</a>
+<a href="https://alishams.ir/terms.html">Terms</a>
+<a href="https://alishams.ir/pricing.html">Pricing</a>
+<a href="https://alishams.ir/logo-portfolio.html">Logo Portfolio</a>
+<a href="https://alishams.ir/ad-image-portfolio.html">Ad Image Portfolio</a>
+<a href="https://alishams.ir/videos.html">Videos</a>
+<a href="https://alishams.ir/blog.html">Blog</a>
+<a href="https://alishams.ir/instagram-marketing-guide.html">Instagram Marketing Guide</a>
+<a href="https://alishams.ir/technology-trends-guide.html">Technology Trends Guide</a>
+<a href="https://alishams.ir/plus.html">Plus</a>
+<a href="https://alishams.ir/color-studio.html">Color Studio</a>
+<a href="https://alishams.ir/consultation-booking.html">Consultation Booking</a></nav></section>
+<section class="footer-directory-group"><h4>خدمات استودیو <small>16</small></h4><nav aria-label="خدمات استودیو"><a href="https://alishams.ir/services/motion-graphics.html">Motion Graphics</a>
+<a href="https://alishams.ir/services/website-design.html">Website Design</a>
+<a href="https://alishams.ir/services/blog-template-design.html">Blog Template Design</a>
+<a href="https://alishams.ir/services/custom-brand-website.html">Custom Brand Website</a>
+<a href="https://alishams.ir/services/economic-website-package.html">Economic Website Package</a>
+<a href="https://alishams.ir/services/economic-logo-motion-package.html">Economic Logo Motion Package</a>
+<a href="https://alishams.ir/services/reels-video.html">Reels Video</a>
+<a href="https://alishams.ir/services/ad-trailer.html">Ad Trailer</a>
+<a href="https://alishams.ir/services/social-security.html">Social Security</a>
+<a href="https://alishams.ir/services/website-articles.html">Website Articles</a>
+<a href="https://alishams.ir/services/promotion.html">Promotion</a>
+<a href="https://alishams.ir/services/online-business-consulting.html">Online Business Consulting</a>
+<a href="https://alishams.ir/services/social-media-services.html">Social Media Services</a>
+<a href="https://alishams.ir/services/custom-logo-design.html">Custom Logo Design</a>
+<a href="https://alishams.ir/services/seo.html">Seo</a>
+<a href="https://alishams.ir/services/domain-purchase.html">Domain Purchase</a></nav></section>
+<section class="footer-directory-group"><h4>نمونه‌کارها و پروژه‌ها <small>10</small></h4><nav aria-label="نمونه‌کارها و پروژه‌ها"><a href="https://alishams.ir/case-studies/iran-ma.html">Iran Ma</a>
+<a href="https://alishams.ir/case-studies/nova.html">Nova</a>
+<a href="https://alishams.ir/case-studies/apex.html">Apex</a>
+<a href="https://alishams.ir/case-studies/shirazeh.html">Shirazeh</a>
+<a href="https://alishams.ir/case-studies/abzarino.html">Abzarino</a>
+<a href="https://alishams.ir/case-studies/hardware-shenas.html">Hardware Shenas</a>
+<a href="https://alishams.ir/case-studies/baladi.html">Baladi</a>
+<a href="https://alishams.ir/case-studies/homagram.html">Homagram</a>
+<a href="https://alishams.ir/case-studies/studio-ordering.html">Studio Ordering</a>
+<a href="https://alishams.ir/case-studies/midwifery-document.html">Midwifery Document</a></nav></section>
+<section class="footer-directory-group"><h4>دموهای طراحی وب‌سایت <small>25</small></h4><nav aria-label="دموهای طراحی وب‌سایت"><a href="https://alishams.ir/demos/industrial-company.html">Industrial Company</a>
+<a href="https://alishams.ir/demos/international-trading.html">International Trading</a>
+<a href="https://alishams.ir/demos/aurelia-hotel.html">Aurelia Hotel</a>
+<a href="https://alishams.ir/demos/voltura-electric.html">Voltura Electric</a>
+<a href="https://alishams.ir/demos/syntra-ai.html">Syntra Ai</a>
+<a href="https://alishams.ir/demos/velora-store.html">Velora Store</a>
+<a href="https://alishams.ir/demos/vantage-architecture.html">Vantage Architecture</a>
+<a href="https://alishams.ir/demos/northline-service.html">Northline Service</a>
+<a href="https://alishams.ir/demos/maison-elan-fashion.html">Maison Elan Fashion</a>
+<a href="https://alishams.ir/demos/nova-tech-store.html">Nova Tech Store</a>
+<a href="https://alishams.ir/demos/rose-rue-beauty.html">Rose Rue Beauty</a>
+<a href="https://alishams.ir/demos/nestora-home.html">Nestora Home</a>
+<a href="https://alishams.ir/demos/arvin-rad-portfolio.html">Arvin Rad Portfolio</a>
+<a href="https://alishams.ir/demos/mira-noir-photography.html">Mira Noir Photography</a>
+<a href="https://alishams.ir/demos/arman-radmanesh-consultant.html">Arman Radmanesh Consultant</a>
+<a href="https://alishams.ir/demos/vesta-lifestyle-magazine.html">Vesta Lifestyle Magazine</a>
+<a href="https://alishams.ir/demos/didban-news.html">Didban News</a>
+<a href="https://alishams.ir/demos/edura-academy.html">Edura Academy</a>
+<a href="https://alishams.ir/demos/lingoza-language-school.html">Lingoza Language School</a>
+<a href="https://alishams.ir/demos/tavola-restaurant.html">Tavola Restaurant</a>
+<a href="https://alishams.ir/demos/miette-cafe-patisserie.html">Miette Cafe Patisserie</a>
+<a href="https://alishams.ir/demos/nobate-booking.html">Nobate Booking</a>
+<a href="https://alishams.ir/demos/orbita-business-dashboard.html">Orbita Business Dashboard</a>
+<a href="https://alishams.ir/demos/campus-one-student-portal.html">Campus One Student Portal</a>
+<a href="https://alishams.ir/demos/servio-online-services.html">Servio Online Services</a></nav></section>
+<section class="footer-directory-group"><h4>مقالات و راهنماها <small>101</small></h4><nav aria-label="مقالات و راهنماها"><a href="https://alishams.ir/articles/website-design-checklist.html">Website Design Checklist</a>
+<a href="https://alishams.ir/articles/website-design-cost.html">Website Design Cost</a>
+<a href="https://alishams.ir/articles/why-site-not-ranking.html">Why Site Not Ranking</a>
+<a href="https://alishams.ir/articles/seo-basics-small-business.html">Seo Basics Small Business</a>
+<a href="https://alishams.ir/articles/mobile-website-speed.html">Mobile Website Speed</a>
+<a href="https://alishams.ir/articles/reels-hooks.html">Reels Hooks</a>
+<a href="https://alishams.ir/articles/reels-vs-posts.html">Reels Vs Posts</a>
+<a href="https://alishams.ir/articles/motion-graphics-for-business.html">Motion Graphics For Business</a>
+<a href="https://alishams.ir/articles/promo-video-script.html">Promo Video Script</a>
+<a href="https://alishams.ir/articles/logo-design-guide.html">Logo Design Guide</a>
+<a href="https://alishams.ir/articles/website-article-writing.html">Website Article Writing</a>
+<a href="https://alishams.ir/articles/social-account-security.html">Social Account Security</a>
+<a href="https://alishams.ir/articles/instagram-content-calendar.html">Instagram Content Calendar</a>
+<a href="https://alishams.ir/articles/online-ad-budget.html">Online Ad Budget</a>
+<a href="https://alishams.ir/articles/online-business-growth-plan.html">Online Business Growth Plan</a>
+<a href="https://alishams.ir/articles/landing-page-conversion.html">Landing Page Conversion</a>
+<a href="https://alishams.ir/articles/brand-visual-consistency.html">Brand Visual Consistency</a>
+<a href="https://alishams.ir/articles/content-strategy-small-business.html">Content Strategy Small Business</a>
+<a href="https://alishams.ir/articles/social-media-service-choice.html">Social Media Service Choice</a>
+<a href="https://alishams.ir/articles/choose-motion-or-ad-video.html">Choose Motion Or Ad Video</a>
+<a href="https://alishams.ir/articles/website-maintenance-checklist.html">Website Maintenance Checklist</a>
+<a href="https://alishams.ir/articles/ecommerce-product-page.html">Ecommerce Product Page</a>
+<a href="https://alishams.ir/articles/email-marketing-basics.html">Email Marketing Basics</a>
+<a href="https://alishams.ir/articles/content-repurposing-guide.html">Content Repurposing Guide</a>
+<a href="https://alishams.ir/articles/linkedin-content-for-business.html">Linkedin Content For Business</a>
+<a href="https://alishams.ir/articles/instagram-bio-optimization.html">Instagram Bio Optimization</a>
+<a href="https://alishams.ir/articles/instagram-story-planning.html">Instagram Story Planning</a>
+<a href="https://alishams.ir/articles/video-subtitles-social-media.html">Video Subtitles Social Media</a>
+<a href="https://alishams.ir/articles/brand-color-palette-guide.html">Brand Color Palette Guide</a>
+<a href="https://alishams.ir/articles/customer-testimonials-trust.html">Customer Testimonials Trust</a>
+<a href="https://alishams.ir/articles/website-analytics-kpis.html">Website Analytics Kpis</a>
+<a href="https://alishams.ir/articles/website-migration-seo.html">Website Migration Seo</a>
+<a href="https://alishams.ir/articles/structured-data-schema-guide.html">Structured Data Schema Guide</a>
+<a href="https://alishams.ir/articles/keyword-research-guide.html">Keyword Research Guide</a>
+<a href="https://alishams.ir/articles/google-search-console-guide.html">Google Search Console Guide</a>
+<a href="https://alishams.ir/articles/local-seo-for-small-business.html">Local Seo For Small Business</a>
+<a href="https://alishams.ir/articles/technical-seo-checklist.html">Technical Seo Checklist</a>
+<a href="https://alishams.ir/articles/on-page-seo-guide.html">On Page Seo Guide</a>
+<a href="https://alishams.ir/articles/internal-linking-strategy.html">Internal Linking Strategy</a>
+<a href="https://alishams.ir/articles/image-seo-alt-text.html">Image Seo Alt Text</a>
+<a href="https://alishams.ir/articles/content-refresh-old-articles.html">Content Refresh Old Articles</a>
+<a href="https://alishams.ir/articles/product-description-writing.html">Product Description Writing</a>
+<a href="https://alishams.ir/articles/conversion-copywriting-cta.html">Conversion Copywriting Cta</a>
+<a href="https://alishams.ir/articles/homepage-design-guide.html">Homepage Design Guide</a>
+<a href="https://alishams.ir/articles/website-ux-basics.html">Website Ux Basics</a>
+<a href="https://alishams.ir/articles/website-accessibility-basics.html">Website Accessibility Basics</a>
+<a href="https://alishams.ir/articles/cms-selection-guide.html">Cms Selection Guide</a>
+<a href="https://alishams.ir/articles/domain-hosting-guide.html">Domain Hosting Guide</a>
+<a href="https://alishams.ir/articles/ssl-https-guide.html">Ssl Https Guide</a>
+<a href="https://alishams.ir/articles/website-backup-guide.html">Website Backup Guide</a>
+<a href="https://alishams.ir/articles/instagram-algorithm-guide.html">Instagram Algorithm Guide</a>
+<a href="https://alishams.ir/articles/instagram-explore-guide.html">Instagram Explore Guide</a>
+<a href="https://alishams.ir/articles/instagram-trial-reels-guide.html">Instagram Trial Reels Guide</a>
+<a href="https://alishams.ir/articles/best-time-to-post-instagram.html">Best Time To Post Instagram</a>
+<a href="https://alishams.ir/articles/instagram-business-vs-creator-account.html">Instagram Business Vs Creator Account</a>
+<a href="https://alishams.ir/articles/instagram-professional-dashboard-guide.html">Instagram Professional Dashboard Guide</a>
+<a href="https://alishams.ir/articles/instagram-insights-metrics-guide.html">Instagram Insights Metrics Guide</a>
+<a href="https://alishams.ir/articles/instagram-views-reach-impressions.html">Instagram Views Reach Impressions</a>
+<a href="https://alishams.ir/articles/increase-instagram-reel-views.html">Increase Instagram Reel Views</a>
+<a href="https://alishams.ir/articles/instagram-saves-shares-guide.html">Instagram Saves Shares Guide</a>
+<a href="https://alishams.ir/articles/instagram-hashtag-keyword-seo.html">Instagram Hashtag Keyword Seo</a>
+<a href="https://alishams.ir/articles/instagram-caption-writing-guide.html">Instagram Caption Writing Guide</a>
+<a href="https://alishams.ir/articles/instagram-reels-length-retention.html">Instagram Reels Length Retention</a>
+<a href="https://alishams.ir/articles/instagram-carousel-post-guide.html">Instagram Carousel Post Guide</a>
+<a href="https://alishams.ir/articles/instagram-story-engagement-guide.html">Instagram Story Engagement Guide</a>
+<a href="https://alishams.ir/articles/instagram-posting-frequency-guide.html">Instagram Posting Frequency Guide</a>
+<a href="https://alishams.ir/articles/instagram-content-pillars-guide.html">Instagram Content Pillars Guide</a>
+<a href="https://alishams.ir/articles/instagram-hooks-examples.html">Instagram Hooks Examples</a>
+<a href="https://alishams.ir/articles/instagram-trending-audio-guide.html">Instagram Trending Audio Guide</a>
+<a href="https://alishams.ir/articles/instagram-account-status-recommendations.html">Instagram Account Status Recommendations</a>
+<a href="https://alishams.ir/articles/instagram-collab-post-guide.html">Instagram Collab Post Guide</a>
+<a href="https://alishams.ir/articles/instagram-edits-app-guide.html">Instagram Edits App Guide</a>
+<a href="https://alishams.ir/articles/edits-app-reels-workflow.html">Edits App Reels Workflow</a>
+<a href="https://alishams.ir/articles/instagram-shadowban-myths.html">Instagram Shadowban Myths</a>
+<a href="https://alishams.ir/articles/instagram-fake-views-followers-risks.html">Instagram Fake Views Followers Risks</a>
+<a href="https://alishams.ir/articles/instagram-small-business-sales-guide.html">Instagram Small Business Sales Guide</a>
+<a href="https://alishams.ir/articles/instagram-dm-sales-conversion.html">Instagram Dm Sales Conversion</a>
+<a href="https://alishams.ir/articles/instagram-a-b-testing-content.html">Instagram A B Testing Content</a>
+<a href="https://alishams.ir/articles/instagram-content-repurposing.html">Instagram Content Repurposing</a>
+<a href="https://alishams.ir/articles/instagram-business-profile-optimization.html">Instagram Business Profile Optimization</a>
+<a href="https://alishams.ir/articles/ai-agents-explained.html">Ai Agents Explained</a>
+<a href="https://alishams.ir/articles/physical-ai-robotics.html">Physical Ai Robotics</a>
+<a href="https://alishams.ir/articles/confidential-computing-guide.html">Confidential Computing Guide</a>
+<a href="https://alishams.ir/articles/ai-supercomputing.html">Ai Supercomputing</a>
+<a href="https://alishams.ir/articles/multimodal-ai-guide.html">Multimodal Ai Guide</a>
+<a href="https://alishams.ir/articles/edge-ai-explained.html">Edge Ai Explained</a>
+<a href="https://alishams.ir/articles/post-quantum-cryptography.html">Post Quantum Cryptography</a>
+<a href="https://alishams.ir/articles/spatial-computing-guide.html">Spatial Computing Guide</a>
+<a href="https://alishams.ir/articles/digital-twins-guide.html">Digital Twins Guide</a>
+<a href="https://alishams.ir/articles/ai-cybersecurity-2026.html">Ai Cybersecurity 2026</a>
+<a href="https://alishams.ir/articles/green-computing-data-centers.html">Green Computing Data Centers</a>
+<a href="https://alishams.ir/articles/brain-computer-interfaces.html">Brain Computer Interfaces</a>
+<a href="https://alishams.ir/articles/synthetic-data-ai.html">Synthetic Data Ai</a>
+<a href="https://alishams.ir/articles/low-code-no-code.html">Low Code No Code</a>
+<a href="https://alishams.ir/articles/quantum-computing-practical.html">Quantum Computing Practical</a>
+<a href="https://alishams.ir/articles/6g-wireless-future.html">6g Wireless Future</a>
+<a href="https://alishams.ir/articles/online-website-builder-guide.html">Online Website Builder Guide</a>
+<a href="https://alishams.ir/articles/custom-design-vs-website-builder.html">Custom Design Vs Website Builder</a>
+<a href="https://alishams.ir/articles/build-online-store-without-coding.html">Build Online Store Without Coding</a>
+<a href="https://alishams.ir/articles/business-website-without-coding.html">Business Website Without Coding</a>
+<a href="https://alishams.ir/articles/website-builder-cost-comparison.html">Website Builder Cost Comparison</a></nav></section></div></details></section>
+<div class="footer-bottom"><span>© ۲۰۲۶ استودیو دیجیتال علی شمس. تمامی حقوق محفوظ است.</span><a href="https://alishams.ir/terms.html">قوانین و حریم خصوصی</a><a href="https://alishams.ir/">ALISHAMS.IR</a></div></footer>
 <script>
 const form=document.getElementById('coinForm'),coins=document.getElementById('coins'),amount=document.getElementById('amount'),statusBox=document.getElementById('status'),submit=document.getElementById('submit');
-const toman=n=>new Intl.NumberFormat('fa-IR').format(n);
-function updateAmount(){amount.textContent=toman(Number(coins.value)/1000*8900)+' تومان'}
-coins.addEventListener('change',updateAmount);updateAmount();
+const toman=n=>new Intl.NumberFormat('fa-IR').format(n),coinLabels={1000:['۱٬۰۰۰ سکه','بسته شروع ماجراجویی'],3000:['۳٬۰۰۰ سکه','بسته یک قدم جلوتر'],5000:['۵٬۰۰۰ سکه','پیشنهاد ویژه'],10000:['۱۰٬۰۰۰ سکه','بسته پرقدرت']},coinPrices={1000:8900,3000:26700,5000:44500,10000:89000};
+const picker=document.getElementById('coinPickerBackdrop'),pickerDialog=document.getElementById('coinPickerDialog'),pickerTrigger=document.getElementById('coinPickerTrigger'),pickerClose=document.getElementById('coinPickerClose'),pickerValue=document.getElementById('coinPickerValue'),pickerHint=document.getElementById('coinPickerHint'),pickerPrice=document.getElementById('coinPickerPrice');let pickerReturnFocus=null;
+function updateAmount(){const value=Number(coins.value),price=coinPrices[value]||0;amount.textContent=toman(price)+' تومان';pickerValue.textContent=coinLabels[value][0];pickerHint.textContent=coinLabels[value][1];pickerPrice.textContent=toman(price)+' تومان';document.querySelectorAll('[data-coin-option]').forEach(b=>{const active=Number(b.dataset.coinOption)===value;b.classList.toggle('is-selected',active);b.setAttribute('aria-pressed',String(active))})}
+function openCoinPicker(){pickerReturnFocus=document.activeElement;picker.hidden=false;document.body.classList.add('coin-picker-open');pickerTrigger.setAttribute('aria-expanded','true');requestAnimationFrame(()=>{picker.classList.add('is-visible');pickerDialog.focus()})}
+function closeCoinPicker(){picker.classList.remove('is-visible');document.body.classList.remove('coin-picker-open');pickerTrigger.setAttribute('aria-expanded','false');setTimeout(()=>{picker.hidden=true;if(pickerReturnFocus&&pickerReturnFocus.focus)pickerReturnFocus.focus()},220)}
+pickerTrigger.addEventListener('click',openCoinPicker);pickerClose.addEventListener('click',closeCoinPicker);picker.addEventListener('click',e=>{if(e.target===picker)closeCoinPicker()});
+document.addEventListener('keydown',e=>{if(picker.hidden)return;if(e.key==='Escape'){e.preventDefault();closeCoinPicker()}if(e.key==='Tab'){const f=[...pickerDialog.querySelectorAll('button:not([disabled])')],first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
+document.querySelectorAll('[data-coin-option]').forEach(b=>b.addEventListener('click',()=>{coins.value=b.dataset.coinOption;coins.dispatchEvent(new Event('change',{bubbles:true}));closeCoinPicker()}));coins.addEventListener('change',updateAmount);updateAmount();
 document.querySelectorAll('[data-select]').forEach(button=>button.addEventListener('click',()=>{
  coins.value=button.dataset.select;updateAmount();document.getElementById('coin-order').scrollIntoView({behavior:'smooth'});coins.focus({preventScroll:true});
 }));
