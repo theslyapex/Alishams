@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-  <url><loc>https://alishams.ir/</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://alishams.ir/</loc><lastmod>2026-11-26</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://alishams.ir/site-builder.html</loc><lastmod>2026-11-20</lastmod></url>
   <url><loc>https://alishams.ir/packages.html</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://alishams.ir/domain-lab.html</loc><lastmod>2026-11-08</lastmod></url>
@@ -28,7 +28,7 @@
   <url><loc>https://alishams.ir/support.html</loc><lastmod>2026-11-05</lastmod></url>
   <url><loc>https://alishams.ir/persian-fonts.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://alishams.ir/tools.html</loc><lastmod>2026-11-19</lastmod><priority>0.9</priority></url>
-  <url><loc>https://alishams.ir/portfolio.html</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://alishams.ir/portfolio.html</loc><lastmod>2026-11-26</lastmod></url>
   <url><loc>https://alishams.ir/website-demos.html</loc><lastmod>2026-11-22</lastmod><priority>0.9</priority></url>
   <url><loc>https://alishams.ir/demos/industrial-company.html</loc><lastmod>2026-11-22</lastmod><priority>0.6</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://alishams.ir/game-coins.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
@@ -42,6 +42,7 @@
   <url><loc>https://alishams.ir/case-studies/shirazeh.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://alishams.ir/case-studies/abzarino.html</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://alishams.ir/case-studies/hardware-shenas.html</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://alishams.ir/case-studies/baladi.html</loc><lastmod>2026-11-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://alishams.ir/videos.html</loc><lastmod>2026-11-16</lastmod></url>
   <url><loc>https://alishams.ir/blog.html</loc><lastmod>2026-11-23</lastmod></url>
   <url><loc>https://alishams.ir/articles/website-design-checklist.html</loc><lastmod>2026-11-20</lastmod></url>
