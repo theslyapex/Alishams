@@ -126,9 +126,10 @@ Deno.serve(async (req: Request) => {
     if (action === "group_messages") {
       const groupId = String(body.group_id || "");
       if (!uuid(groupId)) return out({ error: "شناسه گروه معتبر نیست." }, 400, origin);
+      const offset = Math.max(0, Math.min(1000000, Number(body.offset) || 0));
       const { data: messages, error } = await db.from("baladi_group_messages")
         .select("id,group_id,user_id,body,sticker_id,is_pinned,pinned_at,created_at")
-        .eq("group_id", groupId).order("created_at", { ascending: false }).limit(500);
+        .eq("group_id", groupId).order("created_at", { ascending: false }).range(offset, offset + 199);
       if (error) throw error;
       const userIds = [...new Set((messages || []).map((m: any) => m.user_id))];
       const stickerIds = [...new Set((messages || []).map((m: any) => m.sticker_id).filter(Boolean))];
@@ -140,7 +141,7 @@ Deno.serve(async (req: Request) => {
       if (stickersError) throw stickersError;
       const profileMap = new Map((profiles || []).map((p: any) => [p.user_id, p]));
       const stickerMap = new Map((stickers || []).map((p: any) => [p.id, p]));
-      return out({ ok: true, messages: (messages || []).reverse().map((m: any) => ({
+      return out({ ok: true, has_more: (messages || []).length === 200, next_offset: offset + (messages || []).length, messages: (messages || []).reverse().map((m: any) => ({
         ...m, player: profileMap.get(m.user_id) || { display_name: "بازیکن" },
         sticker: m.sticker_id ? stickerMap.get(m.sticker_id) || null : null
       })) }, 200, origin);
