@@ -81,11 +81,11 @@ Deno.serve(async (req: Request) => {
       return out({ error: reason ? "دسترسی حساب بازی شما مسدود شده است: " + reason : "دسترسی حساب بازی شما توسط مدیریت مسدود شده است.", suspended: true }, 403, origin);
     }
 
-    if (action === "admin_notifications") {
+    if (action === "admin_notifications" || action === "notifications_inbox") {
       const { data: notifications, error: notificationError } = await db.from("account_notifications")
-        .select("id,title,body,created_at").eq("user_id", user.id)
-        .eq("source", "baladi_admin").is("read_at", null)
-        .order("created_at", { ascending: true }).limit(5);
+        .select("id,source,source_id,event_key,title,body,created_at").eq("user_id", user.id)
+        .is("read_at", null)
+        .order("created_at", { ascending: false }).limit(30);
       if (notificationError) throw notificationError;
       const ids = (notifications || []).map((item: any) => item.id);
       if (ids.length) {
@@ -93,7 +93,7 @@ Deno.serve(async (req: Request) => {
           .update({ read_at: new Date().toISOString() }).in("id", ids).eq("user_id", user.id);
         if (markError) throw markError;
       }
-      return out({ ok: true, notifications: notifications || [] }, 200, origin);
+      return out({ ok: true, notifications: notifications || [], unread_count: (notifications || []).length }, 200, origin);
     }
 
     if (action === "summary") {
