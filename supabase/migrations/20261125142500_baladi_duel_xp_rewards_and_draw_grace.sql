@@ -82,7 +82,7 @@ begin
   if cardinality(found_words)>=cardinality(r.answers) then
     if p.current_round=10 then
       elapsed:=floor(extract(epoch from(now()-p.started_at))*1000)::bigint;
-      update public.baladi_duel_progress set found_words=found_words,completed_at=now(),elapsed_ms=elapsed
+      update public.baladi_duel_progress set found_words=p.found_words || answer,completed_at=now(),elapsed_ms=elapsed
       where match_id=p_match_id and user_id=p_user_id;
       final_result:=public.baladi_finalize_duel_match(p_match_id);
       if coalesce((final_result->>'finalized')::boolean,false) then
@@ -99,7 +99,7 @@ begin
     where match_id=p_match_id and user_id=p_user_id;
     return jsonb_build_object('ok',true,'correct',true,'round_complete',true,'match_complete',false,'current_round',next_round,'found_words','[]'::jsonb);
   end if;
-  update public.baladi_duel_progress set found_words=found_words where match_id=p_match_id and user_id=p_user_id;
+  update public.baladi_duel_progress set found_words=p.found_words || answer where match_id=p_match_id and user_id=p_user_id;
   return jsonb_build_object('ok',true,'correct',true,'already_found',false,'round_complete',false,'match_complete',false,'found_words',to_jsonb(found_words));
 end; $$;
 
