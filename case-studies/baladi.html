@@ -123,6 +123,11 @@ button,a{-webkit-tap-highlight-color:transparent}
 @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:28px}.hero-copy{order:1}.hero-art{order:2}.modules{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(2,1fr)}.tech-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.wrap{width:calc(100% - 30px)}.nav{height:auto;min-height:58px;flex-wrap:wrap;padding:9px 0;row-gap:8px}.brand{flex:1 1 auto;min-width:0}.brand img{width:35px;height:35px}.brand small{font-size:8px}.nav-cta{flex:0 0 auto;padding:7px 10px;font-size:10px}.navlinks{order:3;flex:1 0 100%;width:100%;justify-content:space-between;gap:8px;padding:9px 2px 2px;border-top:1px solid #ffffff18;font-size:11px;white-space:nowrap}.navlinks a{flex:0 0 auto;white-space:nowrap}.hero{padding:22px 0 55px}.hero h1{font-size:37px}.lead{font-size:12px}.hero-art{min-height:330px}.baladi-orbit{width:235px;height:235px}.baladi-logo{width:96px;height:96px;border-radius:24px}.letter-tile{width:44px;height:47px;font-size:22px}.game-hud{right:12px;left:12px;bottom:12px;padding:9px 10px}.art-caption{right:13px;left:13px;top:13px;font-size:7px}.stats{gap:6px}.stat{padding:9px 4px}.stat b{font-size:15px}.stat small{font-size:8px}.section{padding:52px 0}.section-head{display:block}.section-head p{margin-top:8px}.intro-grid,.status-grid{grid-template-columns:1fr}.modules{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.feature-band{grid-template-columns:1fr}.module{min-height:0;padding:15px}.module-icon{width:39px;height:39px;margin:9px 0}.module h3{font-size:12px}.module p{font-size:10px}.gallery figcaption{font-size:9px;padding:9px}.flow{gap:8px}.step{padding:14px;min-height:140px}.tech-grid{grid-template-columns:1fr 1fr}.next,.footer{align-items:flex-start;flex-direction:column}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+/* Prevent casual text selection, copying and dragging on this case-study page. */
+html,body,body *{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}
+img,svg,a,button{-webkit-user-drag:none!important;user-drag:none!important}
+
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"بلدی؟","alternateName":"Baladi","applicationCategory":"GameApplication","operatingSystem":"Android","description":"بازی مرحله‌ای واژه‌سازی فارسی برای کشف واژه‌ها با ترکیب حروف، همراه با مراحل، سکه، راهنما و رقابت آنلاین.","url":"https://alishams.ir/case-studies/baladi.html","author":{"@type":"Person","name":"علی شمس"}}
@@ -210,4 +215,17 @@ button,a{-webkit-tap-highlight-color:transparent}
 </main>
 <footer class="wrap footer"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><span><a href="../">صفحه اصلی</a> · <a href="../portfolio.html">نمونه‌کارها</a> · <a href="https://icons8.com/" target="_blank" rel="noopener noreferrer">Icons by Icons8</a></span></footer>
 <script>document.getElementById("year").textContent=new Date().getFullYear();</script>
+
+<script>
+(()=>{
+ const editable='input,textarea,select,option,[contenteditable="true"]';
+ const outsideEditable=e=>!e.target.closest(editable);
+ document.addEventListener('contextmenu',e=>{if(outsideEditable(e))e.preventDefault()});
+ document.addEventListener('copy',e=>{if(outsideEditable(e))e.preventDefault()});
+ document.addEventListener('cut',e=>{if(outsideEditable(e))e.preventDefault()});
+ document.addEventListener('selectstart',e=>{if(outsideEditable(e))e.preventDefault()});
+ document.addEventListener('dragstart',e=>e.preventDefault());
+})();
+</script>
+
 </body></html>
