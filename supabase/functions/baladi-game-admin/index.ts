@@ -48,7 +48,7 @@ Deno.serve(async (req: Request) => {
         id: u.id, email: u.email || "", created_at: u.created_at,
         last_sign_in_at: u.last_sign_in_at, banned_until: u.banned_until,
         profile: profileMap.get(u.id) || null
-      }));
+      })).filter((u: any) => u.profile !== null);
       return out({ ok: true, users, page, total: authUsers.users?.length || 0 }, 200, origin);
     }
 
