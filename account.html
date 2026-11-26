@@ -274,6 +274,19 @@
   </div>
   <style>
     @media(max-width:520px){.baladi-shortcuts{grid-template-columns:1fr!important}}
+    @media(max-width:600px){
+      #baladiGamePanel .baladi-stat{padding:11px;border-radius:13px}
+      #baladiGamePanel .baladi-stat span{font-size:10px;line-height:1.7}
+      #baladiGamePanel .baladi-stat strong{font-size:14px!important;line-height:1.8;margin-top:3px}
+      #baladiGamePanel .baladi-coin-item{padding:11px 12px;border-radius:13px}
+      #baladiGamePanel .baladi-coin-item .baladi-coin-title{font-size:15px;line-height:1.8;font-weight:650}
+      #baladiGamePanel .baladi-coin-item .baladi-coin-amount{font-size:15px;line-height:1.8;white-space:nowrap}
+      #baladiGamePanel .baladi-coin-item .baladi-coin-date{font-size:11px;line-height:1.7;margin-top:3px}
+      #baladiGamePanel #baladiGameCoinHistory{gap:8px}
+      #baladiGamePanel #baladiGameSessions .item{padding:11px 12px}
+      #baladiGamePanel #baladiGameSessions .item strong{font-size:13px;line-height:1.8}
+      #baladiGamePanel #baladiGameSessions .item p{font-size:11px;line-height:1.8}
+    }
     .baladi-shortcut:hover{transform:translateY(-2px);border-color:rgba(201,255,114,.55)!important}
     .baladi-shortcut:focus-visible{outline:2px solid #c9ff72;outline-offset:3px}
     @media(prefers-reduced-motion:reduce){.baladi-shortcut{transition:none!important}}
@@ -912,7 +925,7 @@ async function loadBaladiGameModule(){
    ["راهنماهای مصرف‌شده",fa(p.hints_used)],
    ["آخرین بازی",p.last_played_at?new Date(p.last_played_at).toLocaleString("fa-IR"):"هنوز بازی نکرده‌ای"]
   ];
-  stats.innerHTML=cards.map(([label,value])=>'<div class="stat" style="min-width:0"><span>'+label+'</span><strong style="font-size:17px;overflow-wrap:anywhere">'+value+'</strong></div>').join("");
+  stats.innerHTML=cards.map(([label,value])=>'<div class="stat baladi-stat" style="min-width:0"><span>'+label+'</span><strong style="font-size:17px;overflow-wrap:anywhere">'+value+'</strong></div>').join("");
   const rows=Array.isArray(data.sessions)?data.sessions:[];
   sessions.innerHTML=rows.length?rows.map(x=>{
    const when=x.started_at?new Date(x.started_at).toLocaleString("fa-IR"):"—";
@@ -928,7 +941,7 @@ async function loadBaladiGameModule(){
    const when=e.created_at?new Date(e.created_at).toLocaleString("fa-IR"):"—";
    const level=e.level_number?" · مرحله "+fa(e.level_number):"";
    const color=amount>0?"#8ed6a5":"#f08c80";
-   return '<article class="item"><div class="row" style="justify-content:space-between;gap:10px"><strong>'+eventTitle(e)+level+'</strong><strong style="color:'+color+'">'+sign+fa(amount)+' سکه</strong></div><p class="muted">'+when+'</p></article>';
+   return '<article class="item baladi-coin-item"><div class="row" style="justify-content:space-between;gap:10px"><strong class="baladi-coin-title">'+eventTitle(e)+level+'</strong><strong class="baladi-coin-amount" style="color:'+color+'">'+sign+fa(amount)+' سکه</strong></div><p class="muted baladi-coin-date">'+when+'</p></article>';
   }).join(""):'<div class="empty">هنوز تغییری در موجودی سکه ثبت نشده است.</div>';
   if(noticeBox)noticeBox.textContent="";
  }catch(error){
