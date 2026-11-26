@@ -1697,21 +1697,24 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
  <div class="wrap">
   <div class="portfolio-showcase-panel reveal">
    <div class="portfolio-showcase-art ad-showcase-art" aria-hidden="true">
-    <div class="ad-signal-stage">
-     <div class="ad-signal-grid"></div>
-     <div class="ad-signal-orbit ad-signal-orbit--one"></div>
-     <div class="ad-signal-orbit ad-signal-orbit--two"></div>
-     <div class="ad-lens">
-      <div class="ad-lens-rim"></div>
-      <div class="ad-lens-glass"></div>
-      <div class="ad-lens-iris"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="ad-lens-core"></div>
-      <span class="ad-lens-glint"></span>
+    <div class="ad-signal-stage ad-persian-art">
+     <div class="ad-persian-art__grid"></div>
+     <div class="ad-persian-art__halo"></div>
+     <div class="ad-persian-art__frame">
+      <div class="ad-persian-art__top"><span>استودیو دیجیتال علی شمس</span><i></i><span>تبلیغات خلاقانه</span></div>
+      <div class="ad-persian-art__headline">
+       <span>فقط دیده نشو،</span>
+       <strong>در ذهن <em>بمان.</em></strong>
+      </div>
+      <div class="ad-persian-art__rule"><i></i><span>قدرت یک پیام درست</span><i></i></div>
+      <div class="ad-persian-art__bottom">
+       <span>ایده‌ای که توجه می‌گیرد</span>
+       <b>۰۱ / ۰۳</b>
+      </div>
+      <div class="ad-persian-art__stamp"><span>اثرگذاری</span><b>+</b></div>
+      <div class="ad-persian-art__orbit"></div>
      </div>
-     <div class="ad-signal-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-     <span class="ad-signal-label ad-signal-label--top"><small>ATTENTION IS THE START</small></span>
-     <span class="ad-signal-label ad-signal-label--bottom"><b>CAMPAIGN · ACTIVE</b><small>VISUAL COMMUNICATION SYSTEM</small></span>
-     
+     <div class="ad-persian-art__side-note">از توجه تا انتخاب</div>
     </div>
    </div>
    <div class="portfolio-showcase-copy">
@@ -3734,6 +3737,66 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
 @media(max-width:390px){#logo-showcase-home .identity-board{height:260px}#logo-showcase-home .identity-center{width:130px;height:130px}#logo-showcase-home .identity-monogram{font-size:60px}#logo-showcase-home .identity-note{padding:7px 8px}#logo-showcase-home .identity-note>b{font-size:9px}#logo-showcase-home .identity-palette i{width:10px;height:10px}#logo-showcase-home .identity-palette span{font-size:5px}}
 @media(prefers-reduced-motion:reduce){#logo-showcase-home .identity-art:before,#logo-showcase-home .identity-note{animation:none!important}#logo-showcase-home .identity-board{transition:none!important}}
 </style>
+
+<style id="ad-showcase-persian-art-v1">
+#ad-showcase-home .ad-persian-art{
+ position:relative;isolation:isolate;width:100%;height:100%;min-height:390px;
+ display:grid;place-items:center;overflow:hidden;
+ background:radial-gradient(ellipse at 50% 48%,#d9ff7219,transparent 58%),linear-gradient(145deg,#141a12,#0b0e0b 72%);
+ font-family:"Estedad",Estedad,sans-serif;direction:rtl
+}
+#ad-showcase-home .ad-persian-art__grid{
+ position:absolute;inset:0;opacity:.19;
+ background-image:linear-gradient(#d9ff7220 1px,transparent 1px),linear-gradient(90deg,#d9ff7220 1px,transparent 1px);
+ background-size:34px 34px;mask-image:linear-gradient(135deg,#000,transparent 85%)
+}
+#ad-showcase-home .ad-persian-art__halo{
+ position:absolute;width:72%;aspect-ratio:1;border:1px solid #d9ff7228;border-radius:50%;
+ box-shadow:0 0 0 24px #d9ff7208,0 0 0 54px #d9ff7205;animation:adPersianHalo 8s ease-in-out infinite
+}
+#ad-showcase-home .ad-persian-art__frame{
+ position:relative;z-index:2;width:min(82%,490px);min-height:285px;padding:24px 26px 20px;
+ border:1px solid #d9ff7250;border-radius:4px 28px 4px 28px;
+ background:linear-gradient(145deg,#1b2418ed,#10140fee 70%);
+ box-shadow:0 28px 80px #0009,inset 0 0 50px #d9ff7208;transform:rotate(-2deg);
+ transition:transform .55s cubic-bezier(.2,.8,.2,1)
+}
+#ad-showcase-home .portfolio-showcase-panel:hover .ad-persian-art__frame{transform:rotate(0) translateY(-5px)}
+#ad-showcase-home .ad-persian-art__top,#ad-showcase-home .ad-persian-art__bottom{
+ display:flex;align-items:center;justify-content:space-between;gap:12px;color:#b9c3aa;font-size:10px;font-weight:500
+}
+#ad-showcase-home .ad-persian-art__top i{width:5px;height:5px;border-radius:50%;background:#d9ff72;box-shadow:0 0 12px #d9ff72}
+#ad-showcase-home .ad-persian-art__headline{display:flex;flex-direction:column;align-items:flex-start;margin:42px 0 28px;line-height:1.55}
+#ad-showcase-home .ad-persian-art__headline span{font-size:clamp(23px,3vw,34px);font-weight:500;color:#f5f5ee}
+#ad-showcase-home .ad-persian-art__headline strong{font-size:clamp(43px,5.3vw,68px);font-weight:900;letter-spacing:-2px;color:#f5f5ee;white-space:nowrap}
+#ad-showcase-home .ad-persian-art__headline em{font-style:normal;color:#d9ff72;text-shadow:0 0 28px #d9ff7240}
+#ad-showcase-home .ad-persian-art__rule{display:flex;align-items:center;gap:10px;color:#d9ff72;font-size:11px;font-weight:700}
+#ad-showcase-home .ad-persian-art__rule i{height:1px;flex:1;background:linear-gradient(90deg,transparent,#d9ff7277)}
+#ad-showcase-home .ad-persian-art__rule i:last-child{background:linear-gradient(270deg,transparent,#d9ff7277)}
+#ad-showcase-home .ad-persian-art__bottom{margin-top:30px;padding-top:13px;border-top:1px solid #ffffff1a}
+#ad-showcase-home .ad-persian-art__bottom b{color:#d9ff72;font-size:10px;letter-spacing:1px}
+#ad-showcase-home .ad-persian-art__stamp{position:absolute;left:-23px;top:45%;width:74px;height:74px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;border:1px solid #d9ff72;border-radius:50%;background:#d9ff72;color:#10140c;box-shadow:0 8px 30px #0008;transform:rotate(-13deg)}
+#ad-showcase-home .ad-persian-art__stamp span{font-size:11px;font-weight:800}
+#ad-showcase-home .ad-persian-art__stamp b{font:700 19px Manrope}
+#ad-showcase-home .ad-persian-art__side-note{position:absolute;right:4%;bottom:12%;writing-mode:vertical-rl;color:#d9ff7288;font-size:10px;letter-spacing:1px}
+#ad-showcase-home .ad-persian-art__orbit{position:absolute;z-index:-1;width:130px;height:130px;right:-60px;top:-60px;border:1px solid #d9ff7240;border-radius:50%;box-shadow:0 0 0 13px #d9ff7208}
+@keyframes adPersianHalo{0%,100%{transform:scale(.96);opacity:.55}50%{transform:scale(1.04);opacity:1}}
+@media(max-width:600px){
+ #ad-showcase-home .ad-persian-art{min-height:260px}
+ #ad-showcase-home .ad-persian-art__frame{width:84%;min-height:215px;padding:17px 16px 14px;border-radius:4px 20px 4px 20px}
+ #ad-showcase-home .ad-persian-art__top{font-size:8px}
+ #ad-showcase-home .ad-persian-art__headline{margin:27px 0 18px}
+ #ad-showcase-home .ad-persian-art__headline span{font-size:20px}
+ #ad-showcase-home .ad-persian-art__headline strong{font-size:clamp(35px,9vw,48px);letter-spacing:-1.5px}
+ #ad-showcase-home .ad-persian-art__rule{font-size:9px}
+ #ad-showcase-home .ad-persian-art__bottom{margin-top:20px;font-size:8px}
+ #ad-showcase-home .ad-persian-art__stamp{width:57px;height:57px;left:-15px}
+ #ad-showcase-home .ad-persian-art__stamp span{font-size:9px}
+ #ad-showcase-home .ad-persian-art__side-note{font-size:8px;right:2%}
+}
+@media(prefers-reduced-motion:reduce){#ad-showcase-home .ad-persian-art__halo{animation:none}}
+</style>
+
 </body>
 <style id="remove-visible-legacy-order-service">
 /* Keep the native select only as the form's hidden data source; the custom picker below is the sole visible control. */
