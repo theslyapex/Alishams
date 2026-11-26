@@ -142,6 +142,12 @@ img,svg,a,button{-webkit-user-drag:none!important;user-drag:none!important}
 .coin-crosslink-action:hover{transform:translateY(-3px);box-shadow:0 16px 35px rgba(83,218,180,.24)}
 @media(max-width:680px){.coin-crosslink{display:block;padding:18px;margin-bottom:24px;border-radius:20px}.coin-crosslink-main{align-items:flex-start;gap:12px}.coin-crosslink-icon{width:49px;height:49px;border-radius:15px}.coin-crosslink-icon img{width:34px;height:34px}.coin-crosslink-copy h2{font-size:16px}.coin-crosslink-copy p{font-size:10px}.coin-crosslink-action{width:100%;margin-top:16px;padding:12px}}
 
+
+/* Official Bazaar download panel, styled to match the Baladi case study. */
+.download-panel{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(22px,4vw,36px);border:1px solid #edc87970;border-radius:23px;background:radial-gradient(ellipse at 0 0,#edc8791c,transparent 55%),linear-gradient(135deg,#10241f,#132b26)}
+.download-panel h2{font-size:clamp(21px,3vw,30px);margin:0 0 5px}.download-panel p{color:var(--muted);font-size:12px;margin:0}.download-note{max-width:580px;margin-top:9px!important;font-size:10px!important;line-height:1.9}
+.download-panel .btn-primary{min-width:190px;padding:14px 20px;box-shadow:0 12px 30px #edc87924}
+@media(max-width:680px){.download-panel{align-items:stretch;flex-direction:column;gap:17px;padding:20px;border-radius:20px}.download-panel .btn-primary{width:100%;min-width:0}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"بلدی؟","alternateName":"Baladi","applicationCategory":"GameApplication","operatingSystem":"Android","description":"بازی مرحله‌ای واژه‌سازی فارسی برای کشف واژه‌ها با ترکیب حروف، همراه با مراحل، سکه، راهنما و رقابت آنلاین.","url":"https://alishams.ir/case-studies/baladi.html","author":{"@type":"Person","name":"علی شمس"}}
@@ -226,6 +232,8 @@ img,svg,a,button{-webkit-user-drag:none!important;user-drag:none!important}
 <figure><img src="../assets/images/mobile-apps/baladi/gallery-17.jpg" alt="اسکرین‌شات شماره 17 از محیط واقعی بازی بلدی؟" loading="lazy" decoding="async"><figcaption>نمای واقعی بازی · 17</figcaption></figure>
 </div></div></section>
 
+
+<section class="section" aria-labelledby="baladi-download-title"><div class="wrap"><div class="download-panel"><div><span class="eyebrow">AVAILABLE ON CAFE BAZAAR</span><h2 id="baladi-download-title">دریافت بازی بلدی؟</h2><p>نسخه اندروید بازی را از صفحه رسمی بلدی؟ در کافه‌بازار دریافت و نصب کن.</p><p class="download-note">برای دریافت آخرین نسخه و به‌روزرسانی‌های بازی، از صفحه رسمی آن در کافه‌بازار استفاده کن.</p></div><a class="btn btn-primary" href="https://cafebazaar.ir/app/?id=ir.alishams.baladi&amp;ref=share" target="_blank" rel="noopener noreferrer">دریافت بازی از کافه‌بازار <b>↓</b></a></div></div></section>
 <section class="section" aria-labelledby="coin-crosslink-title">
  <div class="wrap">
   <div class="coin-crosslink">
@@ -244,7 +252,7 @@ img,svg,a,button{-webkit-user-drag:none!important;user-drag:none!important}
 
 <section class="section"><div class="wrap"><div class="next"><div><h2>بلدی؟؛ یک بازی فارسی برای کشف واژه‌ها.</h2><p>برای دنبال‌کردن توسعه بازی و مشاهده کد پروژه، به مخزن رسمی آن سر بزن.</p></div><div class="hero-actions"><a class="btn btn-primary" href="https://github.com/theslyapex/Baladi" target="_blank" rel="noopener noreferrer">مشاهده مخزن بازی ↗</a><a class="btn" href="../portfolio.html">مشاهده همه نمونه‌کارها</a></div></div></div></section>
 </main>
-<footer class="wrap footer"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><span><a href="../">صفحه اصلی</a> · <a href="../portfolio.html">نمونه‌کارها</a> · <a href="https://icons8.com/" target="_blank" rel="noopener noreferrer">Icons by Icons8</a></span></footer>
+<footer class="wrap footer"><span>© <span id="year"></span> علی شمس · تمامی حقوق محفوظ است.</span><span><a href="../">صفحه اصلی</a> · <a href="../portfolio.html">نمونه‌کارها</a></span></footer>
 <script>document.getElementById("year").textContent=new Date().getFullYear();</script>
 
 <script>
