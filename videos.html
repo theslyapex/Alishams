@@ -235,20 +235,25 @@ function render(){
  $('#stream').innerHTML=list.map(card).join('');
  $$('.video-player').forEach(function(player){var v=$('video',player),btn=$('.custom-play',player),icon=$('.custom-play-icon',player);function sync(){var playing=!v.paused&&!v.ended;icon.textContent=playing?'Ⅱ':'▶';btn.setAttribute('aria-label',playing?'توقف موقت ویدئو':'پخش ویدئو');btn.classList.toggle('is-playing',playing);var p=$('.poster',player);if(p)p.style.opacity=playing?'0':'1'}async function toggle(){if(v.paused||v.ended){$$('.video-player video').forEach(function(o){if(o!==v)o.pause()});if(!v.src){v.src=v.dataset.src;v.load()}try{await v.play()}catch(e){toast('پخش ویدئو ممکن نشد؛ دوباره تلاش کن.')}}else v.pause();sync()}btn.addEventListener('click',toggle);v.addEventListener('click',toggle);v.addEventListener('play',sync);v.addEventListener('pause',sync);v.addEventListener('ended',sync);sync()});
 }
+async function fetchAllPages(makeQuery){
+ var all=[],offset=0,pageSize=1000;
+ while(true){var result=await makeQuery().range(offset,offset+pageSize-1);if(result.error)return result;var rows=result.data||[];all=all.concat(rows);if(rows.length<pageSize)break;offset+=pageSize;}
+ return {data:all,error:null};
+}
 async function load(){
  if(!db){$('#stream').innerHTML='<div class="error">اتصال پایگاه داده برقرار نشد. صفحه را دوباره بارگذاری کن.</div>';return}
  var selectFields='id,slug,title,description,category,categories,video_url,poster_url,aspect_ratio,featured,published_at';
  var res, lastError;
  // Retry transient network/API failures, then fall back to core fields if optional fields cause a schema error.
  for(var attempt=0;attempt<2;attempt++){
-  res=await db.from('studio_videos').select(selectFields).eq('is_published',true).order('featured',{ascending:false}).order('published_at',{ascending:false});
+  res=await fetchAllPages(function(){return db.from('studio_videos').select(selectFields).eq('is_published',true).order('featured',{ascending:false}).order('published_at',{ascending:false})});
   if(!res.error)break;
   lastError=res.error;
   console.warn('Video feed request failed:',lastError);
   if(attempt===0)await new Promise(function(resolve){setTimeout(resolve,700)});
  }
  if(res.error){
-  res=await db.from('studio_videos').select('id,slug,title,description,category,video_url,poster_url,featured,published_at').eq('is_published',true).order('featured',{ascending:false}).order('published_at',{ascending:false});
+  res=await fetchAllPages(function(){return db.from('studio_videos').select('id,slug,title,description,category,video_url,poster_url,featured,published_at').eq('is_published',true).order('featured',{ascending:false}).order('published_at',{ascending:false})});
   if(res.error){
    console.error('Could not load published videos:',res.error,'Previous error:',lastError);
    $('#stream').innerHTML='<div class="error">دریافت ویدئوها از سرور با خطا روبه‌رو شد. صفحه را یک‌بار تازه‌سازی کن؛ اگر مشکل ادامه داشت، بعداً دوباره امتحان کن.</div>';
