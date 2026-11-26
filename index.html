@@ -3450,6 +3450,139 @@ panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setOpen(fa
 })();
 </script>
 
+
+<style id="homepage-editorial-redesign-v1">
+/* HOMEPAGE EDITORIAL REDESIGN · reduce repeated card surfaces and establish visual rhythm */
+:root{
+ --home-section-gap:clamp(76px,9vw,132px);
+ --home-soft-line:rgba(255,255,255,.085);
+}
+@media(min-width:761px){
+ main>section.section{padding-top:var(--home-section-gap);padding-bottom:var(--home-section-gap)}
+ main>section.section+section.section{position:relative}
+ main>section.section+section.section:before{content:"";position:absolute;top:0;right:max(24px,calc((100vw - var(--max))/2));left:max(24px,calc((100vw - var(--max))/2));height:1px;background:linear-gradient(90deg,transparent,var(--home-soft-line) 18%,var(--home-soft-line) 82%,transparent)}
+}
+.section-head{margin-bottom:clamp(28px,4vw,54px)}
+.section-head h2{max-width:760px;text-wrap:pretty}
+.section-head p{line-height:2.1}
+.eyebrow{letter-spacing:1.7px}
+
+/* Editorial feature: no longer another bordered card */
+.feature-section .feature-card{
+ display:grid;grid-template-columns:minmax(0,1.04fr) minmax(280px,.96fr);
+ gap:clamp(34px,6vw,88px);align-items:center;
+ padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;
+}
+.feature-section .feature-copy{max-width:610px}
+.feature-section .feature-copy h2{font-size:clamp(34px,4.7vw,60px);line-height:1.48;letter-spacing:-1.6px}
+.feature-section .feature-copy>p{max-width:560px;font-size:15px;line-height:2.25;color:#b8bac2}
+.feature-section .feature-art-photo{min-height:390px;border-radius:8px 90px 8px 8px;overflow:hidden;position:relative}
+.feature-section .feature-art-photo:after{content:"";position:absolute;inset:0;border:1px solid #ffffff20;border-radius:inherit;pointer-events:none}
+.feature-section .feature-art-photo img{width:100%;height:100%;min-height:390px;object-fit:cover;filter:saturate(.82)}
+.feature-section .checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 20px;margin:28px 0 30px}
+.feature-section .check{background:transparent;border:0;border-bottom:1px solid var(--home-soft-line);border-radius:0;padding:9px 0;font-size:12px}
+
+/* Portfolio: let the work breathe, instead of wrapping every story in a panel */
+.all-portfolio-promo{padding-top:36px!important;padding-bottom:72px!important}
+.all-portfolio-panel{
+ border:0!important;border-radius:0!important;box-shadow:none!important;
+ background:radial-gradient(ellipse at 82% 50%,rgba(217,255,114,.075),transparent 42%)!important;
+ padding:clamp(24px,4vw,52px) 0!important;
+}
+.all-portfolio-panel:before{display:none!important}
+.all-portfolio-copy h2{font-size:clamp(38px,5.3vw,68px)!important;line-height:1.35}
+.all-portfolio-art{border-radius:24px!important}
+.portfolio-showcase{padding-top:clamp(55px,7vw,90px)!important;padding-bottom:clamp(55px,7vw,90px)!important}
+.portfolio-showcase-panel{
+ border:0!important;border-radius:0!important;background:transparent!important;
+ box-shadow:none!important;padding:0!important;gap:clamp(30px,6vw,82px)!important;
+}
+.portfolio-showcase-panel:before,.portfolio-showcase-panel:after{display:none!important}
+.portfolio-showcase-copy h2{font-size:clamp(34px,4.6vw,58px)!important;line-height:1.48!important;letter-spacing:-1.2px}
+.portfolio-showcase-copy>p{max-width:540px;line-height:2.2}
+.portfolio-showcase-art{min-height:360px!important;border-radius:8px 72px 8px 8px!important;overflow:hidden}
+.portfolio-showcase--ads .portfolio-showcase-art{border-radius:72px 8px 8px 8px!important}
+.portfolio-showcase-meta{border-top:1px solid var(--home-soft-line);padding-top:16px}
+.mobile-apps-showcase{background:linear-gradient(180deg,transparent,rgba(255,255,255,.018) 45%,transparent)}
+.mobile-apps-heading{margin-bottom:42px}
+.mobile-apps-heading h2{font-size:clamp(34px,4.7vw,58px);line-height:1.45}
+.mobile-apps-grid{gap:18px!important}
+.mobile-app-card{border-radius:17px!important;background:#111318!important}
+.video-showcase{background:radial-gradient(ellipse at 50% 40%,rgba(182,160,255,.055),transparent 58%)}
+.discovery-band{margin-block:clamp(34px,5vw,70px)!important}
+
+/* Distinct editorial and knowledge spaces */
+#avangaar-home{padding-top:65px!important;padding-bottom:65px!important}
+#avangaar-home>.wrap>a{
+ grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr)!important;
+ padding:clamp(28px,5vw,58px)!important;border:0!important;border-top:1px solid #a78bfa55!important;
+ border-bottom:1px solid #a78bfa55!important;border-radius:0!important;
+ background:radial-gradient(ellipse at 80% 45%,#8b5cf61c,transparent 48%),linear-gradient(90deg,#11182766,#17152b55)!important;
+}
+#learning-magazine{background:linear-gradient(180deg,transparent,#11131855 35%,#11131855 65%,transparent)}
+#learning-magazine .magazine-shell{border-radius:8px 34px 8px 34px!important}
+#free-tools-home .free-tools-shell{border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;padding-inline:0!important}
+#free-tools-home .free-tools-head{margin-bottom:34px}
+#free-tools-home .free-tools-grid{gap:12px!important}
+#free-tools-home .free-tools-foot{border-top:1px solid var(--home-soft-line);padding-top:18px}
+
+/* Trust, process and conversation become quieter, more readable chapters */
+#about .about-grid{gap:clamp(30px,6vw,80px)!important}
+#reviews{background:linear-gradient(180deg,transparent,rgba(255,255,255,.018),transparent)}
+#process .process-grid{gap:0!important}
+#process .process-grid>*{border-radius:0!important;box-shadow:none!important}
+#trust .trust-grid{gap:14px!important}
+#project-tracking{padding-top:clamp(65px,8vw,105px)!important;padding-bottom:clamp(65px,8vw,105px)!important}
+#conversation .chat-hub{border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;padding-inline:0!important}
+.community-promo-section{padding-top:35px!important;padding-bottom:65px!important}
+.community-promo-card{border-radius:8px 38px 8px 38px!important}
+#faq{background:linear-gradient(180deg,transparent,#10121766 22%,#10121766 78%,transparent)}
+#contact{padding-top:clamp(55px,7vw,90px)!important;padding-bottom:clamp(75px,9vw,120px)!important}
+#contact .contact-panel{border:0!important;border-radius:0!important;background:radial-gradient(ellipse at 50% 0%,rgba(217,255,114,.08),transparent 60%)!important;box-shadow:none!important;padding:clamp(30px,5vw,70px) 20px!important}
+#contact .contact-panel h2{font-size:clamp(38px,5.5vw,68px)!important;line-height:1.4}
+
+/* Community and utility promotions use different visual weights */
+#instagramStudio .instagram-studio-card{
+ border-radius:8px 38px 8px 38px!important;
+}
+.sitebuilder-promo{padding-top:clamp(55px,7vw,90px)!important;padding-bottom:clamp(55px,7vw,90px)!important}
+.sitebuilder-promo-inner{border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;padding:0!important}
+.color-studio-promo{margin-top:20px!important}
+.home-font-promo__panel{border:0!important;border-top:1px solid #d9ff7235!important;border-bottom:1px solid #d9ff7235!important;border-radius:0!important;background:linear-gradient(90deg,transparent,#171c2688,transparent)!important;box-shadow:none!important}
+
+/* Consistent interaction details */
+main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+@media(max-width:760px){
+ main>section.section{padding-top:62px;padding-bottom:62px}
+ .feature-section .feature-card{grid-template-columns:1fr;gap:25px}
+ .feature-section .feature-copy h2{font-size:clamp(30px,8vw,40px)}
+ .feature-section .feature-art-photo,.feature-section .feature-art-photo img{min-height:245px}
+ .feature-section .feature-art-photo{border-radius:8px 42px 8px 8px}
+ .feature-section .checklist{grid-template-columns:1fr 1fr;gap:6px 13px}
+ .all-portfolio-promo{padding-top:25px!important;padding-bottom:40px!important}
+ .all-portfolio-panel{padding:10px 0!important}
+ .portfolio-showcase{padding-top:48px!important;padding-bottom:48px!important}
+ .portfolio-showcase-panel{grid-template-columns:1fr!important;gap:22px!important}
+ .portfolio-showcase-art,.portfolio-showcase--ads .portfolio-showcase-art{min-height:260px!important;border-radius:8px 38px 8px 8px!important}
+ .portfolio-showcase-copy h2{font-size:clamp(29px,7.5vw,39px)!important}
+ #avangaar-home>.wrap>a{grid-template-columns:1fr!important;gap:15px!important;padding:25px 0!important}
+ #learning-magazine .magazine-shell{border-radius:8px 24px 8px 24px!important}
+ #free-tools-home .free-tools-grid{grid-template-columns:1fr 1fr!important}
+ #process .process-grid{gap:10px!important}
+ #contact .contact-panel{padding:35px 5px!important}
+ #contact .contact-panel h2{font-size:clamp(32px,8.5vw,43px)!important}
+ .sitebuilder-promo-inner{grid-template-columns:1fr!important}
+ .home-font-promo__panel{padding:26px 0!important}
+}
+@media(max-width:390px){
+ .feature-section .checklist{grid-template-columns:1fr}
+ #free-tools-home .free-tools-grid{grid-template-columns:1fr!important}
+}
+@media(prefers-reduced-motion:reduce){
+ main *,main *:before,main *:after{scroll-behavior:auto!important}
+}
+</style>
+
 </body>
 <style id="remove-visible-legacy-order-service">
 /* Keep the native select only as the form's hidden data source; the custom picker below is the sole visible control. */
