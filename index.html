@@ -3797,6 +3797,68 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
 @media(prefers-reduced-motion:reduce){#ad-showcase-home .ad-persian-art__halo{animation:none}}
 </style>
 
+
+<style id="homepage-chapter-label-mobile-fix">
+/* Chapter labels: clean editorial text, no circular badge or clipped Persian text */
+.home-chapter-label{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:flex-start;
+  gap:4px;
+  width:100%;
+  margin:0 0 25px;
+  color:#f5f3ee;
+  direction:rtl;
+  text-align:right;
+}
+.home-chapter-label>span:first-child{
+  display:block;
+  width:auto;
+  height:auto;
+  min-width:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:none;
+  color:#d9ff72;
+  font-size:14px;
+  line-height:1.8;
+  font-weight:750;
+  white-space:normal;
+  font-variant-numeric:normal;
+}
+.home-chapter-label>span:nth-child(2){font-size:14px;font-weight:750}
+.home-chapter-label i{
+  display:block;
+  margin:0;
+  padding:0;
+  font-style:normal;
+  font-size:9px;
+  line-height:1.6;
+  letter-spacing:1.5px;
+  color:#858993;
+  direction:ltr;
+  text-align:right;
+}
+@media(max-width:600px){
+  .home-chapter-label{
+    gap:2px;
+    margin-bottom:20px;
+    align-items:flex-start;
+  }
+  .home-chapter-label>span:first-child,
+  .home-chapter-label>span:nth-child(2){
+    font-size:13px;
+    line-height:1.85;
+  }
+  .home-chapter-label i{
+    font-size:8px;
+    letter-spacing:1.15px;
+  }
+}
+</style>
+
 </body>
 <style id="remove-visible-legacy-order-service">
 /* Keep the native select only as the form's hidden data source; the custom picker below is the sole visible control. */
