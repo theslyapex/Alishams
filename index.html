@@ -3602,23 +3602,6 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
 
 <style id="homepage-editorial-showcases-v3">
 /* Stage 03 · Editorial showcases: real work leads, decorative panels recede */
-#work{position:relative;isolation:isolate}
-#work .section-head{max-width:760px;margin-bottom:34px}
-#work .section-head h2{max-width:620px;font-size:clamp(28px,4vw,46px);line-height:1.55;letter-spacing:-.7px}
-#work .work-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px;align-items:stretch}
-#work .work-card{grid-column:span 4;min-width:0;border:1px solid #ffffff17;border-radius:22px;background:linear-gradient(155deg,#171a20,#0d0f14);overflow:hidden;transition:transform .35s,border-color .35s}
-#work .work-card:nth-child(1){grid-column:span 7}
-#work .work-card:nth-child(2){grid-column:span 5}
-#work .work-card:nth-child(n+3){grid-column:span 4}
-#work .work-card:hover{transform:translateY(-5px);border-color:#d9ff7260}
-#work .work-art{height:clamp(210px,25vw,330px);overflow:hidden}
-#work .work-card:nth-child(n+3) .work-art{height:220px}
-#work .work-art img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
-#work .work-card:hover .work-art img{transform:scale(1.045)}
-#work .work-info{min-height:145px;padding:20px 22px 22px}
-#work .work-info h3{font-size:clamp(15px,1.7vw,19px);line-height:1.8}
-#work .work-info p{font-size:12px;line-height:2;color:#a9abb3}
-#work .case-study-link{display:inline-flex;margin-top:8px;color:#d9ff72}
 #logo-showcase-home,#ad-showcase-home{padding-block:clamp(54px,7vw,94px);position:relative;isolation:isolate}
 #logo-showcase-home:before,#ad-showcase-home:before{content:"";position:absolute;inset:12% 0;background:linear-gradient(90deg,transparent,#ffffff03 18%,#ffffff03 82%,transparent);z-index:-1;pointer-events:none}
 #logo-showcase-home .portfolio-showcase-panel,#ad-showcase-home .portfolio-showcase-panel{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:clamp(24px,5vw,70px);align-items:center;padding:clamp(10px,2vw,24px) 0;border:0;border-radius:0;background:transparent;box-shadow:none}
@@ -3665,7 +3648,6 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
 .home-font-promo__panel{border-radius:8px 26px 8px 26px;box-shadow:none}
 #avangaar-home .wrap>a{border-radius:8px 28px 8px 28px!important;box-shadow:none}
 @media(max-width:900px){
- #work .work-card:nth-child(1),#work .work-card:nth-child(2),#work .work-card:nth-child(n+3){grid-column:span 6}
  #mobile-apps-showcase .mobile-app-card:nth-child(n){grid-column:span 6}
  #mobile-apps-showcase .mobile-apps-heading{gap:22px}
  #free-tools-home .free-tools-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -3673,14 +3655,6 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
  #free-tools-home .free-tool-tile:nth-child(n+3){border-top:1px solid #ffffff13}
 }
 @media(max-width:640px){
- #work .work-grid{grid-template-columns:1fr;gap:13px}
- #work .work-card:nth-child(n){grid-column:1;display:grid;grid-template-columns:112px minmax(0,1fr);align-items:stretch;border-radius:17px}
- #work .work-art,#work .work-card:nth-child(n) .work-art{height:100%;min-height:148px}
- #work .work-art .work-type{font-size:8px}
- #work .work-info{min-height:0;padding:13px 12px 14px}
- #work .work-info h3{font-size:12px;line-height:1.8}
- #work .work-info p{font-size:10px;line-height:1.8;margin:4px 0}
- #work .case-study-link{font-size:10px;margin-top:3px}
  #logo-showcase-home,#ad-showcase-home{padding-block:48px}
  #logo-showcase-home .portfolio-showcase-panel,#ad-showcase-home .portfolio-showcase-panel{display:flex;flex-direction:column;gap:18px}
  #logo-showcase-home .portfolio-showcase-art,#ad-showcase-home .portfolio-showcase-art{width:100%;min-height:260px;order:2;border-radius:20px}
@@ -3708,7 +3682,6 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
  .home-font-promo__panel{border-radius:7px 20px 7px 20px}
 }
 @media(prefers-reduced-motion:reduce){
- #work .work-card,#work .work-art img,#mobile-apps-showcase .mobile-app-card{transition:none!important}
 }
 </style>
 
