@@ -1,15 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-  <url>
-    <loc>https://alishams.ir/videos.html?v=motion-graphic-06</loc>
-    <video:video>
-      <video:thumbnail_loc>https://alishams.ir/assets/images/alishams-studio-workspace.jpg</video:thumbnail_loc>
-      <video:title>موشن گرافیک ویژه به زبان انگلیسی</video:title>
-      <video:description>به صورت تیزر تبلیغاتی با ابعاد 9:16</video:description>
-      <video:content_loc>https://my.uploadkon.ir/d/5PDOTXN7J29GnVnLg7d8t4IV1yAWHc/MTI3MDQzfHBhZA.mp4</video:content_loc>
-      <video:publication_date>2026-11-22T20:39:55Z</video:publication_date>
-    </video:video>
-  </url>
   <url>
     <loc>https://alishams.ir/videos.html?v=motion-graphic-05</loc>
     <video:video>
