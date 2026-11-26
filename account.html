@@ -250,6 +250,34 @@
     <div><span class="eyebrow">ALISHAMS GAME STUDIO</span><h2 style="margin:5px 0">بازی (بلدی؟)</h2><p class="muted" style="margin:0">آمار و پیشرفت بازی متصل به حساب کاربری شما</p></div>
     <span class="badge" style="border:1px solid rgba(237,200,121,.35);color:#edc879">حساب یکپارچه</span>
   </div>
+  <div class="baladi-shortcuts" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px">
+    <a href="/case-studies/baladi.html" class="baladi-shortcut" style="min-width:0;display:flex;align-items:center;gap:12px;padding:14px;border:1px solid rgba(151,255,107,.22);border-radius:16px;background:linear-gradient(135deg,rgba(151,255,107,.10),rgba(17,29,25,.72));text-decoration:none;color:inherit;transition:transform .2s ease,border-color .2s ease">
+      <span style="width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:13px;background:rgba(151,255,107,.10)">
+        <img src="https://img.icons8.com/fluency/48/controller.png" width="38" height="38" alt="" loading="lazy" style="display:block;object-fit:contain">
+      </span>
+      <span style="min-width:0;display:flex;flex-direction:column;gap:4px">
+        <strong style="font-size:14px;line-height:1.6">معرفی بازی بلدی؟</strong>
+        <small class="muted" style="font-size:11px;line-height:1.7">مشاهده جزئیات و ویژگی‌های بازی</small>
+      </span>
+      <span aria-hidden="true" style="margin-right:auto;color:#c9ff72;font-size:20px">‹</span>
+    </a>
+    <a href="/game-coins.html" class="baladi-shortcut" style="min-width:0;display:flex;align-items:center;gap:12px;padding:14px;border:1px solid rgba(237,200,121,.24);border-radius:16px;background:linear-gradient(135deg,rgba(237,200,121,.10),rgba(35,28,17,.62));text-decoration:none;color:inherit;transition:transform .2s ease,border-color .2s ease">
+      <span style="width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:13px;background:rgba(237,200,121,.10)">
+        <img src="https://img.icons8.com/fluency/48/coins.png" width="38" height="38" alt="" loading="lazy" style="display:block;object-fit:contain">
+      </span>
+      <span style="min-width:0;display:flex;flex-direction:column;gap:4px">
+        <strong style="font-size:14px;line-height:1.6">فروشگاه سکه</strong>
+        <small class="muted" style="font-size:11px;line-height:1.7">مشاهده و تهیه بسته‌های سکه</small>
+      </span>
+      <span aria-hidden="true" style="margin-right:auto;color:#edc879;font-size:20px">‹</span>
+    </a>
+  </div>
+  <style>
+    @media(max-width:520px){.baladi-shortcuts{grid-template-columns:1fr!important}}
+    .baladi-shortcut:hover{transform:translateY(-2px);border-color:rgba(201,255,114,.55)!important}
+    .baladi-shortcut:focus-visible{outline:2px solid #c9ff72;outline-offset:3px}
+    @media(prefers-reduced-motion:reduce){.baladi-shortcut{transition:none!important}}
+  </style>
   <div id="baladiGameStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:10px;margin-top:18px">
     <div class="stat"><span>وضعیت</span><strong>در حال دریافت…</strong></div>
   </div>
