@@ -7,14 +7,18 @@ function escapeHTML(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","
 function faNum(n){return new Intl.NumberFormat("fa-IR").format(Number(n)||0);}
 function imageURL(sb,path){if(!path)return "";if(/^https?:\/\//i.test(path))return path;return sb.storage.from(PORTFOLIO_CONFIG.bucket).getPublicUrl(path).data.publicUrl;}
 async function recordPageView(page){try{const sb=await getPortfolioSB();await sb.rpc("record_portfolio_page_view",{p_page_key:page});}catch(e){console.warn("Portfolio view counter unavailable",e);}}
+async function fetchAllPages(makeQuery){
+ const all=[];let offset=0;const pageSize=1000;
+ while(true){const result=await makeQuery().range(offset,offset+pageSize-1);if(result.error)throw result.error;const rows=result.data||[];all.push(...rows);if(rows.length<pageSize)break;offset+=pageSize;}
+ return all;
+}
 async function loadGallery(category){
  const sb=await getPortfolioSB(); const grid=document.getElementById("galleryGrid");
  try{
-  const [{data:items,error},pageStats]=await Promise.all([
-   sb.from("portfolio_items").select("id,category,title,description,image_path,cover_path,created_at,view_count").eq("category",category).eq("published",true).order("created_at",{ascending:false}),
+  const [items,pageStats]=await Promise.all([
+   fetchAllPages(()=>sb.from("portfolio_items").select("id,category,title,description,image_path,cover_path,created_at,view_count").eq("category",category).eq("published",true).order("created_at",{ascending:false})),
    sb.rpc("get_portfolio_page_view_count",{p_page_key:category})
   ]);
-  if(error)throw error;
   const total=items.reduce((n,x)=>n+(Number(x.view_count)||0),0);
   document.getElementById("pageViews").textContent=faNum(pageStats.data||0);
   document.getElementById("itemViews").textContent=faNum(total);
