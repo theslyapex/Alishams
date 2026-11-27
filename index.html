@@ -1292,6 +1292,57 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 }
 @media(prefers-reduced-motion:reduce){.process-step-icon,.process-journey-bottom>a{transition:none!important}}
 </style>
+<style id="video-work-gallery-redesign">
+#video-showcase .video-showcase-card{grid-template-columns:.82fr 1.18fr;gap:clamp(24px,4.5vw,58px)}
+#video-showcase .video-work-gallery{position:relative;display:grid;grid-template-columns:1.55fr .8fr;grid-template-rows:minmax(0,1fr) auto;gap:12px;min-height:390px;padding:13px;border:1px solid #ffffff1c;border-radius:25px 5px 25px 5px;background:linear-gradient(145deg,#1b211a,#101510 75%);box-shadow:0 24px 60px #0005;overflow:hidden;text-decoration:none}
+#video-showcase .video-work-gallery:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 70% 20%,#d9ff7210,transparent 58%);pointer-events:none}
+#video-showcase .video-work-feature,#video-showcase .video-work-mini{position:relative;display:block;min-width:0;min-height:0;overflow:hidden;background:#20251e;border:1px solid #ffffff20}
+#video-showcase .video-work-feature{grid-row:1;grid-column:1;min-height:300px}
+#video-showcase .video-work-side{display:grid;grid-template-rows:1fr 1fr;gap:12px;min-height:300px}
+#video-showcase .video-work-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease,filter .35s ease}
+#video-showcase .video-work-feature:after,#video-showcase .video-work-mini:after{content:"";position:absolute;inset:0;border:1px solid #ffffff1a;pointer-events:none}
+#video-showcase .video-work-shade{position:absolute;inset:0;background:linear-gradient(0deg,#070a07e8,transparent 62%),linear-gradient(135deg,#d9ff7212,transparent 55%)}
+#video-showcase .video-work-play{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:62px;height:62px;display:grid;place-items:center;border:1px solid #d9ff72;border-radius:50%;background:#10150dcc;color:#d9ff72;box-shadow:0 0 0 8px #d9ff721c,0 12px 35px #0008}
+#video-showcase .video-work-play svg{width:23px;height:23px;fill:currentColor;margin-left:3px}
+#video-showcase .video-work-caption{position:absolute;right:17px;bottom:15px;display:grid;gap:4px;color:#fff;font-family:Estedad,Tahoma,sans-serif}
+#video-showcase .video-work-caption small{font-size:10px;color:#d9ff72}
+#video-showcase .video-work-caption strong{font-size:16px;font-weight:750}
+#video-showcase .video-work-mini{min-height:0}
+#video-showcase .video-work-mini img{filter:saturate(.88)}
+#video-showcase .video-work-mini-shade{position:absolute;inset:0;background:linear-gradient(0deg,#080b08d9,transparent 75%)}
+#video-showcase .video-work-mini strong{position:absolute;right:10px;bottom:9px;left:30px;color:#fff;font:600 10px/1.8 Estedad,Tahoma,sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#video-showcase .video-work-mini i{position:absolute;left:9px;top:9px;width:25px;height:25px;display:grid;place-items:center;border-radius:50%;background:#d9ff72;color:#111;font-size:10px;font-style:normal}
+#video-showcase .video-work-gallery-foot{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 3px 2px;border-top:1px solid #ffffff20;color:#aab3a4;font:500 10px Estedad,Tahoma,sans-serif}
+#video-showcase .video-work-gallery-foot b{color:#d9ff72;font-weight:650}
+#video-showcase .video-work-gallery:hover .video-work-poster{transform:scale(1.035)}
+#video-showcase .video-work-mini:hover .video-work-poster{filter:saturate(1.12) brightness(1.08)}
+#video-showcase .video-work-gallery.is-empty .video-work-feature{background:linear-gradient(145deg,#303b29,#131a13)}
+#video-showcase .video-work-gallery.is-empty .video-work-feature:before{content:"نمونه‌کارهای ویدیویی";position:absolute;inset:0;display:grid;place-items:center;color:#d9ff72;font:800 22px Estedad,Tahoma,sans-serif}
+@media(max-width:800px){#video-showcase .video-showcase-card{grid-template-columns:1fr;gap:20px}#video-showcase .video-work-gallery{order:-1;min-height:340px;grid-template-columns:1.45fr .8fr}#video-showcase .video-work-feature,#video-showcase .video-work-side{min-height:255px}}
+@media(max-width:430px){#video-showcase .video-work-gallery{min-height:295px;padding:9px;gap:8px;border-radius:19px 4px 19px 4px}#video-showcase .video-work-feature,#video-showcase .video-work-side{min-height:220px}#video-showcase .video-work-side{gap:8px}#video-showcase .video-work-caption{right:11px;bottom:11px}#video-showcase .video-work-caption strong{font-size:14px}#video-showcase .video-work-play{width:49px;height:49px}#video-showcase .video-work-mini strong{font-size:8px;right:7px;bottom:6px}#video-showcase .video-work-gallery-foot{font-size:8px}}
+@media(prefers-reduced-motion:reduce){#video-showcase .video-work-gallery *{transition:none!important}}
+</style>
+<script id="homepage-video-portfolio-loader">
+(function(){
+ var root=document.querySelector('#video-showcase .video-work-gallery');if(!root)return;
+ var endpoint='https://srfldjfrzmtnlabusssq.supabase.co/rest/v1/studio_videos?select=title,poster_url,featured,published_at&is_published=eq.true&order=featured.desc,published_at.desc&limit=3';
+ var key='sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB';
+ fetch(endpoint,{headers:{apikey:key,Authorization:'Bearer '+key},cache:'no-store'})
+ .then(function(r){if(!r.ok)throw new Error('video portfolio unavailable');return r.json()})
+ .then(function(rows){
+  if(!Array.isArray(rows)||!rows.length){root.classList.add('is-empty');return}
+  var slots=[root.querySelector('.video-work-feature'),...root.querySelectorAll('.video-work-mini')];
+  rows.slice(0,3).forEach(function(item,index){
+   var slot=slots[index];if(!slot||!item.poster_url)return;
+   var img=slot.querySelector('img');if(img){img.src=item.poster_url;img.alt=item.title||'نمونه‌کار ویدیویی'}
+   var title=slot.querySelector('strong');if(title)title.textContent=item.title||'تماشای اثر';
+   slot.setAttribute('aria-label','تماشای '+(item.title||'نمونه‌کار ویدیویی'));
+  });
+  slots.slice(rows.length).forEach(function(slot){if(slot)slot.hidden=true});
+ })
+ .catch(function(){root.classList.add('is-empty')});
+})();
+</script>
 </head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="علی شمس"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی">
@@ -1831,21 +1882,19 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
     <a class="btn btn-primary video-showcase-cta" href="videos.html">ورود به دنیای ویدئوها <span class="arrow" aria-hidden="true">↗︎</span></a>
     <div class="video-showcase-meta"><span><i></i> موشن‌گرافیک</span><span><i></i> تیزر تبلیغاتی</span><span><i></i> روایت تصویری</span></div>
    </div>
-   <a class="video-showcase-visual video-showcase-static-art" href="videos.html" aria-label="مشاهده مجموعه ویدئوهای علی شمس">
-    <div class="fresh-art-top"><span>استودیو دیجیتال علی شمس</span><i></i><span>تصویر، روایت، تأثیر</span></div>
-    <div class="fresh-art-stage">
-     <div class="fresh-art-wordmark"><span>هر ایده</span><strong>یک<br><em>روایت</em></strong><small>از خیال تا تصویر</small></div>
-     <div class="fresh-art-composition" aria-hidden="true">
-      <div class="fresh-art-slab fresh-art-slab-back"></div>
-      <div class="fresh-art-slab fresh-art-slab-mid"></div>
-      <div class="fresh-art-slab fresh-art-slab-front"><span></span></div>
-      <div class="fresh-art-disc"></div>
-      <div class="fresh-art-cut"></div>
-     </div>
-     <div class="fresh-art-vertical">داستانت را متفاوت نشان بده</div>
+   <div class="video-showcase-visual video-work-gallery" aria-label="پیش‌نمایش نمونه‌کارهای ویدیویی">
+    <a class="video-work-feature" href="videos.html" aria-label="تماشای نمونه‌کارهای ویدیویی">
+     <img class="video-work-poster" src="" alt="" loading="lazy">
+     <span class="video-work-shade"></span>
+     <span class="video-work-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.8c0-.78.85-1.26 1.52-.86l9.2 5.45a1.86 1.86 0 0 1 0 3.22l-9.2 5.45A1 1 0 0 1 8 18.2V5.8Z"/></svg></span>
+     <span class="video-work-caption"><small>نمونه‌کار ویدیویی</small><strong>تماشای اثر</strong></span>
+    </a>
+    <div class="video-work-side">
+     <a class="video-work-mini" href="videos.html" aria-label="تماشای نمونه‌کار ویدیویی دوم"><img class="video-work-poster" src="" alt="" loading="lazy"><span class="video-work-mini-shade"></span><strong></strong><i aria-hidden="true">▶</i></a>
+     <a class="video-work-mini" href="videos.html" aria-label="تماشای نمونه‌کار ویدیویی سوم"><img class="video-work-poster" src="" alt="" loading="lazy"><span class="video-work-mini-shade"></span><strong></strong><i aria-hidden="true">▶</i></a>
     </div>
-    <div class="fresh-art-bottom"><span>از یک فکر ساده</span><b>تا تصویری ماندگار</b><i aria-hidden="true">↗</i></div>
-   </a>
+    <div class="video-work-gallery-foot"><span>از مجموعه آثار اجراشده</span><b>موشن‌گرافیک و تیزر تبلیغاتی</b></div>
+   </div>
   </div>
  </div>
 </section>
