@@ -4514,6 +4514,25 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
 </style>
 
 
+<style id="avangaar-cta-interaction-fix">
+/* Keep the Avangaar text link readable in every interaction state. */
+#avangaar-home a.avangaar-cta,
+#avangaar-home a.avangaar-cta:link,
+#avangaar-home a.avangaar-cta:visited,
+#avangaar-home a.avangaar-cta:hover,
+#avangaar-home a.avangaar-cta:focus,
+#avangaar-home a.avangaar-cta:focus-visible,
+#avangaar-home a.avangaar-cta:active{
+  color:#d9ff72!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  border-color:transparent transparent #d9ff72!important;
+  -webkit-tap-highlight-color:transparent;
+}
+#avangaar-home a.avangaar-cta b{color:inherit!important}
+#avangaar-home a.avangaar-cta:focus-visible{outline:2px solid #d9ff72!important;outline-offset:5px}
+</style>
+
 </body>
 <style id="remove-visible-legacy-order-service">
 /* Keep the native select only as the form's hidden data source; the custom picker below is the sole visible control. */
