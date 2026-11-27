@@ -4069,7 +4069,7 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
 #logo-showcase-home .identity-center-kicker{color:#d9ff72a8;font:700 7px Manrope;letter-spacing:2.2px}
 #logo-showcase-home .identity-monogram{margin:-1px 0 -7px;color:#e5ffad;font:800 88px/1 Estedad,sans-serif;text-shadow:0 0 30px #d9ff7260;transform:rotate(-8deg)}
 #logo-showcase-home .identity-center-line{width:34px;height:1px;margin:9px 0 7px;background:#d9ff72a8}
-#logo-showcase-home .identity-center>b{color:#f4f3ec;font:800 14px Manrope;letter-spacing:2px}
+
 #logo-showcase-home .identity-center>small{margin-top:4px;color:#a6b58c;font:600 6px Manrope;letter-spacing:2.6px}
 #logo-showcase-home .identity-note{position:absolute;z-index:3;display:flex;flex-direction:column;gap:3px;padding:10px 12px;border:1px solid #ffffff20;border-radius:10px;background:#111610e8;box-shadow:0 12px 30px #0006;backdrop-filter:blur(12px)}
 #logo-showcase-home .identity-note>span{color:#d9ff72;font:700 8px Manrope;letter-spacing:1px}
@@ -4711,4 +4711,14 @@ html body dialog#orderDialog select#serviceSelect {
 </style>
 </html>
 <style id="ad-visual-replacement">.ad-visual-mark--back svg{filter:drop-shadow(0 0 10px #d9ff7255)}.ad-visual-mark--front svg{filter:drop-shadow(0 0 10px #d9ff7277)}.ad-visual-mark--back svg .prism-shadow{transform-origin:center;animation:prismPulse 4s ease-in-out infinite}@keyframes prismPulse{0%,100%{opacity:.55;transform:scale(.97)}50%{opacity:1;transform:scale(1.03)}}@media(prefers-reduced-motion:reduce){.ad-visual-mark--back svg .prism-shadow{animation:none!important}}
+
+/* Enforce Estedad on the Persian logo-showcase center caption */
+#logo-showcase-home .identity-center > b{
+ font-family:"Estedad",Tahoma,sans-serif!important;
+ font-size:10px!important;
+ font-weight:700!important;
+ line-height:1.9!important;
+ letter-spacing:0!important;
+ direction:rtl!important;
+}
 </style>
