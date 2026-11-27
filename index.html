@@ -2033,9 +2033,9 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
     </div>
    </div>
    <div class="unified-contact-actions" aria-label="مسیرهای ارتباطی">
-    <a class="uca-action uca-action-primary" href="/contact-center.html"><span class="uca-action-icon">↗</span><span><b>شروع گفت‌وگو</b><small>ثبت درخواست و شروع همکاری</small></span></a>
-    <a class="uca-action" href="/contact-center.html#trackingPanel"><span class="uca-action-icon">⌕</span><span><b>پیگیری مکاتبه</b><small>ادامه درخواست‌های قبلی</small></span></a>
-    <a class="uca-action" href="/community-chat.html"><span class="uca-action-icon">✳</span><span><b>گفت‌وگوی عمومی</b><small>ارتباط با کاربران Alishams</small></span></a>
+    <a class="uca-action uca-action-primary" href="/contact-center.html"><span class="uca-action-icon"><img src="https://img.icons8.com/fluency-systems-regular/48/chat.png" alt="" loading="lazy"></span><span><b>شروع گفت‌وگو</b><small>ثبت درخواست و شروع همکاری</small></span><span class="uca-action-arrow">↗</span></a>
+    <a class="uca-action" href="/contact-center.html#trackingPanel"><span class="uca-action-icon"><img src="https://img.icons8.com/fluency-systems-regular/48/edit-chat-history.png" alt="" loading="lazy"></span><span><b>پیگیری مکاتبه</b><small>ادامه درخواست‌های قبلی</small></span><span class="uca-action-arrow">↗</span></a>
+    <a class="uca-action" href="/community-chat.html"><span class="uca-action-icon"><img src="https://img.icons8.com/fluency-systems-regular/48/chat-room.png" alt="" loading="lazy"></span><span><b>گفت‌وگوی عمومی</b><small>ارتباط با کاربران Alishams</small></span><span class="uca-action-arrow">↗</span></a>
    </div>
   </div>
  </div>
@@ -4349,8 +4349,12 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
 .uca-action{display:flex;align-items:center;gap:12px;min-width:0;min-height:70px;padding:12px 15px;border:1px solid #ffffff20;border-radius:17px;background:#ffffff06;color:#f4f4ed;text-decoration:none;transition:transform .2s,border-color .2s,background .2s}
 .uca-action:hover{transform:translateY(-3px);border-color:#d9ff7270;background:#d9ff720c}
 .uca-action-primary{border-color:#d9ff7270;background:linear-gradient(120deg,#d9ff7220,#d9ff7208)}
-.uca-action-icon{display:grid;place-items:center;flex:none;width:39px;height:39px;border-radius:12px;background:#d9ff7218;color:#d9ff72;font:700 21px/1 Estedad,sans-serif}
-.uca-action-primary .uca-action-icon{background:#d9ff72;color:#11150b}
+.uca-action-icon{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,#d9ff7226,#d9ff720b);border:1px solid #d9ff7238;box-shadow:inset 0 1px 0 #ffffff12,0 5px 16px #0003}
+.uca-action-icon img{display:block;width:27px;height:27px;object-fit:contain;filter:brightness(0) saturate(100%) invert(91%) sepia(43%) saturate(537%) hue-rotate(25deg) brightness(105%) contrast(102%)}
+.uca-action-primary .uca-action-icon{background:linear-gradient(145deg,#e5ff9b,#c9f45d);border-color:#eaffad;box-shadow:0 5px 18px #d9ff7228}
+.uca-action-primary .uca-action-icon img{filter:brightness(0) saturate(100%)}
+.uca-action-arrow{margin-right:auto;flex:none;color:#d9ff72;font:700 16px Manrope;opacity:.8;transition:transform .2s,opacity .2s}
+.uca-action:hover .uca-action-arrow{transform:translate(2px,-2px);opacity:1}
 .uca-action b,.uca-action small{display:block;font-family:Estedad,sans-serif}
 .uca-action b{font-size:12px;font-weight:800}
 .uca-action small{margin-top:4px;color:#aeb2a5;font-size:9px;line-height:1.7}
@@ -4365,7 +4369,9 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
  .uca-sticker{left:4%;bottom:9%;font-size:9px}
  .unified-contact-actions{grid-template-columns:1fr;gap:8px;margin-top:17px}
  .uca-action{min-height:58px;padding:9px 12px;border-radius:14px}
- .uca-action-icon{width:35px;height:35px}
+ .uca-action-icon{width:39px;height:39px;border-radius:12px}
+ .uca-action-icon img{width:24px;height:24px}
+ .uca-action-arrow{font-size:14px}
 }
 @media(min-width:701px) and (max-width:900px){
  .unified-contact-card{padding:24px}
