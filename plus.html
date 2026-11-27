@@ -120,9 +120,23 @@ body,button,input,a,.btn,.faq summary{font-family:"Estedad",Tahoma,sans-serif}
 
 /* Match the homepage authenticated account indicator */
 .site-shared-header .account-cta.is-authenticated .account-cta-status{
+ display:block!important;
  color:#d9ff72!important;
  font-family:"Estedad",Tahoma,sans-serif!important;
  font-weight:700!important;
+}
+@media(max-width:760px){
+ .site-shared-header .nav-actions .account-cta.is-authenticated{
+  width:auto!important;min-width:58px!important;flex:0 0 auto!important;
+  height:auto!important;min-height:48px!important;padding:2px 3px!important;
+  overflow:visible!important;
+ }
+ .site-shared-header .nav-actions .account-cta.is-authenticated .account-cta-status{
+  display:block!important;font-size:8px!important;line-height:11px!important;
+ }
+ .site-shared-header .nav-actions .account-cta.is-authenticated .account-status-row{
+  display:flex!important;flex-direction:column!important;gap:0!important;
+ }
 }
 
 </style>
