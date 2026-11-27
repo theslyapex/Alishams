@@ -1301,6 +1301,9 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 #video-showcase .video-work-side{display:grid;grid-template-rows:1fr 1fr;gap:12px;min-height:300px}
 #video-showcase .video-work-side{grid-column:2;grid-row:1}
 #video-showcase .video-work-gallery.single-work .video-work-side{display:none}
+#video-showcase .video-work-gallery.two-works .video-work-side{grid-template-rows:1fr}
+#video-showcase .video-work-gallery.two-works .video-work-mini[hidden],
+#video-showcase .video-work-mini[hidden]{display:none!important}
 #video-showcase .video-work-feature.poster-unavailable,#video-showcase .video-work-mini.poster-unavailable{background:linear-gradient(145deg,#303b29,#131a13)}
 #video-showcase .video-work-feature img[hidden],#video-showcase .video-work-mini img[hidden]{display:none}
 #video-showcase .video-work-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease,filter .35s ease}
@@ -1331,35 +1334,46 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
  function loadVideoShowcase(){
   var root=document.querySelector('#video-showcase .video-work-gallery');
   if(!root)return;
-  var endpoint='https://srfldjfrzmtnlabusssq.supabase.co/rest/v1/studio_videos?select=title,poster_url,featured,published_at&is_published=eq.true&order=featured.desc,published_at.desc&limit=3';
+  var endpoint='https://srfldjfrzmtnlabusssq.supabase.co/rest/v1/studio_videos?select=title,poster_url,featured,published_at&is_published=eq.true&order=featured.desc,published_at.desc&limit=12';
   var key='sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB';
   var slots=[root.querySelector('.video-work-feature')].concat(Array.prototype.slice.call(root.querySelectorAll('.video-work-mini')));
   function showFallback(){
    root.classList.add('is-empty');
+   root.classList.remove('single-work','two-works');
    slots.forEach(function(slot){if(!slot)return;var img=slot.querySelector('img');if(img){img.removeAttribute('src');img.hidden=true}if(slot!==slots[0])slot.hidden=true});
+  }
+  function checkPoster(item){
+   return new Promise(function(resolve){
+    var image=new Image(),settled=false;
+    function finish(ok){if(settled)return;settled=true;resolve(ok?item:null)}
+    image.onload=function(){finish(true)};
+    image.onerror=function(){finish(false)};
+    image.src=item.poster_url.trim();
+    if(image.complete&&image.naturalWidth>0)finish(true);
+   });
   }
   fetch(endpoint,{headers:{apikey:key,Authorization:'Bearer '+key},cache:'no-store'})
    .then(function(response){if(!response.ok)throw new Error('video portfolio unavailable');return response.json()})
    .then(function(rows){
     if(!Array.isArray(rows))throw new Error('invalid video portfolio response');
-    var usable=rows.filter(function(item){return item&&typeof item.poster_url==='string'&&item.poster_url.trim()&&/^https?:\/\//i.test(item.poster_url.trim())}).slice(0,3);
+    var candidates=rows.filter(function(item){return item&&typeof item.poster_url==='string'&&item.poster_url.trim()&&/^https?:\/\//i.test(item.poster_url.trim())});
+    return Promise.all(candidates.map(checkPoster));
+   })
+   .then(function(results){
+    var usable=results.filter(Boolean).slice(0,3);
     if(!usable.length){showFallback();return}
+    root.classList.remove('is-empty','single-work','two-works');
     slots.forEach(function(slot,index){
      var item=usable[index];if(!slot)return;
      if(!item){slot.hidden=true;return}
      slot.hidden=false;
      var img=slot.querySelector('img');
-     if(img){
-      img.hidden=false;
-      img.alt=item.title||'نمونه‌کار ویدیویی';
-      img.onerror=function(){img.hidden=true;slot.classList.add('poster-unavailable')};
-      img.src=item.poster_url.trim();
-     }
+     if(img){img.hidden=false;img.alt=item.title||'نمونه‌کار ویدیویی';img.onerror=function(){slot.hidden=true;slot.classList.add('poster-unavailable')};img.src=item.poster_url.trim()}
      var title=slot.querySelector('strong');if(title)title.textContent=item.title||'تماشای اثر';
      slot.setAttribute('aria-label','تماشای '+(item.title||'نمونه‌کار ویدیویی'));
     });
     if(usable.length===1)root.classList.add('single-work');
-    else root.classList.remove('single-work');
+    if(usable.length===2)root.classList.add('two-works');
    })
    .catch(function(error){console.warn('Homepage video showcase:',error);showFallback()});
  }
