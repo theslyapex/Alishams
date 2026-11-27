@@ -107,7 +107,7 @@ function richCommand(kind){
  syncRichEditor();
 }
 function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2800)}
-function viewerKey(){let k=localStorage.getItem('avangaar_viewer');if(!k){k=crypto.randomUUID();localStorage.setItem('avangaar_viewer',k)}return k}
+function viewerKey(){return crypto.randomUUID()}
 function imgUrl(path){return path?sb.storage.from('avangaar-images').getPublicUrl(path).data.publicUrl:''}
 function topicMarkup(items){return (items||[]).map(x=>'<span class="topic">'+esc(x)+'</span>').join(' ')}
 function renderTopics(){ $('topics').innerHTML=['همه',...SERVICES].map(x=>'<button class="chip '+(activeTopic===x?'active':'')+'" data-topic="'+esc(x)+'">'+esc(x)+'</button>').join('') }
