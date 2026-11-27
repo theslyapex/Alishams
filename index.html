@@ -1490,7 +1490,18 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <p class="pb-intro">لازم نیست از اول همه‌چیز مشخص باشه. با چند قدم ساده، مسیر مناسب پروژه‌ات رو پیدا می‌کنیم.</p>
 <div class="pb-steps"><div class="pb-step"><span class="pb-num">گام اول</span><div><b>درباره ایده‌ات بگو</b><small>هدف، نیاز و چیزی که در ذهنته</small></div><span class="pb-arrow">↗︎</span></div><div class="pb-step"><span class="pb-num">گام دوم</span><div><b>راه مناسب رو انتخاب می‌کنیم</b><small>خدمت، سبک اجرا و جزئیات پروژه</small></div><span class="pb-arrow">↗︎</span></div><div class="pb-step"><span class="pb-num">گام سوم</span><div><b>با برنامه جلو می‌ریم</b><small>زمان‌بندی روشن و شروع همکاری</small></div><span class="pb-arrow">↗︎</span></div></div>
 <div class="pb-bottom"><span class="pb-note">شروع همکاری با یک گفت‌وگوی کوتاهه.<br>بدون پیچیدگی و حرف‌های اضافه.</span><a class="pb-link" href="#contact">شروع یک پروژه <span>↗︎</span></a></div></div></div></div></section>
-<nav class="home-chapter-nav" aria-label="راهنمای بخش‌های صفحه اصلی"><div class="home-chapter-nav-inner"><span class="home-chapter-nav-caption">EXPLORE THE STUDIO</span><a href="#services">خدمات و راهکارها</a><a href="#work">پروژه‌های اجراشده</a><a href="#free-tools-home">ابزار و یادگیری</a><a href="#about">درباره استودیو</a><a href="#contact">شروع همکاری</a></div></nav>
+<nav class="home-chapter-nav" aria-label="بخش‌های استودیو">
+ <div class="home-chapter-nav-inner">
+  <div class="home-chapter-nav-heading"><span>مسیرهای استودیو</span><i>بخش موردنظرت را انتخاب کن</i></div>
+  <div class="home-chapter-nav-links">
+   <a href="#services"><img src="https://img.icons8.com/fluency-systems-regular/96/d9ff72/idea.png" alt="" loading="lazy"><span>خدمات و راهکارها</span><b aria-hidden="true">↗</b></a>
+   <a href="#work"><img src="https://img.icons8.com/fluency-systems-regular/96/d9ff72/gallery.png" alt="" loading="lazy"><span>پروژه‌های اجراشده</span><b aria-hidden="true">↗</b></a>
+   <a href="#free-tools-home"><img src="https://img.icons8.com/fluency-systems-regular/96/d9ff72/toolbox.png" alt="" loading="lazy"><span>ابزار و یادگیری</span><b aria-hidden="true">↗</b></a>
+   <a href="#about"><img src="https://img.icons8.com/fluency-systems-regular/96/d9ff72/info.png" alt="" loading="lazy"><span>درباره استودیو</span><b aria-hidden="true">↗</b></a>
+   <a href="#contact"><img src="https://img.icons8.com/fluency-systems-regular/96/d9ff72/handshake.png" alt="" loading="lazy"><span>شروع همکاری</span><b aria-hidden="true">↗</b></a>
+  </div>
+ </div>
+</nav>
 
 <section class="homepage-feature-video" aria-labelledby="homepageVideoTitle">
   <div class="homepage-video-heading">
@@ -3951,19 +3962,24 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
 }
 </style>
 
-<style id="homepage-chapters-navigation-v2">
-.home-chapter-nav{position:relative;z-index:3;padding:17px 24px 20px;background:linear-gradient(180deg,#0b0d10,#0b0d10e8);border-top:1px solid #ffffff0b;border-bottom:1px solid #ffffff12}
-.home-chapter-nav-inner{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.home-chapter-nav-caption{font-size:9px;letter-spacing:1.6px;color:#777d86;white-space:nowrap;margin-left:10px}
-.home-chapter-nav a{display:inline-flex;align-items:center;gap:9px;padding:9px 12px;color:#c9cbd0;text-decoration:none;font-size:12px;white-space:nowrap;border-radius:8px;transition:background .2s,color .2s}
-.home-chapter-nav a span{font-size:9px;color:#d9ff72;font-variant-numeric:tabular-nums}
-.home-chapter-nav a:hover{background:#ffffff0a;color:#f5f3ee}
-.home-chapter-label{display:flex;align-items:center;gap:12px;margin:0 0 25px;color:#f5f3ee}
-.home-chapter-label>span:first-child{display:grid;place-items:center;width:30px;height:30px;border:1px solid #d9ff7255;border-radius:50%;font-size:10px;color:#d9ff72;font-variant-numeric:tabular-nums}
-.home-chapter-label>span:nth-child(2){font-size:13px;font-weight:650}
-.home-chapter-label i{font-style:normal;font-size:9px;letter-spacing:1.5px;color:#777d86}
-@media(max-width:850px){.home-chapter-nav{padding:12px 0 13px}.home-chapter-nav-inner{justify-content:flex-start;overflow-x:auto;scrollbar-width:none;padding:0 18px;gap:5px}.home-chapter-nav-inner::-webkit-scrollbar{display:none}.home-chapter-nav-caption{display:none}.home-chapter-nav a{padding:9px 11px;background:#ffffff06;border:1px solid #ffffff0b}}
-@media(max-width:600px){.home-chapter-label{gap:9px;margin-bottom:20px}.home-chapter-label>span:first-child{width:26px;height:26px}.home-chapter-label>span:nth-child(2){font-size:12px}.home-chapter-label i{font-size:8px;letter-spacing:1px}}
+<style id="homepage-chapters-navigation-v3">
+.home-chapter-nav{position:relative;z-index:3;padding:25px 24px 30px;background:linear-gradient(180deg,#0b0d10,#0d1013);border-top:1px solid #ffffff0b;border-bottom:1px solid #ffffff12}
+.home-chapter-nav-inner{max-width:1180px;margin:auto}
+.home-chapter-nav-heading{display:flex;align-items:baseline;gap:13px;margin:0 0 16px}
+.home-chapter-nav-heading>span{color:#f4f5ee;font:700 14px/1.8 Estedad,Tahoma,sans-serif}
+.home-chapter-nav-heading>i{color:#858b80;font:400 10px/1.8 Estedad,Tahoma,sans-serif;font-style:normal}
+.home-chapter-nav-links{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid #ffffff16;border-radius:17px;background:#111419;overflow:hidden}
+.home-chapter-nav-links a{position:relative;display:flex;align-items:center;gap:11px;min-width:0;min-height:76px;padding:13px 15px;color:#d9ddd2;text-decoration:none;border-left:1px solid #ffffff12;transition:background .22s ease,color .22s ease}
+.home-chapter-nav-links a:last-child{border-left:0}
+.home-chapter-nav-links a:hover{background:#d9ff720b;color:#f5f7ed}
+.home-chapter-nav-links a img{width:29px;height:29px;flex:0 0 29px;object-fit:contain;opacity:.92;transition:transform .22s ease,opacity .22s ease}
+.home-chapter-nav-links a:hover img{transform:translateY(-2px);opacity:1}
+.home-chapter-nav-links a span{min-width:0;font:600 11px/1.9 Estedad,Tahoma,sans-serif;white-space:nowrap}
+.home-chapter-nav-links a b{margin-right:auto;color:#d9ff72;font:500 14px/1 Manrope;opacity:0;transform:translate(-3px,3px);transition:opacity .2s,transform .2s}
+.home-chapter-nav-links a:hover b{opacity:1;transform:translate(0,0)}
+@media(max-width:900px){.home-chapter-nav-links{grid-template-columns:repeat(3,minmax(0,1fr))}.home-chapter-nav-links a:nth-child(3){border-left:0}.home-chapter-nav-links a:nth-child(n+4){border-top:1px solid #ffffff12}}
+@media(max-width:600px){.home-chapter-nav{padding:21px 0 24px}.home-chapter-nav-inner{padding:0 16px}.home-chapter-nav-heading{gap:9px;margin-bottom:12px}.home-chapter-nav-heading>span{font-size:13px}.home-chapter-nav-heading>i{font-size:9px}.home-chapter-nav-links{grid-template-columns:repeat(2,minmax(0,1fr));border-radius:14px}.home-chapter-nav-links a{min-height:65px;padding:10px 11px;gap:8px}.home-chapter-nav-links a:nth-child(3){border-left:1px solid #ffffff12;border-top:1px solid #ffffff12}.home-chapter-nav-links a:nth-child(4){border-top:1px solid #ffffff12}.home-chapter-nav-links a:nth-child(5){grid-column:1/-1;border-left:0;border-top:1px solid #ffffff12;min-height:58px}.home-chapter-nav-links a img{width:25px;height:25px;flex-basis:25px}.home-chapter-nav-links a span{font-size:10px}.home-chapter-nav-links a b{opacity:.75;transform:none}}
+@media(prefers-reduced-motion:reduce){.home-chapter-nav-links a,.home-chapter-nav-links a img,.home-chapter-nav-links a b{transition:none}}
 </style>
 
 <style id="homepage-editorial-showcases-v3">
