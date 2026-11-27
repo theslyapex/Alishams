@@ -2035,7 +2035,7 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
    <div class="unified-contact-actions" aria-label="مسیرهای ارتباطی">
     <a class="uca-action uca-action-primary" href="/contact-center.html"><span class="uca-action-icon"><img src="https://img.icons8.com/fluency-systems-regular/48/chat.png" alt="" loading="lazy"></span><span><b>شروع گفت‌وگو</b><small>ثبت درخواست و شروع همکاری</small></span><span class="uca-action-arrow">↗</span></a>
     <a class="uca-action" href="/contact-center.html#trackingPanel"><span class="uca-action-icon"><img src="https://img.icons8.com/fluency-systems-regular/48/edit-chat-history.png" alt="" loading="lazy"></span><span><b>پیگیری مکاتبه</b><small>ادامه درخواست‌های قبلی</small></span><span class="uca-action-arrow">↗</span></a>
-    <a class="uca-action" href="/community-chat.html"><span class="uca-action-icon"><img src="https://img.icons8.com/ios/50/group-chat.png" alt="" loading="lazy"></span><span><b>گفت‌وگوی عمومی</b><small>ارتباط با کاربران Alishams</small></span><span class="uca-action-arrow">↗</span></a>
+    <a class="uca-action" href="/community-chat.html"><span class="uca-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24" role="img"><path d="M7.5 18.5 4 20l1.2-3.4A8 8 0 1 1 7.5 18.5Z"/><path d="M9 10h6M9 13.5h4"/><path d="M16.5 4.5a7 7 0 0 1 5 6.7 6.8 6.8 0 0 1-1 3.6l.8 2.2-2.4-.8a6.8 6.8 0 0 1-2.4.5"/></svg></span><span><b>گفت‌وگوی عمومی</b><small>ارتباط با کاربران Alishams</small></span><span class="uca-action-arrow">↗</span></a>
    </div>
   </div>
  </div>
@@ -4351,6 +4351,8 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
 .uca-action-primary{border-color:#d9ff7270;background:linear-gradient(120deg,#d9ff7220,#d9ff7208)}
 .uca-action-icon{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,#d9ff7226,#d9ff720b);border:1px solid #d9ff7238;box-shadow:inset 0 1px 0 #ffffff12,0 5px 16px #0003}
 .uca-action-icon img{display:block;width:27px;height:27px;object-fit:contain;filter:brightness(0) saturate(100%) invert(91%) sepia(43%) saturate(537%) hue-rotate(25deg) brightness(105%) contrast(102%)}
+.uca-action-icon svg{display:block;width:27px;height:27px;fill:none;stroke:#d9ff72;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.uca-action-primary .uca-action-icon svg{stroke:#11150b}
 .uca-action-primary .uca-action-icon{background:linear-gradient(145deg,#e5ff9b,#c9f45d);border-color:#eaffad;box-shadow:0 5px 18px #d9ff7228}
 .uca-action-primary .uca-action-icon img{filter:brightness(0) saturate(100%)}
 .uca-action-arrow{margin-right:auto;flex:none;color:#d9ff72;font:700 16px Manrope;opacity:.8;transition:transform .2s,opacity .2s}
