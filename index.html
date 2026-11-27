@@ -1299,6 +1299,10 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 #video-showcase .video-work-feature,#video-showcase .video-work-mini{position:relative;display:block;min-width:0;min-height:0;overflow:hidden;background:#20251e;border:1px solid #ffffff20}
 #video-showcase .video-work-feature{grid-row:1;grid-column:1;min-height:300px}
 #video-showcase .video-work-side{display:grid;grid-template-rows:1fr 1fr;gap:12px;min-height:300px}
+#video-showcase .video-work-side{grid-column:2;grid-row:1}
+#video-showcase .video-work-gallery.single-work .video-work-side{display:none}
+#video-showcase .video-work-feature.poster-unavailable,#video-showcase .video-work-mini.poster-unavailable{background:linear-gradient(145deg,#303b29,#131a13)}
+#video-showcase .video-work-feature img[hidden],#video-showcase .video-work-mini img[hidden]{display:none}
 #video-showcase .video-work-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease,filter .35s ease}
 #video-showcase .video-work-feature:after,#video-showcase .video-work-mini:after{content:"";position:absolute;inset:0;border:1px solid #ffffff1a;pointer-events:none}
 #video-showcase .video-work-shade{position:absolute;inset:0;background:linear-gradient(0deg,#070a07e8,transparent 62%),linear-gradient(135deg,#d9ff7212,transparent 55%)}
@@ -1324,23 +1328,43 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 </style>
 <script id="homepage-video-portfolio-loader">
 (function(){
- var root=document.querySelector('#video-showcase .video-work-gallery');if(!root)return;
- var endpoint='https://srfldjfrzmtnlabusssq.supabase.co/rest/v1/studio_videos?select=title,poster_url,featured,published_at&is_published=eq.true&order=featured.desc,published_at.desc&limit=3';
- var key='sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB';
- fetch(endpoint,{headers:{apikey:key,Authorization:'Bearer '+key},cache:'no-store'})
- .then(function(r){if(!r.ok)throw new Error('video portfolio unavailable');return r.json()})
- .then(function(rows){
-  if(!Array.isArray(rows)||!rows.length){root.classList.add('is-empty');return}
-  var slots=[root.querySelector('.video-work-feature'),...root.querySelectorAll('.video-work-mini')];
-  rows.slice(0,3).forEach(function(item,index){
-   var slot=slots[index];if(!slot||!item.poster_url)return;
-   var img=slot.querySelector('img');if(img){img.src=item.poster_url;img.alt=item.title||'نمونه‌کار ویدیویی'}
-   var title=slot.querySelector('strong');if(title)title.textContent=item.title||'تماشای اثر';
-   slot.setAttribute('aria-label','تماشای '+(item.title||'نمونه‌کار ویدیویی'));
-  });
-  slots.slice(rows.length).forEach(function(slot){if(slot)slot.hidden=true});
- })
- .catch(function(){root.classList.add('is-empty')});
+ function loadVideoShowcase(){
+  var root=document.querySelector('#video-showcase .video-work-gallery');
+  if(!root)return;
+  var endpoint='https://srfldjfrzmtnlabusssq.supabase.co/rest/v1/studio_videos?select=title,poster_url,featured,published_at&is_published=eq.true&order=featured.desc,published_at.desc&limit=3';
+  var key='sb_publishable_UW2Wzzp8Y-KKd82nZHQUKA_RGl876RB';
+  var slots=[root.querySelector('.video-work-feature')].concat(Array.prototype.slice.call(root.querySelectorAll('.video-work-mini')));
+  function showFallback(){
+   root.classList.add('is-empty');
+   slots.forEach(function(slot){if(!slot)return;var img=slot.querySelector('img');if(img){img.removeAttribute('src');img.hidden=true}if(slot!==slots[0])slot.hidden=true});
+  }
+  fetch(endpoint,{headers:{apikey:key,Authorization:'Bearer '+key},cache:'no-store'})
+   .then(function(response){if(!response.ok)throw new Error('video portfolio unavailable');return response.json()})
+   .then(function(rows){
+    if(!Array.isArray(rows))throw new Error('invalid video portfolio response');
+    var usable=rows.filter(function(item){return item&&typeof item.poster_url==='string'&&item.poster_url.trim()&&/^https?:\/\//i.test(item.poster_url.trim())}).slice(0,3);
+    if(!usable.length){showFallback();return}
+    slots.forEach(function(slot,index){
+     var item=usable[index];if(!slot)return;
+     if(!item){slot.hidden=true;return}
+     slot.hidden=false;
+     var img=slot.querySelector('img');
+     if(img){
+      img.hidden=false;
+      img.alt=item.title||'نمونه‌کار ویدیویی';
+      img.onerror=function(){img.hidden=true;slot.classList.add('poster-unavailable')};
+      img.src=item.poster_url.trim();
+     }
+     var title=slot.querySelector('strong');if(title)title.textContent=item.title||'تماشای اثر';
+     slot.setAttribute('aria-label','تماشای '+(item.title||'نمونه‌کار ویدیویی'));
+    });
+    if(usable.length===1)root.classList.add('single-work');
+    else root.classList.remove('single-work');
+   })
+   .catch(function(error){console.warn('Homepage video showcase:',error);showFallback()});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',loadVideoShowcase,{once:true});
+ else loadVideoShowcase();
 })();
 </script>
 </head>
