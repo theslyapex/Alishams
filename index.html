@@ -2746,6 +2746,15 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 .club-league .club-league-empty{padding:25px;text-align:center;color:#a5a5ad;font-size:12px}
 @media(max-width:620px){.club-league{padding:70px 0}.club-league .club-podium{gap:7px}.club-league .club-podium-card{padding:15px 7px;border-radius:16px}.club-league .club-podium-card.first{padding:19px 7px;transform:translateY(-16px)}.club-league .club-medal{width:42px;height:42px;font-size:20px}.club-league .first .club-medal{width:48px;height:48px;font-size:24px}.club-league .club-name{font-size:11px}.club-league .club-score{font-size:13px}.club-league .club-tier{font-size:9px}.club-league .club-rest-head,.club-league .club-row{grid-template-columns:36px minmax(0,1fr) 70px 78px;padding:11px 10px;gap:7px;font-size:10px}.club-league .club-row .club-row-score{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.club-league *{scroll-behavior:auto!important;transition:none!important}}
+/* Persian numerals and score values use Estedad consistently */
+.club-league .club-rank,
+.club-league .club-score,
+.club-league .club-row .club-row-rank,
+.club-league .club-row .club-row-score{
+ font-family:"Estedad",Tahoma,sans-serif!important;
+ font-variant-numeric:normal;
+ letter-spacing:0;
+}
 </style>
 <div class="wrap">
  <header class="club-league-head"><span class="club-kicker">ALISHAMS CLUB · HALL OF FAME</span><h2 id="clubLeagueTitle">رقابت برای <span>رتبه برتر</span></h2><p>۱۰ عضو برتر باشگاه</p></header>
