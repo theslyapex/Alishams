@@ -2140,6 +2140,78 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 @media(prefers-reduced-motion:reduce){
   .conversation-pair-grid .community-chat-preview{animation:none!important}
 }
+@media(max-width:860px){
+  .conversation-pair-grid{
+    width:calc(100% - 28px);
+    max-width:760px;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+    align-items:stretch;
+  }
+  .conversation-pair-grid>section,
+  .conversation-pair-grid>section>.wrap{min-width:0}
+  .conversation-pair-grid .chat-hub-card,
+  .conversation-pair-grid .community-promo-card{
+    grid-template-columns:1fr;
+    align-content:start;
+    min-height:0;
+    height:100%;
+    padding:clamp(13px,2.4vw,20px);
+    gap:8px;
+    border-radius:18px;
+  }
+  .conversation-pair-grid .chat-hub-copy h2,
+  .conversation-pair-grid .community-promo-copy h2{
+    font-size:clamp(17px,2.8vw,23px);
+    line-height:1.55;
+    margin:8px 0;
+    letter-spacing:-.3px;
+  }
+  .conversation-pair-grid .chat-hub-copy p,
+  .conversation-pair-grid .community-promo-copy p{
+    font-size:clamp(9px,1.45vw,11px);
+    line-height:1.9;
+  }
+  .conversation-pair-grid .chat-hub-visual,
+  .conversation-pair-grid .community-promo-visual{
+    min-height:0;
+    height:clamp(76px,15vw,120px);
+    margin:5px 0 0;
+    overflow:hidden;
+  }
+  .conversation-pair-grid .chat-orbit,
+  .conversation-pair-grid .community-promo-orbit{width:105px;height:105px}
+  .conversation-pair-grid .chat-orbit-b,
+  .conversation-pair-grid .community-promo-orbit-b{width:82px;height:118px}
+  .conversation-pair-grid .chat-window,
+  .conversation-pair-grid .community-chat-preview{
+    width:min(88%,190px);
+    padding:8px;
+  }
+  .conversation-pair-grid .chat-bubble,
+  .conversation-pair-grid .community-preview-bubble{font-size:7px;padding:6px;margin-top:5px}
+  .conversation-pair-grid .chat-compose{font-size:7px;padding:6px;margin-top:6px}
+  .conversation-pair-grid .chat-float-tag,
+  .conversation-pair-grid .community-float-chip{font-size:6px;padding:5px 7px}
+  .conversation-pair-grid .chat-hub-actions{gap:5px;margin-top:10px;flex-wrap:wrap}
+  .conversation-pair-grid .chat-hub-actions .btn,
+  .conversation-pair-grid .community-promo-cta{font-size:9px;padding:8px 9px;margin-top:10px}
+  .conversation-pair-grid .chat-hub-points,
+  .conversation-pair-grid .community-promo-meta{font-size:8px;gap:5px 7px;margin-top:9px}
+}
+@media(max-width:390px){
+  .conversation-pair-grid{width:calc(100% - 20px);gap:8px;margin:26px auto}
+  .conversation-pair-grid .chat-hub-card,
+  .conversation-pair-grid .community-promo-card{padding:12px 10px;border-radius:15px}
+  .conversation-pair-grid .chat-hub-copy h2,
+  .conversation-pair-grid .community-promo-copy h2{font-size:16px;line-height:1.5}
+  .conversation-pair-grid .chat-hub-copy p,
+  .conversation-pair-grid .community-promo-copy p{font-size:8px;line-height:1.8}
+  .conversation-pair-grid .chat-hub-visual,
+  .conversation-pair-grid .community-promo-visual{height:68px}
+  .conversation-pair-grid .chat-hub-actions .btn,
+  .conversation-pair-grid .community-promo-cta{font-size:8px;padding:7px 8px}
+}
 </style>
 
 <!-- FAQ refreshed: 238 entries; includes the no-code site builder and current account/order workflows -->
