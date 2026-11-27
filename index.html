@@ -1234,6 +1234,64 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 </style>
 
 <style id="demo-spotlight-order-note-style">.demo-spotlight-order-note{max-width:660px;margin:22px 0 0;color:var(--muted);font-size:14px;line-height:2.15;text-align:justify}@media(max-width:760px){.demo-spotlight-order-note{font-size:13px;line-height:2.05;margin-top:18px;text-align:right}}</style>
+<style id="process-stepper-redesign">
+#process.process-journey{position:relative;isolation:isolate;overflow:hidden;padding-top:clamp(76px,9vw,118px);padding-bottom:clamp(76px,9vw,118px);background:radial-gradient(ellipse at 82% 43%,rgba(217,255,114,.075),transparent 36%),linear-gradient(180deg,rgba(255,255,255,.018),transparent 24%,rgba(255,255,255,.018))}
+#process.process-journey:before{content:"";position:absolute;z-index:-1;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(90deg,transparent,black 35%,black 75%,transparent);pointer-events:none}
+.process-journey-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:58px}
+.process-journey-heading{max-width:720px}
+.process-journey-heading h2{margin:17px 0 12px;font-size:clamp(32px,4.7vw,57px);line-height:1.45;letter-spacing:-1.3px}
+.process-journey-heading h2 span{color:var(--lime)}
+.process-journey-heading>p{margin:0;max-width:600px;color:#aeb1b9;font-size:14px;line-height:2.2}
+.process-journey-count{display:flex;align-items:center;gap:12px;flex:0 0 auto;padding:12px 16px;border:1px solid rgba(217,255,114,.22);border-radius:15px;background:rgba(217,255,114,.045)}
+.process-count-icon{display:grid;place-items:center;width:39px;height:39px;border-radius:11px;background:rgba(217,255,114,.12);color:var(--lime)}
+.process-count-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.process-journey-count b,.process-journey-count small{display:block}
+.process-journey-count b{font-size:12px;color:#f2f4e9}
+.process-journey-count small{margin-top:2px;color:#999da5;font-size:10px}
+.process-journey-track{height:2px;margin:0 8.3% -2px;background:linear-gradient(90deg,rgba(217,255,114,.65),rgba(217,255,114,.12));position:relative}
+.process-journey-track:before,.process-journey-track:after{content:"";position:absolute;top:50%;width:9px;height:9px;border:2px solid #d9ff72;border-radius:50%;background:#10130d;transform:translateY(-50%)}
+.process-journey-track:before{left:0}.process-journey-track:after{right:0}
+.process-journey-track span{position:absolute;inset:-3px 0 auto;height:8px;background:linear-gradient(90deg,transparent,rgba(217,255,114,.12),transparent);filter:blur(5px)}
+.process-journey-steps{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,2.2vw,28px);margin:0;padding:0;list-style:none}
+.process-journey-step{position:relative;min-width:0;padding:0 5px 5px}
+.process-step-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:28px}
+.process-step-index{font:800 13px/1 Manrope,sans-serif;letter-spacing:1.5px;color:var(--lime)}
+.process-step-state{font-size:10px;color:#a9adb5;padding:5px 9px;border:1px solid rgba(255,255,255,.1);border-radius:999px;background:rgba(255,255,255,.025);white-space:nowrap}
+.process-step-icon{position:relative;display:grid;place-items:center;width:66px;height:66px;margin-bottom:23px;border:1px solid rgba(217,255,114,.34);border-radius:19px;background:linear-gradient(145deg,rgba(217,255,114,.15),rgba(217,255,114,.035));box-shadow:0 10px 32px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.09);transition:transform .35s cubic-bezier(.2,.75,.25,1),background .35s,border-color .35s}
+.process-step-icon:after{content:"";position:absolute;inset:6px;border:1px solid rgba(217,255,114,.12);border-radius:13px;pointer-events:none}
+.process-step-icon img{width:31px;height:31px;object-fit:contain;filter:brightness(0) saturate(100%) invert(91%) sepia(43%) saturate(513%) hue-rotate(25deg) brightness(105%) contrast(103%)}
+.process-journey-step:hover .process-step-icon{transform:translateY(-5px) rotate(-3deg);border-color:var(--lime);background:rgba(217,255,114,.17)}
+.process-journey-step h3{margin:0 0 10px;color:#f3f4ee;font-size:17px;line-height:1.7}
+.process-journey-step>p{min-height:82px;margin:0;color:#a4a7b0;font-size:12px;line-height:2.15}
+.process-step-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:20px;padding-top:13px;border-top:1px solid rgba(255,255,255,.1);color:#c8d99e;font-size:10px}
+.process-step-foot i{display:grid;place-items:center;width:24px;height:24px;border:1px solid rgba(217,255,114,.25);border-radius:50%;color:var(--lime);font:normal 13px Manrope}
+.process-journey-bottom{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:46px;padding-top:19px;border-top:1px solid rgba(255,255,255,.09)}
+.process-journey-bottom>span{display:flex;align-items:center;gap:9px;color:#969ba3;font-size:11px}
+.process-journey-bottom>span i{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 13px rgba(217,255,114,.65)}
+.process-journey-bottom>a{display:inline-flex;align-items:center;gap:10px;color:var(--lime);font-size:12px;font-weight:800;transition:gap .2s}
+.process-journey-bottom>a:hover{gap:15px}
+.process-journey-bottom>a b{font:700 17px Manrope}
+@media(max-width:760px){
+ #process.process-journey{padding-top:64px;padding-bottom:64px}
+ .process-journey-head{align-items:flex-start;flex-direction:column;gap:20px;margin-bottom:36px}
+ .process-journey-heading h2{font-size:clamp(29px,7.5vw,39px);line-height:1.55}
+ .process-journey-heading>p{font-size:12px}
+ .process-journey-count{padding:9px 12px}
+ .process-journey-track{display:none}
+ .process-journey-steps{grid-template-columns:1fr;gap:0;margin-right:6px}
+ .process-journey-step{display:grid;grid-template-columns:56px minmax(0,1fr);column-gap:15px;padding:0 0 29px}
+ .process-journey-step:not(:last-child):before{content:"";position:absolute;right:27px;top:58px;bottom:-1px;width:1px;background:linear-gradient(180deg,rgba(217,255,114,.62),rgba(217,255,114,.08))}
+ .process-step-top{grid-column:2;grid-row:1;align-self:center;margin:0 0 7px}
+ .process-step-index{font-size:12px}
+ .process-step-icon{grid-column:1;grid-row:1 / span 3;width:55px;height:55px;margin:0;border-radius:16px}
+ .process-step-icon img{width:27px;height:27px}
+ .process-journey-step h3{grid-column:2;grid-row:2;margin:0 0 5px;font-size:15px}
+ .process-journey-step>p{grid-column:2;grid-row:3;min-height:0;font-size:11px;line-height:2}
+ .process-step-foot{grid-column:2;grid-row:4;margin-top:10px;padding-top:9px;font-size:10px}
+ .process-journey-bottom{align-items:flex-start;flex-direction:column;margin-top:18px;padding-top:16px}
+}
+@media(prefers-reduced-motion:reduce){.process-step-icon,.process-journey-bottom>a{transition:none!important}}
+</style>
 </head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="علی شمس"><span class="brand-mark brand-logo"><img src="/assets/images/alishams-studio-logo.png" alt="لوگوی علی شمس" decoding="async"></span><span>علی شمس<small>Alishams DIGITAL STUDIO</small></span></a><nav class="navlinks" id="navlinks" aria-label="ناوبری اصلی">
@@ -1986,7 +2044,53 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 <div class="principles-controls"><div class="principles-dots" role="group" aria-label="انتخاب اصل همکاری"><button class="principle-dot is-active" aria-label="اصل اول" aria-current="true"></button><button class="principle-dot" aria-label="اصل دوم" aria-current="false"></button><button class="principle-dot" aria-label="اصل سوم" aria-current="false"></button></div></div>
 <div class="principles-footnote"><span class="principles-foot-line"></span><span>یک مسیر روشن؛ از ایده تا اجرا</span><span class="principles-foot-mark">A / S</span></div>
 </div></div></section>
-<section class="section" id="process"><div class="wrap"><div class="section-head reveal"><div><span class="eyebrow">HOW WE WORK</span><h2>ساده، روشن و مرحله‌به‌مرحله.</h2></div><p>از اولین گفت‌وگو تا تحویل نهایی، مسیر همکاری باید برای هر دو طرف مشخص باشد.</p></div><div class="process-grid"><article class="process reveal"><h3>گفت‌وگو</h3><p>هدف، مخاطب، نیازها و محدودیت‌های پروژه را می‌شناسیم.</p></article><article class="process reveal delay-1"><h3>پیشنهاد مسیر</h3><p>خروجی، زمان‌بندی و هزینه پیش از شروع روشن می‌شود.</p></article><article class="process reveal delay-2"><h3>طراحی و اجرا</h3><p>کار در مسیر توافق‌شده پیش می‌رود و نقاط بازبینی مشخص‌اند.</p></article><article class="process reveal delay-3"><h3>تحویل</h3><p>فایل‌ها و خروجی‌های توافق‌شده تحویل داده می‌شوند.</p></article></div></div></section>
+<section class="section process-journey" id="process" aria-labelledby="processJourneyTitle">
+ <div class="wrap">
+  <div class="process-journey-head reveal">
+   <div class="process-journey-heading">
+    <span class="eyebrow">HOW WE WORK</span>
+    <h2 id="processJourneyTitle">از ایده تا نتیجه، <span>چهار گام روشن.</span></h2>
+    <p>در هر مرحله می‌دانی کجای مسیر هستیم، چه کاری انجام می‌شود و قدم بعدی چیست.</p>
+   </div>
+   <div class="process-journey-count" aria-label="چهار مرحله مشخص">
+    <span class="process-count-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/><path d="m17 15 3 2-3 2"/></svg></span>
+    <span><b>۰۴ مرحله</b><small>از گفت‌وگو تا تحویل</small></span>
+   </div>
+  </div>
+  <div class="process-journey-track" aria-hidden="true"><span></span></div>
+  <ol class="process-journey-steps">
+   <li class="process-journey-step reveal">
+    <div class="process-step-top"><span class="process-step-index">01</span><span class="process-step-state">شروع مسیر</span></div>
+    <div class="process-step-icon"><img src="https://img.icons8.com/fluency-systems-regular/96/d9ff72/chat.png" alt="" loading="lazy" decoding="async"></div>
+    <h3>گفت‌وگو و شناخت</h3>
+    <p>درباره ایده، هدف، مخاطب و نیازهای پروژه صحبت می‌کنیم تا مسئله را دقیق بشناسیم.</p>
+    <span class="process-step-foot">شناخت نیازها <i>↗</i></span>
+   </li>
+   <li class="process-journey-step reveal delay-1">
+    <div class="process-step-top"><span class="process-step-index">02</span><span class="process-step-state">برنامه‌ریزی</span></div>
+    <div class="process-step-icon"><img src="https://img.icons8.com/fluency-systems-regular/96/d9ff72/document.png" alt="" loading="lazy" decoding="async"></div>
+    <h3>پیشنهاد مسیر</h3>
+    <p>خروجی‌ها، محدوده کار، زمان‌بندی و هزینه را شفاف می‌کنیم و پس از تأیید تو جلو می‌رویم.</p>
+    <span class="process-step-foot">توافق شفاف <i>↗</i></span>
+   </li>
+   <li class="process-journey-step reveal delay-2">
+    <div class="process-step-top"><span class="process-step-index">03</span><span class="process-step-state">اجرا و بازبینی</span></div>
+    <div class="process-step-icon"><img src="https://img.icons8.com/fluency-systems-regular/96/d9ff72/design.png" alt="" loading="lazy" decoding="async"></div>
+    <h3>طراحی و اجرا</h3>
+    <p>پروژه طبق برنامه پیش می‌رود؛ در نقاط مشخص، نتیجه را بررسی می‌کنی و بازخورد می‌دهی.</p>
+    <span class="process-step-foot">پیشرفت مرحله‌ای <i>↗</i></span>
+   </li>
+   <li class="process-journey-step process-journey-step--last reveal delay-3">
+    <div class="process-step-top"><span class="process-step-index">04</span><span class="process-step-state">نتیجه نهایی</span></div>
+    <div class="process-step-icon"><img src="https://img.icons8.com/fluency-systems-regular/96/d9ff72/checked.png" alt="" loading="lazy" decoding="async"></div>
+    <h3>تحویل و پایان</h3>
+    <p>خروجی‌ها و فایل‌های توافق‌شده را تحویل می‌گیری و مسیر استفاده از آن‌ها برایت روشن است.</p>
+    <span class="process-step-foot">تحویل پروژه <i>✓</i></span>
+   </li>
+  </ol>
+  <div class="process-journey-bottom"><span><i></i> هیچ مرحله‌ای مبهم یا ناگهانی نیست</span><a href="#contact">برای شروع گفت‌وگو <b>↗</b></a></div>
+ </div>
+</section>
 <section class="section trust-section" id="trust"><div class="wrap"><div class="section-head reveal"><div><span class="eyebrow">TRUST THROUGH CLARITY</span><h2>اعتماد، با <span style="color:var(--lime)">شفافیت</span> ساخته می‌شود.</h2></div><p>به‌جای وعده‌های بزرگ یا نظرهای ساختگی، معیار را روی نمونه‌های قابل مشاهده و توافق روشن پیش از شروع می‌گذاریم.</p></div><div class="trust-grid"><article class="trust-card reveal"><div class="trust-card-head"><span class="trust-icon"><svg class="trust-animated-icon icon-work" viewBox="0 0 64 64" role="img" aria-label="نمونه‌کارها"><defs><linearGradient id="workGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b7ff5b"/><stop offset="1" stop-color="#44d9ff"/></linearGradient></defs><rect class="work-window" x="10" y="13" width="44" height="36" rx="8" fill="none" stroke="url(#workGrad)" stroke-width="2.6"/><path d="M10 23h44" stroke="url(#workGrad)" stroke-width="2.6"/><circle cx="17" cy="18" r="1.4" fill="#b7ff5b"/><circle cx="22" cy="18" r="1.4" fill="#44d9ff"/><path class="work-chart" d="M19 40l8-8 7 5 11-12" fill="none" stroke="url(#workGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle class="work-point" cx="45" cy="25" r="3" fill="#b7ff5b"/></svg></span><span class="trust-number">01 / WORK</span></div><h3>نمونه‌های واقعی، نه حرف‌های بزرگ</h3><p>پروژه‌های منتشرشده را باز کن و خودت کیفیت طراحی، ساختار و کاربردشان را بررسی کن؛ از ایران‌ما تا ابزارهای آنلاین.</p><div class="trust-links"><a href="portfolio.html">کاوش نمونه‌کارها</a></div></article><article class="trust-card reveal delay-1"><div class="trust-card-head"><span class="trust-icon"><svg class="trust-animated-icon icon-agreement" viewBox="0 0 64 64" role="img" aria-label="شفافیت در توافق"><defs><linearGradient id="agreeGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c9a7ff"/><stop offset="1" stop-color="#44d9ff"/></linearGradient></defs><rect class="agree-document" x="13" y="9" width="30" height="43" rx="6" fill="#c9a7ff0b" stroke="url(#agreeGrad)" stroke-width="2.5"/><path class="agree-line" d="M20 20h15M20 27h12M20 34h9" fill="none" stroke="#a8dfff" stroke-width="2.4" stroke-linecap="round"/><circle class="agree-badge" cx="43" cy="42" r="11" fill="#14171b" stroke="#c9a7ff" stroke-width="2.4"/><path class="agree-check" d="M37.5 42l3.7 3.7 7-8" fill="none" stroke="#b7ff5b" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path class="agree-spark" d="M49 13v5m-2.5-2.5h5" stroke="#44d9ff" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="trust-number">02 / AGREEMENT</span></div><h3>همه‌چیز روشن، قبل از شروع</h3><p>هدف، محدوده کار، خروجی‌ها، زمان‌بندی و هزینه پیش از اجرا بررسی می‌شوند تا هر دو طرف بدانند روی چه چیزی توافق کرده‌اند.</p><div class="trust-links"><a href="#process">روند همکاری</a><a href="#faq">پرسش‌های رایج</a></div></article><article class="trust-card reveal delay-2"><div class="trust-card-head"><span class="trust-icon"><svg class="trust-animated-icon icon-control" viewBox="0 0 64 64" role="img" aria-label="امنیت اطلاعات"><defs><linearGradient id="secureGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b7ff5b"/><stop offset="1" stop-color="#c9a7ff"/></linearGradient></defs><path class="secure-shield" d="M32 8l19 7v14c0 12-8 21-19 27-11-6-19-15-19-27V15z" fill="none" stroke="url(#secureGrad)" stroke-width="2.8" stroke-linejoin="round"/><path class="secure-check" d="M23 31l6 6 13-14" fill="none" stroke="#b7ff5b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle class="secure-pulse" cx="32" cy="31" r="23" fill="none" stroke="#c9a7ff" stroke-width="1.3" opacity=".45"/></svg></span><span class="trust-number">03 / CONTROL</span></div><h3>اطلاعات و ارسال، تحت کنترل تو</h3><p>از پنل حساب کاربری می‌توانی جزئیات سفارش، وضعیت و روند انجام، پرداخت‌ها و تغییرات را ببینی و امور مربوط به سفارشت را مدیریت و پیگیری کنی. کد پیگیری و دسترسی خصوصی نیز کمک می‌کند اطلاعات سفارشت فقط در اختیار خودت باشد.</p><div class="trust-links"><a href="/contact-center.html">شروع گفت‌وگو</a></div></article></div></div></section>
 
 
