@@ -4121,6 +4121,175 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
 @media(prefers-reduced-motion:reduce){#avangaar-home .avangaar-cta{transition:none}}
 </style>
 
+
+<style id="conversation-cards-unified-final">
+/* Unified paired cards: same hierarchy, proportions and illustration stage */
+.conversation-pair-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  gap:18px!important;
+}
+.conversation-pair-grid>section{
+  min-width:0!important;
+  padding:0!important;
+  margin:0!important;
+}
+.conversation-pair-grid>section>.wrap{
+  display:flex!important;
+  width:100%!important;
+  min-width:0!important;
+}
+.conversation-pair-grid .chat-hub-card,
+.conversation-pair-grid .community-promo-card{
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+  align-items:stretch!important;
+  gap:14px!important;
+  padding:clamp(20px,2.4vw,30px)!important;
+  border:1px solid #d9ff7245!important;
+  border-radius:24px!important;
+  background:
+    radial-gradient(ellipse at 50% 100%,#d9ff7210,transparent 48%),
+    linear-gradient(145deg,#171b13 0%,#111410 58%,#101216 100%)!important;
+  box-shadow:0 18px 48px #0005!important;
+  overflow:hidden!important;
+  text-decoration:none!important;
+  transform:none;
+}
+.conversation-pair-grid .chat-hub-copy,
+.conversation-pair-grid .community-promo-copy{
+  width:100%!important;
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+}
+.conversation-pair-grid .chat-hub-copy h2,
+.conversation-pair-grid .community-promo-copy h2{
+  font-size:clamp(20px,2.35vw,29px)!important;
+  line-height:1.55!important;
+  letter-spacing:-.45px!important;
+  margin:12px 0 10px!important;
+}
+.conversation-pair-grid .chat-hub-copy p,
+.conversation-pair-grid .community-promo-copy p{
+  font-size:12px!important;
+  line-height:2!important;
+  margin:0!important;
+}
+.conversation-pair-grid .chat-hub-actions,
+.conversation-pair-grid .community-promo-meta{
+  margin-top:15px!important;
+}
+.conversation-pair-grid .chat-hub-visual,
+.conversation-pair-grid .community-promo-visual{
+  position:relative!important;
+  width:100%!important;
+  min-height:150px!important;
+  height:150px!important;
+  margin:4px 0 0!important;
+  display:grid!important;
+  place-items:center!important;
+  overflow:hidden!important;
+  border:1px solid #d9ff7225!important;
+  border-radius:17px!important;
+  background:linear-gradient(145deg,#d9ff7209,#ffffff03)!important;
+}
+.conversation-pair-grid .chat-orbit,
+.conversation-pair-grid .community-promo-orbit,
+.conversation-pair-grid .community-promo-glow{
+  opacity:.45!important;
+  transform:scale(.62)!important;
+}
+.conversation-pair-grid .chat-window,
+.conversation-pair-grid .community-chat-preview{
+  width:min(88%,260px)!important;
+  max-width:260px!important;
+  padding:12px!important;
+  border-radius:16px!important;
+  transform:none!important;
+  animation:none!important;
+  box-shadow:0 12px 28px #0007!important;
+}
+.conversation-pair-grid .chat-float-tag,
+.conversation-pair-grid .community-float-chip{
+  right:8px!important;
+  bottom:8px!important;
+  font-size:7px!important;
+  padding:6px 8px!important;
+  transform:none!important;
+}
+.conversation-pair-grid .community-promo-corner{display:none!important}
+@media(max-width:860px){
+  .conversation-pair-grid{
+    width:calc(100% - 28px)!important;
+    max-width:760px!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:12px!important;
+    margin:30px auto!important;
+  }
+  .conversation-pair-grid .chat-hub-card,
+  .conversation-pair-grid .community-promo-card{
+    padding:16px 14px!important;
+    gap:10px!important;
+    border-radius:19px!important;
+  }
+  .conversation-pair-grid .chat-hub-copy h2,
+  .conversation-pair-grid .community-promo-copy h2{
+    font-size:clamp(17px,2.7vw,22px)!important;
+    line-height:1.55!important;
+    margin:8px 0!important;
+  }
+  .conversation-pair-grid .chat-hub-copy p,
+  .conversation-pair-grid .community-promo-copy p{
+    font-size:clamp(9px,1.45vw,11px)!important;
+    line-height:1.9!important;
+  }
+  .conversation-pair-grid .chat-hub-visual,
+  .conversation-pair-grid .community-promo-visual{
+    height:116px!important;
+    min-height:116px!important;
+    margin-top:3px!important;
+    border-radius:14px!important;
+  }
+  .conversation-pair-grid .chat-hub-actions,
+  .conversation-pair-grid .community-promo-meta{margin-top:9px!important;gap:6px!important}
+  .conversation-pair-grid .chat-hub-actions .btn,
+  .conversation-pair-grid .community-promo-cta{
+    font-size:9px!important;
+    padding:8px 9px!important;
+    min-height:0!important;
+    margin-top:9px!important;
+  }
+  .conversation-pair-grid .chat-hub-points{font-size:8px!important;gap:5px!important;margin-top:8px!important}
+  .conversation-pair-grid .community-promo-meta{font-size:8px!important}
+  .conversation-pair-grid .chat-window,
+  .conversation-pair-grid .community-chat-preview{width:90%!important;padding:8px!important}
+  .conversation-pair-grid .chat-bubble,
+  .conversation-pair-grid .community-preview-bubble{font-size:7px!important;padding:6px!important;margin-top:5px!important}
+}
+@media(max-width:390px){
+  .conversation-pair-grid{width:calc(100% - 20px)!important;gap:8px!important}
+  .conversation-pair-grid .chat-hub-card,
+  .conversation-pair-grid .community-promo-card{padding:12px 10px!important}
+  .conversation-pair-grid .chat-hub-copy h2,
+  .conversation-pair-grid .community-promo-copy h2{font-size:16px!important}
+  .conversation-pair-grid .chat-hub-copy p,
+  .conversation-pair-grid .community-promo-copy p{font-size:8px!important}
+  .conversation-pair-grid .chat-hub-visual,
+  .conversation-pair-grid .community-promo-visual{height:92px!important;min-height:92px!important}
+}
+@media(min-width:861px){
+  .conversation-pair-grid .chat-hub-visual,
+  .conversation-pair-grid .community-promo-visual{height:210px!important;min-height:210px!important}
+}
+</style>
 </body>
 <style id="remove-visible-legacy-order-service">
 /* Keep the native select only as the form's hidden data source; the custom picker below is the sole visible control. */
