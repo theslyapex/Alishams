@@ -2183,30 +2183,26 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 
 <section class="section unified-contact" id="conversation" aria-labelledby="unifiedContactTitle">
  <div class="wrap">
-  <div class="unified-contact-card reveal">
+  <div class="unified-contact-layout">
    <div class="unified-contact-main">
     <div class="unified-contact-copy">
-     <span class="unified-contact-kicker">ALISHAMS · ارتباط و گفت‌وگو</span>
+     <span class="unified-contact-kicker">ارتباط و گفت‌وگو با استودیو</span>
      <h2 id="unifiedContactTitle">حرفی برای گفتن داری؟<br><span>از همین‌جا شروع کن.</span></h2>
-     <p>برای شروع همکاری، پیگیری درخواست یا گفت‌وگو با دیگر کاربران، مسیر مناسب خودت را انتخاب کن. همه‌چیز ساده و در دسترس است.</p>
+     <p>برای شروع همکاری، پیگیری درخواست یا گفت‌وگو با دیگر کاربران، مسیر مناسب خودت را انتخاب کن. راه ارتباطی موردنیازت همیشه در دسترس است.</p>
     </div>
-    <div class="unified-contact-art" aria-label="تصویرسازی گفت‌وگوی فارسی">
-     <div class="uca-glow"></div>
-     <div class="uca-panel">
-      <div class="uca-top"><span class="uca-dots"><i></i><i></i><i></i></span><b>گفت‌وگوی Alishams</b><span class="uca-online">آنلاین</span></div>
-      <div class="uca-message uca-message-user"><span class="uca-avatar">ش</span><div><b>سلام، وقت بخیر</b><small>برای شروع یک ایده آماده‌ام.</small></div></div>
-      <div class="uca-message uca-message-reply"><span class="uca-avatar">A</span><div><b>خوش اومدی!</b><small>از همین‌جا با هم شروع می‌کنیم.</small></div></div>
-      <div class="uca-compose"><span>پیامت رو اینجا بنویس...</span><b>↗</b></div>
-     </div>
-     <span class="uca-sticker">ایده‌ات رو<br><strong>شروع کن ✳</strong></span>
-     <span class="uca-orbit uca-orbit-one"></span><span class="uca-orbit uca-orbit-two"></span>
+    <div class="unified-contact-visual" aria-hidden="true">
+     <div class="ucv-rings"><i></i><i></i><i></i></div>
+     <div class="ucv-symbol"><img src="https://img.icons8.com/ios-filled/100/d9ff72/chat.png" alt="" loading="lazy"></div>
+     <span class="ucv-label ucv-label-top">گفت‌وگو</span>
+     <span class="ucv-label ucv-label-bottom">همکاری و ارتباط</span>
+     <span class="ucv-spark ucv-spark-one"></span><span class="ucv-spark ucv-spark-two"></span>
     </div>
    </div>
-   <div class="unified-contact-actions" aria-label="مسیرهای ارتباطی">
-    <a class="uca-action uca-action-primary" href="/contact-center.html"><span class="uca-action-icon"><img src="https://img.icons8.com/fluency-systems-regular/48/chat.png" alt="" loading="lazy"></span><span><b>شروع گفت‌وگو</b><small>ثبت درخواست و شروع همکاری</small></span><span class="uca-action-arrow">↗</span></a>
-    <a class="uca-action" href="/contact-center.html#trackingPanel"><span class="uca-action-icon"><img src="https://img.icons8.com/fluency-systems-regular/48/edit-chat-history.png" alt="" loading="lazy"></span><span><b>پیگیری مکاتبه</b><small>ادامه درخواست‌های قبلی</small></span><span class="uca-action-arrow">↗</span></a>
-    <a class="uca-action" href="/community-chat.html"><span class="uca-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24" role="img"><path d="M7.5 18.5 4 20l1.2-3.4A8 8 0 1 1 7.5 18.5Z"/><path d="M9 10h6M9 13.5h4"/><path d="M16.5 4.5a7 7 0 0 1 5 6.7 6.8 6.8 0 0 1-1 3.6l.8 2.2-2.4-.8a6.8 6.8 0 0 1-2.4.5"/></svg></span><span><b>گفت‌وگوی عمومی</b><small>ارتباط با کاربران Alishams</small></span><span class="uca-action-arrow">↗</span></a>
-   </div>
+   <nav class="unified-contact-actions" aria-label="مسیرهای ارتباطی">
+    <a class="uca-action uca-action-primary" href="/contact-center.html"><span class="uca-action-icon"><img src="https://img.icons8.com/ios-filled/100/d9ff72/chat.png" alt="" loading="lazy"></span><span><b>شروع گفت‌وگو</b><small>ثبت درخواست و شروع همکاری</small></span><span class="uca-action-arrow">↗</span></a>
+    <a class="uca-action" href="/contact-center.html#trackingPanel"><span class="uca-action-icon"><img src="https://img.icons8.com/ios-filled/100/d9ff72/edit-chat.png" alt="" loading="lazy"></span><span><b>پیگیری مکاتبه</b><small>ادامه درخواست‌های قبلی</small></span><span class="uca-action-arrow">↗</span></a>
+    <a class="uca-action" href="/community-chat.html"><span class="uca-action-icon"><img src="https://img.icons8.com/ios-filled/100/d9ff72/speech-bubble.png" alt="" loading="lazy"></span><span><b>گفت‌وگوی عمومی</b><small>ارتباط با کاربران Alishams</small></span><span class="uca-action-arrow">↗</span></a>
+   </nav>
   </div>
  </div>
 </section>
@@ -4630,85 +4626,65 @@ main a:focus-visible,main button:focus-visible{outline:2px solid var(--lime);out
 
 <style id="unified-contact-card-design">
 .unified-contact{padding:64px 0 76px!important}
-.unified-contact-card{
- position:relative;isolation:isolate;overflow:hidden;
- width:100%;box-sizing:border-box;padding:clamp(24px,4vw,48px);
- border:1px solid #d9ff7250;border-radius:30px;
- background:radial-gradient(ellipse at 82% 18%,#d9ff7210,transparent 36%),radial-gradient(ellipse at 5% 100%,#b6a0ff0c,transparent 40%),linear-gradient(135deg,#171b13 0%,#111410 52%,#101216 100%);
- box-shadow:0 28px 80px #0005;
-}
-.unified-contact-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.9fr);align-items:center;gap:clamp(24px,5vw,64px)}
+.unified-contact-layout{position:relative;isolation:isolate;width:100%;padding:clamp(16px,3vw,34px) 0;background:radial-gradient(ellipse at 82% 35%,#d9ff7209,transparent 34%),radial-gradient(ellipse at 4% 95%,#b6a0ff0a,transparent 36%)}
+.unified-contact-main{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(250px,.85fr);align-items:center;gap:clamp(28px,6vw,82px);min-height:290px}
 .unified-contact-copy{position:relative;z-index:2;min-width:0}
-.unified-contact-kicker{display:inline-flex;align-items:center;gap:9px;color:#d9ff72;font:700 11px/1.8 Estedad,sans-serif;letter-spacing:0}
-.unified-contact-kicker:before{content:"";width:8px;height:8px;border-radius:50%;background:#d9ff72;box-shadow:0 0 14px #d9ff72}
-.unified-contact-copy h2{margin:17px 0 13px;font:800 clamp(27px,3.8vw,43px)/1.6 Estedad,sans-serif;letter-spacing:-.7px;color:#f5f5ee}
+.unified-contact-kicker{display:inline-flex;align-items:center;gap:10px;color:#d9ff72;font:700 12px/1.8 Estedad,Tahoma,sans-serif}
+.unified-contact-kicker:before{content:"";width:24px;height:2px;background:#d9ff72;box-shadow:0 0 12px #d9ff72}
+.unified-contact-copy h2{margin:18px 0 13px;font:850 clamp(30px,4.4vw,51px)/1.55 Estedad,Tahoma,sans-serif;letter-spacing:-1px;color:#f5f5ee}
 .unified-contact-copy h2 span{color:#d9ff72}
-.unified-contact-copy p{max-width:570px;margin:0;color:#aeb2a5;font:400 13px/2.2 Estedad,sans-serif}
-.unified-contact-art{
- position:relative;isolation:isolate;min-width:0;min-height:270px;display:grid;place-items:center;
- border:1px solid #d9ff7226;border-radius:24px;overflow:hidden;
- background:radial-gradient(ellipse at 50% 50%,#d9ff7210,transparent 66%),linear-gradient(145deg,#ffffff06,#d9ff7205);
-}
-.uca-glow{position:absolute;width:220px;height:180px;border-radius:50%;background:#d9ff7215;filter:blur(55px)}
-.uca-orbit{position:absolute;border:1px solid #d9ff7230;border-radius:50%;pointer-events:none}
-.uca-orbit-one{width:280px;height:180px;transform:rotate(-25deg)}
-.uca-orbit-two{width:210px;height:260px;border-color:#b6a0ff35;transform:rotate(38deg)}
-.uca-panel{position:relative;z-index:1;width:min(78%,340px);padding:16px;border:1px solid #d9ff7250;border-radius:20px;background:linear-gradient(145deg,#1b2119f5,#0b0e0bf5);box-shadow:0 22px 55px #0009;transform:rotate(-2deg);font-family:Estedad,Tahoma,sans-serif;direction:rtl}
-.uca-top{display:flex;align-items:center;gap:9px;padding-bottom:12px;border-bottom:1px solid #ffffff16;color:#f1f3e9;font-size:11px}
-.uca-top b{font-weight:700}
-.uca-dots{display:flex;gap:4px;direction:ltr}
-.uca-dots i{width:7px;height:7px;border-radius:50%;background:#d9ff72}
-.uca-dots i:nth-child(2){background:#b6a0ff}.uca-dots i:nth-child(3){background:#ff987e}
-.uca-online{margin-right:auto;color:#d9ff72;font-size:9px}
-.uca-message{display:flex;align-items:center;gap:9px;margin-top:13px;padding:10px;border:1px solid #ffffff12;border-radius:13px;background:#ffffff08;color:#f3f4ed}
-.uca-message-reply{background:#d9ff720c;border-color:#d9ff722b}
-.uca-avatar{display:grid;place-items:center;flex:none;width:29px;height:29px;border-radius:10px;background:#d9ff7218;color:#d9ff72;font-weight:800;font-size:12px}
-.uca-message-reply .uca-avatar{background:#b6a0ff20;color:#d5c8ff}
-.uca-message b,.uca-message small{display:block;font-family:Estedad,sans-serif}
-.uca-message b{font-size:10px}.uca-message small{margin-top:3px;color:#aeb3a4;font-size:9px}
-.uca-compose{display:flex;align-items:center;justify-content:space-between;margin-top:13px;padding:8px 10px;border:1px solid #ffffff18;border-radius:10px;color:#93998a;font:9px Estedad,sans-serif}
-.uca-compose b{display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#d9ff72;color:#10130b;font:800 15px Manrope}
-.uca-sticker{position:absolute;z-index:2;left:5%;bottom:12%;padding:10px 14px;border:1px solid #d9ff7250;border-radius:13px;background:#11170df2;color:#c5cfad;font:10px/1.8 Estedad,sans-serif;transform:rotate(4deg);box-shadow:0 12px 30px #0008}
-.uca-sticker strong{color:#d9ff72;font-size:13px}
-.unified-contact-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:24px}
-.uca-action{display:flex;align-items:center;gap:12px;min-width:0;min-height:70px;padding:12px 15px;border:1px solid #ffffff20;border-radius:17px;background:#ffffff06;color:#f4f4ed;text-decoration:none;transition:transform .2s,border-color .2s,background .2s}
-.uca-action:hover{transform:translateY(-3px);border-color:#d9ff7270;background:#d9ff720c}
-.uca-action-primary{border-color:#d9ff7270;background:linear-gradient(120deg,#d9ff7220,#d9ff7208)}
-.uca-action-icon{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,#d9ff7226,#d9ff720b);border:1px solid #d9ff7238;box-shadow:inset 0 1px 0 #ffffff12,0 5px 16px #0003}
-.uca-action-icon img{display:block;width:27px;height:27px;object-fit:contain;filter:brightness(0) saturate(100%) invert(91%) sepia(43%) saturate(537%) hue-rotate(25deg) brightness(105%) contrast(102%)}
-.uca-action-icon svg{display:block;width:27px;height:27px;fill:none;stroke:#d9ff72;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.uca-action-primary .uca-action-icon svg{stroke:#11150b}
-.uca-action-primary .uca-action-icon{background:linear-gradient(145deg,#e5ff9b,#c9f45d);border-color:#eaffad;box-shadow:0 5px 18px #d9ff7228}
-.uca-action-primary .uca-action-icon img{filter:brightness(0) saturate(100%)}
+.unified-contact-copy p{max-width:590px;margin:0;color:#aeb2a5;font:400 14px/2.25 Estedad,Tahoma,sans-serif}
+.unified-contact-visual{position:relative;display:grid;place-items:center;min-width:0;min-height:270px;isolation:isolate}
+.ucv-rings{position:absolute;width:230px;height:230px;border:1px solid #d9ff7235;border-radius:50%;transform:rotate(-25deg) scaleX(1.2)}
+.ucv-rings i{position:absolute;inset:18px;border:1px solid #b6a0ff35;border-radius:50%}
+.ucv-rings i:nth-child(2){inset:38px;border-color:#d9ff7228}
+.ucv-rings i:nth-child(3){inset:58px;border-color:#ffffff20}
+.ucv-symbol{position:relative;z-index:2;display:grid;place-items:center;width:112px;height:112px}
+.ucv-symbol:before{content:"";position:absolute;inset:-22px;border-radius:50%;background:radial-gradient(circle,#d9ff7222,transparent 68%);filter:blur(8px)}
+.ucv-symbol img{position:relative;width:76px;height:76px;object-fit:contain;filter:drop-shadow(0 0 22px #d9ff7245)}
+.ucv-label{position:absolute;z-index:3;color:#dce7c4;font:700 11px Estedad,Tahoma,sans-serif}
+.ucv-label-top{top:12%;right:8%}
+.ucv-label-bottom{bottom:11%;left:5%;color:#b6a0ff}
+.ucv-spark{position:absolute;width:7px;height:7px;border-radius:50%;background:#d9ff72;box-shadow:0 0 15px #d9ff72}
+.ucv-spark-one{top:22%;left:18%}.ucv-spark-two{right:18%;bottom:22%;background:#b6a0ff;box-shadow:0 0 15px #b6a0ff}
+.unified-contact-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:24px;border-top:1px solid #ffffff20;border-bottom:1px solid #ffffff20}
+.uca-action{position:relative;display:flex;align-items:center;gap:13px;min-width:0;min-height:88px;padding:15px 18px;color:#f4f4ed;text-decoration:none;transition:background .2s}
+.uca-action+.uca-action{border-right:1px solid #ffffff18}
+.uca-action:hover,.uca-action-primary{background:linear-gradient(100deg,#d9ff7210,transparent)}
+.uca-action-icon{display:grid;place-items:center;flex:none;width:43px;height:43px}
+.uca-action-icon img{display:block;width:31px;height:31px;object-fit:contain;filter:brightness(0) saturate(100%) invert(91%) sepia(43%) saturate(537%) hue-rotate(25deg) brightness(105%) contrast(102%)}
+.uca-action-primary .uca-action-icon img{filter:brightness(0) saturate(100%) invert(91%) sepia(43%) saturate(537%) hue-rotate(25deg) brightness(105%) contrast(102%)}
 .uca-action-arrow{margin-right:auto;flex:none;color:#d9ff72;font:700 16px Manrope;opacity:.8;transition:transform .2s,opacity .2s}
 .uca-action:hover .uca-action-arrow{transform:translate(2px,-2px);opacity:1}
-.uca-action b,.uca-action small{display:block;font-family:Estedad,sans-serif}
-.uca-action b{font-size:12px;font-weight:800}
-.uca-action small{margin-top:4px;color:#aeb2a5;font-size:9px;line-height:1.7}
+.uca-action b,.uca-action small{display:block;font-family:Estedad,Tahoma,sans-serif}
+.uca-action b{font-size:13px;font-weight:800}
+.uca-action small{margin-top:4px;color:#aeb2a5;font-size:10px;line-height:1.7}
 @media(max-width:700px){
- .unified-contact{padding:38px 0 52px!important}
- .unified-contact-card{padding:21px 17px;border-radius:23px}
- .unified-contact-main{grid-template-columns:1fr;gap:18px}
- .unified-contact-copy h2{font-size:clamp(24px,6.4vw,32px);margin:10px 0}
- .unified-contact-copy p{font-size:11px;line-height:2}
- .unified-contact-art{min-height:220px;border-radius:18px}
- .uca-panel{width:min(82%,340px);padding:13px}
- .uca-sticker{left:4%;bottom:9%;font-size:9px}
- .unified-contact-actions{grid-template-columns:1fr;gap:8px;margin-top:17px}
- .uca-action{min-height:58px;padding:9px 12px;border-radius:14px}
- .uca-action-icon{width:39px;height:39px;border-radius:12px}
- .uca-action-icon img{width:24px;height:24px}
- .uca-action-arrow{font-size:14px}
+ .unified-contact{padding:42px 0 54px!important}
+ .unified-contact-layout{padding:10px 0;background:radial-gradient(ellipse at 50% 20%,#d9ff7209,transparent 42%)}
+ .unified-contact-main{grid-template-columns:1fr;gap:5px;min-height:0}
+ .unified-contact-copy{text-align:center}
+ .unified-contact-kicker{font-size:10px}
+ .unified-contact-copy h2{font-size:clamp(26px,7vw,35px);margin:12px 0}
+ .unified-contact-copy p{font-size:12px;line-height:2.1;margin-inline:auto}
+ .unified-contact-visual{min-height:175px}
+ .ucv-rings{width:150px;height:150px}
+ .ucv-symbol{width:80px;height:80px}
+ .ucv-symbol img{width:56px;height:56px}
+ .ucv-label-top{top:8%;right:14%}.ucv-label-bottom{bottom:5%;left:12%}
+ .unified-contact-actions{grid-template-columns:1fr;margin-top:18px}
+ .uca-action{min-height:65px;padding:10px 4px;gap:12px}
+ .uca-action+.uca-action{border-right:0;border-top:1px solid #ffffff18}
+ .uca-action-icon{width:38px;height:38px}
+ .uca-action-icon img{width:27px;height:27px}
+ .uca-action b{font-size:12px}.uca-action small{font-size:9px}
 }
 @media(min-width:701px) and (max-width:900px){
- .unified-contact-card{padding:24px}
- .unified-contact-main{grid-template-columns:minmax(0,1fr) minmax(230px,.85fr);gap:20px}
- .unified-contact-copy h2{font-size:28px}
- .unified-contact-art{min-height:230px}
- .unified-contact-actions{gap:8px}
- .uca-action{padding:10px;gap:8px}
- .uca-action b{font-size:11px}.uca-action small{font-size:8px}
+ .unified-contact-main{grid-template-columns:minmax(0,1fr) minmax(210px,.7fr);gap:20px}
+ .unified-contact-copy h2{font-size:32px}
+ .uca-action{padding:12px 9px;gap:7px}.uca-action b{font-size:11px}.uca-action small{font-size:8px}
 }
+@media(prefers-reduced-motion:reduce){.uca-action,.uca-action-arrow{transition:none!important}}
 </style>
 
 <style id="tracking-animated-cta-style">
